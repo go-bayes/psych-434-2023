@@ -37,7 +37,7 @@ code {
 }
 
 code {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 18px;
 }
 

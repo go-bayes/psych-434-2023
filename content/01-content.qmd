@@ -10,7 +10,7 @@ date: "2023-FEB-28"
 
 ## Slides
 
-[slides](/slides/01-slides.html)
+[PREVIEW](/slides/01-slides.html)
 
 <div>
 

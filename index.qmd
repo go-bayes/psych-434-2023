@@ -2,4 +2,34 @@
 title: "Psych-434-2023"
 ---
 
-This is the website for pscyh 434
+
+Welcome to the Psych 434 lecture website! 
+
+You can access the course lectures by navigating to the "Contents" section and selecting the appropriate lab. 
+
+
+## Class times and locations
+
+**Lectures** Day/Time: Tuesday, 1:10-3:00pm
+
+**Lecture Location** All classes are in Easterfield Building EA407
+
+
+## Names and contact details
+
+**Course Coordinator** Prof Joseph Bulbulia <joseph.bulbulia@vuw.ac.nz>
+**Room** EA324 
+
+**TA** Inkuk Kim  <inkuk.kim@vuw.ac.nz>
+
+**TA** Torven Schalk <torven.schalk@vuw.ac.nz>
+
+
+
+## Course Description 
+
+The official description:
+
+*This course will focus on theoretical and practical challenges for conducting research involving individuals from more than one cultural background or ethnicity. Topics are likely to include defining and measuring culture; developing culture-sensitive studies, choice of language and translation; communication styles and bias; questionnaire and interview design; qualitative and quantitative data analysis for cultural and cross-cultural research; minorities, power and ethics in cross-cultural research; and ethno-methodologies and indigenous research methodologies. Appropriate background for this course: PSYC 338. *
+
+

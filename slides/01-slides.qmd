@@ -7,8 +7,8 @@ format:
     smaller: false
     scrollable: true
     incremental: true
-    chalkboard: 
-      buttons: false
+    chalkboard: true 
+    buttons: false
     preview-links: auto
     theme: moon
     css: styles.css
@@ -17,6 +17,8 @@ format:
     code-overflow: scroll
     code-line-numbers: true
     auto-stretch: true
+    html-math-method: katex
+
 ---
 
 
@@ -25,10 +27,17 @@ format:
 
 Why why? 
 
+
+
 ## Test
 
+
+At the core: 
+
+\[ Y|A=1  \neq Y_{0} \]
+
 ::: {.r-fit-text}
-$$ E[E[Y|A]] = E[E[A|Y]|Y] $$
+
 :::
 
 

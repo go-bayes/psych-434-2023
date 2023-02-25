@@ -8,13 +8,8 @@ execute:
 website:
   title: "Psych 434"
   navbar:
-    title: false
-    pinned: true
     search: false
-    background: "#228B22" # VUW-like colour
     right:
-    - text: "About"
-      href: about.qmd
     - text: "Content"
       menu:
         - text: "Preliminaries"
@@ -24,9 +19,9 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: lumen
     toc: true
-    css: theme.css
+    css: styles.css
     html-math-method: katex
 
 license: MIT # CC BY-NC-SA if any data are used

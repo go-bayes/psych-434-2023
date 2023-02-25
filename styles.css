@@ -25,10 +25,10 @@ html {
   --aside-color:     rgba(0, 0, 0, 0.6);
   --fig-cap-color:   rgba(0, 0, 0, 0.6);
   /*-- Specify custom fonts ~~~ must be imported above   --*/
-  --heading-font:    "Roboto", sans-serif;
+  --heading-font:    "Fira Code", sans-serif;
+  --body-font:       "Fira Code", sans-serif;
+  --navbar-font:     "Fira Code", sans-serif;  /* websites + blogs only */
   --mono-font:       "Fira Code", monospace;
-  --body-font:       "Roboto", sans-serif;
-  --navbar-font:     "Roboto", sans-serif;  /* websites + blogs only */
 }
 
 code {

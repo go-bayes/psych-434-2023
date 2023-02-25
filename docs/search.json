@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Psych-434-2023",
     "section": "",
-    "text": "This is the website for pscyh 434\n\n\n\nReuseMIT"
+    "text": "Welcome to the Psych 434 lecture website!\nYou can access the course lectures by navigating to the “Contents” section and selecting the appropriate lab."
   },
   {
     "objectID": "content/01.content.html",
@@ -60,7 +60,7 @@
     "href": "content/01-content.html#slides",
     "title": "Causal effects",
     "section": "Slides",
-    "text": "Slides\nslides\n\n\n\nOpen in browser here"
+    "text": "Slides\nPREVIEW\n\n\n\nOpen in browser here"
   },
   {
     "objectID": "content/01-content.html#overview",
@@ -74,7 +74,7 @@
     "href": "slides/01-slides.html",
     "title": "How to ask a Why Question",
     "section": "",
-    "text": "-SOMETHING"
+    "text": "Why why?"
   },
   {
     "objectID": "slides/01-slides.html#why-questions",
@@ -88,7 +88,7 @@
     "href": "slides/01-slides.html#test",
     "title": "How to ask a Why Question",
     "section": "Test",
-    "text": "Test\n\n\\[ E[E[Y|A]] = E[E[A|Y]|Y] \\]"
+    "text": "Test\nAt the core:\n[ Y|A=1 Y_{0} ]"
   },
   {
     "objectID": "slides/01-slides.html#slide-here",
@@ -145,5 +145,26 @@
     "title": "How to ask a Why Question",
     "section": "Visualise confounding",
     "text": "Visualise confounding"
+  },
+  {
+    "objectID": "index.html#class-times-and-locations",
+    "href": "index.html#class-times-and-locations",
+    "title": "Psych-434-2023",
+    "section": "Class times and locations",
+    "text": "Class times and locations\nLectures Day/Time: Tuesday, 1:10-3:00pm\nLecture Location All classes are in Easterfield Building EA407"
+  },
+  {
+    "objectID": "index.html#names-and-contact-details",
+    "href": "index.html#names-and-contact-details",
+    "title": "Psych-434-2023",
+    "section": "Names and contact details",
+    "text": "Names and contact details\nCourse Coordinator Prof Joseph Bulbulia joseph.bulbulia@vuw.ac.nz Room EA324\nTA Inkuk Kim inkuk.kim@vuw.ac.nz\nTA Torven Schalk torven.schalk@vuw.ac.nz"
+  },
+  {
+    "objectID": "index.html#course-description",
+    "href": "index.html#course-description",
+    "title": "Psych-434-2023",
+    "section": "Course Description",
+    "text": "Course Description\nThe official description:\nThis course will focus on theoretical and practical challenges for conducting research involving individuals from more than one cultural background or ethnicity. Topics are likely to include defining and measuring culture; developing culture-sensitive studies, choice of language and translation; communication styles and bias; questionnaire and interview design; qualitative and quantitative data analysis for cultural and cross-cultural research; minorities, power and ethics in cross-cultural research; and ethno-methodologies and indigenous research methodologies. Appropriate background for this course: PSYC 338."
   }
 ]
