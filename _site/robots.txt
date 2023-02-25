@@ -1,0 +1,1 @@
+Sitemap: https://github.com/go-bayes/psych-434-2023/sitemap.xml

@@ -1,0 +1,24 @@
+---
+title: "Causal effects"
+date: "2023-FEB-28"
+---
+
+
+## Overview
+
+
+
+## Slides
+
+[slides](/slides/01-slides.html)
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="/slides/01-slides.html"></iframe>
+```
+
+</div>
+
+Open in browser
+[here](/slides/01-slides.html){target="_blank"}

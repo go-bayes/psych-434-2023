@@ -1,0 +1,7 @@
+---
+title: "Preliminaries"
+---
+
+This website is for the lecture slides for psych 434.
+
+

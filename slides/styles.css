@@ -1,0 +1,47 @@
+.border {
+  border: 1px solid #dee2e6;
+}
+
+.border-thick {
+  border-width: 3px;
+}
+
+
+/* Optional: embed custom fonts here with `@import`          */
+/* This must remain at the top of this file.                 */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto&display=swap');
+
+html {
+  /*-- Main font sizes --*/
+  /*  --title-size:      32px;
+  --body-size:       1.06rem;
+  --code-size:       14px;
+  --aside-size:      12px;
+  --fig-cap-size:    13px;
+  /*-- Main font colors --*/
+  --title-color:     #000000;
+  --header-color:    rgba(0, 0, 0, 0.8);
+  --body-color:      rgba(0, 0, 0, 0.8);
+  --aside-color:     rgba(0, 0, 0, 0.6);
+  --fig-cap-color:   rgba(0, 0, 0, 0.6);
+  /*-- Specify custom fonts ~~~ must be imported above   --*/
+  --heading-font:    "Roboto", sans-serif;
+  --mono-font:       "Fira Code", monospace;
+  --body-font:       "Roboto", sans-serif;
+  --navbar-font:     "Roboto", sans-serif;  /* websites + blogs only */
+}
+
+code {
+  font-family: var(--mono-font);
+  font-size: 14px;
+}
+
+code {
+  font-family: var(--mono-font);
+  font-size: 18px;
+}
+
+
+
+
+

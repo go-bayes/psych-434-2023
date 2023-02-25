@@ -1,0 +1,22 @@
+\documentclass[
+%% TIKZ_CLASSOPTION %%
+tikz
+]{standalone}
+\usepackage{amsmath}
+\usetikzlibrary{matrix}
+%% EXTRA_TIKZ_PREAMBLE_CODE %%
+\begin{document}
+%% TIKZ_CODE %%
+| engine.opts=list(template = "\files\latex\tikz-template.tex",
+|                  dvisvgm.opts = "--font-format=woff")
+
+\begin{tikzpicture}[squarednode/.style={rectangle, draw=gray!90, fill=gray!5, auto}]
+\tikzset{>=latex}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzstyle{DoubleArrow} = [-, preaction = {decorate}]
+\node[squarednode] (1) {$L_{t-1}$};
+\node[right =of 1] (2) {$A_{t}$};
+\node[right =of 2] (3) {$Y_{t+1}$};
+\draw[Arrow,bend left] (1) to (3);
+\draw[Arrow] (1) to (2);
+\end{document}

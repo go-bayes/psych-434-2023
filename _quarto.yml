@@ -1,0 +1,33 @@
+project:
+  type: website
+  output-dir: docs
+
+execute:
+  freeze: auto  # Re-render only when source changes
+
+website:
+  title: "Psych 434"
+  navbar:
+    title: false
+    pinned: true
+    search: false
+    background: "#228B22" # VUW-like colour
+    right:
+    - text: "About"
+      href: about.qmd
+    - text: "Content"
+      menu:
+        - text: "Preliminaries"
+          href: content/index.qmd
+        - text: "1: How to ask a why question"
+          href: content/01-content.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    css: theme.css
+    html-math-method: katex
+
+license: MIT # CC BY-NC-SA if any data are used
+

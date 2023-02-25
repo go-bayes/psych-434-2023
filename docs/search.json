@@ -1,0 +1,149 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Psych-434-2023",
+    "section": "",
+    "text": "This is the website for pscyh 434\n\n\n\nReuseMIT"
+  },
+  {
+    "objectID": "content/01.content.html",
+    "href": "content/01.content.html",
+    "title": "Psych 434",
+    "section": "",
+    "text": "here"
+  },
+  {
+    "objectID": "content/01.content.html#assumptions",
+    "href": "content/01.content.html#assumptions",
+    "title": "Psych 434",
+    "section": "Assumptions",
+    "text": "Assumptions\nhere"
+  },
+  {
+    "objectID": "content/01.content.html#slides",
+    "href": "content/01.content.html#slides",
+    "title": "Psych 434",
+    "section": "Slides",
+    "text": "Slides\nhere"
+  },
+  {
+    "objectID": "content/index.html",
+    "href": "content/index.html",
+    "title": "Preliminaries",
+    "section": "",
+    "text": "This website is for the lecture slides for psych 434.\n\n\n\nReuseMIT"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n\n\nReuseMIT"
+  },
+  {
+    "objectID": "content/01-content.html",
+    "href": "content/01-content.html",
+    "title": "Causal effects",
+    "section": "",
+    "text": "here"
+  },
+  {
+    "objectID": "content/01-content.html#assumptions",
+    "href": "content/01-content.html#assumptions",
+    "title": "Causal effects",
+    "section": "Assumptions",
+    "text": "Assumptions\nhere"
+  },
+  {
+    "objectID": "content/01-content.html#slides",
+    "href": "content/01-content.html#slides",
+    "title": "Causal effects",
+    "section": "Slides",
+    "text": "Slides\nslides\n\n\n\nOpen in browser here"
+  },
+  {
+    "objectID": "content/01-content.html#overview",
+    "href": "content/01-content.html#overview",
+    "title": "Quarto Presentations",
+    "section": "Overview",
+    "text": "Overview\nhere"
+  },
+  {
+    "objectID": "slides/01-slides.html",
+    "href": "slides/01-slides.html",
+    "title": "How to ask a Why Question",
+    "section": "",
+    "text": "-SOMETHING"
+  },
+  {
+    "objectID": "slides/01-slides.html#why-questions",
+    "href": "slides/01-slides.html#why-questions",
+    "title": "How to ask a Why Question",
+    "section": "Why questions",
+    "text": "Why questions\nWhy why?"
+  },
+  {
+    "objectID": "slides/01-slides.html#test",
+    "href": "slides/01-slides.html#test",
+    "title": "How to ask a Why Question",
+    "section": "Test",
+    "text": "Test\n\n\\[ E[E[Y|A]] = E[E[A|Y]|Y] \\]"
+  },
+  {
+    "objectID": "slides/01-slides.html#slide-here",
+    "href": "slides/01-slides.html#slide-here",
+    "title": "How to ask a Why Question",
+    "section": "Slide here",
+    "text": "Slide here\nSome code\nlibrary(ggdag)\nlibrary(dplyr)\n\ncoords <- read.table(header = TRUE, text = \"\n  x y name\n  0 1 U\n  1 0 L0\n  2 0 A0\n  3 0 Y0\n  4 0 A1\n  5 0 Y2\n\")\n\nd <- dagify(\n  A1 ~ L0 + A0,\n  L0 ~ U,\n  Y0 ~ U,\n  Y2 ~ A1,\n  Y2 ~ U + Y0,\n  coords = coords)\n\nggdag(d) +\n   theme_dag()"
+  },
+  {
+    "objectID": "slides/01-slides.html#dags",
+    "href": "slides/01-slides.html#dags",
+    "title": "How to ask a Why Question",
+    "section": "Dags",
+    "text": "Dags"
+  },
+  {
+    "objectID": "slides/01-slides.html#code",
+    "href": "slides/01-slides.html#code",
+    "title": "How to ask a Why Question",
+    "section": "Code",
+    "text": "Code\nlibrary(ggdag)\nlibrary(dplyr)\n\n\ncoords <- read.table(header = TRUE, text = \"\n  x y name\n  0 1 U\n  1 0 L0\n  2 0 A0\n  3 0 Y0\n  4 0 A1\n  5 0 Y2\n\")\n\nd <- dagify(\n  A1 ~ L0 + A0,\n  L0 ~ U,\n  Y0 ~ U,\n  Y2 ~ A1,\n  Y2 ~ U + Y0,\n  coords = coords)\n\nggdag(d) +\n   theme_dag()"
+  },
+  {
+    "objectID": "slides/01-slides.html#test2",
+    "href": "slides/01-slides.html#test2",
+    "title": "How to ask a Why Question",
+    "section": "Test2",
+    "text": "Test2\n\\[ E[E[Y|A]] = E[E[A|Y]|Y] \\] ## Dags"
+  },
+  {
+    "objectID": "slides/01-slides.html#test-dag",
+    "href": "slides/01-slides.html#test-dag",
+    "title": "How to ask a Why Question",
+    "section": "test dag",
+    "text": "test dag\ninstall.packages(c(\"coda\",\"mvtnorm\",\"devtools\",\"loo\",\"dagitty\",\"shape\"))\ndevtools::install_github(\"rmcelreath/rethinking\")\nlibrary(rethinking)\ndrawdag(d, arrow = \"gray\",  Z=list(\"U\"))"
+  },
+  {
+    "objectID": "slides/01-slides.html#dag",
+    "href": "slides/01-slides.html#dag",
+    "title": "How to ask a Why Question",
+    "section": "DAG",
+    "text": "DAG"
+  },
+  {
+    "objectID": "slides/01-slides.html#check-confounding",
+    "href": "slides/01-slides.html#check-confounding",
+    "title": "How to ask a Why Question",
+    "section": "Check confounding",
+    "text": "Check confounding"
+  },
+  {
+    "objectID": "slides/01-slides.html#visualise-confounding",
+    "href": "slides/01-slides.html#visualise-confounding",
+    "title": "How to ask a Why Question",
+    "section": "Visualise confounding",
+    "text": "Visualise confounding"
+  }
+]

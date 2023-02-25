@@ -1,0 +1,30 @@
+author: Joseph Bulbulia
+
+instructor:
+  name: Prof. Joseph Bulbulia
+  name_no_title: Joseph Bulbulia
+  email: joseph.bulbulia@vuw.ac.nz
+  url: "https://www.wgtn.ac.nz/psyc/about/staff/prof-joseph-bulbulia"
+  twitter:
+  github: go_bayes
+  office: "Rm 323 Easterfield"
+  contact_policy: >-
+    E-mail is the best ways to get in contact with me. I will try to respond to all course-related e-mails within one working day
+course:
+  number: "PYSC 434"
+  semester: "Trimester 1 2023"
+  days: "Tuesdays"
+  time: "1-3 PM"
+  location: "TBA"
+  dates: "TBA"
+  github: "TBA"
+  url: "TBA"
+  copyright_year: "2023"
+
+university:
+  name: Victoria University of Wellington
+  url: "https://www.wgtn.ac.nz/"
+
+school:
+  name: School of Psychology
+  url: "https://www.wgtn.ac.nz/explore/study-areas/psychology/overview"
