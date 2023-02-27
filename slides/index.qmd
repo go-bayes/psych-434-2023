@@ -10,7 +10,7 @@ format:
     chalkboard: true 
     buttons: false
     preview-links: auto
-    theme: moon
+    theme: dark
     css: styles.css
     embed-resources: false
     code-fold: false
@@ -21,7 +21,12 @@ format:
 
 ---
 
-
+```{r include=FALSE}
+# Necessary for using dvisvgm on macOS
+# See https://www.andrewheiss.com/blog/2021/08/27/tikz-knitr-html-svg-fun/
+Sys.setenv(LIBGS = "/usr/local/share/ghostscript/9.53.3/lib/libgs.dylib.9.53")
+font_opts <- list(dvisvgm.opts = "--font-format=woff")
+```
 
 ## Where do we meet? 
 
@@ -69,14 +74,14 @@ my_data %>%
 ```
 
 
-## Class Participation
+## Assessment 1: Class Participation
 
 - (a) your willingness to ask/answer questions and generally contribute to class discussion; and 
 
 - (b) the quality of your contributions
 
 
-##  Take Home Research Concepts Workbook
+## Assessment 2:  Take Home Research Concepts Workbook
 
 - This test will help you revise core statistical and methodological issues.  It is a chance to brush up on basic statistical knowledge and will help you re-familiarize yourself with material that we will build on later in this course. 
 
@@ -88,16 +93,13 @@ my_data %>%
 
 - You can use any source that you find useful.
 
-- Artificially Intelligence Chatbots mau be used but they occasionally make errors – sometimes spectacular errors. Currently they make these errors confidently 
+- Warning: AI chatbots may be used but they make errors confidently.
 
-- Generally, it is better practice, at least for now, to use peer-reviewed publications. 
+- Generally, it is better practice, to use peer-reviewed publications. 
 
-
-- Whatever resourcse you use must be cited.  Failure to cite your source is a form of academic misconduct. 
-
+- Any resource you use must be cited.  Failure to cite your source is a form of academic misconduct. 
 
 - You may complete the test in your own study time. We ask that you work individually. 
 
 
-## 
-
+## Assessment 3:

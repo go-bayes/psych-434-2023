@@ -10,7 +10,7 @@ format:
     chalkboard: true 
     buttons: false
     preview-links: auto
-    theme: moon
+    theme: dark
     css: styles.css
     embed-resources: false
     code-fold: false

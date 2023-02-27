@@ -10,7 +10,7 @@ format:
     chalkboard: true 
     buttons: false
     preview-links: auto
-    theme: moon
+    theme: dark
     css: styles.css
     embed-resources: false
     code-fold: false
@@ -165,3 +165,6 @@ drawdag(d, arrow = "gray",  Z=list("U"))
 ```
 
 
+###
+
+https://gist.github.com/andrewheiss/4ece621813a27dfdcaef7f1c2d773237
