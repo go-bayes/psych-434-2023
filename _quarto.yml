@@ -51,5 +51,6 @@ format:
     css: styles.css
     html-math-method: katex
 
+
 license: MIT # CC BY-NC-SA if any data are used
 

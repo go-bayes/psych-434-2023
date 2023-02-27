@@ -72,9 +72,9 @@
   {
     "objectID": "slides/01-slides.html",
     "href": "slides/01-slides.html",
-    "title": "How to ask a Why Question",
+    "title": "Asking questions in cross-cultural psychology",
     "section": "",
-    "text": "Why why?"
+    "text": "By the end of this lecture you will be able to:\n\nUnderstand why measurement is important to psychological research.\nUnderstand the special problems that cultural research presents.\nUnderstand why measurement test are not enough.\n\nKey Concepts\n\nMeasurement\nValidity (in measurement)\nConfounding (in estimation)"
   },
   {
     "objectID": "slides/01-slides.html#why-questions",
@@ -88,7 +88,7 @@
     "href": "slides/01-slides.html#test",
     "title": "Asking questions in cross-cultural psychology",
     "section": "Test",
-    "text": "Test\nAt the core:\n[ Y|A=1 Y_{0} ]"
+    "text": "Test"
   },
   {
     "objectID": "slides/01-slides.html#slide-here",
@@ -158,7 +158,7 @@
     "href": "index.html#names-and-contact-details",
     "title": "Psych 434: Conducting Research Across Cultures",
     "section": "Names and contact details",
-    "text": "Names and contact details\nCourse Coordinator Prof Joseph Bulbulia joseph.bulbulia@vuw.ac.nz\nRoom EA324\nLectures Dr.Inkuk Kim inkuk.kim@vuw.ac.nz\nLectures Torven Schalk torven.schalk@vuw.ac.nz"
+    "text": "Names and contact details\nCourse Coordinator Prof Joseph Bulbulia joseph.bulbulia@vuw.ac.nz\nRoom EA324\nLecturers Dr.Inkuk Kim inkuk.kim@vuw.ac.nz\nLecturers Torven Schalk torven.schalk@vuw.ac.nz"
   },
   {
     "objectID": "index.html#course-description",
@@ -178,8 +178,8 @@
     "objectID": "index.html#course-learning-objectives",
     "href": "index.html#course-learning-objectives",
     "title": "Psych 434: Conducting Research Across Cultures",
-    "section": "Course learning objectives",
-    "text": "Course learning objectives\n\nEthical Reasoning. Beginning in week 1, we will explore questions that are typically reserved for philosophy courses but are central to the conduct of psychology: why do we need to think about right and wrong in science? What if different people have different ideas about what is right and wrong in science? Is there hope for ethical progress? Can science play a role in ethical progress? We will provide you with a set of strategies for addressing these questions.\nProgramming in R. Beginning in week 2, we will teach you the basics of programming in the statistical language R. The past several decades have brought extraordinary new tools to psychological scientists, many of which require literacy in computer programming. While some of you may find the thought of programming thrilling, others may find it terrifying or boring! We promise that programming can be fun. This course is designed to help you find that joy.\nUnderstanding measurement. Beginning in week 3 the course will turn its focus to developing skills for constructing and validating measures in cross-cultural research. Again these skills will be invaluable for a wide range of tasks you may face in psychological science and will help you to address problems that will arise in other areas of your research and work. Measurement will occupy our attention through week 6.\nUnderstanding causal inference. Beginning in week 7 and for the following four weeks, the course will impart skills that you require to disentangle causation from correlation. Again our focus will be on the special problems that arise for cultural datasets. Notably, in psychological science, causal inference remains underdeveloped, and the material in this part of the course will position you to make potentially important contributions, whether or not your interests lie in cross-cultural psychology."
+    "section": "Course Learning Objectives",
+    "text": "Course Learning Objectives\n\nEthical Reasoning. Beginning in week 1, we will explore questions that are typically reserved for philosophy courses but are central to the conduct of psychology: why do we need to think about right and wrong in science? What if different people have different ideas about what is right and wrong in science? Is there hope for ethical progress? Can science play a role in ethical progress? We will provide you with a set of strategies for addressing these questions.\nProgramming in R. Beginning in week 2, we will teach you the basics of programming in the statistical language R. The past several decades have brought extraordinary new tools to psychological scientists, many of which require literacy in computer programming. While some of you may find the thought of programming thrilling, others may find it terrifying or boring! We promise that programming can be fun. This course is designed to help you find that joy.\nUnderstanding measurement. Beginning in week 3 the course will turn its focus to developing skills for constructing and validating measures in cross-cultural research. Again these skills will be invaluable for a wide range of tasks you may face in psychological science and will help you to address problems that will arise in other areas of your research and work. Measurement will occupy our attention through week 6.\nUnderstanding causal inference. Beginning in week 7 and for the following four weeks, the course will impart skills that you require to disentangle causation from correlation. Again our focus will be on the special problems that arise for cultural datasets. Notably, in psychological science, causal inference remains underdeveloped, and the material in this part of the course will position you to make potentially important contributions, whether or not your interests lie in cross-cultural psychology."
   },
   {
     "objectID": "content/02-content.html#slides",
@@ -276,8 +276,8 @@
     "objectID": "slides/01-slides.html#examples-of-psychological-questions",
     "href": "slides/01-slides.html#examples-of-psychological-questions",
     "title": "Asking questions in cross-cultural psychology",
-    "section": "Examples of Psychological Questions",
-    "text": "Examples of Psychological Questions"
+    "section": "Examples of psychological questions?",
+    "text": "Examples of psychological questions?\n\nHow does early childhood experience affect personality and behaviour?\nWhat are the effects of social media on self-esteem?\nWhy do some people believe in a God or gods and others do not?\nWhy are some people motivated to sacrifice for others?\nDoes marriage make people happy?"
   },
   {
     "objectID": "slides/index.html#examples-of-psychological-questions",
@@ -418,5 +418,453 @@
     "title": "Preliminaries",
     "section": "Assessment 3:",
     "text": "Assessment 3:"
+  },
+  {
+    "objectID": "slides/01-slides.html#references",
+    "href": "slides/01-slides.html#references",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "References",
+    "text": "References\nFor an account of the history of measurement in psychological research, see: (Briggs 2021)\nFor an account of key concepts and current debates in psychometrics, see: (Bandalos 2018)\nFor an account of special measurement problems that arise in cross-cultural research, see: (Van de Vijver and Leung 2021)\nFor an accessible introduction to causal inference and its history see: (Pearl and Mackenzie 2018)\nBibliography\n\n\n\n\n\n\nBandalos, Deborah L. 2018. Measurement Theory and Applications for the Social Sciences. Guilford Publications.\n\n\nBriggs, Derek C. 2021. Historical and Conceptual Foundations of Measurement in the Human Sciences: Credos and Controversies. Routledge.\n\n\nPearl, Judea, and Dana Mackenzie. 2018. The Book of Why: The New Science of Cause and Effect. Basic books.\n\n\nVan de Vijver, Fons JR, and Kwok Leung. 2021. Methods and Data Analysis for Cross-Cultural Research. Vol. 116. Cambridge University Press."
+  },
+  {
+    "objectID": "content/01-content.html#readings",
+    "href": "content/01-content.html#readings",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Readings",
+    "text": "Readings\nVan de Vijver and Leung (2021)\nBerry (1989)"
+  },
+  {
+    "objectID": "content/01-content.html#recommended-readings",
+    "href": "content/01-content.html#recommended-readings",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Recommended Readings",
+    "text": "Recommended Readings\n(He and Vijver 2012)\n(Van de Vijver and Leung 2021)\n(Berry 1989)"
+  },
+  {
+    "objectID": "content/01-content.html#background-readings",
+    "href": "content/01-content.html#background-readings",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Background Readings",
+    "text": "Background Readings\n(He and Vijver 2012)\n(Van de Vijver and Leung 2021)\n(Berry 1989)"
+  },
+  {
+    "objectID": "slides/01-slides.html#goals-of-this-lecture",
+    "href": "slides/01-slides.html#goals-of-this-lecture",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Goals of this lecture",
+    "text": "Goals of this lecture\nBy the end of this lecture you will be able to:\n\nUnderstand why measurement is important to psychological research.\nUnderstand the special problems that cultural research presents.\nUnderstand why measurement test are not enough.\n\nKey Concepts\n\nMeasurement\nValidity (in measurement)\nConfounding (in estimation)"
+  },
+  {
+    "objectID": "slides/01-slides.html#examples-of-psychological-questions-1",
+    "href": "slides/01-slides.html#examples-of-psychological-questions-1",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Examples of psychological questions",
+    "text": "Examples of psychological questions\n\n\nHow does early childhood experience affect personality and behaviour?\nWhat are the effects of social media on self-esteem?\nWhy do some people believe in a God or gods and others do not?\nWhy are some people motivated to sacrifice for others?\nDoes marriage make people happy?"
+  },
+  {
+    "objectID": "slides/01-slides.html#example-of-psychological-questions-in-cross-cultural-psychology",
+    "href": "slides/01-slides.html#example-of-psychological-questions-in-cross-cultural-psychology",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Example of psychological questions in cross-cultural psychology",
+    "text": "Example of psychological questions in cross-cultural psychology\n\nHow do early childhood experiences differ across cultures, and how do these differences impact personality and behavior development?\nAre there cultural differences in the way social media use affects self-esteem and body image?\nHow do cultural and religious beliefs shape individual attitudes towards the concept of God or gods?\nWhat are the cultural and individual factors that motivate people to engage in acts of altruism or sacrifice for others, and how do these factors vary across cultures?\nAre there cultural differences in the factors that contribute to marital satisfaction and happiness, and how do cultural expectations and values surrounding marriage play a role?"
+  },
+  {
+    "objectID": "slides/01-slides.html#where-does-psychology-start",
+    "href": "slides/01-slides.html#where-does-psychology-start",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Where does psychology start?",
+    "text": "Where does psychology start?\nPsychology starts with a question about how people think or behave."
+  },
+  {
+    "objectID": "slides/01-slides.html#how-might-we-answer-this-question",
+    "href": "slides/01-slides.html#how-might-we-answer-this-question",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "How might we answer this question?",
+    "text": "How might we answer this question?\nDoes marriage make people happy?"
+  },
+  {
+    "objectID": "slides/01-slides.html#how-might-psychological-scientists-answer-this-question-wrong-answers-only",
+    "href": "slides/01-slides.html#how-might-psychological-scientists-answer-this-question-wrong-answers-only",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "How might psychological scientists answer this question (Wrong answers only)?",
+    "text": "How might psychological scientists answer this question (Wrong answers only)?\nDoes marriage make people happy?"
+  },
+  {
+    "objectID": "slides/01-slides.html#how-might-psychological-scientists-answer-this-question",
+    "href": "slides/01-slides.html#how-might-psychological-scientists-answer-this-question",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "How might psychological scientists answer this question?",
+    "text": "How might psychological scientists answer this question?\nDoes marriage make people happy?"
+  },
+  {
+    "objectID": "slides/01-slides.html#wrong-answers",
+    "href": "slides/01-slides.html#wrong-answers",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Wrong answers:",
+    "text": "Wrong answers:\n\n\n“Ask my married parents if they are happy.”\n“Consult a palm reader.”\nAssertion: “Yes marriage always makes people happy”; “No marriage can’t possibly make anyone happy”\nIntuition: “It depends on the gender of the individual. Men are always happier in marriage, while women are never happier.”\nBias: “It depends on the cultural background of the individuals. Couples from Western cultures are always happier in marriage, while couples from Eastern cultures are never happier.”\nConduct a literature review of previous research on the association between marriage and happiness, including cross-cultural studies that compare different cultural attitudes and practices regarding marriage and their relationship to happiness.\nConduct a survey of a large and diverse sample of individuals to assess their happiness levels, as well as their marital status assess the relationship."
+  },
+  {
+    "objectID": "slides/01-slides.html#data-driven-responses",
+    "href": "slides/01-slides.html#data-driven-responses",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Data driven responses",
+    "text": "Data driven responses\nConduct a survey of a large and diverse sample of individuals\n:::{.incremental} - Where to begin?\n::"
+  },
+  {
+    "objectID": "slides/01-slides.html#conduct-a-literature-review-of-previous-research",
+    "href": "slides/01-slides.html#conduct-a-literature-review-of-previous-research",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Conduct a literature review of previous research",
+    "text": "Conduct a literature review of previous research\n\nWhat would this tell us?\n\nwhat other researchers have found.\n\nWhat would this not tell us?\n\nwhat other researchers have not found.\nwhat other researchers got wrong."
+  },
+  {
+    "objectID": "slides/01-slides.html#how-might-psychological-scientists-answer-whether-marriage-makes-people-happy",
+    "href": "slides/01-slides.html#how-might-psychological-scientists-answer-whether-marriage-makes-people-happy",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "How might psychological scientists answer whether marriage makes people happy?",
+    "text": "How might psychological scientists answer whether marriage makes people happy?"
+  },
+  {
+    "objectID": "slides/01-slides.html#measurement-of-happiness-measurement-of-marriage",
+    "href": "slides/01-slides.html#measurement-of-happiness-measurement-of-marriage",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Measurement of Happiness & Measurement of Marriage",
+    "text": "Measurement of Happiness & Measurement of Marriage\n“On a scale of 1-7, how happy are you?”\n:::{.incremental}\n\nHow might this go wrong?\nWhat might be problems that arise fin different cultures? ::"
+  },
+  {
+    "objectID": "slides/01-slides.html#the-happiness-question",
+    "href": "slides/01-slides.html#the-happiness-question",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "The Happiness Question:",
+    "text": "The Happiness Question:"
+  },
+  {
+    "objectID": "slides/01-slides.html#wrong-answers-only",
+    "href": "slides/01-slides.html#wrong-answers-only",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Wrong answers only",
+    "text": "Wrong answers only\n\n“Ask my married parents if they are happy.”\n“Consult a palm reader.”\nAssertion: “Yes marriage always makes people happy”; “No marriage can’t possibly make anyone happy”\nIntuition: “It depends on the gender of the individual. Men are always happier in marriage, while women are never happier.”\nIntuition: “It depends on the cultural background of the individuals. Couples from Western cultures are always happier in marriage, while couples from Eastern cultures are never happier.”\nConduct a literature review of previous research on the association between marriage and happiness, including cross-cultural studies that compare different cultural attitudes and practices regarding marriage and their relationship to happiness.\nConduct a survey of a large and diverse sample of individuals to assess their happiness levels, as well as their marital status assess the relationship."
+  },
+  {
+    "objectID": "slides/01-slides.html#conduct-a-survey-of-a-large-and-diverse-sample-of-individuals",
+    "href": "slides/01-slides.html#conduct-a-survey-of-a-large-and-diverse-sample-of-individuals",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Conduct a survey of a large and diverse sample of individuals",
+    "text": "Conduct a survey of a large and diverse sample of individuals\n\nWhere to begin?"
+  },
+  {
+    "objectID": "slides/01-slides.html#on-a-scale-of-1-7-how-happy-are-you",
+    "href": "slides/01-slides.html#on-a-scale-of-1-7-how-happy-are-you",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "“On a scale of 1-7, how happy are you?”",
+    "text": "“On a scale of 1-7, how happy are you?”\nHow might this go wrong?\n\nAmbiguity: Respondents may interpret “happiness” in different ways. -e.g. Some people may equate happiness with a momentary positive emotion -e.g. Others may think of happiness as a long-term state of contentment.\nSocial Desirability Bias: Respondents may want to tell you what they think you want to hear. Others might want to frustrate you.\nMood: the context in which the question is asked and the respondent’s current mood might affect the answer (reliability)\nLimited range of scale\nWhat do the endpoints mean?\nCultural Differences:\n\nin meanings\nin constructs themselves"
+  },
+  {
+    "objectID": "slides/01-slides.html#concept-of-validity-in-psychometric-research",
+    "href": "slides/01-slides.html#concept-of-validity-in-psychometric-research",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Concept of validity in psychometric research",
+    "text": "Concept of validity in psychometric research\n\nContent Validity: The degree an instrument measures what it is intended to measure (the “construct”).\nConstruct Validity: Whether the construct assumed to measure is accurately defined and operationalised.\nCriterion Validity: Whether an instrument accurately predicts performance\nFace Validity: whether an instrument measure what it is intended to measure, as assessed by experts.\nEcological Validity: whether an instrument accurately reflects real-world situations and behavior (Bandalos 2018)"
+  },
+  {
+    "objectID": "slides/01-slides.html#are-there-cultural-differences-in-marital-satisfaction-and-happiness",
+    "href": "slides/01-slides.html#are-there-cultural-differences-in-marital-satisfaction-and-happiness",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Are there cultural differences in marital satisfaction and happiness?",
+    "text": "Are there cultural differences in marital satisfaction and happiness?"
+  },
+  {
+    "objectID": "slides/01-slides.html#are-there-cultural-differences-in-marital-satisfaction-and-happiness-1",
+    "href": "slides/01-slides.html#are-there-cultural-differences-in-marital-satisfaction-and-happiness-1",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Are there cultural differences in marital satisfaction and happiness?",
+    "text": "Are there cultural differences in marital satisfaction and happiness?"
+  },
+  {
+    "objectID": "slides/01-slides.html#measurement",
+    "href": "slides/01-slides.html#measurement",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Measurement",
+    "text": "Measurement\nDefinitions:\n\n“Measurement is the numerical quantifcation of the attributes of an object or event, which can be used to compare with other objects or events” [Conventional]\n“Measurement is the assignment of numerals to objects or events according to rules.” [Psychological]\n“Measurement is the process of experimentally obtaining one or more quantity values that can reasonably be attributed to a quantity.” [Metrological] from (Briggs 2021)"
+  },
+  {
+    "objectID": "slides/01-slides.html#what-can-we-do-about-it",
+    "href": "slides/01-slides.html#what-can-we-do-about-it",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "What can we do about it?",
+    "text": "What can we do about it?\nPart 1: Measurement matters\n\nWeek 2: Getting started with R (Torven Schalk) tools for probing validity\nWeek 3: Lost in Translation? Measurement and Language (Inkuk Kim) – tools for addressing differences in meanings and concepts\nWeek 4: Dealing with Data Factor Analysis (Inkuk Kim) - assessing use multiple items to assess “happiness”\nWeek 5: Dealing with Data (Multi-Group CFA) (In Kuk Kim) - test the factor structures across groups.\nWeek 6: Dealing with Data (Partial Invariance) (Torven Schalk) – test (a) whether there are differences in the measurement properties of variables between groups, but the overall structure of the measurement model is similar (b) investigate whether there are differences in the factor structure of a measure between groups."
+  },
+  {
+    "objectID": "slides/01-slides.html#measurement-is-sorted.-what-else-might-go-wrong",
+    "href": "slides/01-slides.html#measurement-is-sorted.-what-else-might-go-wrong",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Measurement is sorted. What else might go wrong?",
+    "text": "Measurement is sorted. What else might go wrong?"
+  },
+  {
+    "objectID": "slides/01-slides.html#else",
+    "href": "slides/01-slides.html#else",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "ELSE",
+    "text": "ELSE"
+  },
+  {
+    "objectID": "slides/01-slides.html#what-else-might-go-wrong",
+    "href": "slides/01-slides.html#what-else-might-go-wrong",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "What else might go wrong?",
+    "text": "What else might go wrong?\nSuppose we are confident in measurement, administer survey, and find an relationship.\n\nDoes marriage cause happiness cross culturally?"
+  },
+  {
+    "objectID": "slides/01-slides.html#what-else-might-go-wrong-1",
+    "href": "slides/01-slides.html#what-else-might-go-wrong-1",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "What else might go wrong?",
+    "text": "What else might go wrong?"
+  },
+  {
+    "objectID": "slides/01-slides.html#section",
+    "href": "slides/01-slides.html#section",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "",
+    "text": "Marriage \\to  Happiness\nBut perhaps::\nHappiness \\to Marriage\n\n\n# Fixed Effects\n\nParameter   | Coefficient |   SE |         95% CI | Statistic |     df |      p\n-------------------------------------------------------------------------------\n(Intercept) |        0.38 | 0.07 | [ 0.25,  0.52] |      5.56 | 221.60 | < .001\nA           |       -0.27 | 0.07 | [-0.41, -0.14] |     -3.92 | 201.35 | < .001\nM           |        0.07 | 0.05 | [-0.02,  0.16] |      1.54 | 223.48 | 0.126 \n\n\n\n\n# Fixed Effects\n\nParameter   | Coefficient |   SE |         95% CI | Statistic |     df |      p\n-------------------------------------------------------------------------------\n(Intercept) |        0.41 | 0.06 | [ 0.28,  0.54] |      6.35 | 264.74 | < .001\nA           |       -0.21 | 0.04 | [-0.30, -0.12] |     -4.64 | 274.40 | < .001"
+  },
+  {
+    "objectID": "slides/01-slides.html#we-might-infer-that-marriage-causes-happiness",
+    "href": "slides/01-slides.html#we-might-infer-that-marriage-causes-happiness",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "We might infer that Marriage causes Happiness",
+    "text": "We might infer that Marriage causes Happiness"
+  },
+  {
+    "objectID": "slides/01-slides.html#can-we-rule-out-that-happiness-causes-marriage",
+    "href": "slides/01-slides.html#can-we-rule-out-that-happiness-causes-marriage",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Can we rule out that happiness causes marriage?",
+    "text": "Can we rule out that happiness causes marriage?\nM -> H\n\n\n\n\n\n\nH -> M\n\n\n\n\n\n\nM -> H"
+  },
+  {
+    "objectID": "slides/01-slides.html#but-can-we-rule-out-that-happiness-causes-marriage",
+    "href": "slides/01-slides.html#but-can-we-rule-out-that-happiness-causes-marriage",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "But can we rule out that Happiness causes marriage?",
+    "text": "But can we rule out that Happiness causes marriage?"
+  },
+  {
+    "objectID": "slides/01-slides.html#many-psychologists-will-simply-control-for-age",
+    "href": "slides/01-slides.html#many-psychologists-will-simply-control-for-age",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Many psychologists will simply “control for age”",
+    "text": "Many psychologists will simply “control for age”\n\nThis doesn’t work if there is reverse causation\n\n\n\nCode\n## Simulate data \nset.seed(123)\nsim_fun_B = function() {\n  n <- 1000\n  A <- rnorm(n, 1) # simulates age,\n  H <- rnorm(n , A) #  simulates happy as function of age\n  M <- rnorm(n , A) + .2 * H # simulate marriage as a function of age + happiness\n\n  \n# Simulate dataframe from function\nsimdat_B <- data.frame(\n  A = A, \n  H = H,\n  M = M) \n\n#  model in which marriage \"predicts\" happiness controlling for age\nsim_B <- lm(H ~ M + A, data = simdat_B)\nsim_B  # returns output\n}\n\n# Replication 100 times\nr_lm_B <- NA\nr_lm_B = replicate(100, sim_fun_B(), simplify = FALSE )\n\n# print model results\nparameters::pool_parameters(r_lm_B)\n\n\n# Fixed Effects\n\nParameter   | Coefficient |   SE |        95% CI | Statistic |     df |      p\n------------------------------------------------------------------------------\n(Intercept) |    4.12e-03 | 0.06 | [-0.12, 0.13] |      0.07 | 220.99 | 0.947 \nM           |        0.19 | 0.04 | [ 0.10, 0.27] |      4.42 | 234.19 | < .001\nA           |        0.77 | 0.07 | [ 0.64, 0.91] |     11.17 | 211.13 | < .001"
+  },
+  {
+    "objectID": "slides/01-slides.html#happiness-might-cause-marriage",
+    "href": "slides/01-slides.html#happiness-might-cause-marriage",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Happiness might cause marriage",
+    "text": "Happiness might cause marriage"
+  },
+  {
+    "objectID": "slides/01-slides.html#age-might-be-a-confounder-of-both-marriage-and-happiness",
+    "href": "slides/01-slides.html#age-might-be-a-confounder-of-both-marriage-and-happiness",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Age might be a confounder of both Marriage and Happiness",
+    "text": "Age might be a confounder of both Marriage and Happiness"
+  },
+  {
+    "objectID": "slides/01-slides.html#what-can-we-do-about-it-1",
+    "href": "slides/01-slides.html#what-can-we-do-about-it-1",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "What can we do about it?",
+    "text": "What can we do about it?\nWeek 7: Causal inference: Causal Graphs(Joseph Bulbulia)\nWeek 8: Causal inference: Target Trial Emulation (Joseph (Joseph Bulbulia)\nWeek 9: Causal inference: Reconsidering measurement and selection biases (Joseph Bulbulia)\nWeek 10 Causal inference: Cross-Cultural Experiments (Joseph Bulbulia & Guests)"
+  },
+  {
+    "objectID": "slides/01-slides.html#course-conclusions",
+    "href": "slides/01-slides.html#course-conclusions",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Course conclusions",
+    "text": "Course conclusions\nWeek 11 Ethics and Ownership (Joseph Bulbulia & Guests). Can causal inference help us to improve ethical reasoning? Why is data protection important? How do the ethics of data protection relate to the ethics of open science?\nWeek 12 Future Horizons (Joseph Bulbulia, Torven, Inkuk):"
+  },
+  {
+    "objectID": "slides/01-slides.html#ethics-workshop",
+    "href": "slides/01-slides.html#ethics-workshop",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Ethics workshop",
+    "text": "Ethics workshop\n\nWhat are some ethical considerations that researchers need to take into account when conducting cross-cultural research? How do these considerations differ from those in other types of research?\nHow can cultural differences in values and beliefs impact the ethical considerations in cross-cultural research? What are some examples of cultural differences that researchers need to be aware of?\nHow can researchers ensure that their cross-cultural research is ethical, while still being scientifically rigorous and producing valuable insights? What are some best practices or guidelines that researchers can follow?"
+  },
+  {
+    "objectID": "slides/01-slides.html#the-problem-is-confounding-what-can-we-do-about-it",
+    "href": "slides/01-slides.html#the-problem-is-confounding-what-can-we-do-about-it",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "The problem is confounding: what can we do about it?",
+    "text": "The problem is confounding: what can we do about it?\nWeek 7: Causal inference: Causal Graphs(Joseph Bulbulia). How to diagnosis sources of confounding and what to do about it.\nWeek 8: Causal inference: Target Trial Emulation (Joseph (Joseph Bulbulia). How to emulate an experiment with observational data and how to identify the modification of effects by cultural groups.\nWeek 9: Causal inference: Reconsidering measurement and selection biases (Joseph Bulbulia). A discussion of problems in standard approaches to measurement.\nWeek 10 Causal inference: Cross-Cultural Experiments (Joseph Bulbulia & Guests). For whom to our results generalise?"
+  },
+  {
+    "objectID": "slides/01-slides.html#ethics-brainstorm",
+    "href": "slides/01-slides.html#ethics-brainstorm",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Ethics brainstorm",
+    "text": "Ethics brainstorm\n\nWhat are some ethical considerations that researchers need to take into account when conducting cross-cultural research? How do these considerations differ from those in other types of research?\nHow can cultural differences in values and beliefs impact the ethical considerations in cross-cultural research? What are some examples of cultural differences that researchers need to be aware of?\nHow can researchers ensure that their cross-cultural research is ethical, while still being scientifically rigorous and producing valuable insights? What are some best practices or guidelines that researchers can follow?"
+  },
+  {
+    "objectID": "slides/01-slides.html#group-discussion-ethics-brainstorm",
+    "href": "slides/01-slides.html#group-discussion-ethics-brainstorm",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Group discussion: Ethics brainstorm",
+    "text": "Group discussion: Ethics brainstorm\n\nWhat are some ethical considerations that researchers need to take into account when conducting cross-cultural research? How do these considerations differ from those in other types of research?\nHow can cultural differences in values and beliefs impact the ethical considerations in cross-cultural research? What are some examples of cultural differences that researchers need to be aware of?\nHow can researchers ensure that their cross-cultural research is ethical, while still being scientifically rigorous and producing valuable insights? What are some best practices or guidelines that researchers can follow?"
+  },
+  {
+    "objectID": "slides/index.html#assessment-3theoretical-application-5000-word-maximum-including-references",
+    "href": "slides/index.html#assessment-3theoretical-application-5000-word-maximum-including-references",
+    "title": "Preliminaries",
+    "section": "Assessment 3:Theoretical Application (5,000 word maximum including references)",
+    "text": "Assessment 3:Theoretical Application (5,000 word maximum including references)\nChoose one particular psychological concept or variable of interest to you. Provide a brief introduction to the concept or variable. Provide a sketch of the methodology for your study (what analysis will you run: equivalence tests, regressions, etc.) following the provided pre-registration template. Identify and justify your research participants’ cultural background. This assessment is equivalent to the introduction and methods part of an empirical paper.\nThe word limit for this assignment is 5000 words max (including references), and it must be typed and double spaced with a 12point Times New Roman font (or similar)."
+  },
+  {
+    "objectID": "slides/index.html#pre-registration-review-1000-words-maximum-including-references",
+    "href": "slides/index.html#pre-registration-review-1000-words-maximum-including-references",
+    "title": "Preliminaries",
+    "section": "Pre-Registration Review (1000 words maximum, including references)",
+    "text": "Pre-Registration Review (1000 words maximum, including references)\nYou will be invited to provide a review of one submitted pre-registration from another student. Using what you have learned about cross-cultural research provide feedback on both theory and suggested methods. Make sure to provide concrete and respectful feedback.\nStatistical Application (4,000 word maximum excluding tables and any references)\nOption 1 Measurement (see outline)\nOption 2 Causality (see outline)"
+  },
+  {
+    "objectID": "slides/index.html#letter-to-the-reviewer",
+    "href": "slides/index.html#letter-to-the-reviewer",
+    "title": "Preliminaries",
+    "section": "Letter to the Reviewer",
+    "text": "Letter to the Reviewer\nUsing the reviewer letter you received, respond to the points raised by the reviewer. Where did you alter your methods and pre-registration, where do results support your reviewer, where do they not support their claims.\nSubmission and return of work"
+  },
+  {
+    "objectID": "slides/index.html#assessments-or-detailed-feedback-on-your-performance-will-typically-be-returned-to-you-within-10-working-days.",
+    "href": "slides/index.html#assessments-or-detailed-feedback-on-your-performance-will-typically-be-returned-to-you-within-10-working-days.",
+    "title": "Preliminaries",
+    "section": "Assessments or detailed feedback on your performance will typically be returned to you within 10 working days.",
+    "text": "Assessments or detailed feedback on your performance will typically be returned to you within 10 working days."
+  },
+  {
+    "objectID": "slides/index.html#extensions",
+    "href": "slides/index.html#extensions",
+    "title": "Preliminaries",
+    "section": "Extensions",
+    "text": "Extensions\nIf any due date does not suit you, you may negotiate a new due date, in writing, that suits you. Any request for revision must be submitted in writing (by email) to your instructor before class on March 14th, 2023"
+  },
+  {
+    "objectID": "slides/index.html#penalties",
+    "href": "slides/index.html#penalties",
+    "title": "Preliminaries",
+    "section": "Penalties",
+    "text": "Penalties\nThe submission of late assignments is strongly discouraged. A penalty of one grade per day (e.g., B down to B-) from the hand-in date will be deducted from the final grade for any late work."
+  },
+  {
+    "objectID": "slides/index.html#unforeseeable-events",
+    "href": "slides/index.html#unforeseeable-events",
+    "title": "Preliminaries",
+    "section": "Unforeseeable events",
+    "text": "Unforeseeable events\nIn general, we require evidence (medical certificate etc.) to grant an extension."
+  },
+  {
+    "objectID": "slides/index.html#word-limits",
+    "href": "slides/index.html#word-limits",
+    "title": "Preliminaries",
+    "section": "Word limits",
+    "text": "Word limits\nAssignments that are over the word limit (see above) will be penalized. All submitted assessments are expected to be your own. You should neither give nor receive any aid on the assessments. Giving or receiving aid on assessments will be considered academic misconduct, resulting in registration in the Academic Misconduct Register (AMR). You may use any source, but the source must be cited. Penalties appropriate for the level of academic misconduct may be applied. Failure to cite your source will be considered academic misconduct and will result in registration in the Academic Misconduct Register (AMR)."
+  },
+  {
+    "objectID": "slides/index.html#materials-and-equipment",
+    "href": "slides/index.html#materials-and-equipment",
+    "title": "Preliminaries",
+    "section": "Materials and equipment",
+    "text": "Materials and equipment\nYou should bring paper and a writing utensil or laptop/tablet to seminars. For the data analysis sessions, having your personal laptop with the relevant computer programs (R and RStudio) installed is essential. Most sessions will require data analysis."
+  },
+  {
+    "objectID": "slides/index.html#course-learning-objectives",
+    "href": "slides/index.html#course-learning-objectives",
+    "title": "Preliminaries",
+    "section": "Course Learning Objectives",
+    "text": "Course Learning Objectives\n\nEthical Reasoning. Beginning in week 1, we will explore questions that are typically reserved for philosophy courses but are central to the conduct of psychology: why do we need to think about right and wrong in science? What if different people have different ideas about what is right and wrong in science? Is there hope for ethical progress? Can science play a role in ethical progress? We will provide you with a set of strategies for addressing these questions.\nProgramming in R. Beginning in week 2, we will teach you the basics of programming in the statistical language R. The past several decades have brought extraordinary new tools to psychological scientists, many of which require literacy in computer programming. While some of you may find the thought of programming thrilling, others may find it terrifying or boring! We promise that programming can be fun. This course is designed to help you find that joy.\nUnderstanding measurement. Beginning in week 3 the course will turn its focus to developing skills for constructing and validating measures in cross-cultural research. Again these skills will be invaluable for a wide range of tasks you may face in psychological science and will help you to address problems that will arise in other areas of your research and work. Measurement will occupy our attention through week 6.\nUnderstanding causal inference. Beginning in week 7 and for the following four weeks, the course will impart skills that you require to disentangle causation from correlation. Again our focus will be on the special problems that arise for cultural datasets. Notably, in psychological science, causal inference remains underdeveloped, and the material in this part of the course will position you to make potentially important contributions, whether or not your interests lie in cross-cultural psychology."
+  },
+  {
+    "objectID": "index.html#assignments-and-due-dates",
+    "href": "index.html#assignments-and-due-dates",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Assignments and due dates",
+    "text": "Assignments and due dates\n\n\n\n\n \n  \n    Assessment \n    CLOs \n    Percent \n    Due \n  \n \n\n  \n    Class participation \n    * \n    10 \n    Weekly \n  \n  \n    Take-home \n    3,4 \n    10 \n    March 19 (w3) \n  \n  \n    Theoretical application \n    1,2,3 \n    30 \n    9 May (w9) \n  \n  \n    Pre-reg review \n    1,2,3,4 \n    10 \n    28 May (w11) \n  \n  \n    Statistical application \n    1,2,3 \n    30 \n    11 June (w13) \n  \n  \n    Letter to the reviewer \n    1,2,3 \n    10 \n    11 June (w13)"
+  },
+  {
+    "objectID": "index.html#assessment-1-class-participation",
+    "href": "index.html#assessment-1-class-participation",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Assessment 1: Class Participation",
+    "text": "Assessment 1: Class Participation\n\n\nyour willingness to ask/answer questions and generally contribute to class discussion; and\n\n\nthe quality of your contributions"
+  },
+  {
+    "objectID": "index.html#assessment-2-take-home-research-concepts-workbook",
+    "href": "index.html#assessment-2-take-home-research-concepts-workbook",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Assessment 2: Take Home Research Concepts Workbook",
+    "text": "Assessment 2: Take Home Research Concepts Workbook\n\nThis test will help you revise core statistical and methodological issues. It is a chance to brush up on basic statistical knowledge and will help you re-familiarize yourself with material that we will build on later in this course.\nThe key focus is the revision of basic terms, including correlation, regression, and on basic R applications.\nThe test contains a theoretical and a practical component. Therefore, it is essential that you complete these questions since you will need to understand the material for the more advanced techniques and approaches that we cover in this course.\nThere is no word limit (be reasonable)\nYou can use any source that you find useful.\nWarning: AI chatbots may be used but they make errors confidently.\nGenerally, it is better practice, to use peer-reviewed publications.\nAny resource you use must be cited. Failure to cite your source is a form of academic misconduct.\nYou may complete the test in your own study time. We ask that you work individually."
+  },
+  {
+    "objectID": "index.html#assessment-3theoretical-application-5000-word-maximum-including-references",
+    "href": "index.html#assessment-3theoretical-application-5000-word-maximum-including-references",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Assessment 3:Theoretical Application (5,000 word maximum including references)",
+    "text": "Assessment 3:Theoretical Application (5,000 word maximum including references)\nChoose one particular psychological concept or variable of interest to you. Provide a brief introduction to the concept or variable. Provide a sketch of the methodology for your study (what analysis will you run: equivalence tests, regressions, etc.) following the provided pre-registration template. Identify and justify your research participants’ cultural background. This assessment is equivalent to the introduction and methods part of an empirical paper.\nThe word limit for this assignment is 5000 words max (including references), and it must be typed and double spaced with a 12point Times New Roman font (or similar)."
+  },
+  {
+    "objectID": "index.html#pre-registration-review-1000-words-maximum-including-references",
+    "href": "index.html#pre-registration-review-1000-words-maximum-including-references",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Pre-Registration Review (1000 words maximum, including references)",
+    "text": "Pre-Registration Review (1000 words maximum, including references)\nYou will be invited to provide a review of one submitted pre-registration from another student. Using what you have learned about cross-cultural research provide feedback on both theory and suggested methods. Make sure to provide concrete and respectful feedback.\nStatistical Application (4,000 word maximum excluding tables and any references)\nOption 1 Measurement (see outline)\nOption 2 Causality (see outline)"
+  },
+  {
+    "objectID": "index.html#letter-to-the-reviewer",
+    "href": "index.html#letter-to-the-reviewer",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Letter to the Reviewer",
+    "text": "Letter to the Reviewer\nUsing the reviewer letter you received, respond to the points raised by the reviewer. Where did you alter your methods and pre-registration, where do results support your reviewer, where do they not support their claims.\nSubmission and return of work"
+  },
+  {
+    "objectID": "index.html#assessments-or-detailed-feedback-on-your-performance-will-typically-be-returned-to-you-within-10-working-days.",
+    "href": "index.html#assessments-or-detailed-feedback-on-your-performance-will-typically-be-returned-to-you-within-10-working-days.",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Assessments or detailed feedback on your performance will typically be returned to you within 10 working days.",
+    "text": "Assessments or detailed feedback on your performance will typically be returned to you within 10 working days."
+  },
+  {
+    "objectID": "index.html#extensions",
+    "href": "index.html#extensions",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Extensions",
+    "text": "Extensions\nIf any due date does not suit you, you may negotiate a new due date, in writing, that suits you. Any request for revision must be submitted in writing (by email) to your instructor before class on March 14th, 2023"
+  },
+  {
+    "objectID": "index.html#penalties",
+    "href": "index.html#penalties",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Penalties",
+    "text": "Penalties\nThe submission of late assignments is strongly discouraged. A penalty of one grade per day (e.g., B down to B-) from the hand-in date will be deducted from the final grade for any late work."
+  },
+  {
+    "objectID": "index.html#unforeseeable-events",
+    "href": "index.html#unforeseeable-events",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Unforeseeable events",
+    "text": "Unforeseeable events\nIn general, we require evidence (medical certificate etc.) to grant an extension."
+  },
+  {
+    "objectID": "index.html#word-limits",
+    "href": "index.html#word-limits",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Word limits",
+    "text": "Word limits\nAssignments that are over the word limit (see above) will be penalized. All submitted assessments are expected to be your own. You should neither give nor receive any aid on the assessments. Giving or receiving aid on assessments will be considered academic misconduct, resulting in registration in the Academic Misconduct Register (AMR). You may use any source, but the source must be cited. Penalties appropriate for the level of academic misconduct may be applied. Failure to cite your source will be considered academic misconduct and will result in registration in the Academic Misconduct Register (AMR)."
+  },
+  {
+    "objectID": "index.html#materials-and-equipment",
+    "href": "index.html#materials-and-equipment",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Materials and equipment",
+    "text": "Materials and equipment\nYou should bring paper and a writing utensil or laptop/tablet to seminars. For the data analysis sessions, having your personal laptop with the relevant computer programs (R and RStudio) installed is essential. Most sessions will require data analysis."
   }
 ]

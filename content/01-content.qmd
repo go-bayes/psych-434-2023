@@ -1,12 +1,10 @@
 ---
 title: "Asking questions in cross-cultural psychology"
 date: "2023-FEB-28"
+bibliography: references.bib
 ---
 
-
 ## Overview
-
-
 
 ## Slides
 
@@ -20,5 +18,12 @@ date: "2023-FEB-28"
 
 </div>
 
-Open in browser
-[here](/slides/01-slides.html){target="_blank"}
+Open in browser [here](/slides/01-slides.html){target="_blank"}
+
+## Background Readings
+
+[@he2012]
+
+[@vandevijver2021]
+
+[@berry1989]

@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Joseph Bulbulia">
 
 <title>PSYC 434 Conducting Research Across Cultures: Trimester 1, 2023 - Psych 434: Conducting Research Across Cultures</title>
 <style>
@@ -58,6 +59,18 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+
+<script src="site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -152,10 +165,23 @@ ul.task-list li input[type="checkbox"] {
                       </div>
   </div>
     
-  
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      Joseph Bulbulia <a href="https://orcid.org/0000-0002-5861-2056" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Victoria University of Wellington, New Zealand
+            </p>
+        </div>
+      </div>
+
   <div class="quarto-title-meta">
 
-      
+        
     
       
     </div>
@@ -172,29 +198,47 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#class-times-and-locations" id="toc-class-times-and-locations" class="nav-link active" data-scroll-target="#class-times-and-locations">Class times and locations</a></li>
   <li><a href="#names-and-contact-details" id="toc-names-and-contact-details" class="nav-link" data-scroll-target="#names-and-contact-details">Names and contact details</a></li>
   <li><a href="#course-description" id="toc-course-description" class="nav-link" data-scroll-target="#course-description">Course Description</a></li>
-  <li><a href="#course-learning-objectives" id="toc-course-learning-objectives" class="nav-link" data-scroll-target="#course-learning-objectives">Course learning objectives</a></li>
+  <li><a href="#course-learning-objectives" id="toc-course-learning-objectives" class="nav-link" data-scroll-target="#course-learning-objectives">Course Learning Objectives</a></li>
+  <li><a href="#assignments-and-due-dates" id="toc-assignments-and-due-dates" class="nav-link" data-scroll-target="#assignments-and-due-dates">Assignments and due dates</a></li>
+  <li><a href="#assessment-1-class-participation" id="toc-assessment-1-class-participation" class="nav-link" data-scroll-target="#assessment-1-class-participation">Assessment 1: Class Participation</a></li>
+  <li><a href="#assessment-2-take-home-research-concepts-workbook" id="toc-assessment-2-take-home-research-concepts-workbook" class="nav-link" data-scroll-target="#assessment-2-take-home-research-concepts-workbook">Assessment 2: Take Home Research Concepts Workbook</a></li>
+  <li><a href="#assessment-3theoretical-application-5000-word-maximum-including-references" id="toc-assessment-3theoretical-application-5000-word-maximum-including-references" class="nav-link" data-scroll-target="#assessment-3theoretical-application-5000-word-maximum-including-references">Assessment 3:Theoretical Application (5,000 word maximum including references)</a></li>
+  <li><a href="#pre-registration-review-1000-words-maximum-including-references" id="toc-pre-registration-review-1000-words-maximum-including-references" class="nav-link" data-scroll-target="#pre-registration-review-1000-words-maximum-including-references">Pre-Registration Review (1000 words maximum, including references)</a></li>
+  <li><a href="#letter-to-the-reviewer" id="toc-letter-to-the-reviewer" class="nav-link" data-scroll-target="#letter-to-the-reviewer">Letter to the Reviewer</a></li>
+  <li><a href="#assessments-or-detailed-feedback-on-your-performance-will-typically-be-returned-to-you-within-10-working-days." id="toc-assessments-or-detailed-feedback-on-your-performance-will-typically-be-returned-to-you-within-10-working-days." class="nav-link" data-scroll-target="#assessments-or-detailed-feedback-on-your-performance-will-typically-be-returned-to-you-within-10-working-days.">Assessments or detailed feedback on your performance will typically be returned to you within 10 working days.</a></li>
+  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions">Extensions</a></li>
+  <li><a href="#penalties" id="toc-penalties" class="nav-link" data-scroll-target="#penalties">Penalties</a></li>
+  <li><a href="#unforeseeable-events" id="toc-unforeseeable-events" class="nav-link" data-scroll-target="#unforeseeable-events">Unforeseeable events</a></li>
+  <li><a href="#word-limits" id="toc-word-limits" class="nav-link" data-scroll-target="#word-limits">Word limits</a></li>
+  <li><a href="#materials-and-equipment" id="toc-materials-and-equipment" class="nav-link" data-scroll-target="#materials-and-equipment">Materials and equipment</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
 
 <p>Welcome to the Psych 434 lecture website.</p>
 <p><strong>You can access the course lectures by navigating to the “Contents” section and selecting the appropriate tab</strong></p>
-<section id="class-times-and-locations" class="level2">
+<section id="class-times-and-locations" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="class-times-and-locations">Class times and locations</h2>
 <p><strong>Lectures</strong> Day/Time: Tuesday, 1:10-3:00pm</p>
 <p><strong>Lecture Location</strong> All classes are in Easterfield Building EA407</p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display column-screen">
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-fa5fc020b77ed5785973" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-fa5fc020b77ed5785973">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[-41.2889,174.7681,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Easterfield",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-41.2889,-41.2889],"lng":[174.7681,174.7681]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 </section>
 <section id="names-and-contact-details" class="level2">
 <h2 class="anchored" data-anchor-id="names-and-contact-details">Names and contact details</h2>
 <p><strong>Course Coordinator</strong> Prof Joseph Bulbulia <a href="mailto:joseph.bulbulia@vuw.ac.nz" class="email">joseph.bulbulia@vuw.ac.nz</a></p>
 <p><strong>Room</strong> EA324</p>
-<p><strong>Lectures</strong> Dr.Inkuk Kim <a href="mailto:inkuk.kim@vuw.ac.nz" class="email">inkuk.kim@vuw.ac.nz</a></p>
-<p><strong>Lectures</strong> Torven Schalk <a href="mailto:torven.schalk@vuw.ac.nz" class="email">torven.schalk@vuw.ac.nz</a></p>
+<p><strong>Lecturers</strong> Dr.Inkuk Kim <a href="mailto:inkuk.kim@vuw.ac.nz" class="email">inkuk.kim@vuw.ac.nz</a></p>
+<p><strong>Lecturers</strong> Torven Schalk <a href="mailto:torven.schalk@vuw.ac.nz" class="email">torven.schalk@vuw.ac.nz</a></p>
 </section>
 <section id="course-description" class="level2">
 <h2 class="anchored" data-anchor-id="course-description">Course Description</h2>
@@ -202,13 +246,135 @@ ul.task-list li input[type="checkbox"] {
 <p><em>This course will focus on theoretical and practical challenges for conducting research involving individuals from more than one cultural background or ethnicity. Topics are likely to include defining and measuring culture; developing culture-sensitive studies, choice of language and translation; communication styles and bias; questionnaire and interview design; qualitative and quantitative data analysis for cultural and cross-cultural research; minorities, power and ethics in cross-cultural research; and ethno-methodologies and indigenous research methodologies. Appropriate background for this course: PSYC 338. </em></p>
 </section>
 <section id="course-learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="course-learning-objectives">Course learning objectives</h2>
+<h2 class="anchored" data-anchor-id="course-learning-objectives">Course Learning Objectives</h2>
 <ol type="1">
-<li><p>Ethical Reasoning. Beginning in week 1, we will explore questions that are typically reserved for philosophy courses but are central to the conduct of psychology: why do we need to think about right and wrong in science? What if different people have different ideas about what is right and wrong in science? Is there hope for ethical progress? Can science play a role in ethical progress? We will provide you with a set of strategies for addressing these questions.</p></li>
-<li><p>Programming in R. Beginning in week 2, we will teach you the basics of programming in the statistical language R. The past several decades have brought extraordinary new tools to psychological scientists, many of which require literacy in computer programming. While some of you may find the thought of programming thrilling, others may find it terrifying or boring! We promise that programming can be fun. This course is designed to help you find that joy.</p></li>
-<li><p>Understanding measurement. Beginning in week 3 the course will turn its focus to developing skills for constructing and validating measures in cross-cultural research. Again these skills will be invaluable for a wide range of tasks you may face in psychological science and will help you to address problems that will arise in other areas of your research and work. Measurement will occupy our attention through week 6.</p></li>
-<li><p>Understanding causal inference. Beginning in week 7 and for the following four weeks, the course will impart skills that you require to disentangle causation from correlation. Again our focus will be on the special problems that arise for cultural datasets. Notably, in psychological science, causal inference remains underdeveloped, and the material in this part of the course will position you to make potentially important contributions, whether or not your interests lie in cross-cultural psychology.</p></li>
+<li><p><em>Ethical Reasoning.</em> Beginning in week 1, we will explore questions that are typically reserved for philosophy courses but are central to the conduct of psychology: why do we need to think about right and wrong in science? What if different people have different ideas about what is right and wrong in science? Is there hope for ethical progress? Can science play a role in ethical progress? We will provide you with a set of strategies for addressing these questions.</p></li>
+<li><p><em>Programming in R.</em> Beginning in week 2, we will teach you the basics of programming in the statistical language R. The past several decades have brought extraordinary new tools to psychological scientists, many of which require literacy in computer programming. While some of you may find the thought of programming thrilling, others may find it terrifying or boring! We promise that programming can be fun. This course is designed to help you find that joy.</p></li>
+<li><p><em>Understanding measurement.</em> Beginning in week 3 the course will turn its focus to developing skills for constructing and validating measures in cross-cultural research. Again these skills will be invaluable for a wide range of tasks you may face in psychological science and will help you to address problems that will arise in other areas of your research and work. Measurement will occupy our attention through week 6.</p></li>
+<li><p><em>Understanding causal inference.</em> Beginning in week 7 and for the following four weeks, the course will impart skills that you require to disentangle causation from correlation. Again our focus will be on the special problems that arise for cultural datasets. Notably, in psychological science, causal inference remains underdeveloped, and the material in this part of the course will position you to make potentially important contributions, whether or not your interests lie in cross-cultural psychology.</p></li>
 </ol>
+</section>
+<section id="assignments-and-due-dates" class="level2">
+<h2 class="anchored" data-anchor-id="assignments-and-due-dates">Assignments and due dates</h2>
+<div class="cell" data-warnings="false">
+<div class="cell-output-display">
+
+<table class="table table-hover" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Assessment </th>
+   <th style="text-align:left;"> CLOs </th>
+   <th style="text-align:left;"> Percent </th>
+   <th style="text-align:left;"> Due </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Class participation </td>
+   <td style="text-align:left;"> * </td>
+   <td style="text-align:left;"> 10 </td>
+   <td style="text-align:left;"> Weekly </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Take-home </td>
+   <td style="text-align:left;"> 3,4 </td>
+   <td style="text-align:left;"> 10 </td>
+   <td style="text-align:left;"> March 19 (w3) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Theoretical application </td>
+   <td style="text-align:left;"> 1,2,3 </td>
+   <td style="text-align:left;"> 30 </td>
+   <td style="text-align:left;"> 9 May (w9) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pre-reg review </td>
+   <td style="text-align:left;"> 1,2,3,4 </td>
+   <td style="text-align:left;"> 10 </td>
+   <td style="text-align:left;"> 28 May (w11) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Statistical application </td>
+   <td style="text-align:left;"> 1,2,3 </td>
+   <td style="text-align:left;"> 30 </td>
+   <td style="text-align:left;"> 11 June (w13) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Letter to the reviewer </td>
+   <td style="text-align:left;"> 1,2,3 </td>
+   <td style="text-align:left;"> 10 </td>
+   <td style="text-align:left;"> 11 June (w13) </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="assessment-1-class-participation" class="level2">
+<h2 class="anchored" data-anchor-id="assessment-1-class-participation">Assessment 1: Class Participation</h2>
+<ul>
+<li><ol type="a">
+<li>your willingness to ask/answer questions and generally contribute to class discussion; and</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>the quality of your contributions</li>
+</ol></li>
+</ul>
+</section>
+<section id="assessment-2-take-home-research-concepts-workbook" class="level2">
+<h2 class="anchored" data-anchor-id="assessment-2-take-home-research-concepts-workbook">Assessment 2: Take Home Research Concepts Workbook</h2>
+<ul>
+<li><p>This test will help you revise core statistical and methodological issues. It is a chance to brush up on basic statistical knowledge and will help you re-familiarize yourself with material that we will build on later in this course.</p></li>
+<li><p>The key focus is the revision of basic terms, including correlation, regression, and on basic R applications.</p></li>
+<li><p>The test contains a theoretical and a practical component. Therefore, it is essential that you complete these questions since you will need to understand the material for the more advanced techniques and approaches that we cover in this course.</p></li>
+<li><p>There is no word limit (be reasonable)</p></li>
+<li><p>You can use any source that you find useful.</p></li>
+<li><p>Warning: AI chatbots may be used but they make errors confidently.</p></li>
+<li><p>Generally, it is better practice, to use peer-reviewed publications.</p></li>
+<li><p>Any resource you use must be cited. Failure to cite your source is a form of academic misconduct.</p></li>
+<li><p>You may complete the test in your own study time. We ask that you work individually.</p></li>
+</ul>
+</section>
+<section id="assessment-3theoretical-application-5000-word-maximum-including-references" class="level2">
+<h2 class="anchored" data-anchor-id="assessment-3theoretical-application-5000-word-maximum-including-references">Assessment 3:Theoretical Application (5,000 word maximum including references)</h2>
+<p>Choose one particular psychological concept or variable of interest to you. Provide a brief introduction to the concept or variable. Provide a sketch of the methodology for your study (what analysis will you run: equivalence tests, regressions, etc.) following the provided pre-registration template. Identify and justify your research participants’ cultural background. This assessment is equivalent to the introduction and methods part of an empirical paper.</p>
+<p>The word limit for this assignment is 5000 words max (including references), and it must be typed and double spaced with a 12point Times New Roman font (or similar).</p>
+</section>
+<section id="pre-registration-review-1000-words-maximum-including-references" class="level2">
+<h2 class="anchored" data-anchor-id="pre-registration-review-1000-words-maximum-including-references">Pre-Registration Review (1000 words maximum, including references)</h2>
+<p>You will be invited to provide a review of one submitted pre-registration from another student. Using what you have learned about cross-cultural research provide feedback on both theory and suggested methods. Make sure to provide concrete and respectful feedback.</p>
+<p>Statistical Application (4,000 word maximum excluding tables and any references)</p>
+<p>Option 1 Measurement (see outline)</p>
+<p>Option 2 Causality (see outline)</p>
+</section>
+<section id="letter-to-the-reviewer" class="level2">
+<h2 class="anchored" data-anchor-id="letter-to-the-reviewer">Letter to the Reviewer</h2>
+<p>Using the reviewer letter you received, respond to the points raised by the reviewer. Where did you alter your methods and pre-registration, where do results support your reviewer, where do they not support their claims.</p>
+<p>Submission and return of work</p>
+</section>
+<section id="assessments-or-detailed-feedback-on-your-performance-will-typically-be-returned-to-you-within-10-working-days." class="level2">
+<h2 class="anchored" data-anchor-id="assessments-or-detailed-feedback-on-your-performance-will-typically-be-returned-to-you-within-10-working-days.">Assessments or detailed feedback on your performance will typically be returned to you within 10 working days.</h2>
+</section>
+<section id="extensions" class="level2">
+<h2 class="anchored" data-anchor-id="extensions">Extensions</h2>
+<p>If any due date does not suit you, you may negotiate a new due date, in writing, that suits you. Any request for revision must be submitted in writing (by email) to your instructor before class on March 14th, 2023</p>
+</section>
+<section id="penalties" class="level2">
+<h2 class="anchored" data-anchor-id="penalties">Penalties</h2>
+<p>The submission of late assignments is strongly discouraged. A penalty of one grade per day (e.g., B down to B-) from the hand-in date will be deducted from the final grade for any late work.</p>
+</section>
+<section id="unforeseeable-events" class="level2">
+<h2 class="anchored" data-anchor-id="unforeseeable-events">Unforeseeable events</h2>
+<p>In general, we require evidence (medical certificate etc.) to grant an extension.</p>
+</section>
+<section id="word-limits" class="level2">
+<h2 class="anchored" data-anchor-id="word-limits">Word limits</h2>
+<p>Assignments that are over the word limit (see above) will be penalized. All submitted assessments are expected to be your own. You should neither give nor receive any aid on the assessments. Giving or receiving aid on assessments will be considered academic misconduct, resulting in registration in the Academic Misconduct Register (AMR). You may use any source, but the source must be cited. Penalties appropriate for the level of academic misconduct may be applied. Failure to cite your source will be considered academic misconduct and will result in registration in the Academic Misconduct Register (AMR).</p>
+</section>
+<section id="materials-and-equipment" class="level2">
+<h2 class="anchored" data-anchor-id="materials-and-equipment">Materials and equipment</h2>
+<p>You should bring paper and a writing utensil or laptop/tablet to seminars. For the data analysis sessions, having your personal laptop with the relevant computer programs (R and RStudio) installed is essential. Most sessions will require data analysis.</p>
 
 
 </section>
