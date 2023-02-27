@@ -1,0 +1,15 @@
+---
+title: "Dealing with Data (Factor Analysis)"
+date: "2023-MAR-21"
+author:
+    name: Inkuk Kim
+    email: inkuk.kim@vuw.ac.nz
+    corresponding: yes
+---
+  
+  
+## Overview
+  
+  
+  
+## Slides

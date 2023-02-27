@@ -8,12 +8,12 @@ freeze: true
 title-block-banner: true
 
 # Author name of all blog posts
-# author:
-#     name: Joseph Bulbulia
-#     orcid: 0000-0002-5861-2056
-#     affiliation: Victoria University of Wellington, New Zealand
-#     email: joseph.bulbulia@vuw.ac.nz
-#     corresponding: yes
+author:
+    name: Joseph Bulbulia
+    orcid: 0000-0002-5861-2056
+    affiliation: Victoria University of Wellington, New Zealand
+    email: joseph.bulbulia@vuw.ac.nz
+    corresponding: yes
 
 # Table of content settings
 toc: true

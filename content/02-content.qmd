@@ -1,0 +1,15 @@
+---
+title: "Getting started with R"
+date: "2023-MAR-07"
+author:
+    name: Torven Schalk
+    email: torven.schalk@vuw.ac.nz
+    corresponding: yes
+---
+  
+  
+## Overview
+  
+  
+  
+## Slides

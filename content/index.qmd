@@ -1,7 +1,24 @@
 ---
 title: "Preliminaries"
+date: "2023-FEB-28"
 ---
 
-This website is for the lecture slides for psych 434.
+
+## Overview
 
 
+
+## Slides
+
+[PREVIEW](/slides/index.html)
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="/slides/index.html"></iframe>
+```
+
+</div>
+
+Open in browser
+[here](/slides/index.html){target="_blank"}

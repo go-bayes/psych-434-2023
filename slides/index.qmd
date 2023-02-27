@@ -1,0 +1,103 @@
+---
+title: "Preliminaries"
+subtitle: ""
+format:
+  revealjs: 
+    slide-number: true
+    smaller: false
+    scrollable: true
+    incremental: false
+    chalkboard: true 
+    buttons: false
+    preview-links: auto
+    theme: moon
+    css: styles.css
+    embed-resources: false
+    code-fold: false
+    code-overflow: scroll
+    code-line-numbers: true
+    auto-stretch: true
+    html-math-method: katex
+
+---
+
+
+
+## Where do we meet? 
+
+- Class times and locations
+Lectures Day/Time: Tuesday, 1:10-3:00pm
+
+- Lecture Location: Easterfield Building EA407
+
+
+## Assignments and due dates
+
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+# create a data frame
+my_data <- tibble(
+  Assessment = c(
+    "Class participation",
+    "Take-home",
+    "Theoretical application",
+    "Pre-reg review",
+    "Statistical application",
+    "Letter to the reviewer"
+  ),
+  CLOs = c("*", "3,4", "1,2,3", "1,2,3,4", "1,2,3", "1,2,3"),
+  Percent = c("10", "10", "30", "10", "30", "10"),
+  Due = c(
+    "Weekly",
+    "March 19 (w3)",
+    "9 May (w9)",
+    "28 May (w11)",
+    "11 June (w13)",
+    "11 June (w13)"
+  )
+  
+)
+
+# create a text table using dplyr and tidyr functions
+my_data %>%
+  kbl(format = "html") 
+
+```
+
+
+## Class Participation
+
+- (a) your willingness to ask/answer questions and generally contribute to class discussion; and 
+
+- (b) the quality of your contributions
+
+
+##  Take Home Research Concepts Workbook
+
+- This test will help you revise core statistical and methodological issues.  It is a chance to brush up on basic statistical knowledge and will help you re-familiarize yourself with material that we will build on later in this course. 
+
+- The key focus is the revision of basic terms, including correlation, regression, and on basic R applications. 
+
+- The test contains a theoretical and a practical component. Therefore, it is essential that you complete these questions since you will need to understand the material for the more advanced techniques and approaches that we cover in this course. 
+
+- There is no word limit (be reasonable)
+
+- You can use any source that you find useful.
+
+- Artificially Intelligence Chatbots mau be used but they occasionally make errors – sometimes spectacular errors. Currently they make these errors confidently 
+
+- Generally, it is better practice, at least for now, to use peer-reviewed publications. 
+
+
+- Whatever resourcse you use must be cited.  Failure to cite your source is a form of academic misconduct. 
+
+
+- You may complete the test in your own study time. We ask that you work individually. 
+
+
+## 
+

@@ -1,0 +1,15 @@
+---
+title: "Dealing with Data (Partial Invariance)"
+date: "2023-APR-04"
+author:
+    name: Torven Schalk
+    email: torven.schalk@vuw.ac.nz
+    corresponding: yes
+---
+  
+  
+## Overview
+  
+  
+  
+## Slides

@@ -2,11 +2,15 @@ project:
   type: website
   output-dir: docs
 
+
+# Enable banner style title blocks
+title-block-banner: true
+
 execute:
   freeze: auto  # Re-render only when source changes
 
 website:
-  title: "Psych 434"
+  title: "PSYC 434 Conducting Research Across Cultures: Trimester 1, 2023"
   navbar:
     search: false
     right:
@@ -14,8 +18,31 @@ website:
       menu:
         - text: "Preliminaries"
           href: content/index.qmd
-        - text: "1: How to ask a why question"
-          href: content/01-content.qmd
+        - text: "1: Asking questions in cross-cultural psychology"
+          href: content/index.qmd
+        - text: "2: Getting started with R"
+          href: content/02-content.qmd
+        - text: "3: Lost in Translation? Measurement and Language"
+          href: content/03-content.qmd
+        - text: "4: Dealing with Data (Factor Analysis)"
+          href: content/04-content.qmd
+        - text: "5: Dealing with Data (Multi-Group CFA)"
+          href: content/05-content.qmd
+        - text: "6: Dealing with Data (Partial Invariance)"
+          href: content/06-content.qmd
+        - text: "7: Causal Inference: Causal Graphs"
+          href: content/07-content.qmd
+        - text: "8: Causal Inference: Target Trial Emulation"
+          href: content/08-content.qmd
+        - text: "9: Causal inference: Reconsidering measurement and selection biases "
+          href: content/09-content.qmd
+        - text: "10: Causal Inference: Cross-Cultural Experiments"
+          href: content/10-content.qmd
+        - text: "11: Ethics and Ownership"
+          href: content/11-content.qmd
+        - text: "12: Future Horizons"
+          href: content/12-content.qmd
+
 
 format:
   html:
