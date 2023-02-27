@@ -14,6 +14,18 @@ author:
 ---
 
 
+```{r}
+#| echo: false
+# Necessary for using dvisvgm on macOS
+# See https://www.andrewheiss.com/blog/2021/08/27/tikz-knitr-html-svg-fun/
+Sys.setenv(LIBGS = "/usr/local/share/ghostscript/9.53.3/lib/libgs.dylib.9.53")
+font_opts <- list(dvisvgm.opts = "--font-format=woff")
+```
+
+```{r}
+#| echo: false
+library("tinytex")
+```
 Welcome to the Psych 434 lecture website.
 
 **You can access the course lectures by navigating to the "Contents" section and selecting the appropriate tab**
@@ -25,8 +37,7 @@ Welcome to the Psych 434 lecture website.
 
 **Lecture Location** All classes are in Easterfield Building EA407
 
-```{r}
-#| column: screen
+```{r .column-body-outset}
 #| echo: false
 #| code-fold: true
 
@@ -181,6 +192,33 @@ Assignments that are over the word limit (see above) will be penalized. All subm
 ## Materials and equipment
 
 You should bring paper and a writing utensil or laptop/tablet to seminars. For the data analysis sessions, having your personal laptop with the relevant computer programs (R and RStudio) installed is essential. Most sessions will require data analysis.
+
+
+
+## Notes
+
+Example of a causal grap.
+
+```{tikz engine.opts=font_opts}
+#| echo: false
+#| out-width: 60%
+#| caption: "dag"
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+  \node [ellipse, draw=white] (Age) at (0, 0) {$A$};
+  \node [rectangle, draw=white] (Marriage) at (2, 0) {$M$};
+  \node [rectangle, draw=white] (Happiness) at (4, 0) {$H$};
+  \draw [-latex, draw=black] (Age) to (Marriage);
+  \draw [-latex, bend left] (Age) to (Happiness);
+\end{tikzpicture}
+```
 
 
 

@@ -65,16 +65,16 @@
   {
     "objectID": "content/01-content.html#overview",
     "href": "content/01-content.html#overview",
-    "title": "Quarto Presentations",
+    "title": "Asking questions in cross-cultural psychology",
     "section": "Overview",
-    "text": "Overview\nhere"
+    "text": "Overview"
   },
   {
     "objectID": "slides/01-slides.html",
     "href": "slides/01-slides.html",
     "title": "Asking questions in cross-cultural psychology",
     "section": "",
-    "text": "By the end of this lecture you will be able to:\n\nUnderstand why measurement is important to psychological research.\nUnderstand the special problems that cultural research presents.\nUnderstand why measurement test are not enough.\n\nKey Concepts\n\nMeasurement\nValidity (in measurement)\nConfounding (in estimation)"
+    "text": "Consider ethical problems that cultural research might present.\nUnderstand the special problems that cultural research presents for measurement.\nUnderstand the concept of confounding.\n\n\n\n\n\nMeasurement\nValidity\nA confounder"
   },
   {
     "objectID": "slides/01-slides.html#why-questions",
@@ -403,7 +403,7 @@
     "href": "slides/index.html#assessment-1-class-participation",
     "title": "Preliminaries",
     "section": "Assessment 1: Class Participation",
-    "text": "Assessment 1: Class Participation\n\n\nyour willingness to ask/answer questions and generally contribute to class discussion; and\n\n\nthe quality of your contributions"
+    "text": "Assessment 1: Class Participation\n\n\nyour willingness to ask/answer questions and generally contribute to class discussion; and\n\n\nthe quality of your contributions\n\nNOTE: if you’re sick, you shouldn’t come to class. Just let me know in advance. Your participation will not be affected."
   },
   {
     "objectID": "slides/index.html#assessment-2-take-home-research-concepts-workbook",
@@ -452,7 +452,7 @@
     "href": "slides/01-slides.html#goals-of-this-lecture",
     "title": "Asking questions in cross-cultural psychology",
     "section": "Goals of this lecture",
-    "text": "Goals of this lecture\nBy the end of this lecture you will be able to:\n\nUnderstand why measurement is important to psychological research.\nUnderstand the special problems that cultural research presents.\nUnderstand why measurement test are not enough.\n\nKey Concepts\n\nMeasurement\nValidity (in measurement)\nConfounding (in estimation)"
+    "text": "Goals of this lecture\nBy the end of this lecture you will be able to:\n\nConsider ethical problems that cultural research might present.\nUnderstand the special problems that cultural research presents for measurement.\nUnderstand the concept of confounding.\n\nKey Concepts\n\nMeasurement\nValidity\nA confounder"
   },
   {
     "objectID": "slides/01-slides.html#examples-of-psychological-questions-1",
@@ -592,7 +592,7 @@
     "href": "slides/01-slides.html#what-can-we-do-about-it",
     "title": "Asking questions in cross-cultural psychology",
     "section": "What can we do about it?",
-    "text": "What can we do about it?\nPart 1: Measurement matters\n\nWeek 2: Getting started with R (Torven Schalk) tools for probing validity\nWeek 3: Lost in Translation? Measurement and Language (Inkuk Kim) – tools for addressing differences in meanings and concepts\nWeek 4: Dealing with Data Factor Analysis (Inkuk Kim) - assessing use multiple items to assess “happiness”\nWeek 5: Dealing with Data (Multi-Group CFA) (In Kuk Kim) - test the factor structures across groups.\nWeek 6: Dealing with Data (Partial Invariance) (Torven Schalk) – test (a) whether there are differences in the measurement properties of variables between groups, but the overall structure of the measurement model is similar (b) investigate whether there are differences in the factor structure of a measure between groups."
+    "text": "What can we do about it?\nPart 1: Measurement matters\n\nWeek 2: Getting started with R (Torven Schalk) tools for probing validity\nWeek 3: Lost in Translation? Measurement and Language (Inkuk Kim) – tools for addressing differences in meanings and concepts\nWeek 4: Dealing with Data Factor Analysis (Inkuk Kim) - tools needed for modelling relationship of items in a scale.\nWeek 5: Dealing with Data (Multi-Group CFA) (In Kuk Kim) - test the factor structures across groups.\nWeek 6: Dealing with Data (Partial Invariance) (Torven Schalk) – test (a) whether there are differences in the measurement properties of variables between groups, but the overall structure of the measurement model is similar (b) investigate whether there are differences in the factor structure of a measure between groups. Interest is in equivalence\n\n\nMetric equivalence: Factor loadings are similar across groups. Configural equivalence: The factor structure is the same across groups in a multi-group confirmatory factor analysis. Scalar equivalence: Values/Means are also equivalent across groups."
   },
   {
     "objectID": "slides/01-slides.html#measurement-is-sorted.-what-else-might-go-wrong",
@@ -655,7 +655,7 @@
     "href": "slides/01-slides.html#many-psychologists-will-simply-control-for-age",
     "title": "Asking questions in cross-cultural psychology",
     "section": "Many psychologists will simply “control for age”",
-    "text": "Many psychologists will simply “control for age”\n\nThis doesn’t work if there is reverse causation\n\n\n\nCode\n## Simulate data \nset.seed(123)\nsim_fun_B = function() {\n  n <- 1000\n  A <- rnorm(n, 1) # simulates age,\n  H <- rnorm(n , A) #  simulates happy as function of age\n  M <- rnorm(n , A) + .2 * H # simulate marriage as a function of age + happiness\n\n  \n# Simulate dataframe from function\nsimdat_B <- data.frame(\n  A = A, \n  H = H,\n  M = M) \n\n#  model in which marriage \"predicts\" happiness controlling for age\nsim_B <- lm(H ~ M + A, data = simdat_B)\nsim_B  # returns output\n}\n\n# Replication 100 times\nr_lm_B <- NA\nr_lm_B = replicate(100, sim_fun_B(), simplify = FALSE )\n\n# print model results\nparameters::pool_parameters(r_lm_B)\n\n\n# Fixed Effects\n\nParameter   | Coefficient |   SE |        95% CI | Statistic |     df |      p\n------------------------------------------------------------------------------\n(Intercept) |    4.12e-03 | 0.06 | [-0.12, 0.13] |      0.07 | 220.99 | 0.947 \nM           |        0.19 | 0.04 | [ 0.10, 0.27] |      4.42 | 234.19 | < .001\nA           |        0.77 | 0.07 | [ 0.64, 0.91] |     11.17 | 211.13 | < .001"
+    "text": "Many psychologists will simply “control for age”\n\nThis doesn’t work if there is reverse causation: Regression coefficient for Marriage (M) is biased.\n\n\n\nCode\n## Simulate data \nset.seed(123)\nsim_fun_B = function() {\n  n <- 1000\n  A <- rnorm(n, 1) # simulates age,\n  H <- rnorm(n , A) #  simulates happy as function of age\n  M <- rnorm(n , A) + .2 * H # simulate marriage as a function of age + happiness\n\n  \n# Simulate dataframe from function\nsimdat_B <- data.frame(\n  A = A, \n  H = H,\n  M = M) \n\n#  model in which marriage \"predicts\" happiness controlling for age\nsim_B <- lm(H ~ M + A, data = simdat_B)\nsim_B  # returns output\n}\n\n# Replication 100 times\nr_lm_B <- NA\nr_lm_B = replicate(100, sim_fun_B(), simplify = FALSE )\n\n# print model results\nparameters::pool_parameters(r_lm_B)\n\n\n# Fixed Effects\n\nParameter   | Coefficient |   SE |        95% CI | Statistic |     df |      p\n------------------------------------------------------------------------------\n(Intercept) |    4.12e-03 | 0.06 | [-0.12, 0.13] |      0.07 | 220.99 | 0.947 \nM           |        0.19 | 0.04 | [ 0.10, 0.27] |      4.42 | 234.19 | < .001\nA           |        0.77 | 0.07 | [ 0.64, 0.91] |     11.17 | 211.13 | < .001"
   },
   {
     "objectID": "slides/01-slides.html#happiness-might-cause-marriage",
@@ -697,7 +697,7 @@
     "href": "slides/01-slides.html#the-problem-is-confounding-what-can-we-do-about-it",
     "title": "Asking questions in cross-cultural psychology",
     "section": "The problem is confounding: what can we do about it?",
-    "text": "The problem is confounding: what can we do about it?\nWeek 7: Causal inference: Causal Graphs(Joseph Bulbulia). How to diagnosis sources of confounding and what to do about it.\nWeek 8: Causal inference: Target Trial Emulation (Joseph (Joseph Bulbulia). How to emulate an experiment with observational data and how to identify the modification of effects by cultural groups.\nWeek 9: Causal inference: Reconsidering measurement and selection biases (Joseph Bulbulia). A discussion of problems in standard approaches to measurement.\nWeek 10 Causal inference: Cross-Cultural Experiments (Joseph Bulbulia & Guests). For whom to our results generalise?"
+    "text": "The problem is confounding: what can we do about it?\nWeek 7: Causal inference: Causal Graphs(Joseph Bulbulia). How to diagnosis sources of confounding and what to do about it.\nWeek 8: Causal inference: Target Trial Emulation (Joseph Bulbulia). How to emulate an experiment with observational data and how to identify the modification of effects by cultural groups.\nWeek 9: Causal inference: Reconsidering measurement and selection biases (Joseph Bulbulia). A discussion of problems in standard approaches to measurement.\nWeek 10 Causal inference: Cross-Cultural Experiments (Joseph Bulbulia & Guests). For whom to our results generalise?"
   },
   {
     "objectID": "slides/01-slides.html#ethics-brainstorm",
@@ -774,7 +774,7 @@
     "href": "slides/index.html#materials-and-equipment",
     "title": "Preliminaries",
     "section": "Materials and equipment",
-    "text": "Materials and equipment\nYou should bring paper and a writing utensil or laptop/tablet to seminars. For the data analysis sessions, having your personal laptop with the relevant computer programs (R and RStudio) installed is essential. Most sessions will require data analysis."
+    "text": "Materials and equipment\nYou should bring paper and a writing utensil or laptop/tablet to seminars. For the data analysis sessions, having your personal laptop with the relevant computer programs (R and RStudio) installed is essential. Most sessions will require data analysis.\n\nNote: If you do not have a laptop, let me know. We will find a solution."
   },
   {
     "objectID": "slides/index.html#course-learning-objectives",
@@ -866,5 +866,75 @@
     "title": "Psych 434: Conducting Research Across Cultures",
     "section": "Materials and equipment",
     "text": "Materials and equipment\nYou should bring paper and a writing utensil or laptop/tablet to seminars. For the data analysis sessions, having your personal laptop with the relevant computer programs (R and RStudio) installed is essential. Most sessions will require data analysis."
+  },
+  {
+    "objectID": "index.html#notes",
+    "href": "index.html#notes",
+    "title": "Psych 434: Conducting Research Across Cultures",
+    "section": "Notes",
+    "text": "Notes\nExample of a causal grap."
+  },
+  {
+    "objectID": "slides/01-slides.html#what-might-go-wrong",
+    "href": "slides/01-slides.html#what-might-go-wrong",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "What might go wrong?",
+    "text": "What might go wrong?"
+  },
+  {
+    "objectID": "slides/01-slides.html#what-have-we-learned",
+    "href": "slides/01-slides.html#what-have-we-learned",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "What have we learned?",
+    "text": "What have we learned?\nKey Concepts ::: {.fragment .highlight-red} 1. Measurement = quantification 2. Validity = accuracy 3. Confounder = interference :::"
+  },
+  {
+    "objectID": "slides/01-slides.html#the-end",
+    "href": "slides/01-slides.html#the-end",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "The end!",
+    "text": "The end!\n\n\n\n\n\n\n\n\n\n\nBandalos, Deborah L. 2018. Measurement Theory and Applications for the Social Sciences. Guilford Publications.\n\n\nBriggs, Derek C. 2021. Historical and Conceptual Foundations of Measurement in the Human Sciences: Credos and Controversies. Routledge.\n\n\nPearl, Judea, and Dana Mackenzie. 2018. The Book of Why: The New Science of Cause and Effect. Basic books.\n\n\nVan de Vijver, Fons JR, and Kwok Leung. 2021. Methods and Data Analysis for Cross-Cultural Research. Vol. 116. Cambridge University Press."
+  },
+  {
+    "objectID": "slides/01-slides.html#bibliography",
+    "href": "slides/01-slides.html#bibliography",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Bibliography",
+    "text": "Bibliography"
+  },
+  {
+    "objectID": "slides/01-slides.html#goals",
+    "href": "slides/01-slides.html#goals",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "Goals",
+    "text": "Goals\nBy the end of this seminaryou will be able to:\n\nConsider ethical problems that cultural research might present.\nUnderstand the special problems that cultural research presents for measurement.\nUnderstand the concept of confounding.\n\nKey Concepts\n\nMeasurement\nValidity\nA confounder"
+  },
+  {
+    "objectID": "slides/index.html#thanks",
+    "href": "slides/index.html#thanks",
+    "title": "Preliminaries",
+    "section": "Thanks",
+    "text": "Thanks\n["
+  },
+  {
+    "objectID": "slides/index.html#thanks-to-johannes-karl-and-ron-fischer",
+    "href": "slides/index.html#thanks-to-johannes-karl-and-ron-fischer",
+    "title": "Preliminaries",
+    "section": "Thanks to Johannes Karl and Ron Fischer",
+    "text": "Thanks to Johannes Karl and Ron Fischer\nFor developing measurement components of the course\n\n\n\n\n\n\nJohannes Karl\n\n\n\n\n\n\n\n\n\n\n\nRonald Fischer"
+  },
+  {
+    "objectID": "slides/index.html#help",
+    "href": "slides/index.html#help",
+    "title": "Preliminaries",
+    "section": "Help",
+    "text": "Help\nDr.Inkuk Kim inkuk.kim@vuw.ac.nz\n\n\n\n\n\n\nDr. In Kuk Kim\n\n\n\n\n\nTorven Schalk torven.schalk@vuw.ac.nz\n\n\n\n\n\n\nTorven Schalk\n\n\n\n\n\nJoseph Bulbulia joseph.bulbulia@vuw.ac.nz\n\n\n\n\n\n\nJoseph Bulbulia"
+  },
+  {
+    "objectID": "slides/01-slides.html#in-survey-research",
+    "href": "slides/01-slides.html#in-survey-research",
+    "title": "Asking questions in cross-cultural psychology",
+    "section": "In survey research",
+    "text": "In survey research\nConstruct: e.g. Happiness - a subjective experience of positive emotions, such as joy, contentment, and satisfaction with life/\nItem: A question or statement used to measure an aspect of happiness. Example: “I feel content with my life.”\nScale: A collection of items designed to measure a construct. Example: a happiness scale might consist of items rated on a Likert-type scale, with an overall score reflecting the level of happiness being measured. Example:\n\n“In general, how happy do you feel?” (rated on a scale from 1 - not at all happy to 5 - extremely happy)\n“How often do you feel positive emotions, such as joy or contentment?” (rated on a scale from 1 - very rarely or never to 5 - very often or always)\n“How satisfied are you with your life as a whole?” (rated on a scale from 1 - very dissatisfied to 5 - very satisfied)"
   }
 ]

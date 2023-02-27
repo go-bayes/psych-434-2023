@@ -420,19 +420,27 @@
 </div>
 
 </section>
-<section id="goals-of-this-lecture" class="slide level2">
-<h2>Goals of this lecture</h2>
-<p><strong>By the end of this lecture you will be able to:</strong></p>
+<section id="goals" class="slide level2">
+<h2>Goals</h2>
+<h3 id="by-the-end-of-this-seminaryou-will-be-able-to">By the end of this seminaryou will be able to:</h3>
 <ol type="1">
-<li class="fragment">Understand why measurement is important to psychological research.</li>
-<li class="fragment">Understand the special problems that cultural research presents.</li>
-<li class="fragment">Understand why measurement test are not enough.</li>
+<li class="fragment">Consider ethical problems that cultural research might present.</li>
+<li class="fragment">Understand the special problems that cultural research presents for <strong>measurement.</strong></li>
+<li class="fragment">Understand the concept of <strong>confounding.</strong></li>
 </ol>
-<p><strong>Key Concepts</strong></p>
+<h3 id="key-concepts">Key Concepts</h3>
 <ol type="1">
 <li class="fragment">Measurement</li>
-<li class="fragment">Validity (in measurement)</li>
-<li class="fragment">Confounding (in estimation)</li>
+<li class="fragment">Validity</li>
+<li class="fragment">A confounder</li>
+</ol>
+</section>
+<section id="group-discussion-ethics-brainstorm" class="slide level2">
+<h2>Group discussion: Ethics brainstorm</h2>
+<ol type="1">
+<li class="fragment"><p>What are some ethical considerations that researchers need to take into account when conducting cross-cultural research? How do these considerations differ from those in other types of research?</p></li>
+<li class="fragment"><p>How can cultural differences in values and beliefs impact the ethical considerations in cross-cultural research? What are some examples of cultural differences that researchers need to be aware of?</p></li>
+<li class="fragment"><p>How can researchers ensure that their cross-cultural research is ethical, while still being scientifically rigorous and producing valuable insights? What are some best practices or guidelines that researchers can follow?</p></li>
 </ol>
 </section>
 <section id="where-does-psychology-start" class="slide level2">
@@ -519,6 +527,17 @@
 </ul></li>
 </ul>
 </section>
+<section id="in-survey-research" class="slide level2">
+<h2>In survey research</h2>
+<p>Construct: e.g.&nbsp;Happiness - a subjective experience of positive emotions, such as joy, contentment, and satisfaction with life/</p>
+<p>Item: A question or statement used to measure an aspect of happiness. Example: “I feel content with my life.”</p>
+<p>Scale: A collection of items designed to measure a construct. Example: a happiness scale might consist of items rated on a Likert-type scale, with an overall score reflecting the level of happiness being measured. Example:</p>
+<ul>
+<li class="fragment">“In general, how happy do you feel?” (rated on a scale from 1 - not at all happy to 5 - extremely happy)</li>
+<li class="fragment">“How often do you feel positive emotions, such as joy or contentment?” (rated on a scale from 1 - very rarely or never to 5 - very often or always)</li>
+<li class="fragment">“How satisfied are you with your life as a whole?” (rated on a scale from 1 - very dissatisfied to 5 - very satisfied)</li>
+</ul>
+</section>
 <section id="concept-of-validity-in-psychometric-research" class="slide level2">
 <h2>Concept of validity in psychometric research</h2>
 <ul>
@@ -535,10 +554,23 @@
 <ul>
 <li class="fragment">Week 2: Getting started with R (Torven Schalk) tools for probing validity</li>
 <li class="fragment">Week 3: Lost in Translation? Measurement and Language (Inkuk Kim) – tools for addressing differences in meanings and concepts</li>
-<li class="fragment">Week 4: Dealing with Data Factor Analysis (Inkuk Kim) - assessing use multiple items to assess “happiness”</li>
+<li class="fragment">Week 4: Dealing with Data Factor Analysis (Inkuk Kim) - tools needed for modelling relationship of items in a scale.</li>
 <li class="fragment">Week 5: Dealing with Data (Multi-Group CFA) (In Kuk Kim) - test the factor structures across groups.</li>
-<li class="fragment">Week 6: Dealing with Data (Partial Invariance) (Torven Schalk) – test (a) whether there are differences in the measurement properties of variables between groups, but the overall structure of the measurement model is similar (b) investigate whether there are differences in the factor structure of a measure between groups.</li>
+<li class="fragment">Week 6: Dealing with Data (Partial Invariance) (Torven Schalk) – test (a) whether there are differences in the measurement properties of variables between groups, but the overall structure of the measurement model is similar (b) investigate whether there are differences in the factor structure of a measure between groups. Interest is in <em>equivalence</em></li>
 </ul>
+<aside class="notes">
+<p>Metric equivalence: Factor loadings are similar across groups. Configural equivalence: The factor structure is the same across groups in a multi-group confirmatory factor analysis. Scalar equivalence: Values/Means are also equivalent across groups.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="what-else-might-go-wrong" class="slide level2">
 <h2>What else might go wrong?</h2>
@@ -546,10 +578,13 @@
 <div class="fragment highlight-red">
 <p>Does marriage cause happiness cross culturally?</p>
 </div>
+</section>
+<section id="what-might-go-wrong" class="slide level2">
+<h2>What might go wrong?</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-415799fa736df7c5cdcf" style="width:960px;height:600px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-415799fa736df7c5cdcf">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      A -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ac8eaade61ace5c834ad" style="width:960px;height:600px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-ac8eaade61ace5c834ad">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      A -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -557,8 +592,8 @@
 <h2>Happiness might cause marriage</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-1eff0235564644f11f2e" style="width:960px;height:600px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-1eff0235564644f11f2e">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      Y -> A\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-69200301b49c8df65225" style="width:960px;height:600px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-69200301b49c8df65225">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      Y -> A\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -566,15 +601,15 @@
 <h2>Age might be a confounder of both Marriage and Happiness</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-1f73ba09102be6bf18bb" style="width:960px;height:600px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-1f73ba09102be6bf18bb">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      L [label=\"Age   \",  pos=\"0,0!\"]\n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happy\",  pos=\"2,0!\"]\n\n      { rank = same; L A Y }\n\n      L -> A\n      L -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7f37e18dd90daea6c24b" style="width:960px;height:600px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-7f37e18dd90daea6c24b">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      L [label=\"Age   \",  pos=\"0,0!\"]\n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happy\",  pos=\"2,0!\"]\n\n      { rank = same; L A Y }\n\n      L -> A\n      L -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
 <section id="many-psychologists-will-simply-control-for-age" class="slide level2">
 <h2>Many psychologists will simply “control for age”</h2>
 <div class="fragment highlight-red">
-<p>This doesn’t work if there is reverse causation</p>
+<p>This doesn’t work if there is reverse causation: Regression coefficient for Marriage (M) is biased.</p>
 </div>
 <div class="cell">
 <details>
@@ -620,7 +655,7 @@ A           |        0.77 | 0.07 | [ 0.64, 0.91] |     11.17 | 211.13 | &lt; .00
 <section id="the-problem-is-confounding-what-can-we-do-about-it" class="slide level2">
 <h2>The problem is confounding: what can we do about it?</h2>
 <p>Week 7: Causal inference: Causal Graphs(Joseph Bulbulia). How to diagnosis sources of confounding and what to do about it.</p>
-<p>Week 8: Causal inference: Target Trial Emulation (Joseph (Joseph Bulbulia). How to emulate an experiment with observational data and how to identify the modification of effects by cultural groups.</p>
+<p>Week 8: Causal inference: Target Trial Emulation (Joseph Bulbulia). How to emulate an experiment with observational data and how to identify the modification of effects by cultural groups.</p>
 <p>Week 9: Causal inference: Reconsidering measurement and selection biases (Joseph Bulbulia). A discussion of problems in standard approaches to measurement.</p>
 <p>Week 10 Causal inference: Cross-Cultural Experiments (Joseph Bulbulia &amp; Guests). For whom to our results generalise?</p>
 </section>
@@ -629,13 +664,9 @@ A           |        0.77 | 0.07 | [ 0.64, 0.91] |     11.17 | 211.13 | &lt; .00
 <p>Week 11 Ethics and Ownership (Joseph Bulbulia &amp; Guests). Can causal inference help us to improve ethical reasoning? Why is data protection important? How do the ethics of data protection relate to the ethics of open science?</p>
 <p>Week 12 Future Horizons (Joseph Bulbulia, Torven, Inkuk):</p>
 </section>
-<section id="group-discussion-ethics-brainstorm" class="slide level2">
-<h2>Group discussion: Ethics brainstorm</h2>
-<ol type="1">
-<li class="fragment"><p>What are some ethical considerations that researchers need to take into account when conducting cross-cultural research? How do these considerations differ from those in other types of research?</p></li>
-<li class="fragment"><p>How can cultural differences in values and beliefs impact the ethical considerations in cross-cultural research? What are some examples of cultural differences that researchers need to be aware of?</p></li>
-<li class="fragment"><p>How can researchers ensure that their cross-cultural research is ethical, while still being scientifically rigorous and producing valuable insights? What are some best practices or guidelines that researchers can follow?</p></li>
-</ol>
+<section id="what-have-we-learned" class="slide level2">
+<h2>What have we learned?</h2>
+<p><strong>Key Concepts</strong> ::: {.fragment .highlight-red} 1. Measurement = quantification 2. Validity = accuracy 3. Confounder = interference :::</p>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -643,7 +674,7 @@ A           |        0.77 | 0.07 | [ 0.64, 0.91] |     11.17 | 211.13 | &lt; .00
 <p>For an account of key concepts and current debates in psychometrics, see: <span class="citation" data-cites="bandalos2018">(<a href="#/references" role="doc-biblioref" onclick="">Bandalos 2018</a>)</span></p>
 <p>For an account of special measurement problems that arise in cross-cultural research, see: <span class="citation" data-cites="vandevijver2021">(<a href="#/references" role="doc-biblioref" onclick="">Van de Vijver and Leung 2021</a>)</span></p>
 <p>For an accessible introduction to causal inference and its history see: <span class="citation" data-cites="pearl2018">(<a href="#/references" role="doc-biblioref" onclick="">Pearl and Mackenzie 2018</a>)</span></p>
-<p>Bibliography</p>
+<h3 id="bibliography">Bibliography</h3>
 
 <div class="footer footer-default">
 

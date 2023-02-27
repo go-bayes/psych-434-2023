@@ -19,22 +19,36 @@ format:
     html-math-method: katex
     progress: true
     bibliography: references.bib
-bibliography: references.bib
 ---
 
-## Goals of this lecture
 
-**By the end of this lecture you will be able to:**
 
-1.  Understand why measurement is important to psychological research.
-2.  Understand the special problems that cultural research presents.
-3.  Understand why measurement test are not enough.
+## Goals
 
-**Key Concepts**
+### By the end of this seminaryou will be able to:
+
+1.  Consider ethical problems that cultural research might present.
+2.  Understand the special problems that cultural research presents for **measurement.**
+3.  Understand the concept of **confounding.**
+
+### Key Concepts
 
 1.  Measurement
-2.  Validity (in measurement)
-3.  Confounding (in estimation)
+2.  Validity 
+3.  A confounder 
+
+
+
+## Group discussion: Ethics brainstorm
+
+1.  What are some ethical considerations that researchers need to take into account when conducting cross-cultural research? How do these considerations differ from those in other types of research?
+
+2.  How can cultural differences in values and beliefs impact the ethical considerations in cross-cultural research? What are some examples of cultural differences that researchers need to be aware of?
+
+3.  How can researchers ensure that their cross-cultural research is ethical, while still being scientifically rigorous and producing valuable insights? What are some best practices or guidelines that researchers can follow?
+
+
+
 
 ## Where does psychology start?
 
@@ -117,6 +131,19 @@ How might this go wrong?
 -   Cultural Differences:
     -   in meanings
     -   in constructs themselves
+    
+## In survey research
+
+Construct: e.g. Happiness - a subjective experience of positive emotions, such as joy, contentment, and satisfaction with life/
+
+Item: A question or statement used to measure an aspect of happiness. Example: "I feel content with my life."
+
+Scale: A collection of items designed to measure a construct. Example: a happiness scale might consist of items rated on a Likert-type scale, with an overall score reflecting the level of happiness being measured. Example: 
+
+- "In general, how happy do you feel?" (rated on a scale from 1 - not at all happy to 5 - extremely happy)
+- "How often do you feel positive emotions, such as joy or contentment?" (rated on a scale from 1 - very rarely or never to 5 - very often or always)
+- "How satisfied are you with your life as a whole?" (rated on a scale from 1 - very dissatisfied to 5 - very satisfied)
+    
 
 ## Concept of validity in psychometric research
 
@@ -132,9 +159,15 @@ Part 1: Measurement matters
 
 -   Week 2: Getting started with R (Torven Schalk) tools for probing validity
 -   Week 3: Lost in Translation? Measurement and Language (Inkuk Kim) -- tools for addressing differences in meanings and concepts
--   Week 4: Dealing with Data Factor Analysis (Inkuk Kim) - assessing use multiple items to assess "happiness"
+-   Week 4: Dealing with Data Factor Analysis (Inkuk Kim) - tools needed for modelling relationship of items in a scale.
 -   Week 5: Dealing with Data (Multi-Group CFA) (In Kuk Kim) - test the factor structures across groups.
--   Week 6: Dealing with Data (Partial Invariance) (Torven Schalk) -- test (a) whether there are differences in the measurement properties of variables between groups, but the overall structure of the measurement model is similar (b) investigate whether there are differences in the factor structure of a measure between groups.
+-   Week 6: Dealing with Data (Partial Invariance) (Torven Schalk) -- test (a) whether there are differences in the measurement properties of variables between groups, but the overall structure of the measurement model is similar (b) investigate whether there are differences in the factor structure of a measure between groups. Interest is in *equivalence*
+
+:::{.notes}
+Metric equivalence: Factor loadings are similar across groups.
+Configural equivalence: The factor structure is the same across groups in a multi-group confirmatory factor analysis.
+Scalar equivalence: Values/Means are also equivalent across groups.
+:::
 
 ## What else might go wrong?
 
@@ -143,6 +176,9 @@ Suppose we are confident in measurement, administer survey, and find an relation
 ::: {.fragment .highlight-red}
 Does marriage cause happiness cross culturally?
 :::
+
+
+## What might go wrong?
 
 ```{r}
 # See: https://remlapmot.github.io/mrdags/
@@ -213,7 +249,8 @@ DiagrammeR::grViz("
 ## Many psychologists will simply "control for age"
 
 ::: {.fragment .highlight-red}
-This doesn't work if there is reverse causation
+This doesn't work if there is reverse causation: 
+Regression coefficient for Marriage (M) is biased.
 :::
 
 ```{r}
@@ -251,7 +288,7 @@ parameters::pool_parameters(r_lm_B)
 
 Week 7: Causal inference: Causal Graphs(Joseph Bulbulia). How to diagnosis sources of confounding and what to do about it.
 
-Week 8: Causal inference: Target Trial Emulation (Joseph (Joseph Bulbulia). How to emulate an experiment with observational data and how to identify the modification of effects by cultural groups.
+Week 8: Causal inference: Target Trial Emulation (Joseph Bulbulia). How to emulate an experiment with observational data and how to identify the modification of effects by cultural groups.
 
 Week 9: Causal inference: Reconsidering measurement and selection biases (Joseph Bulbulia). A discussion of problems in standard approaches to measurement.
 
@@ -263,13 +300,17 @@ Week 11 Ethics and Ownership (Joseph Bulbulia & Guests). Can causal inference he
 
 Week 12 Future Horizons (Joseph Bulbulia, Torven, Inkuk):
 
-## Group discussion: Ethics brainstorm
 
-1.  What are some ethical considerations that researchers need to take into account when conducting cross-cultural research? How do these considerations differ from those in other types of research?
+## What have we learned? 
 
-2.  How can cultural differences in values and beliefs impact the ethical considerations in cross-cultural research? What are some examples of cultural differences that researchers need to be aware of?
+**Key Concepts**
+::: {.fragment .highlight-red}
+1.  Measurement = quantification
+2.  Validity = accuracy
+3.  Confounder = interference
+:::
 
-3.  How can researchers ensure that their cross-cultural research is ethical, while still being scientifically rigorous and producing valuable insights? What are some best practices or guidelines that researchers can follow?
+
 
 ## References
 
@@ -281,4 +322,8 @@ For an account of special measurement problems that arise in cross-cultural rese
 
 For an accessible introduction to causal inference and its history see: [@pearl2018]
 
-Bibliography
+
+
+
+### Bibliography
+

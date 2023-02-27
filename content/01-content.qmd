@@ -4,7 +4,45 @@ date: "2023-FEB-28"
 bibliography: references.bib
 ---
 
+
+
+```{r}
+#| echo: false
+# Necessary for using dvisvgm on macOS
+# See https://www.andrewheiss.com/blog/2021/08/27/tikz-knitr-html-svg-fun/
+Sys.setenv(LIBGS = "/usr/local/share/ghostscript/9.53.3/lib/libgs.dylib.9.53")
+font_opts <- list(dvisvgm.opts = "--font-format=woff")
+
+library("tinytex")
+```
+
+```{tikz engine.opts=font_opts}
+#| echo: false
+#| out-width: 60%
+#| caption: "dag"
+#| label: fig-line-plot
+#| fig-cap: "A caual graph "
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+  \node [ellipse, draw=white] (Age) at (0, 0) {$A$};
+  \node [rectangle, draw=white] (Marriage) at (2, 0) {$M$};
+  \node [rectangle, draw=white] (Happiness) at (4, 0) {$H$};
+  \draw [-latex, draw=black] (Age) to (Marriage);
+  \draw [-latex, bend left] (Age) to (Happiness);
+\end{tikzpicture}
+```
+
+
 ## Overview
+
+
 
 ## Slides
 
