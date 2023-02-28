@@ -19,7 +19,7 @@ website:
         - text: "Preliminaries"
           href: content/index.qmd
         - text: "1: Asking questions in cross-cultural psychology"
-          href: content/index.qmd
+          href: content/01-content.qmd
         - text: "2: Getting started with R"
           href: content/02-content.qmd
         - text: "3: Lost in Translation? Measurement and Language"
