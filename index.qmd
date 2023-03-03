@@ -197,7 +197,7 @@ You should bring paper and a writing utensil or laptop/tablet to seminars. For t
 
 ## Notes
 
-Example of a causal grap.
+Example of a causal graph.
 
 ```{tikz engine.opts=font_opts}
 #| echo: false

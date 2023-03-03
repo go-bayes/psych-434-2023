@@ -186,7 +186,7 @@
     "href": "content/02-content.html#slides",
     "title": "Getting started with R",
     "section": "Slides",
-    "text": "Slides"
+    "text": "Slides\nTorven’s slides will be on Nuku/Canvas."
   },
   {
     "objectID": "content/06-content.html#slides",
@@ -872,7 +872,7 @@
     "href": "index.html#notes",
     "title": "Psych 434: Conducting Research Across Cultures",
     "section": "Notes",
-    "text": "Notes\nExample of a causal grap."
+    "text": "Notes\nExample of a causal graph."
   },
   {
     "objectID": "slides/01-slides.html#what-might-go-wrong",
@@ -936,5 +936,12 @@
     "title": "Asking questions in cross-cultural psychology",
     "section": "In survey research",
     "text": "In survey research\nConstruct: e.g. Happiness - a subjective experience of positive emotions, such as joy, contentment, and satisfaction with life/\nItem: A question or statement used to measure an aspect of happiness. Example: “I feel content with my life.”\nScale: A collection of items designed to measure a construct. Example: a happiness scale might consist of items rated on a Likert-type scale, with an overall score reflecting the level of happiness being measured. Example:\n\n“In general, how happy do you feel?” (rated on a scale from 1 - not at all happy to 5 - extremely happy)\n“How often do you feel positive emotions, such as joy or contentment?” (rated on a scale from 1 - very rarely or never to 5 - very often or always)\n“How satisfied are you with your life as a whole?” (rated on a scale from 1 - very dissatisfied to 5 - very satisfied)"
+  },
+  {
+    "objectID": "content/02-content.html",
+    "href": "content/02-content.html",
+    "title": "Getting started with R",
+    "section": "",
+    "text": "Material from a previous course [Bulbulia & Karl], here:\nhttps://go-bayes.github.io/psych-447/"
   }
 ]

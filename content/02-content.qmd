@@ -9,7 +9,12 @@ author:
   
   
 ## Overview
-  
+
+Material from a previous course [Bulbulia & Karl], here: 
+
+[https://go-bayes.github.io/psych-447/](https://go-bayes.github.io/psych-447/)
   
   
 ## Slides
+
+Torven's slides will be on Nuku/Canvas.
