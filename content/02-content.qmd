@@ -10,11 +10,25 @@ author:
   
 ## Overview
 
-Material from a previous course [Bulbulia & Karl], here: 
+This session is devoted to learning R. There are no required readings. 
 
-[https://go-bayes.github.io/psych-447/](https://go-bayes.github.io/psych-447/)
-  
   
 ## Slides
 
 Torven's slides will be on Nuku/Canvas.
+
+
+
+## OPTIONAL extra material
+
+(1) A very accessible resource on learning R is Megan Hall's lecture here: 
+[https://meghan.rbind.io/talk/neair/](https://meghan.rbind.io/talk/neair/)
+
+(2) R-studio has assembled many accessible materials for learning R here:
+
+[https://education.rstudio.com/learn/beginner/](https://education.rstudio.com/learn/beginner/)
+
+(3)  There is materia from a previous course on learning R can be found here.  At this stage, only lecture 1 would be relevant. Note that this lecture covers working with GitHub. Github is useful, however, there is no requirement for you to work with GitHub in the present course. 
+
+[https://go-bayes.github.io/psych-447/](https://go-bayes.github.io/psych-447/)
+  
