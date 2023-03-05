@@ -949,6 +949,6 @@
     "href": "content/02-content.html#optional-extra-material",
     "title": "Getting started with R",
     "section": "OPTIONAL extra material",
-    "text": "OPTIONAL extra material\n\nA very accessible resource on learning R is Megan Hall’s lecture here: https://meghan.rbind.io/talk/neair/\nR-studio has assembled many accessible materials for learning R here:\n\nhttps://education.rstudio.com/learn/beginner/\n\nThere is materia from a previous course on learning R can be found here. At this stage, only lecture 1 would be relevant. Note that this lecture covers working with GitHub. Github is useful, however, there is no requirement for you to work with GitHub in the present course.\n\nhttps://go-bayes.github.io/psych-447/"
+    "text": "OPTIONAL extra material\nProofread version:\n\nA helpful resource for learning R is Megan Hall’s lecture available at: https://meghan.rbind.io/talk/neair/.\nRStudio has compiled numerous accessible materials for learning R, which can be found here: https://education.rstudio.com/learn/beginner/.\nMaterials from a previous course on learning R can be accessed here. https://go-bayes.github.io/psych-447/ For now, only lecture 1 would be relevant. It’s worth noting that this lecture covers working with GitHub. While GitHub is a useful tool, it’s not a requirement for the current course."
   }
 ]

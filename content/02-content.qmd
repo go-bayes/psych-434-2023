@@ -21,14 +21,10 @@ Torven's slides will be on Nuku/Canvas.
 
 ## OPTIONAL extra material
 
-(1) A very accessible resource on learning R is Megan Hall's lecture here: 
-[https://meghan.rbind.io/talk/neair/](https://meghan.rbind.io/talk/neair/)
+Proofread version:
 
-(2) R-studio has assembled many accessible materials for learning R here:
+(1) A helpful resource for learning R is Megan Hall's lecture available at: [https://meghan.rbind.io/talk/neair/](https://meghan.rbind.io/talk/neair/).
 
-[https://education.rstudio.com/learn/beginner/](https://education.rstudio.com/learn/beginner/)
+(2) RStudio has compiled numerous accessible materials for learning R, which can be found here: [https://education.rstudio.com/learn/beginner/](https://education.rstudio.com/learn/beginner/).
 
-(3)  There is materia from a previous course on learning R can be found here.  At this stage, only lecture 1 would be relevant. Note that this lecture covers working with GitHub. Github is useful, however, there is no requirement for you to work with GitHub in the present course. 
-
-[https://go-bayes.github.io/psych-447/](https://go-bayes.github.io/psych-447/)
-  
+(3) Materials from a previous course on learning R can be accessed here.  [https://go-bayes.github.io/psych-447/](https://education.rstudio.com/learn/beginner/) For now, only lecture 1 would be relevant. It's worth noting that this lecture covers working with GitHub. While GitHub is a useful tool, it's not a requirement for the current course.
