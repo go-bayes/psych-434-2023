@@ -104,7 +104,7 @@ my_data <- tibble(
   Due = c(
     "Weekly",
     "March 19 (w3)",
-    "9 May (w9)",
+    "21 May (w9)",
     "28 May (w11)",
     "11 June (w13)",
     "11 June (w13)"
@@ -198,7 +198,7 @@ You should bring paper and a writing utensil or laptop/tablet to seminars. For t
 <!-- ## Notes -->
 
 <!-- Example of a causal graph. -->
-
+<!-- 
 ```{tikz engine.opts=font_opts}
 #| echo: false
 #| out-width: 60%
@@ -219,6 +219,4 @@ You should bring paper and a writing utensil or laptop/tablet to seminars. For t
 #   \draw [-latex, bend left] (Age) to (Happiness);
 # \end{tikzpicture}
 # <!-- ``` -->
-# 
-# 
-# 
+

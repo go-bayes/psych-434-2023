@@ -6,6 +6,31 @@ date: "2023-MAY-09"
   
 ## Overview
   
+## What is a Cause and What is an Effect? 
+
+```{r}
+if (!requireNamespace("igraph", quietly = TRUE)) {
+  install.packages("igraph")
+}
+
+library(igraph)
+
+graph <- graph_from_literal(R -+ W, 
+                            R -+ SS, 
+                            SS -+ W)
+plot(graph)
+```
+
+
+
+
+## Why is Causal Inference a “missing data” problem?
+
+
+
+b. Confounding and Confounders
+c. Causal Graphs to identify sources of confounding  
+  
   
   
 ## Slides

@@ -788,7 +788,7 @@
     "href": "index.html#assignments-and-due-dates",
     "title": "Psych 434: Conducting Research Across Cultures",
     "section": "Assignments and due dates",
-    "text": "Assignments and due dates\n\n\n\n\n \n  \n    Assessment \n    CLOs \n    Percent \n    Due \n  \n \n\n  \n    Class participation \n    * \n    10 \n    Weekly \n  \n  \n    Take-home \n    3,4 \n    10 \n    March 19 (w3) \n  \n  \n    Theoretical application \n    1,2,3 \n    30 \n    9 May (w9) \n  \n  \n    Pre-reg review \n    1,2,3,4 \n    10 \n    28 May (w11) \n  \n  \n    Statistical application \n    1,2,3 \n    30 \n    11 June (w13) \n  \n  \n    Letter to the reviewer \n    1,2,3 \n    10 \n    11 June (w13)"
+    "text": "Assignments and due dates\n\n\n\n\n\nAssessment\nCLOs\nPercent\nDue\n\n\n\n\nClass participation\n*\n10\nWeekly\n\n\nTake-home\n3,4\n10\nMarch 19 (w3)\n\n\nTheoretical application\n1,2,3\n30\n21 May (w9)\n\n\nPre-reg review\n1,2,3,4\n10\n28 May (w11)\n\n\nStatistical application\n1,2,3\n30\n11 June (w13)\n\n\nLetter to the reviewer\n1,2,3\n10\n11 June (w13)"
   },
   {
     "objectID": "index.html#assessment-1-class-participation",
@@ -950,5 +950,33 @@
     "title": "Getting started with R",
     "section": "OPTIONAL extra material",
     "text": "OPTIONAL extra material\nProofread version:\n\nA helpful resource for learning R is Megan Hall’s lecture available at: https://meghan.rbind.io/talk/neair/.\nRStudio has compiled numerous accessible materials for learning R, which can be found here: https://education.rstudio.com/learn/beginner/.\nMaterials from a previous course on learning R can be accessed here. https://go-bayes.github.io/psych-447/ For now, only lecture 1 would be relevant. It’s worth noting that this lecture covers working with GitHub. While GitHub is a useful tool, it’s not a requirement for the current course."
+  },
+  {
+    "objectID": "assignments/Explanation.html",
+    "href": "assignments/Explanation.html",
+    "title": "Assignment 1 review",
+    "section": "",
+    "text": "Understand why we are asking you about correlation, covariance, and regression.\n\n\n\n\n\ncorrelation\ncovariance\nregression\n\n\n\n\n\n\nWhat is a correlation? b) When do you use a correlation (what type of theoretical problem)? c) What is the theoretical range of a correlation coefficient? d) How can you interpret a correlation?"
+  },
+  {
+    "objectID": "assignments/Explanation.html#references",
+    "href": "assignments/Explanation.html#references",
+    "title": "Assignment 1 review",
+    "section": "References",
+    "text": "References\nFor an account of the history of measurement in psychological research, see: [@briggs2021]\nFor an account of key concepts and current debates in psychometrics, see: [@bandalos2018]\nFor an account of special measurement problems that arise in cross-cultural research, see: [@vandevijver2021]\nFor an accessible introduction to causal inference and its history see: [@pearl2018]\n\nBibliography"
+  },
+  {
+    "objectID": "content/07-content.html#what-is-a-cause-and-what-is-an-effect",
+    "href": "content/07-content.html#what-is-a-cause-and-what-is-an-effect",
+    "title": "Causal Inference: Causal Graphs",
+    "section": "What is a Cause and What is an Effect?",
+    "text": "What is a Cause and What is an Effect?\n\nif (!requireNamespace(\"igraph\", quietly = TRUE)) {\n  install.packages(\"igraph\")\n}\n\nlibrary(igraph)\n\n\nAttaching package: 'igraph'\n\n\nThe following objects are masked from 'package:stats':\n\n    decompose, spectrum\n\n\nThe following object is masked from 'package:base':\n\n    union\n\ngraph &lt;- graph_from_literal(R -+ W, \n                            R -+ SS, \n                            SS -+ W)\nplot(graph)"
+  },
+  {
+    "objectID": "content/07-content.html#why-is-causal-inference-a-missing-data-problem",
+    "href": "content/07-content.html#why-is-causal-inference-a-missing-data-problem",
+    "title": "Causal Inference: Causal Graphs",
+    "section": "Why is Causal Inference a “missing data” problem?",
+    "text": "Why is Causal Inference a “missing data” problem?\n\nConfounding and Confounders\nCausal Graphs to identify sources of confounding"
   }
 ]

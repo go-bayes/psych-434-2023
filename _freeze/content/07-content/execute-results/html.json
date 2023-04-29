@@ -1,0 +1,16 @@
+{
+  "hash": "fc08365c4e9dfeb7577d9b46ca9450d7",
+  "result": {
+    "markdown": "---\ntitle: \"Causal Inference: Causal Graphs\"\ndate: \"2023-MAY-09\"\n---\n\n  \n  \n## Overview\n  \n## What is a Cause and What is an Effect? \n\n\n::: {.cell}\n\n```{.r .cell-code}\nif (!requireNamespace(\"igraph\", quietly = TRUE)) {\n  install.packages(\"igraph\")\n}\n\nlibrary(igraph)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\n\nAttaching package: 'igraph'\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\nThe following objects are masked from 'package:stats':\n\n    decompose, spectrum\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\nThe following object is masked from 'package:base':\n\n    union\n```\n:::\n\n```{.r .cell-code}\ngraph <- graph_from_literal(R -+ W, \n                            R -+ SS, \n                            SS -+ W)\nplot(graph)\n```\n\n::: {.cell-output-display}\n![](07-content_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n\n\n\n\n\n## Why is Causal Inference a “missing data” problem?\n\n\n\nb. Confounding and Confounders\nc. Causal Graphs to identify sources of confounding  \n  \n  \n  \n## Slides\n",
+    "supporting": [
+      "07-content_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
