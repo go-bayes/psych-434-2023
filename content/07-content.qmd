@@ -1,13 +1,11 @@
 ---
 title: "Causal Inference: Causal Graphs"
 date: "2023-MAY-09"
+execute:
+  warning: false
 ---
   
-  
-## Overview
-  
-## What is a Cause and What is an Effect? 
-
+<!-- 
 ```{r}
 if (!requireNamespace("igraph", quietly = TRUE)) {
   install.packages("igraph")
@@ -19,7 +17,38 @@ graph <- graph_from_literal(R -+ W,
                             R -+ SS, 
                             SS -+ W)
 plot(graph)
+``` -->
+
+
+```{latex}
+#| label: fig-dag
+#| fig-cap: "Causal graph shows potential for selection bias from loss to follow up or non-response. To address this, we multiply impute missing values conditional on the assumption that missing values are random conditional on the imputation model (MAR)."
+#| out-width: 80%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+  \node [ellipse, draw=white] (A) at (0, 0) {$Attacks$};
+  \node [rectangle, draw=white] (Ac) at (4, 0) {$Acceptance$};
+  \node [rectangle, draw=black] (S) at (8, 0) {$Selection$};
+  \draw [-latex, draw=black] (Ac) to (S);
+  \draw [-latex, bend left] (A) to (S);
+  \draw [-latex, red, dashed] (A) to (Ac);
+\end{tikzpicture}
 ```
+
+
+
+## Overview
+  
+## What is a Cause and What is an Effect? 
 
 
 

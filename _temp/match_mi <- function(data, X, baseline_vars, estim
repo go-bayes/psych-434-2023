@@ -1,0 +1,38 @@
+match_mi <- function(data, X, baseline_vars, estimand, method, sample_weights = NULL, subgroup = NULL) {
+  require(WeightIt)
+  require(MatchThem)
+
+  # Check the class of the input data
+  data_class <- class(data)
+
+  # If not binary, we model the interaction to obtain better weights
+  # Note we can add survey weights at this point.
+  formula_str <- paste(X, "~", paste(baseline_vars, collapse = "+"))
+
+  # Use weightthem() for 'mids' objects, and weightit() for 'data.frame' objects
+  if (data_class == "mids") {
+    dt_match <- weightthem(
+      as.formula(formula_str),
+      weights = sample_weights,
+      data,
+      by = subgroup,
+      estimand = estimand,
+      stabilize = TRUE,
+      method = method
+    )
+  } else if (data_class == "data.frame") {
+    dt_match <- weightit(
+      as.formula(formula_str),
+      weights = sample_weights,
+      data,
+      by = subgroup,
+      estimand = estimand,
+      stabilize = TRUE,
+      method = method
+    )
+  } else {
+    stop("Input data must be either 'mids' or 'data.frame' object")
+  }
+
+  dt_match
+}

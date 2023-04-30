@@ -970,7 +970,7 @@
     "href": "content/07-content.html#what-is-a-cause-and-what-is-an-effect",
     "title": "Causal Inference: Causal Graphs",
     "section": "What is a Cause and What is an Effect?",
-    "text": "What is a Cause and What is an Effect?\n\nif (!requireNamespace(\"igraph\", quietly = TRUE)) {\n  install.packages(\"igraph\")\n}\n\nlibrary(igraph)\n\n\nAttaching package: 'igraph'\n\n\nThe following objects are masked from 'package:stats':\n\n    decompose, spectrum\n\n\nThe following object is masked from 'package:base':\n\n    union\n\ngraph &lt;- graph_from_literal(R -+ W, \n                            R -+ SS, \n                            SS -+ W)\nplot(graph)"
+    "text": "What is a Cause and What is an Effect?\n\nif (!requireNamespace(\"igraph\", quietly = TRUE)) {\n  install.packages(\"igraph\")\n}\n\nlibrary(igraph)\n\ngraph &lt;- graph_from_literal(R -+ W, \n                            R -+ SS, \n                            SS -+ W)\nplot(graph)"
   },
   {
     "objectID": "content/07-content.html#why-is-causal-inference-a-missing-data-problem",
