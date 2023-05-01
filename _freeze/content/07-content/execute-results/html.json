@@ -1,7 +1,7 @@
 {
-  "hash": "c58a8daad283ce37d511899460c28b47",
+  "hash": "e56603c76ac013f86cbb8646c73a9249",
   "result": {
-    "markdown": "---\ntitle: \"Causal Inference: Causal Graphs\"\ndate: \"2023-MAY-09\"\nexecute:\n  warning: false\n---\n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Causal graph shows potential for selection bias from loss to follow up or non-response. To address this, we multiply impute missing values on the assumption that missing values are random conditional on the imputation model (MAR).](07-content_files/figure-html/fig-dag-1.png){#fig-dag width=80%}\n:::\n:::\n\n\n\n## Downloads\n\nThis R link will allow you to download the data an exercises: \n\n\n\n\n\n## Overview\n  \n## What is a Cause and What is an Effect? \n\n\n\n\n## Why is Causal Inference a “missing data” problem?\n\n\n\nb. Confounding and Confounders\nc. Causal Graphs to identify sources of confounding  \n  \n  \n  \n## Slides\n",
+    "markdown": "---\ntitle: \"Causal Inference: Causal Graphs\"\ndate: \"2023-MAY-09\"\nexecute:\n  warning: false\n---\n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Causal graph shows potential for selection bias from loss to follow up or non-response. To address this, we multiply impute missing values on the assumption that missing values are random conditional on the imputation model (MAR).](07-content_files/figure-html/fig-dag-1.png){#fig-dag width=80%}\n:::\n:::\n\n\n\n## Downloads\n\nThis R link will allow you to download the data and exercises:[link to script for this week ](https://raw.githubusercontent.com/go-bayes/psych-434-2023/main/files/R/434-intro-causal-inference-week-7.R)\n\n\n## Overview\n  \n  \n  \n## What is a Cause and What is an Effect? \n\n\n\n\n## Why is Causal Inference a “missing data” problem?\n\n\n\nb. Confounding and Confounders\nc. Causal Graphs to identify sources of confounding  \n  \n  \n  \n## Slides\n",
     "supporting": [
       "07-content_files"
     ],

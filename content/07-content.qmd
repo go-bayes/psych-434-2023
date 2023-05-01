@@ -62,8 +62,15 @@ push_mods <-
 
 ## Downloads
 
-This R link will allow you to download the data and exercises:
+Below is a link to the R script that will allow you to download the data and exercises. Copy the contents on your screen to a new R script, and run the script from the begging. Before class, it will be useful for you to: 
 
+1. Run "source()" file. 
+2. Download the synthetic data. 
+3. Create a folder in your Rstudio project called "data"
+4. Place the downloaded file in your data folder.
+
+
+[link to script for this week ](https://raw.githubusercontent.com/go-bayes/psych-434-2023/main/files/R/434-intro-causal-inference-week-7.R)
 
 
 
