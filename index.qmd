@@ -126,7 +126,7 @@ my_data %>%
 
 ## Assessment 2: Take Home Research Concepts Workbook
 
--   This test will help you revise core statistical and methodological issues. It is a chance to brush up on basic statistical knowledge and will help you re-familiarize yourself with material that we will build on later in this course.
+-   This test will help you revise core statistical and methodological issues. It is a chance to brush up on basic statistical knowledge and will help you re-familiarise yourself with material that we will build on later in this course.
 
 -   The key focus is the revision of basic terms, including correlation, regression, and on basic R applications.
 
@@ -144,29 +144,276 @@ my_data %>%
 
 -   You may complete the test in your own study time. We ask that you work individually.
 
-## Assessment 3:Theoretical Application (5,000 word maximum including references)
+## Assessment 3: Theoretical Application(5,000 word maximum including references)
 
-Choose one particular psychological concept or variable of interest to you. Provide a brief introduction to the concept or variable. Provide a sketch of the methodology for your study (what analysis will you run: equivalence tests, regressions, etc.) following the provided pre-registration template. Identify and justify your research participants' cultural background. This assessment is equivalent to the introduction and methods part of an empirical paper.
+### Option 1: Cross-Cultural Psychology: Investigating a Psychological Concept or Variable of Interest in Diverse Cultural Contexts (5,000 word maximum including references)
 
-The word limit for this assignment is 5000 words max (including references), and it must be typed and double spaced with a 12point Times New Roman font (or similar).
 
-## Pre-Registration Review (1000 words maximum, including references)
+#### Objective: 
+- Conduct a study focusing on cross-cultural measurement of a specific psychological concept or variable of interest, with attention to methodological rigour, cultural diversity, and the cultural background of research participants.
 
-You will be invited to provide a review of one submitted pre-registration from another student. Using what you have learned about cross-cultural research provide feedback on both theory and suggested methods. Make sure to provide concrete and respectful feedback.
+#### Instructions:
 
-Statistical Application (4,000 word maximum excluding tables and any references)
+1. Introduction to the concept or variable:
+   - Choose a psychological concept or variable of interest in the context of cross-cultural psychology.
+   - Provide a brief overview of the concept or variable, including its relevance and importance within the field of psychology and cross-cultural research.
 
-Option 1 Measurement (see outline)
+2. Methodology and analysis:
+   - Outline the methodology for your study, specifying the type of analysis you plan to conduct (e.g., equivalence tests, regressions, etc.).
+   - Explain the rationale for choosing the specific analysis technique, and how it will help address your research question in the context of cross-cultural psychology.
 
-Option 2 Causality (see outline)
+3. Cultural background of research participants:
+   - Identify the cultural background(s) of your research participants.
+   - Justify your selection of participants, discussing the importance of studying this concept or variable in the chosen cultural context(s) and its relevance to cross-cultural psychology.
 
-## Letter to the Reviewer
+4. Validity and reliability considerations:
+   - Address potential challenges in measuring the chosen concept or variable across different cultural contexts.
+   - Describe the strategies you will employ to ensure validity and reliability in your cross-cultural measurement.
 
-Using the reviewer letter you received, respond to the points raised by the reviewer. Where did you alter your methods and pre-registration, where do results support your reviewer, where do they not support their claims.
+####  Requirements:
+- Maximum length: 5,000 words (including references)
+- Use APA style for citations and references
+- Include tables and/or figures as needed to support your analysis
+- Submit your assignment as a single PDF file
 
-Submission and return of work
 
-## Assessments or detailed feedback on your performance will typically be returned to you within 10 working days.
+
+#### Evaluation Criteria:
+- Clarity and coherence of the introduction to the chosen psychological concept or variable in the context of cross-cultural psychology
+- Appropriateness and rigour of the chosen methodology and analysis technique for cross-cultural research
+- Well-founded justification for the selection of research participants and their cultural background(s)
+- Thorough consideration of validity and reliability challenges in cross-cultural measurement
+- Overall organisation, presentation, and adherence to formatting guidelines
+
+Note: This assessment is equivalent to the introduction and methods part of a psychology manuscript.
+
+
+
+
+### Option 2: Causal Inference in Cultural Psychology: Examining the Effect of Exposure on Dimensions of Well-being Modified by Key Cultural or Sociodemographic Categories 
+
+
+
+#### Objective:
+
+- Utilise the NZAVS longitudinal synthetic data set to develop a study quantifying the causal effect of a specific exposure on a dimension or dimensions of well-being, as modified by one of the following sociodemographic categories: `born_nz`, `eth_cat`, `big_doms`, or `gen_cohort`.
+
+#### Instructions:
+
+1. Theoretical interest and research question:
+   - Briefly describe the significance of your chosen exposure and its potential effects on the selected outcome(s) (as modified by the chosen cultural or sociodemographic category).
+   - Explain the theoretical relevance of understanding these relationships within the field of psychology.
+   - Clearly state your research question.
+
+2. Directed Acyclic Graph (DAG):
+   - Construct a DAG representing the relationships between the exposure, outcome(s), chosen sociodemographic category, and potential sources of bias.
+   - Clearly label all variables and arrows in the DAG to ensure easy interpretation.
+
+3. Confounding control strategy:
+   - Detail your approach to addressing confounding in the analysis.
+   - Justify your choice of confounders and their relationship to the exposure, outcome(s), and chosen sociodemographic category.
+
+4. Assumptions and statistical models:
+   - Discuss the assumptions underlying your approach to causal inference and the statistical model you will employ.
+   - Critically evaluate the robustness of these assumptions and the potential limitations of your chosen model.
+
+#### Requirements:
+
+- Maximum length: 5,000 words (excluding tables and references)
+- Adhere to APA style for citations and references
+- Incorporate tables and/or figures as needed to support your analysis
+- Submit as a single PDF file
+
+#### Additional Submission:
+- As a separate file, submit any code used for preliminary data analysis in a format appropriate for your chosen software (e.g. your R script, LaTeX)
+
+#### Evaluation Criteria:
+
+- Clarity and coherence of the theoretical framework, research question, and study design
+- Quality and appropriateness of the DAG for representing relationships and sources of bias
+- rigour and validity of the confounding control strategy
+- Comprehensive discussion of assumptions and statistical models, including potential limitations
+- Overall organisation, presentation, and adherence to formatting guidelines
+
+Note: This assessment is equivalent to the introduction and methods part of a psychology manuscript.
+
+
+
+
+## Assessment 4: Constructive Review of a Pre-Registration Study in Cross-Cultural Psychology or Causal Inference (1,000 words maximum, including references)
+
+### Objective:
+
+Review and provide constructive feedback on the Introduction and Methods sections of a pre-registration study submitted by a fellow student, focusing on the theoretical foundations and methodological rigour in the context of cross-cultural psychology or causal inference research.
+Instructions:
+
+####  Familiarise yourself with the assigned study:
+
+- Read and understand the submitted pre-registration study, including its theoretical background, research question, and methodology.
+Evaluate the theoretical foundations:
+
+- Assess the clarity, coherence, and relevance of the study's theoretical background and research question.
+Consider the significance of the chosen psychological concept or exposure variable and its potential effects on the selected outcome(s).
+
+#### Briefly review the methodology:
+
+- Critically examine the proposed methodology, including the choice of statistical analysis techniques, the cultural background of research participants (if applicable), and confounding control strategies (if applicable).
+- Assess the appropriateness and rigour of the chosen methodology for addressing the research question in the context of cross-cultural psychology or causal inference.
+
+
+#### Provide concrete and respectful feedback:
+
+- Offer specific, actionable suggestions for improving the study's theoretical foundations, research question, and methodology.
+- Maintain a respectful and professional tone throughout your review, acknowledging the efforts of the student while providing constructive criticism.
+
+#### Requirements:
+
+- Maximum length: 1,000 words (including references)
+- Use APA style for citations and references
+- Submit your review as a single PDF file
+
+
+#### Evaluation Criteria:
+
+- Thorough understanding and critical assessment of the assigned pre-registration study
+- Clear and coherent evaluation of the study's theoretical foundations and research question
+- rigorous review of the study's methodology in the context of cross-cultural psychology or causal inference
+- Specific, actionable, and respectful feedback provided to improve the study
+- Adherence to word limit and formatting guidelines
+
+
+## Assessement 5 Statistical Assessment (max 4,000 words)
+
+
+### Option 1: Cross-Cultural Psychology: Examining Measurement Invariance and Cultural Bias in Psychological Constructs
+
+#### Objective: 
+- Conduct a statistical analysis to examine configural, metric, and scalar equivalence of your pre-registered study data, focusing on the technical aspects of measurement invariance testing, analysis, reporting, and discussion of findings in the context of cross-cultural psychology.
+
+#### Instructions:
+
+1. Construct description and sample information:
+   - Provide a minimal description of the construct(s) and the measure used in your study.
+   - Name the samples/countries included in your analysis.
+   - State the purpose of the analysis and the theoretical question being addressed.
+
+2. Analysis procedure:
+   - Describe the procedure you used to examine configural, metric, and scalar equivalence, including a brief description of each step.
+   - Justify any decisions you made during the process, explaining their rationale in the context of measurement invariance testing.
+
+3. Code submission:
+   - Submit your replicable and working code as a separate file, preferably in R script format.
+
+4. Results reporting:
+   - Report your findings in a clear and concise manner, similar to the results section of an empirical paper.
+   - Present factor loadings (optional) and other relevant indices in an appropriate table, following APA style.
+
+5. Discussion:
+   - Discuss your findings, focusing on levels of equivalence, biases identified (if any), biases ruled out, and potential remaining biases.
+   - Provide a concise discussion on the theoretical implications of your analysis and results, connecting the findings to theories about culture and cultural differences.
+
+#### Requirements:
+- Maximum length: 4,000 words (excluding tables, references, and code; provide word count on a separate title page)
+- Use APA style for citations, references, tables, and figures
+- Use 12-point Times New Roman font or similar
+- Submit your assignment as a single PDF file
+
+#### Additional Submission:
+- As a separate file, submit any code used for preliminary data analysis in a format appropriate for your chosen software (e.g. your R script, LaTeX)
+
+##### Evaluation Criteria:
+- Clarity and coherence of the construct description, sample information, and theoretical question
+- Appropriateness and rigour of the analysis procedure, including justification for decisions made
+- Correctness and replicability of the submitted code
+- Accurate and concise reporting of results, following APA style
+- Comprehensive and focused discussion of findings, including levels of equivalence, biases, and theoretical implications in the context of cross-cultural psychology
+- Overall organisation, presentation, and adherence to formatting guidelines
+
+Note: This assessment is equivalent to the results and discussion parts of a psychology manuscript.
+
+
+
+### Option 2: Causal Inference in Psychology: Developing the Results and Discussion Sections for a Study on the Effect of Exposure on Dimensions of Well-being Modified by Key Sociodemographic Categories
+
+
+#### Objective: 
+- Based on your previously developed study using the NZAVS longitudinal synthetic data set, create the Results and Discussion sections of a manuscript, detailing the findings of your causal inference analysis and their implications in the context of psychology.
+
+#### Instructions:
+1. Data analysis and results presentation:
+   - Conduct the data analysis as planned in your previous assignment, using appropriate statistical models and confounding control strategies.
+   - Present the results in a clear and concise manner, similar to the results section of an empirical paper.
+   - Include tables and/or figures as needed to support your findings, following APA style.
+
+2. Code submission:
+   - Submit your replicable and working code as a separate file, preferably in R script format.
+
+3. Discussion of findings:
+   - Discuss the findings in the context of the exposure, outcome(s), and the chosen sociodemographic category.
+   - Address the potential limitations of your study, including the robustness of assumptions and potential biases.
+   - Connect the findings to relevant theories in psychology, discussing their implications for the field.
+
+4. Conclusion and future directions:
+   - Summarise the main findings of your study and their significance in the context of psychology and causal inference.
+   - Suggest potential future research directions based on your findings and their theoretical implications.
+
+#### Requirements:
+- Maximum length: 5,000 words (excluding tables, references, and code; provide word count on a separate title page)
+- Use APA style for citations, references, tables, and figures
+- Use 12-point Times New Roman font or similar
+- Submit your assignment as a single PDF file
+
+#### Additional Submission:
+- As a separate file, submit any code used for preliminary data analysis in a format appropriate for your chosen software (e.g. your R script, LaTeX)
+
+#### Evaluation Criteria:
+- Appropriateness and rigour of the data analysis, including the use of statistical models and confounding control strategies
+- Clear and concise presentation of results, following APA style
+- Correctness and replicability of the submitted code
+- Comprehensive and focused discussion of findings, including potential limitations, assumptions, biases, and theoretical implications in the context of psychology
+- Well-structured conclusion and suggestions for future research directions
+- Overall organisation, presentation, and adherence to formatting guidelines
+
+Note: This assessment is equivalent to the results and discussion parts of a psychology manuscript.
+
+
+## Assessment 6: Letter to the reviewer (1,000 words)
+
+#### Objective: 
+
+- Respond to the feedback provided by the reviewer of your pre-registration study, detailing any changes made to your methods and pre-registration, and discussing how the results support or refute the reviewer's claims.
+
+#### Instructions:
+
+1. Address the feedback received:
+   - Carefully read and consider the feedback provided by the reviewer of your pre-registration study.
+
+2. Detail the changes made:
+   - Describe any alterations you made to your study's methods, theoretical foundations, or pre-registration based on the reviewer's feedback.
+   - Explain the rationale behind each change, discussing how it strengthens your study.
+
+3. Present the results in relation to the reviewer's feedback:
+   - Summarise the main findings of your study, focusing on aspects that directly address the points raised by the reviewer.
+   - Discuss how your results support or refute the reviewer's claims, providing evidence and reasoning for your conclusions.
+
+4. Respond professionally and respectfully:
+   - Maintain a respectful and professional tone throughout your letter, acknowledging the reviewer's efforts in providing constructive feedback and their potential concerns.
+   - Clearly address each point raised by the reviewer, providing a thorough and reasoned response.
+
+#### Requirements:
+- Maximum length: 1,000 words (including references)
+- Use APA style for citations and references
+- Submit your letter as a single PDF file
+
+#### Evaluation Criteria:
+
+- Thorough and thoughtful consideration of the reviewer's feedback
+- Clear and coherent description of changes made to the study based on the reviewer's suggestions
+- Convincing presentation of results in relation to the reviewer's feedback, with well-supported conclusions
+- Professional and respectful tone maintained throughout the letter
+- Adherence to word limit and formatting guidelines
+
+
 
 ## Extensions
 
@@ -182,7 +429,7 @@ In general, we require evidence (medical certificate etc.) to grant an extension
 
 ## Word limits
 
-Assignments that are over the word limit (see above) will be penalized. All submitted assessments are expected to be your own. You should neither give nor receive any aid on the assessments. Giving or receiving aid on assessments will be considered academic misconduct, resulting in registration in the Academic Misconduct Register (AMR). You may use any source, but the source must be cited. Penalties appropriate for the level of academic misconduct may be applied. Failure to cite your source will be considered academic misconduct and will result in registration in the Academic Misconduct Register (AMR).
+Assignments that are over the word limit (see above) will be penalised. All submitted assessments are expected to be your own. You should neither give nor receive any aid on the assessments. Giving or receiving aid on assessments will be considered academic misconduct, resulting in registration in the Academic Misconduct Register (AMR). You may use any source, but the source must be cited. Penalties appropriate for the level of academic misconduct may be applied. Failure to cite your source will be considered academic misconduct and will result in registration in the Academic Misconduct Register (AMR).
 
 ## Materials and equipment
 
