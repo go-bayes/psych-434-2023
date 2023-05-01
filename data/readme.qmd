@@ -1,0 +1,256 @@
+---
+title: "Getting started with R"
+date: "2023-APR-30"
+author:
+    name: Joseph Bulbulia
+    email: joseph.bulbulia@vuw.ac.nz
+    corresponding: yes
+---
+  
+
+
+## Read Me
+
+This is a synthetic data file. The data are simulated from the a sub sample of the New Zealand Attitudes and Values Study (NZAVS).
+
+The code to create the synthetic data set, before noise was added to the variables is given below.
+
+## Where can I go for further information?
+
+The NZAVS website is maintained by Prof Chris Sibley. Here is a [Link](https://www.psych.auckland.ac.nz/en/about/new-zealand-attitudes-and-values-study.html)
+
+## Link to data dictionary and questions
+
+[Link to full data dictionary](https://www.dropbox.com/s/8hjgpx1sdzlteqm/NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
+
+[Link to questions only](https://dl.dropboxusercontent.com/s/cv256sbjal4ucvo/nzavs-data-dictionary.htm?dl=0)
+
+```{r}
+#| eval: false
+dat_long <- dat |>
+  arrange(id, wave) |>
+  # select variables
+  rename(religion_religious = religious) |>
+  select(
+    "wave",
+    "year_measured",
+    "sample_frame",# see NZAVS
+    "id",
+    "edu",
+    # Ordinal-Rank 0-10 NZREG codes (with overseas school quals coded as Level 3, and all other ancillary categories coded as missing) See:https://www.nzqa.govt.nz/assets/Studying-in-NZ/New-Zealand-Qualification-Framework/requirements-nzqf.pdf
+    "male",
+    # 0 = female, 0.5 = neither female nor male, 1 = male.
+    "born_nz",
+    # value label 0    No 1   Yes
+    "eth_cat",
+    #factor(EthCat, labels = c("Euro", "Maori", "Pacific", "Asian")),
+    "employed",
+    # Are you currently employed? (this includes self-employment or casual work)
+    "gen_cohort",
+    #What is your gender? (open-ended)
+    "household_inc",
+    # Please estimate your total household income (before tax) for the last year.
+    "nz_dep2018",
+    # see nzavs materials
+    "nzsei13",
+    # see nzavs materials
+    "partner",
+    # 0 = no, 1 = yes
+    "parent",
+    # 0 = no, 1 = yes
+    "pol_orient",
+    #Please rate how politically liberal versus conservative you see yourself as being.
+    "pol_wing",
+    # Please rate how politically left-wing versus right-wing you see yourself as being.
+    "rural_gch2018",
+    # see NZAVS
+    "agreeableness",
+    # Mini-IPIP6 Agreeableness (also modelled as empathy facet)
+    # Sympathize with others' feelings.
+    # Am not interested in other people's problems.
+    # Feel others' emotions.
+    # Am not really interested in others.
+    "conscientiousness",
+    # see mini ipip6
+    # Get chores done right away.
+    # Like order.
+    # Make a mess of things.
+    # Often forget to put things back in their proper place.
+    "extraversion",
+    # Mini-IPIP6 Extraversion
+    # Am the life of the party.
+    # Don't talk a lot.
+    # Keep in the background.
+    # Talk to a lot of different people at parties.
+    "honesty_humility",
+    # see mini ipip6
+    # Would like to be seen driving around in a very expensive car.
+    # Would get a lot of pleasure from owning expensive luxury goods.
+    # Feel entitled to more of everything.
+    # Deserve more things in life.
+    "openness",
+    # see mini ipip6
+    # Have a vivid imagination.
+    # Have difficulty understanding abstract ideas.
+    # Do not have a good imagination.
+    # Am not interested in abstract ideas.
+    "neuroticism",
+    # see mini ipip6
+    # Have frequent mood swings.
+    # Am relaxed most of the time.
+    # Get upset easily.
+    # Seldom feel blue.
+    "modesty",
+    # see mini ipip6
+    # I want people to know that I am an important person of high status,
+    # I am an ordinary person who is no better than others.
+    # I wouldn’t want people to treat me as though I were superior to them.
+    # I think that I am entitled to more respect than the average person is.
+    "religion_religious",
+    # Do you identify with a religion and/or spiritual group?
+    "religion_identification_level",
+    #How important is your religion to how you see yourself?"
+    # "religion_church_binary", # at least 1 time per month = 1, 0.
+    #  "religion_prayer", # How many times did you pray in the last week?
+    #  "religion_scripture", # How many times did you read religious scripture in the last week?
+    #  "religion_church2", # How many times did you attend a church or place of worship in the last month?
+    "religion_believe_spirit",
+    #Do you believe in some form of spirit or lifeforce?
+    "religion_believe_god",
+    #Do you believe in a God
+    # "religion_spiritual_identification", #w8,w10,w12-13 "I identify as a spiritual person."
+    "religion_perceive_religious_discrim",
+    #	I feel that I am often discriminated against because of my religious/spiritual beliefs.
+    "bigger_doms",
+    #What religion or spiritual group?#  Not_Rel, Anglican , Buddist, Catholic , Christian_nfd, Christian_Others, Hindu, Jewish           Muslim, PresbyCongReform, TheOthers
+    "w_gend_age_euro",
+    # sample_weights
+    "alcohol_frequency",
+    #"How often do you have a drink containing alcohol?"
+    "alcohol_intensity",
+    # How many drinks containing alcohol do you have on a typical day when drinking?
+    "hlth_bmi",
+    # " What is your height? (metres)\nWhat is your weight? (kg)\nKg
+    "hours_exercise",
+    # Hours spent … exercising/physical activity
+    # "sfhealth",
+    "sfhealth_your_health",
+    # "In general, would you say your health is...
+    "sfhealth_get_sick_easier",
+    #\nI seem to get sick a little easier than other people.
+    "sfhealth_expect_worse_health",
+    #\nI expect my health to get worse." ****
+    "hlth_sleep_hours",
+    #During the past month, on average, how many hours of actual sleep did you get per night?
+    "smoker",
+    #Do you currently smoke?
+    "hlth_fatigue",
+    #During the last 30 days, how often did.... you feel exhausted?
+    "rumination",
+    # During the last 30 days, how often did.... you have negative thoughts that repeated over and over?
+    "kessler_depressed",
+    #During the last 30 days, how often did.... you feel so depressed that nothing could cheer you up?
+    "kessler_effort",
+    #During the last 30 days, how often did.... you feel that everything was an effort?
+    "kessler_hopeless",
+    # During the last 30 days, how often did.... you feel hopeless?
+    "kessler_nervous",
+    #During the last 30 days, how often did.... you feel nervous?
+    "kessler_restless",
+    #During the last 30 days, how often did.... you feel restless or fidgety?
+    "kessler_worthless",
+    # During the last 30 days, how often did.... you feel worthless?
+    "sexual_satisfaction",
+    #  How satisfied are you with your sex life?
+    "bodysat",
+    ## Am satisfied with the appearance, size and shape of my body.
+    "vengeful_rumin",
+    # Sometimes I can't sleep because of thinking about past wrongs I have suffered.//# I can usually forgive and forget when someone does me wrong.# I find myself regularly thinking about past times that I have been wronged.
+    "perfectionism",
+    # # Doing my best never seems to be enough./# My performance rarely measures up to my standards.
+    # I am hardly ever satisfied with my performance.
+    "power_self_nocontrol",
+    # I do not have enough power or control over\nimportant parts of my life.
+    "power_others_control",
+    # Other people have too much power or control over\nimportant parts of my life
+    "selfesteem_satself",
+    #  On the whole am satisfied with myself.
+    "selfesteem_postiveself",
+    # Take a positive attitude toward myself
+    "selfesteem_rfailure",
+    # Am inclined to feel that I am a failure. (r)
+    "self_control_have_lots",
+    #In general, I have a lot of self-control.
+    "self_control_wish_more_r",
+    #I wish I had more self-discipline.(r)
+    "emotion_regulation_out_control",
+    # When I feel negative emotions, my emotions feel out of control. w10 - w13
+    "emotion_regulation_hide_neg_emotions",
+    # When I feel negative emotions, I suppress or hide my emotions. w10 - w13
+    "emotion_regulation_change_thinking_to_calm",
+    # When I feel negative emotions, I change the way I think to help me stay calm. w10 - w13
+    #  "emp_work_life_balance",# I have a good balance between work and other important things in my life.
+    "gratitude",
+    ## I have much in my life to be thankful for. # When I look at the world, I don’t see much to be grateful for. # I am grateful to a wide variety of people.
+    "pwi_health",
+    #Your health.
+    "pwi_relationships",
+    #Your personal relationships.
+    "pwi_security",
+    #Your future security.
+    "pwi_standardliving",
+    #Your standard of living.
+    "lifesat_satlife",
+    # I am satisfied with my life.
+    "lifesat_ideal",
+    # In most ways my life is close to ideal.
+    "meaning_purpose",
+    # My life has a clear sense of purpose.
+    "meaning_sense",
+    # I have a good sense of what makes my life meaningful.
+    "permeability_individual",
+    #I believe I am capable, as an individual\nof improving my status in society.
+    "impermeability_group",
+    #The current income gap between New Zealand Europeans and other ethnic groups would be very hard to change.
+    "neighbourhood_community",
+    #I feel a sense of community with others in my local neighbourhood.
+    "support_help",
+    # 'There are people I can depend on to help me if I really need it.
+    "support_turnto",
+    # There is no one I can turn to for guidance in times of stress.
+    "support_rnoguidance",
+    #There is no one I can turn to for guidance in times of stress.
+    "belong_accept",
+    #Know that people in my life accept and value me.
+    "belong_routsider",
+    # Feel like an outsider.
+    "belong_beliefs",
+    # Know that people around me share my attitudes and beliefs.
+    "charity_donate",
+    #How much money have you donated to charity in the last year?
+    "hours_charity",
+    #Hours spent in activities/Hours spent … voluntary/charitable work
+    "nwi",
+    # The economic situation in New Zealand./# The social conditions in New Zealand. # Business in New Zealand.
+  ) |>
+  dplyr::rename(sample_weights = w_gend_age_euro) |>
+  dplyr::filter((wave == 2018 & year_measured  == 1) |
+                  (wave == 2019  &
+                     year_measured  == 1) |
+                  (wave == 2020  &  year_measured  == 1)
+  ) |>
+  drop_na() |>
+  group_by(id) |>
+  filter(n_distinct(wave) == 3) |> # not used to avoid missing data -- for teaching purposes only
+  # dplyr::mutate(k_18 =  ifelse(wave == 2018, 1, 0)) |>   # creating an indicator for the first wave
+  # dplyr::mutate(h_18 = mean(k_18, na.rm = TRUE)) |>   # hack
+  # dplyr::mutate(k_19 =  ifelse(wave == 2019 &
+  #                                year_measured == 1, 1, 0)) |>   # creating an indicator for the first wave; note that we allow people t
+  # dplyr::mutate(h_19 = mean(k_19, na.rm = TRUE)) |>  # Hack
+  # dplyr::filter(h_18 > 0) |>  # hack to enable repeat of baseline
+  # dplyr::filter(h_19 > 0) |>  # hack to enable repeat of baseline
+  ungroup() |>
+  droplevels() |>
+  drop_na() |>
+  arrange(id, wave)
+```

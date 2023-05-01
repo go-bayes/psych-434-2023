@@ -1,7 +1,7 @@
 {
-  "hash": "362e3168891448634f210c1fce5a10b7",
+  "hash": "d1a50807035b974213308c0206d3814e",
   "result": {
-    "markdown": "---\ntitle: \"Causal Inference: Causal Graphs\"\ndate: \"2023-MAY-09\"\nexecute:\n  warning: false\n---\n\n  \n  \n## Overview\n  \n## What is a Cause and What is an Effect? \n\n\n::: {.cell}\n\n```{.r .cell-code}\nif (!requireNamespace(\"igraph\", quietly = TRUE)) {\n  install.packages(\"igraph\")\n}\n\nlibrary(igraph)\n\ngraph <- graph_from_literal(R -+ W, \n                            R -+ SS, \n                            SS -+ W)\nplot(graph)\n```\n\n::: {.cell-output-display}\n![](07-content_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n\n\n\n\n\n## Why is Causal Inference a “missing data” problem?\n\n\n\nb. Confounding and Confounders\nc. Causal Graphs to identify sources of confounding  \n  \n  \n  \n## Slides\n",
+    "markdown": "---\ntitle: \"Causal Inference: Causal Graphs\"\ndate: \"2023-MAY-09\"\nexecute:\n  warning: false\n---\n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Causal graph shows potential for selection bias from loss to follow up or non-response. To address this, we multiply impute missing values on the assumption that missing values are random conditional on the imputation model (MAR).](07-content_files/figure-html/fig-dag-1.png){#fig-dag width=80%}\n:::\n:::\n\n\n\n\n## Overview\n  \n## What is a Cause and What is an Effect? \n\n\n\n\n## Why is Causal Inference a “missing data” problem?\n\n\n\nb. Confounding and Confounders\nc. Causal Graphs to identify sources of confounding  \n  \n  \n  \n## Slides\n",
     "supporting": [
       "07-content_files"
     ],
