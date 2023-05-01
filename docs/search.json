@@ -1033,6 +1033,6 @@
     "href": "content/07-content.html#downloads",
     "title": "Causal Inference: Causal Graphs",
     "section": "Downloads",
-    "text": "Downloads\nThis R link will allow you to download the data and exercises:link to script for this week"
+    "text": "Downloads\nBelow is a link to the R script that will allow you to download the data and exercises. Copy the contents on your screen to a new R script, and run the script from the begging. Before class, it will be useful for you to:\n\nRun “source()” file.\nDownload the synthetic data.\nCreate a folder in your Rstudio project called “data”\nPlace the downloaded file in your data folder.\n\nlink to script for this week"
   }
 ]

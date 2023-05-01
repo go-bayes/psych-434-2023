@@ -70,7 +70,7 @@ Below is a link to the R script that will allow you to download the data and exe
 4. Place the downloaded file in your data folder.
 
 
-[link to script for this week ](https://raw.githubusercontent.com/go-bayes/psych-434-2023/main/files/R/434-intro-causal-inference-week-7.R)
+[link to script for this week ](https://raw.githubusercontent.com/go-bayes/psych-434-2023/ab93ccac0b03c9ae46ab310f37d32951b77e406d/scripts/434-intro-causal-inference-week-7.R)
 
 
 
