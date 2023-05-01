@@ -62,13 +62,15 @@ push_mods <-
 
 ## Downloads
 
-This R link will allow you to download the data an exercises: 
+This R link will allow you to download the data and exercises:
 
 
 
 
 
 ## Overview
+  
+  
   
 ## What is a Cause and What is an Effect? 
 
