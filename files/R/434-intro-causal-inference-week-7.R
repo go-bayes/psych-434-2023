@@ -2,6 +2,8 @@
 # PSYCH 434 WEEK 7: INTRODUCTION TO CAUSAL INFERENCE
 # PART 1: CAUSAL ESTIMATION
 # PART 2: PRACTICING DAGS
+# May 2023
+# questions: joseph.bulbulia@vuw.ac.nz
 
 
 # Running this command will download the functions and packages you need to complete this worksheet.
