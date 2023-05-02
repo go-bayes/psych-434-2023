@@ -233,9 +233,9 @@
   {
     "objectID": "content/07-content.html#slides",
     "href": "content/07-content.html#slides",
-    "title": "Causal Inference: Causal Graphs",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
     "section": "Slides",
-    "text": "Slides"
+    "text": "Slides\nPREVIEW\n\n\n\nOpen in browser here"
   },
   {
     "objectID": "content/index.html#slides",
@@ -982,14 +982,14 @@
   {
     "objectID": "content/07-content.html",
     "href": "content/07-content.html",
-    "title": "Causal Inference: Causal Graphs",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
     "section": "",
     "text": "Figure 1: Causal graph shows potential for selection bias from loss to follow up or non-response. To address this, we multiply impute missing values on the assumption that missing values are random conditional on the imputation model (MAR)."
   },
   {
     "objectID": "content/07-content.html#overview",
     "href": "content/07-content.html#overview",
-    "title": "Causal Inference: Causal Graphs",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
     "section": "Overview",
     "text": "Overview"
   },
@@ -1031,7 +1031,7 @@
   {
     "objectID": "content/07-content.html#downloads",
     "href": "content/07-content.html#downloads",
-    "title": "Causal Inference: Causal Graphs",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
     "section": "Downloads",
     "text": "Downloads\nBelow is a link to the R script that will allow you to download the data and exercises. Copy the contents on your screen to a new R script, and run the script from the begging. Before class, it will be useful for you to:\n\nRun “source()” file.\nDownload the synthetic data.\nCreate a folder in your Rstudio project called “data”\nPlace the downloaded file in your data folder.\n\nlink to script for this week"
   },
@@ -1090,5 +1090,565 @@
     "title": "Psych 434: Conducting Research Across Cultures",
     "section": "Assessement 5 Statistical Assessment (max 4,000 words)",
     "text": "Assessement 5 Statistical Assessment (max 4,000 words)\n\nOption 1: Cross-Cultural Psychology: Examining Measurement Invariance and Cultural Bias in Psychological Constructs\n\nObjective:\n\nConduct a statistical analysis to examine configural, metric, and scalar equivalence of your pre-registered study data, focusing on the technical aspects of measurement invariance testing, analysis, reporting, and discussion of findings in the context of cross-cultural psychology.\n\n\n\nInstructions:\n\nConstruct description and sample information:\n\nProvide a minimal description of the construct(s) and the measure used in your study.\nName the samples/countries included in your analysis.\nState the purpose of the analysis and the theoretical question being addressed.\n\nAnalysis procedure:\n\nDescribe the procedure you used to examine configural, metric, and scalar equivalence, including a brief description of each step.\nJustify any decisions you made during the process, explaining their rationale in the context of measurement invariance testing.\n\nCode submission:\n\nSubmit your replicable and working code as a separate file, preferably in R script format.\n\nResults reporting:\n\nReport your findings in a clear and concise manner, similar to the results section of an empirical paper.\nPresent factor loadings (optional) and other relevant indices in an appropriate table, following APA style.\n\nDiscussion:\n\nDiscuss your findings, focusing on levels of equivalence, biases identified (if any), biases ruled out, and potential remaining biases.\nProvide a concise discussion on the theoretical implications of your analysis and results, connecting the findings to theories about culture and cultural differences.\n\n\n\n\nRequirements:\n\nMaximum length: 4,000 words (excluding tables, references, and code; provide word count on a separate title page)\nUse APA style for citations, references, tables, and figures\nUse 12-point Times New Roman font or similar\nSubmit your assignment as a single PDF file\n\n\n\nAdditional Submission:\n\nAs a separate file, submit any code used for preliminary data analysis in a format appropriate for your chosen software (e.g. your R script, LaTeX)\n\n\nEvaluation Criteria:\n\nClarity and coherence of the construct description, sample information, and theoretical question\nAppropriateness and rigour of the analysis procedure, including justification for decisions made\nCorrectness and replicability of the submitted code\nAccurate and concise reporting of results, following APA style\nComprehensive and focused discussion of findings, including levels of equivalence, biases, and theoretical implications in the context of cross-cultural psychology\nOverall organisation, presentation, and adherence to formatting guidelines\n\nNote: This assessment is equivalent to the results and discussion parts of a psychology manuscript.\n\n\n\n\nOption 2: Causal Inference in Psychology: Developing the Results and Discussion Sections for a Study on the Effect of Exposure on Dimensions of Well-being Modified by Key Sociodemographic Categories\n\nObjective:\n\nBased on your previously developed study using the NZAVS longitudinal synthetic data set, create the Results and Discussion sections of a manuscript, detailing the findings of your causal inference analysis and their implications in the context of psychology.\n\n\n\nInstructions:\n\nData analysis and results presentation:\n\nConduct the data analysis as planned in your previous assignment, using appropriate statistical models and confounding control strategies.\nPresent the results in a clear and concise manner, similar to the results section of an empirical paper.\nInclude tables and/or figures as needed to support your findings, following APA style.\n\nCode submission:\n\nSubmit your replicable and working code as a separate file, preferably in R script format.\n\nDiscussion of findings:\n\nDiscuss the findings in the context of the exposure, outcome(s), and the chosen sociodemographic category.\nAddress the potential limitations of your study, including the robustness of assumptions and potential biases.\nConnect the findings to relevant theories in psychology, discussing their implications for the field.\n\nConclusion and future directions:\n\nSummarise the main findings of your study and their significance in the context of psychology and causal inference.\nSuggest potential future research directions based on your findings and their theoretical implications.\n\n\n\n\nRequirements:\n\nMaximum length: 5,000 words (excluding tables, references, and code; provide word count on a separate title page)\nUse APA style for citations, references, tables, and figures\nUse 12-point Times New Roman font or similar\nSubmit your assignment as a single PDF file\n\n\n\nAdditional Submission:\n\nAs a separate file, submit any code used for preliminary data analysis in a format appropriate for your chosen software (e.g. your R script, LaTeX)\n\n\n\nEvaluation Criteria:\n\nAppropriateness and rigour of the data analysis, including the use of statistical models and confounding control strategies\nClear and concise presentation of results, following APA style\nCorrectness and replicability of the submitted code\nComprehensive and focused discussion of findings, including potential limitations, assumptions, biases, and theoretical implications in the context of psychology\nWell-structured conclusion and suggestions for future research directions\nOverall organisation, presentation, and adherence to formatting guidelines\n\nNote: This assessment is equivalent to the results and discussion parts of a psychology manuscript."
+  },
+  {
+    "objectID": "content/07-content.html#introduction-motivating-example",
+    "href": "content/07-content.html#introduction-motivating-example",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Introduction: Motivating Example",
+    "text": "Introduction: Motivating Example\nConsider the following cross-cultural question:\n\nDoes bilingualism improve cognitive abilities in children?\n\nThere is evidence that bilingual children perform better oat cognitive tasks, but is learning more than one language a confounding factors?\nIn this lecture, we will discuss the fundamental problem of causal inference, its assumptions, and how we can address this issue in both experimental and observational settings."
+  },
+  {
+    "objectID": "content/07-content.html#part-1-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem",
+    "href": "content/07-content.html#part-1-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Part 1: The Fundamental Problem of Causal Inference as a Missing Data Problem",
+    "text": "Part 1: The Fundamental Problem of Causal Inference as a Missing Data Problem\nTo understand the fundamental problem of causal inference, let’s first define two potential outcomes for each individual in our study:\n\nY_i^{a = 1}: The cognitive ability of child i if they were bilingual. This is the counterfactual outcome when A = 1.\nY_i^{a = 0}:: The cognitive ability of child i if they were monolingual. This is the counterfactual outcome when A = 0.\n\nThe causal effect of bilingualism on cognitive ability for individual i is then defined as the difference between these potential outcomes:\n\n\\text{Causal Effect}_i = Y^{a=1} - Y^{a=0}\n\nNote that sometimes we will write this contrast as:\n\n\\text{Causal Effect}_i = Y(1) - Y(0)\n\nor\n\n\\text{Causal Effect}_i = Y^{1} - Y^{0}\n\nWe say there is a causal effect if:\n\nY^{a=1} - Y^{a=0}  \\neq 0\n\nThe Philosopher David Hume defines causation in the following way:\n\n“We may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second [definition 1]. Or, in other words, where, if the first object had not been, the second never would have existed [definition 2].”  - Enquiries Concerning Human Understanding, and Concerning the Principles of Morals\n\nThis is a contrast between two states of the world. One in which a child recieves bi-lingual exposure and one in which a child does not.\nHowever, consider that we can only observe one of the potential outcomes for each child. The contrast we require for identifying a causal effect is typically not observed.\nRobert Frost writes,\n\nTwo roads diverged in a yellow wood,\u000b And sorry I could not travel both\u000b And be one traveler, long I stood\u000b And looked down one as far as I could\u000b To where it bent in the undergrowth;\u000b\n\n\nThen took the other, as just as fair,\u000b And having perhaps the better claim,\u000b Because it was grassy and wanted wear;\u000b Though as for that the passing there\u000b Had worn them really about the same,\u000b \u000b And both that morning equally lay\u000b In leaves no step had trodden black.\u000b Oh, I kept the first for another day!\u000b Yet knowing how way leads on to way,\u000b I doubted if I should ever come back.\u000b\n\n\nI shall be telling this with a sigh\u000b Somewhere ages and ages hence:\u000b Two roads diverged in a wood, and I—\u000b I took the one less traveled by,\u000b And that has made all the difference. – The Road Not Taken\n\n“And sorry I could not travel both. And be one traveller\\dots”\nThe fact that causal contrasts are not observed on individuals is called “The fundamental problem of causal inference.”\nWe will discuss how this missing data problem arises in different research designs and explore strategies for addressing it.\nFor now, note that the problem isn’t merely one of statistical analysis on the data. The problem is that the relevant data to identify individual causal effects are missing."
+  },
+  {
+    "objectID": "content/07-content.html#part-2-fundamental-assumptions-of-causal-inference",
+    "href": "content/07-content.html#part-2-fundamental-assumptions-of-causal-inference",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Part 2: Fundamental Assumptions of Causal Inference",
+    "text": "Part 2: Fundamental Assumptions of Causal Inference\nAlthough we typically cannot observe individual causal effects, under certain assumptions we can obtain average causal effects.\n\\begin{align}\nE(\\delta) = E(Y^{a=1} - Y^{a=0})\\\\\n          ~  = E(Y^{a=1}) - E(Y^{a=0}) \\\\\n          ~  = ATE\n\\end{align}"
+  },
+  {
+    "objectID": "content/07-content.html#part-3-causal-inference-from-randomized-experiments",
+    "href": "content/07-content.html#part-3-causal-inference-from-randomized-experiments",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Part 3: Causal Inference from Randomized Experiments",
+    "text": "Part 3: Causal Inference from Randomized Experiments\nRandomized experiments can help us overcome the the fundamental problem of causal inference. By randomly assigning individuals to treatment (bilingual) or control (monolingual) groups, we create comparable groups that allow us to estimate causal effects.\nRandom assignment ensures that all observed and unobserved confounders are balanced between the treatment and control groups on average, satisfying the conditionally exchangeable assumption.\nThe key benefits of randomized experiments are:\n\nUnbiased estimation of average treatment effects.\nControl of both observed and unobserved confounding.\nFacilitated interpretation of causal effects.\n\nNotice that the results of an experiment recover Average Treatment Effects, not individual causal effects. Although a treament might be beneficial for the majority of people, it might not be benefitial for you.\nThis consideration may be extended to subgroups. Although a treatment might be beneficial, on average, for the majority of a population, it might not be benefitial for a sub-population. However, unlike individual causal effects, we may obtain causal effect estimates within sub-populations. We will will return to this topic next week."
+  },
+  {
+    "objectID": "content/07-content.html#part-4-challenges-in-identifying-causal-effects-from-observational-data",
+    "href": "content/07-content.html#part-4-challenges-in-identifying-causal-effects-from-observational-data",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Part 4: Challenges in Identifying Causal Effects from Observational Data",
+    "text": "Part 4: Challenges in Identifying Causal Effects from Observational Data\nIn observational studies, we cannot randomly assign individuals to treatment and control groups. As a result, there may be confounding factors that affect both the treatment assignment and the outcome, making it difficult to identify causal effects.\nIn this context, some strategies to address confounding include:\n\nMatching: Pair individuals with similar observed covariates in treatment and control groups. We will discuss various matching techniques, such as exact matching, nearest-neighbor matching, and optimal matching.\nPropensity score methods: Use the propensity score (the probability of treatment given covariates) to balance treatment and control groups on observed covariates. We will cover propensity score matching, weighting, and subclassification, and discuss their advantages and limitations.\nRegression adjustment: include potential confounders as control variables in a regression model. We will discuss the assumptions behind this approach, as well as techniques for model selection and diagnostics.\n\nHowever, these methods rely on the assumption of conditionally exchangeable treatment assignment, which is often unverifiable. They can only account for observed confounding, leaving the possibility of unobserved confounders affecting our causal estimates. For this reason we use sentistive analyses (topic next week. )"
+  },
+  {
+    "objectID": "content/07-content.html#part-5-causal-graphs-and-directed-acyclic-graphs-dags",
+    "href": "content/07-content.html#part-5-causal-graphs-and-directed-acyclic-graphs-dags",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Part 5: Causal Graphs and Directed Acyclic Graphs (DAGs)",
+    "text": "Part 5: Causal Graphs and Directed Acyclic Graphs (DAGs)\nCausal graphs, also known as directed acyclic graphs (DAGs), provide a powerful way to represent causal relationships between variables. In a DAG, nodes represent variables, and directed edges represent causal relationships between them.\n\nDAG basics: How to construct and interpret DAGs, including the concepts of parents, children, ancestors, and descendants.\nPsychology begins with a question. Ours: “Does A cause Y?”\n\nD-separation and conditional independence: Understanding when variables are conditionally independent given a set of conditioning variables in a DAG, and how this relates to the concept of d-separation.\nIdentifying confounders: Using DAGs to identify confounders that must be controlled for in order to estimate causal effects.\nCollider bias and conditioning: Understanding how conditioning on colliders can induce bias in causal estimates, and how to avoid this issue.\nMediation and direct/indirect effects: Using DAGs to assess mediation and decompose total effects into direct and indirect effects."
+  },
+  {
+    "objectID": "slides/07-slides.html#goals",
+    "href": "slides/07-slides.html#goals",
+    "title": "Introduction to Causal Inference",
+    "section": "Goals",
+    "text": "Goals\nBy the end of this seminaryou will be able to:\n\nUnderstand the definition of “causality” as it is used in the human and health sciences.\nUnderstand the assumptions required for consistently estimating causal effects.\nUnderstand how to use causal diagrammes to assess these assumptions.\n\nKey Concepts\n\nCause/Effect\nConfounder\nCollider"
+  },
+  {
+    "objectID": "slides/07-slides.html#recall-where-does-psychology-start",
+    "href": "slides/07-slides.html#recall-where-does-psychology-start",
+    "title": "Introduction to Causal Inference",
+    "section": "Recall: Where does psychology start?",
+    "text": "Recall: Where does psychology start?\nPsychology starts with a question about how people think or behave."
+  },
+  {
+    "objectID": "slides/07-slides.html#group-discussion",
+    "href": "slides/07-slides.html#group-discussion",
+    "title": "Introduction to Causal Inference",
+    "section": "Group discussion",
+    "text": "Group discussion\n\nWe know that bilingual children tend to perform better on various cognitive tasks. Why might this be the case?\nHow can we know whether it is bilingualism that causes better performance on various cognitive tasks?"
+  },
+  {
+    "objectID": "slides/07-slides.html#definition-of-a-causality",
+    "href": "slides/07-slides.html#definition-of-a-causality",
+    "title": "Introduction to Causal Inference",
+    "section": "Definition of a causality",
+    "text": "Definition of a causality\nThe Philosopher David Hume defines causation in the following way:\n\n“we may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second [definition 1]. Or, in other words, where, if the first object had not been, the second never would have existed [definition 2].” - David Hume, Enquiries Concerning Human Understanding, and Concerning the Principles of Morals, Section VII"
+  },
+  {
+    "objectID": "slides/07-slides.html#individual-causal-effects-are-generally-not-identified",
+    "href": "slides/07-slides.html#individual-causal-effects-are-generally-not-identified",
+    "title": "Introduction to Causal Inference",
+    "section": "Individual causal effects are generally not identified",
+    "text": "Individual causal effects are generally not identified\n\nWe say there is a causal effect for individual i if:\n\n\nY_i^{a=1} - Y_i^{a=0}  \\neq 0"
+  },
+  {
+    "objectID": "slides/07-slides.html#conduct-a-literature-review-of-previous-research",
+    "href": "slides/07-slides.html#conduct-a-literature-review-of-previous-research",
+    "title": "Introduction to Causal Inference",
+    "section": "Conduct a literature review of previous research",
+    "text": "Conduct a literature review of previous research\n\nWhat would this tell us?\n\nwhat other researchers have found.\n\nWhat would this not tell us?\n\nwhat other researchers have not found.\nwhat other researchers got wrong."
+  },
+  {
+    "objectID": "slides/07-slides.html#conduct-a-survey-of-a-large-and-diverse-sample-of-individuals",
+    "href": "slides/07-slides.html#conduct-a-survey-of-a-large-and-diverse-sample-of-individuals",
+    "title": "Introduction to Causal Inference",
+    "section": "Conduct a survey of a large and diverse sample of individuals",
+    "text": "Conduct a survey of a large and diverse sample of individuals\n\nWhere to begin?"
+  },
+  {
+    "objectID": "slides/07-slides.html#measurement",
+    "href": "slides/07-slides.html#measurement",
+    "title": "Introduction to Causal Inference",
+    "section": "Measurement",
+    "text": "Measurement"
+  },
+  {
+    "objectID": "slides/07-slides.html#what-else-might-go-wrong",
+    "href": "slides/07-slides.html#what-else-might-go-wrong",
+    "title": "Introduction to Causal Inference",
+    "section": "What else might go wrong?",
+    "text": "What else might go wrong?\nSuppose we are confident in measurement, administer survey, and find an relationship.\n\nDoes marriage cause happiness cross culturally?"
+  },
+  {
+    "objectID": "slides/07-slides.html#what-might-go-wrong",
+    "href": "slides/07-slides.html#what-might-go-wrong",
+    "title": "Introduction to Causal Inference",
+    "section": "What might go wrong?",
+    "text": "What might go wrong?"
+  },
+  {
+    "objectID": "slides/07-slides.html#happiness-might-cause-marriage",
+    "href": "slides/07-slides.html#happiness-might-cause-marriage",
+    "title": "Introduction to Causal Inference",
+    "section": "Happiness might cause marriage",
+    "text": "Happiness might cause marriage"
+  },
+  {
+    "objectID": "slides/07-slides.html#age-might-be-a-confounder-of-both-marriage-and-happiness",
+    "href": "slides/07-slides.html#age-might-be-a-confounder-of-both-marriage-and-happiness",
+    "title": "Introduction to Causal Inference",
+    "section": "Age might be a confounder of both Marriage and Happiness",
+    "text": "Age might be a confounder of both Marriage and Happiness"
+  },
+  {
+    "objectID": "slides/07-slides.html#many-psychologists-will-simply-control-for-age",
+    "href": "slides/07-slides.html#many-psychologists-will-simply-control-for-age",
+    "title": "Introduction to Causal Inference",
+    "section": "Many psychologists will simply “control for age”",
+    "text": "Many psychologists will simply “control for age”\n\nThis doesn’t work if there is reverse causation: Regression coefficient for Marriage (M) is biased.\n\n\n\nCode\n## Simulate data \nset.seed(123)\nsim_fun_B = function() {\n  n &lt;- 1000\n  A &lt;- rnorm(n, 1) # simulates age,\n  H &lt;- rnorm(n , A) #  simulates happy as function of age\n  M &lt;- rnorm(n , A) + .2 * H # simulate marriage as a function of age + happiness\n\n  \n# Simulate dataframe from function\nsimdat_B &lt;- data.frame(\n  A = A, \n  H = H,\n  M = M) \n\n#  model in which marriage \"predicts\" happiness controlling for age\nsim_B &lt;- lm(H ~ M + A, data = simdat_B)\nsim_B  # returns output\n}\n\n# Replication 100 times\nr_lm_B &lt;- NA\nr_lm_B = replicate(100, sim_fun_B(), simplify = FALSE )\n\n# print model results\nparameters::pool_parameters(r_lm_B)\n\n\n# Fixed Effects\n\nParameter   | Coefficient |   SE |        95% CI | Statistic |     df |      p\n------------------------------------------------------------------------------\n(Intercept) |    4.12e-03 | 0.06 | [-0.12, 0.13] |      0.07 | 220.99 | 0.947 \nM           |        0.19 | 0.04 | [ 0.10, 0.27] |      4.42 | 234.19 | &lt; .001\nA           |        0.77 | 0.07 | [ 0.64, 0.91] |     11.17 | 211.13 | &lt; .001"
+  },
+  {
+    "objectID": "slides/07-slides.html#the-problem-is-confounding-what-can-we-do-about-it",
+    "href": "slides/07-slides.html#the-problem-is-confounding-what-can-we-do-about-it",
+    "title": "Introduction to Causal Inference",
+    "section": "The problem is confounding: what can we do about it?",
+    "text": "The problem is confounding: what can we do about it?\nWeek 7: Causal inference: Causal Graphs(Joseph Bulbulia). How to diagnosis sources of confounding and what to do about it.\nWeek 8: Causal inference: Target Trial Emulation (Joseph Bulbulia). How to emulate an experiment with observational data and how to identify the modification of effects by cultural groups.\nWeek 9: Causal inference: Reconsidering measurement and selection biases (Joseph Bulbulia). A discussion of problems in standard approaches to measurement.\nWeek 10 Causal inference: Cross-Cultural Experiments (Joseph Bulbulia & Guests). For whom to our results generalise?"
+  },
+  {
+    "objectID": "slides/07-slides.html#course-conclusions",
+    "href": "slides/07-slides.html#course-conclusions",
+    "title": "Introduction to Causal Inference",
+    "section": "Course conclusions",
+    "text": "Course conclusions\nWeek 11 Ethics and Ownership (Joseph Bulbulia & Guests). Can causal inference help us to improve ethical reasoning? Why is data protection important? How do the ethics of data protection relate to the ethics of open science?\nWeek 12 Future Horizons (Joseph Bulbulia, Torven, Inkuk):"
+  },
+  {
+    "objectID": "slides/07-slides.html#what-have-we-learned",
+    "href": "slides/07-slides.html#what-have-we-learned",
+    "title": "Introduction to Causal Inference",
+    "section": "What have we learned?",
+    "text": "What have we learned?\n\nCause/Effect: a contrast between the world under different interventions, at most one of which is realised.\nConfounding: failure to condition on a common cause.\nCollider bias: conditioning on a common effect\n\n\nMetric equivalence: Factor loadings are similar across groups. Configural equivalence: The factor structure is the same across groups in a multi-group confirmatory factor analysis. Scalar equivalence: Values/Means are also equivalent across groups."
+  },
+  {
+    "objectID": "slides/07-slides.html#references",
+    "href": "slides/07-slides.html#references",
+    "title": "Introduction to Causal Inference",
+    "section": "References",
+    "text": "References\nTBA\nBibliography\nBibliography\n\nMetric equivalence: Factor loadings are similar across groups. Configural equivalence: The factor structure is the same across groups in a multi-group confirmatory factor analysis. Scalar equivalence: Values/Means are also equivalent across groups."
+  },
+  {
+    "objectID": "slides/07-slides.html#what-else-might-go-wrong-1",
+    "href": "slides/07-slides.html#what-else-might-go-wrong-1",
+    "title": "Introduction to Causal Inference",
+    "section": "What else might go wrong?",
+    "text": "What else might go wrong?\nSuppose we are confident in measurement, administer survey, and find an relationship.\n\nDoes marriage cause happiness cross culturally?"
+  },
+  {
+    "objectID": "slides/07-slides.html#what-might-go-wrong-1",
+    "href": "slides/07-slides.html#what-might-go-wrong-1",
+    "title": "Introduction to Causal Inference",
+    "section": "What might go wrong?",
+    "text": "What might go wrong?"
+  },
+  {
+    "objectID": "slides/07-slides.html#happiness-might-cause-marriage-1",
+    "href": "slides/07-slides.html#happiness-might-cause-marriage-1",
+    "title": "Introduction to Causal Inference",
+    "section": "Happiness might cause marriage",
+    "text": "Happiness might cause marriage"
+  },
+  {
+    "objectID": "slides/07-slides.html#age-might-be-a-confounder-of-both-marriage-and-happiness-1",
+    "href": "slides/07-slides.html#age-might-be-a-confounder-of-both-marriage-and-happiness-1",
+    "title": "Introduction to Causal Inference",
+    "section": "Age might be a confounder of both Marriage and Happiness",
+    "text": "Age might be a confounder of both Marriage and Happiness"
+  },
+  {
+    "objectID": "slides/07-slides.html#many-psychologists-will-simply-control-for-age-1",
+    "href": "slides/07-slides.html#many-psychologists-will-simply-control-for-age-1",
+    "title": "Introduction to Causal Inference",
+    "section": "Many psychologists will simply “control for age”",
+    "text": "Many psychologists will simply “control for age”\n\nThis doesn’t work if there is reverse causation: Regression coefficient for Marriage (M) is biased.\n\n\n\nCode\n## Simulate data \nset.seed(123)\nsim_fun_B = function() {\n  n &lt;- 1000\n  A &lt;- rnorm(n, 1) # simulates age,\n  H &lt;- rnorm(n , A) #  simulates happy as function of age\n  M &lt;- rnorm(n , A) + .2 * H # simulate marriage as a function of age + happiness\n\n  \n# Simulate dataframe from function\nsimdat_B &lt;- data.frame(\n  A = A, \n  H = H,\n  M = M) \n\n#  model in which marriage \"predicts\" happiness controlling for age\nsim_B &lt;- lm(H ~ M + A, data = simdat_B)\nsim_B  # returns output\n}\n\n# Replication 100 times\nr_lm_B &lt;- NA\nr_lm_B = replicate(100, sim_fun_B(), simplify = FALSE )\n\n# print model results\nparameters::pool_parameters(r_lm_B)\n\n\n# Fixed Effects\n\nParameter   | Coefficient |   SE |        95% CI | Statistic |     df |      p\n------------------------------------------------------------------------------\n(Intercept) |    4.12e-03 | 0.06 | [-0.12, 0.13] |      0.07 | 220.99 | 0.947 \nM           |        0.19 | 0.04 | [ 0.10, 0.27] |      4.42 | 234.19 | &lt; .001\nA           |        0.77 | 0.07 | [ 0.64, 0.91] |     11.17 | 211.13 | &lt; .001"
+  },
+  {
+    "objectID": "slides/07-slides.html#the-problem-is-confounding-what-can-we-do-about-it-1",
+    "href": "slides/07-slides.html#the-problem-is-confounding-what-can-we-do-about-it-1",
+    "title": "Introduction to Causal Inference",
+    "section": "The problem is confounding: what can we do about it?",
+    "text": "The problem is confounding: what can we do about it?\nWeek 7: Causal inference: Causal Graphs(Joseph Bulbulia). How to diagnosis sources of confounding and what to do about it.\nWeek 8: Causal inference: Target Trial Emulation (Joseph Bulbulia). How to emulate an experiment with observational data and how to identify the modification of effects by cultural groups.\nWeek 9: Causal inference: Reconsidering measurement and selection biases (Joseph Bulbulia). A discussion of problems in standard approaches to measurement.\nWeek 10 Causal inference: Cross-Cultural Experiments (Joseph Bulbulia & Guests). For whom to our results generalise?"
+  },
+  {
+    "objectID": "slides/07-slides.html#course-conclusions-1",
+    "href": "slides/07-slides.html#course-conclusions-1",
+    "title": "Introduction to Causal Inference",
+    "section": "Course conclusions",
+    "text": "Course conclusions\nWeek 11 Ethics and Ownership (Joseph Bulbulia & Guests). Can causal inference help us to improve ethical reasoning? Why is data protection important? How do the ethics of data protection relate to the ethics of open science?\nWeek 12 Future Horizons (Joseph Bulbulia, Torven, Inkuk):"
+  },
+  {
+    "objectID": "slides/07-slides.html#what-have-we-learned-1",
+    "href": "slides/07-slides.html#what-have-we-learned-1",
+    "title": "Introduction to Causal Inference",
+    "section": "What have we learned?",
+    "text": "What have we learned?\nKey Concepts ::: {.fragment .highlight-red} 1. Measurement = quantification 2. Validity = accuracy 3. Confounder = interference :::"
+  },
+  {
+    "objectID": "slides/07-slides.html#references-1",
+    "href": "slides/07-slides.html#references-1",
+    "title": "Introduction to Causal Inference",
+    "section": "References",
+    "text": "References\nFor an account of the history of measurement in psychological research, see: (Briggs 2021)\nFor an account of key concepts and current debates in psychometrics, see: (Bandalos 2018)\nFor an account of special measurement problems that arise in cross-cultural research, see: (Van de Vijver and Leung 2021)\nFor an accessible introduction to causal inference and its history see: (Pearl and Mackenzie 2018)\nBibliography\n\nMetric equivalence: Factor loadings are similar across groups. Configural equivalence: The factor structure is the same across groups in a multi-group confirmatory factor analysis. Scalar equivalence: Values/Means are also equivalent across groups.\n\n\n\n\n\n\n\nBandalos, Deborah L. 2018. Measurement Theory and Applications for the Social Sciences. Guilford Publications.\n\n\nBriggs, Derek C. 2021. Historical and Conceptual Foundations of Measurement in the Human Sciences: Credos and Controversies. Routledge.\n\n\nPearl, Judea, and Dana Mackenzie. 2018. The Book of Why: The New Science of Cause and Effect. Basic books.\n\n\nVan de Vijver, Fons JR, and Kwok Leung. 2021. Methods and Data Analysis for Cross-Cultural Research. Vol. 116. Cambridge University Press."
+  },
+  {
+    "objectID": "slides/07-slides.html#where-does-psychology-start",
+    "href": "slides/07-slides.html#where-does-psychology-start",
+    "title": "Introduction to Causal Inference",
+    "section": "0Where does psychology start?",
+    "text": "0Where does psychology start?\n\nPsychology starts with a question about how people think or behave."
+  },
+  {
+    "objectID": "slides/07-slides.html#hummes-definitions-of-a-causality",
+    "href": "slides/07-slides.html#hummes-definitions-of-a-causality",
+    "title": "Introduction to Causal Inference",
+    "section": "Humme’s definitions of a causality",
+    "text": "Humme’s definitions of a causality\n\n“we may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second [definition 1]. Or, in other words, where, if the first object had not been, the second never would have existed [definition 2].” - David Hume, Enquiries Concerning Human Understanding, and Concerning the Principles of Morals, Section VII"
+  },
+  {
+    "objectID": "slides/07-slides.html#humes-definitions-of-a-causality",
+    "href": "slides/07-slides.html#humes-definitions-of-a-causality",
+    "title": "Introduction to Causal Inference",
+    "section": "Hume’s definitions of a causality",
+    "text": "Hume’s definitions of a causality\n\n“we may define a cause to be an object followed by another, and where all the objects, similar to the first, are followed by objects similar to the second [definition 1]. Or, in other words, where, if the first object had not been, the second never would have existed [definition 2].” - David Hume, Enquiries Concerning Human Understanding, and Concerning the Principles of Morals, Section VII"
+  },
+  {
+    "objectID": "slides/07-slides.html#individual-causal-effects",
+    "href": "slides/07-slides.html#individual-causal-effects",
+    "title": "Introduction to Causal Inference",
+    "section": "Individual causal effects",
+    "text": "Individual causal effects\nY_i^{a = 1}: The cognitive ability of child i if they were bilingual. This is the counterfactual outcome when A = 1.\nY_i^{a = 0}: The cognitive ability of child i if they were monolingual. This is the counterfactual outcome when A = 0.\n\n\\text{Causal Effect}_i = Y^{a = 1} - Y^{a = 0}"
+  },
+  {
+    "objectID": "slides/07-slides.html#individual-causal-quantities",
+    "href": "slides/07-slides.html#individual-causal-quantities",
+    "title": "Introduction to Causal Inference",
+    "section": "Individual causal quantities",
+    "text": "Individual causal quantities\nWe say there is a causal effect for individual i if:\n\nY_i^{a=1} - Y_i^{a=0}  \\neq 0"
+  },
+  {
+    "objectID": "slides/07-slides.html#two-roads-diverge-in-a-yellow-wood",
+    "href": "slides/07-slides.html#two-roads-diverge-in-a-yellow-wood",
+    "title": "Introduction to Causal Inference",
+    "section": "Two Roads Diverge in a Yellow Wood",
+    "text": "Two Roads Diverge in a Yellow Wood\nRobert Frost writes,\n\nTwo roads diverged in a yellow wood,\n\n\nAnd sorry I could not travel both\u000b\n\n\nAnd be one traveler, long I stood\u000b\n\n\nAnd looked down one as far as I could\u000b\n\n\nTo where it bent in the undergrowth;\u000b\n\n\nThen took the other, as just as fair,\u000b\n\n\nAnd having perhaps the better claim,\u000b\n\n\nBecause it was grassy and wanted wear;\u000b\n\n\nThough as for that the passing there\u000b\n\n\nHad worn them really about the same,\u000b \u000b\n\n\nAnd both that morning equally lay\u000b\n\n\nIn leaves no step had trodden black.\u000b\n\n\nOh, I kept the first for another day!\u000b\n\n\nYet knowing how way leads on to way,\u000b\n\n\nI doubted if I should ever come back.\u000b\n\n\nI shall be telling this with a sigh\u000b\n\n\nSomewhere ages and ages hence:\u000b\n\n\nTwo roads diverged in a wood, and I—\u000b\n\n\nI took the one less traveled by,\u000b\n\n\nAnd that has made all the difference.\n\n\nRobert Frost, The Road Not Taken"
+  },
+  {
+    "objectID": "slides/07-slides.html#how-can-we-identify-causal-effects",
+    "href": "slides/07-slides.html#how-can-we-identify-causal-effects",
+    "title": "Introduction to Causal Inference",
+    "section": "How can we identify causal effects?",
+    "text": "How can we identify causal effects?\n\nRecall the answers you proposed to bilingual causal question\n\ne.g. experiment: random assigment to bilingual training.\n\nHow does this work?\n\nConfounders equally distributed\nCount up results\nTake the average of the differences in the two groups."
+  },
+  {
+    "objectID": "slides/07-slides.html#average-treatement-effect-in-a-randomised-experiment",
+    "href": "slides/07-slides.html#average-treatement-effect-in-a-randomised-experiment",
+    "title": "Introduction to Causal Inference",
+    "section": "Average Treatement Effect in a Randomised Experiment",
+    "text": "Average Treatement Effect in a Randomised Experiment\n\\begin{align}\nE(\\delta) = E(Y^{a=1} - Y^{a=0})\\\\\n          ~  = E(Y^{a=1}) - E(Y^{a=0}) \\\\\n          ~  = ATE\n\\end{align}\n\n\nE(\\delta) is the “estimand” or causal quantity of interest (the expected difference between the means of two randomised groups, or equivalentally, the mean of the differences)"
+  },
+  {
+    "objectID": "slides/07-slides.html#what-is-the-problem",
+    "href": "slides/07-slides.html#what-is-the-problem",
+    "title": "Introduction to Causal Inference",
+    "section": "What is the problem?",
+    "text": "What is the problem?\n\nThese data required to compute this quantity is generally not available."
+  },
+  {
+    "objectID": "content/07-content.html#conclusion-10-minutes",
+    "href": "content/07-content.html#conclusion-10-minutes",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Conclusion (10 minutes)",
+    "text": "Conclusion (10 minutes)\nIn this lecture, we discussed the fundamental problem of causal inference, its assumptions, the role of randomized experiments in estimating causal effects, the challenges in identifying causal effects from observational data, and the use of causal graphs to represent and analyze causal relationships. We focused on the example of bilingualism and cognitive abilities in children, but these concepts and methods can be applied to a wide range of research questions in cross-cultural psychology. As researchers, it is essential to be aware of these issues and to use appropriate methods to make valid causal inferences from our data. In later lectures, we will develop more cross-cultural research examples to illustrate the application of these methods in various contexts."
+  },
+  {
+    "objectID": "slides/07-slides.html#assumptions-required-for-estimating-causal-effects-from-data",
+    "href": "slides/07-slides.html#assumptions-required-for-estimating-causal-effects-from-data",
+    "title": "Introduction to Causal Inference",
+    "section": "Assumptions Required for Estimating Causal Effects From Data",
+    "text": "Assumptions Required for Estimating Causal Effects From Data\n\nCausal Consistency: The values of exposure under comparisons correspond to well-defined interventions that, in turn, correspond to the versions of treatment in the data.(see: Chatton, Hernan & Robbins)\nPositivity: The probability of receiving every value of the exposure within all strata of co-variates is greater than zero\nExchangeablility:The conditional probability of receiving every value of an exposure level, though not decided by the investigators, depends only on the measured covariates (see: Chatton, Hernan & Robbins)"
+  },
+  {
+    "objectID": "slides/07-slides.html#causal-consistency-assumption",
+    "href": "slides/07-slides.html#causal-consistency-assumption",
+    "title": "Introduction to Causal Inference",
+    "section": "Causal Consistency assumption",
+    "text": "Causal Consistency assumption\n\nThe values of exposure under comparisons correspond to well-defined interventions that, in turn, correspond to the versions of treatment in the data.\n\n\\begin{equation}\nY^{obs} = AY^{a=1} + (1-A)Y^{a=0}\n\\end{equation}"
+  },
+  {
+    "objectID": "slides/07-slides.html#causal-consistency-implications",
+    "href": "slides/07-slides.html#causal-consistency-implications",
+    "title": "Introduction to Causal Inference",
+    "section": "Causal Consistency: implications",
+    "text": "Causal Consistency: implications\nFor individuals with exposure level A = 1:\n\\begin{equation}\n\\begin{split}\n(Y^{obs}|A = 1) &= 1 \\times A  \\times Y^{a=1} + (1-1) \\times Y^{a=0}\\\\\n& = 1 \\times Y^{a=1} + 0 \\times  Y^{a=0} \\\\\n& =  Y^{a=1}\n\\end{split}\n\\end{equation}\nFor individuals with exposure level A = 0:\n\\begin{equation}\n\\begin{split}\n(Y^{obs}|A = 0) &= 0 \\times A  \\times Y^{a=1} + (1-0) \\times Y^{a=0}\\\\\n& = 0 \\times Y^{a=1} + 1 \\times  Y^{a=0} \\\\\n& =  Y^{a=0}\n\\end{split}\n\\end{equation}\nWhich implies:\n\\begin{equation}\n\\begin{split}\nY_i &= Y_i^{a=1}~~~\\text{if}~ A_i = 1\\\\\nY_i &= Y_i^{a=0}~~~ \\text{if}~  A_i = 0\n\\end{split}\n\\end{equation}"
+  },
+  {
+    "objectID": "slides/07-slides.html#causal-consistency-gets-from-observations-to-counterfactuals",
+    "href": "slides/07-slides.html#causal-consistency-gets-from-observations-to-counterfactuals",
+    "title": "Introduction to Causal Inference",
+    "section": "Causal Consistency gets from observations to counterfactuals",
+    "text": "Causal Consistency gets from observations to counterfactuals\nFor individuals with exposure level A = 1:\n\\begin{equation}\n\\begin{split}\n(Y^{obs}|A = 1) &= 1 \\times A  \\times Y^{a=1} + (1-1) \\times Y^{a=0}\\\\\n& = 1 \\times Y^{a=1} + 0 \\times  Y^{a=0} \\\\\n& =  Y^{a=1}\n\\end{split}\n\\end{equation}\nFor individuals with exposure level A = 0:\n\\begin{equation}\n\\begin{split}\n(Y^{obs}|A = 0) &= 0 \\times A  \\times Y^{a=1} + (1-0) \\times Y^{a=0}\\\\\n& = 0 \\times Y^{a=1} + 1 \\times  Y^{a=0} \\\\\n& =  Y^{a=0}\n\\end{split}\n\\end{equation}\nWhich implies:\n\\begin{equation}\n\\begin{split}\nY_i &= Y_i^{a=1}~~~\\text{if}~ A_i = 1\\\\\nY_i &= Y_i^{a=0}~~~ \\text{if}~  A_i = 0\n\\end{split}\n\\end{equation}"
+  },
+  {
+    "objectID": "slides/07-slides.html#positivity",
+    "href": "slides/07-slides.html#positivity",
+    "title": "Introduction to Causal Inference",
+    "section": "Positivity",
+    "text": "Positivity\n\nThe probability of receiving every value of the exposure within all strata of co-variates is greater than zero\n\n\\begin{equation}\n0 &lt; \\Pr(A=a|L)&lt;1, ~ \\forall a \\in A, ~ \\forall a \\in L\n\\end{equation}\n\nTwo types of positivity violations\n\nRandom non-positivity: the casual effect of aging with observations missing at ages 40-41 (we use parametric models as a work around.)\nDeterministic non-positivity: the causal effect of hysterectomy in biological males (assumption violated)."
+  },
+  {
+    "objectID": "slides/07-slides.html#conditional-exchangeability",
+    "href": "slides/07-slides.html#conditional-exchangeability",
+    "title": "Introduction to Causal Inference",
+    "section": "Conditional Exchangeability",
+    "text": "Conditional Exchangeability\n\nThe conditional probability of receiving every value of an exposure level, though not decided by the investigators, depends only on the measured covariates\n\ndef: \\coprod means “independent of”, a|b translates to “a conditional on b”\n\\begin{equation}\nY^{a=1},Y^{a=0}\\coprod A|L\n\\end{equation}\nor equivalently\n\\begin{equation}\nA \\coprod Y^{a=1},Y^{a=0}|L\n\\end{equation}\nWhere L is the set of co-variates sufficient to ensure the independence of the counterfactual outcomes and the exposure."
+  },
+  {
+    "objectID": "slides/07-slides.html#test",
+    "href": "slides/07-slides.html#test",
+    "title": "Introduction to Causal Inference",
+    "section": "TEST",
+    "text": "TEST\n\n\nCode\n## Simulate data \nset.seed(123)"
+  },
+  {
+    "objectID": "slides/07-slides.html#causal-graphs",
+    "href": "slides/07-slides.html#causal-graphs",
+    "title": "Introduction to Causal Inference",
+    "section": "Causal Graphs",
+    "text": "Causal Graphs\nPsychology starts with a question. “Does A cause Y?”\n\ncg-1"
+  },
+  {
+    "objectID": "slides/07-slides.html#problem-y---a-might-cause-marriage",
+    "href": "slides/07-slides.html#problem-y---a-might-cause-marriage",
+    "title": "Introduction to Causal Inference",
+    "section": "Problem: Y -> A might cause marriage",
+    "text": "Problem: Y -&gt; A might cause marriage"
+  },
+  {
+    "objectID": "slides/07-slides.html#problem",
+    "href": "slides/07-slides.html#problem",
+    "title": "Introduction to Causal Inference",
+    "section": "Problem:",
+    "text": "Problem:\n\n\n\n\n\n\n##. How might we address this problem of temporal order?\n\nAnswer: collect time series data."
+  },
+  {
+    "objectID": "content/07-content.html#conclusion",
+    "href": "content/07-content.html#conclusion",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Conclusion",
+    "text": "Conclusion\nIn this lecture, we discussed the fundamental problem of causal inference, its assumptions, the role of randomized experiments in estimating causal effects, the challenges in identifying causal effects from observational data, and the use of causal graphs to represent and analyze causal relationships. You have learned how to use causal graphs to identify sources of bias. In the weeks ahead, we will apply this knowledge to address questions in cross-cultural psychology."
+  },
+  {
+    "objectID": "slides/07-slides.html#question",
+    "href": "slides/07-slides.html#question",
+    "title": "Introduction to Causal Inference",
+    "section": "Question:",
+    "text": "Question:\n\ncg-2"
+  },
+  {
+    "objectID": "slides/07-slides.html#one-problem",
+    "href": "slides/07-slides.html#one-problem",
+    "title": "Introduction to Causal Inference",
+    "section": "One Problem",
+    "text": "One Problem\n\ncg-3"
+  },
+  {
+    "objectID": "slides/07-slides.html#solution-collect-time-series-data",
+    "href": "slides/07-slides.html#solution-collect-time-series-data",
+    "title": "Introduction to Causal Inference",
+    "section": "Solution: collect time-series data",
+    "text": "Solution: collect time-series data\n\ncg-4"
+  },
+  {
+    "objectID": "slides/07-slides.html#why-time-series-data-are-critical",
+    "href": "slides/07-slides.html#why-time-series-data-are-critical",
+    "title": "Introduction to Causal Inference",
+    "section": "Why time series data are critical",
+    "text": "Why time series data are critical\n\ncg-5"
+  },
+  {
+    "objectID": "slides/07-slides.html#solution-to-problem-of-common-causes",
+    "href": "slides/07-slides.html#solution-to-problem-of-common-causes",
+    "title": "Introduction to Causal Inference",
+    "section": "Solution: to problem of common causes",
+    "text": "Solution: to problem of common causes\n\ncg-8"
+  },
+  {
+    "objectID": "slides/07-slides.html#another-problem",
+    "href": "slides/07-slides.html#another-problem",
+    "title": "Introduction to Causal Inference",
+    "section": "Another problem",
+    "text": "Another problem\n\ncg-7"
+  },
+  {
+    "objectID": "slides/07-slides.html#conditioning-on-a-mediator-is-a-common-problem",
+    "href": "slides/07-slides.html#conditioning-on-a-mediator-is-a-common-problem",
+    "title": "Introduction to Causal Inference",
+    "section": "Conditioning on a mediator is a common problem",
+    "text": "Conditioning on a mediator is a common problem\n\ncg-9"
+  },
+  {
+    "objectID": "slides/07-slides.html#aside-in-the-weeks-ahead-we-will-discuss-inferring-mediated-causal-effects",
+    "href": "slides/07-slides.html#aside-in-the-weeks-ahead-we-will-discuss-inferring-mediated-causal-effects",
+    "title": "Introduction to Causal Inference",
+    "section": "Aside: in the weeks ahead we will discuss inferring mediated causal effects",
+    "text": "Aside: in the weeks ahead we will discuss inferring mediated causal effects"
+  },
+  {
+    "objectID": "slides/07-slides.html#forshadowing-in-the-weeks-ahead-we-will-discuss-inferring-mediated-causal-effects",
+    "href": "slides/07-slides.html#forshadowing-in-the-weeks-ahead-we-will-discuss-inferring-mediated-causal-effects",
+    "title": "Introduction to Causal Inference",
+    "section": "Forshadowing: in the weeks ahead we will discuss inferring mediated causal effects",
+    "text": "Forshadowing: in the weeks ahead we will discuss inferring mediated causal effects"
+  },
+  {
+    "objectID": "slides/07-slides.html#collider-bias",
+    "href": "slides/07-slides.html#collider-bias",
+    "title": "Introduction to Causal Inference",
+    "section": "Collider bias",
+    "text": "Collider bias\n\ncg-13"
+  },
+  {
+    "objectID": "slides/07-slides.html#collider-bias-1",
+    "href": "slides/07-slides.html#collider-bias-1",
+    "title": "Introduction to Causal Inference",
+    "section": "Collider bias",
+    "text": "Collider bias\n\ncg-13"
+  },
+  {
+    "objectID": "slides/07-slides.html#conditioning-on-descendants",
+    "href": "slides/07-slides.html#conditioning-on-descendants",
+    "title": "Introduction to Causal Inference",
+    "section": "Conditioning on descendants",
+    "text": "Conditioning on descendants\n\ncg-14"
+  },
+  {
+    "objectID": "slides/07-slides.html#summary",
+    "href": "slides/07-slides.html#summary",
+    "title": "Introduction to Causal Inference",
+    "section": "Summary",
+    "text": "Summary\n\ncg-15"
+  },
+  {
+    "objectID": "slides/07-slides.html#advice-some-unconventional",
+    "href": "slides/07-slides.html#advice-some-unconventional",
+    "title": "Introduction to Causal Inference",
+    "section": "Advice (some unconventional)",
+    "text": "Advice (some unconventional)\n\nCauses must precede effects. Index your variables by time.\nArrange your variables in temporal order.\nDeclutter: remove any nodes that are not required to assess whether the association between an exposure and an outcome is biased.\nRemember a DAG is a qualitative tools. They do not represent non-linear associations or interactions. Do not attempt to draw an interaction by showing and edge (arrow) intersect and edge (arrow).\nDAGs differ from the graphs used for structural equation modelling. Unfortunately much of the literature in SEM has ignored the assumptions required for causal inference."
+  },
+  {
+    "objectID": "slides/07-slides.html#summary-on-causal-diagrammes-dags",
+    "href": "slides/07-slides.html#summary-on-causal-diagrammes-dags",
+    "title": "Introduction to Causal Inference",
+    "section": "Summary on Causal Diagrammes (DAGs)",
+    "text": "Summary on Causal Diagrammes (DAGs)\n\nDAGs graphically reveal sources of bias.\nThere are five sources of bias\n\nTemporal order: it is unclear whether effects are measured before causes. Solution: collect time series data or when these are not available, make assumptions clear.\nCommon causes of the exposure and outcome. Solution: condition on common causes by including them in your statistical model (this weeks excercises focus on regression)\nConditioning on a mediator. Solution: do not condition on a mediator (unless mediation is of interest).\nConditioning on a collider. Solution: do not condition on a collider.\nInducing bias by conditioning on the descendent of a confounder. Solution: Draw your DAG and follow instructions for 1-4.\n\nCRITICAL NOTE: in observational studies we cannot be certain we have controlled for confounding. We should therefore always perform sensitivity analyses. Next week we will show you how to perform sensitivity analyses.\nCRITICAL NOTE 2: We have not yet described how to compute causal effects for comparisions between groups. That comes next week."
+  },
+  {
+    "objectID": "slides/07-slides.html#another-problem-common-causes-of-a-an-y",
+    "href": "slides/07-slides.html#another-problem-common-causes-of-a-an-y",
+    "title": "Introduction to Causal Inference",
+    "section": "Another problem: common causes of A an Y",
+    "text": "Another problem: common causes of A an Y\n\ncg-6"
+  },
+  {
+    "objectID": "content/07-content.html#part-4-causal-graphs-and-directed-acyclic-graphs-dags",
+    "href": "content/07-content.html#part-4-causal-graphs-and-directed-acyclic-graphs-dags",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Part 4: Causal Graphs and Directed Acyclic Graphs (DAGs)",
+    "text": "Part 4: Causal Graphs and Directed Acyclic Graphs (DAGs)\nCausal graphs, also known as directed acyclic graphs (DAGs), provide a powerful way to represent causal relationships between variables. In a DAG, nodes represent variables, and directed edges represent causal relationships between them.\nSee this week’s lectures slides where we cover:\n\nDAG basics: How to construct and interpret DAGs, including the concepts of parents, children, ancestors, and descendants.\nD-separation and conditional independence: Understanding when variables are conditionally independent given a set of conditioning variables in a DAG, and how this relates to the concept of d-separation.\nIdentifying confounders: Using DAGs to identify confounders that must be controlled for in order to estimate causal effects.\nCollider bias and conditioning: Understanding how conditioning on colliders can induce bias in causal estimates, and how to avoid this issue.\nMediation and direct/indirect effects: if we are interested in total effects, we should not condition on a mediator."
+  },
+  {
+    "objectID": "slides/07-slides.html#average-treatement-effect-in-observational-studies",
+    "href": "slides/07-slides.html#average-treatement-effect-in-observational-studies",
+    "title": "Introduction to Causal Inference",
+    "section": "Average Treatement Effect in Observational Studies",
+    "text": "Average Treatement Effect in Observational Studies\nWhere L is observed:\n\n\\begin{aligned}\nATE = E[Y^{a=1}|L = l] - E[Y^{a=0}|L = l] ~ \\text{for any value}~l\n\\end{aligned}"
+  },
+  {
+    "objectID": "slides/07-slides.html#another-problem-common-causes-of-a-an-y-d-separation",
+    "href": "slides/07-slides.html#another-problem-common-causes-of-a-an-y-d-separation",
+    "title": "Introduction to Causal Inference",
+    "section": "Another problem: common causes of A an Y (D-separation)",
+    "text": "Another problem: common causes of A an Y (D-separation)\n\ncg-6"
+  },
+  {
+    "objectID": "slides/07-slides.html#solution-condition-on-common-causes-to-ensure-d-separation",
+    "href": "slides/07-slides.html#solution-condition-on-common-causes-to-ensure-d-separation",
+    "title": "Introduction to Causal Inference",
+    "section": "Solution: condition on common causes to ensure d-separation",
+    "text": "Solution: condition on common causes to ensure d-separation\n\ncg-8"
+  },
+  {
+    "objectID": "slides/07-slides.html#another-problem-conditioning-on-a-mediator",
+    "href": "slides/07-slides.html#another-problem-conditioning-on-a-mediator",
+    "title": "Introduction to Causal Inference",
+    "section": "Another problem: conditioning on a mediator",
+    "text": "Another problem: conditioning on a mediator\n\ncg-7"
+  },
+  {
+    "objectID": "slides/07-slides.html#collider-bias-solution-do-not-condition-on-a-collider",
+    "href": "slides/07-slides.html#collider-bias-solution-do-not-condition-on-a-collider",
+    "title": "Introduction to Causal Inference",
+    "section": "Collider bias: solution do not condition on a collider",
+    "text": "Collider bias: solution do not condition on a collider\n\ncg-13"
+  },
+  {
+    "objectID": "slides/07-slides.html#clear-advice-for-drawing-causal-graphs",
+    "href": "slides/07-slides.html#clear-advice-for-drawing-causal-graphs",
+    "title": "Introduction to Causal Inference",
+    "section": "Clear Advice for Drawing Causal Graphs",
+    "text": "Clear Advice for Drawing Causal Graphs\n\nEnsure that causes come before effects. Assign time indices to your variables.\nOrganize your variables chronologically.\nSimplify your graph by removing unnecessary nodes that don’t impact the assessment of bias between an exposure and an outcome.\nKeep in mind that Directed Acyclic Graphs (DAGs) are qualitative tools. They don’t represent non-linear associations or interactions.\nAvoid depicting interactions by crossing arrows.\nRemember that DAGs are distinct from graphs used in Structural Equation Modeling (SEM). Be cautious of SEM literature, as it often overlooks the assumptions needed for causal inference."
+  },
+  {
+    "objectID": "slides/07-slides.html#summary-drawing-causal-graphs-dags",
+    "href": "slides/07-slides.html#summary-drawing-causal-graphs-dags",
+    "title": "Introduction to Causal Inference",
+    "section": "Summary: Drawing Causal Graphs (DAGs)",
+    "text": "Summary: Drawing Causal Graphs (DAGs)\n\nDirected Acyclic Graphs (DAGs) help visualize sources of bias.\nThere are five main sources of bias:\n\nTemporal order ambiguity: Uncertainty about whether causes precede effects. Solution: Collect time series data or clarify assumptions when unavailable.\nCommon causes of exposure and outcome: Address this by including common causes in your statistical model (e.g., using regression).\nConditioning on a mediator: Avoid this unless mediation is of interest.\nConditioning on a collider: Refrain from doing this.\nBias induced by conditioning on a confounder’s descendant: Draw your DAG and follow guidelines for points 1-4.\n\nImportant Note 1: In observational studies, it’s impossible to guarantee complete control for confounding. Always conduct sensitivity analyses. Techniques for sensitivity analyses will be discussed next week.\nImportant Note 2: Methods for computing causal effects for group comparisons will be covered in the following week’s lecture."
+  },
+  {
+    "objectID": "content/07-content.html#clear-advice-for-drawing-causal-graphs",
+    "href": "content/07-content.html#clear-advice-for-drawing-causal-graphs",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Clear Advice for Drawing Causal Graphs",
+    "text": "Clear Advice for Drawing Causal Graphs\n\nEnsure that causes come before effects. Assign time indices to your variables.\nOrganize your variables chronologically.\nSimplify your graph by removing unnecessary nodes that don’t impact the assessment of bias between an exposure and an outcome.\nKeep in mind that Directed Acyclic Graphs (DAGs) are qualitative tools. They don’t represent non-linear associations or interactions.\nAvoid depicting interactions by crossing arrows.\nRemember that DAGs are distinct from graphs used in Structural Equation Modeling (SEM). Be cautious of SEM literature, as it often overlooks the assumptions needed for causal inference."
+  },
+  {
+    "objectID": "content/07-content.html#summary-drawing-causal-graphs-dags",
+    "href": "content/07-content.html#summary-drawing-causal-graphs-dags",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Summary: Drawing Causal Graphs (DAGs)",
+    "text": "Summary: Drawing Causal Graphs (DAGs)\n\nDirected Acyclic Graphs (DAGs) help visualize sources of bias.\nThere are five main sources of bias:\n\nTemporal order ambiguity: Uncertainty about whether causes precede effects. Solution: Collect time series data or clarify assumptions when unavailable.\nCommon causes of exposure and outcome: Address this by including common causes in your statistical model (e.g., using regression).\nConditioning on a mediator: Avoid this unless mediation is of interest.\nConditioning on a collider: Refrain from doing this.\nBias induced by conditioning on a confounder’s descendant: Draw your DAG and follow guidelines for points 1-4.\n\nImportant Note 1: In observational studies, it’s impossible to guarantee complete control for confounding. Always conduct sensitivity analyses. Techniques for sensitivity analyses will be discussed next week.\nImportant Note 2: Methods for computing causal effects for group comparisons will be covered in the following week’s lecture."
+  },
+  {
+    "objectID": "content/07-content.html#assumptions-required-for-estimating-causal-effects-from-data",
+    "href": "content/07-content.html#assumptions-required-for-estimating-causal-effects-from-data",
+    "title": "Introduction to Causal Inference: Definitions, Assumptions, Causal Graphs",
+    "section": "Assumptions Required for Estimating Causal Effects From Data",
+    "text": "Assumptions Required for Estimating Causal Effects From Data\n\nCausal Consistency: The values of exposure under comparisons correspond to well-defined interventions that, in turn, correspond to the versions of treatment in the data.(see: Chatton, Hernan & Robbins)\nPositivity: The probability of receiving every value of the exposure within all strata of co-variates is greater than zero\nExchangeablility: The conditional probability of receiving every value of an exposure level, though not decided by the investigators, depends only on the measured covariates (see: Chatton, Hernan & Robbins)\n\n\nCausal Consistency\nThe fundamental problem of causal inference is that an individual cannot receive two different exposures at the same time. For a binary exposure, an observed outcome under an exposure can be can be expressed:\nY^{observed} = AY^{a=1} + (1-A)Y^{a=0}\nTable Table 1 expresses the relationship between observable outcomes and counterfactual outcomes as a contingency table.\n\n\n\n\nTable 1: Causal Consistency\n\n\nGroup\nExposure_A_1\nNo_Exposure_A_0\n\n\n\n\nY(1)\nObservable\nCounterfactual\n\n\nY(0)\nCounterfactual\nObservable\n\n\n\n\n\n\n\n\nWhen the counterfactual consistency theorem holds, and individuals observed outcome under an exposure is equal to their counterfactual outcome under that exposure:\n\nY_i = Y_i^1 ~\\text{if}~ A_i = 1\n\nand\n\nY_i = Y_i^0 ~\\text{if}~  A_i = 0\n\n\n\nPositivity\nThe probability of receiving every value of the exposure within all strata of co-variates is greater than zero\n\\begin{equation}\n0 &lt; \\Pr(A=a|L)&lt;1, ~ \\forall a \\in A, ~ \\forall a \\in L\n\\end{equation}\nThere are two types of positivity violations - Random non-positivity: the casual effect of aging with observations missing at ages 40-41 (we use parametric models as a work around.) - Deterministic non-positivity: the causal effect of hysterectomy in biological males (assumption violated).\n\n\nConditional exchangeablity\nGiven the observed covariates, the treatment assignment is independent of the potential outcomes. Mathematically, this can be expressed as.\nY^a\\coprod A \\text{ for all }a\nor with strata of confounding covarates:\nY^a\\coprod  A \\text{ for all }a|L\nWhen conditional exchangability holds:\n\n\\begin{aligned}\nATE = E[Y^{a=1}|L = l] - E[Y^{a=0}|L = l] ~ \\text{for any value}~l\n\\end{aligned}\n\n\n“We say that a set L of measured non-descendants of L is a sufficient set for confounding adjustment when conditioning on L blocks all backdoor paths–that is, the treated and the untreated are exchangeable within levels of L” (Hernan & Robins, What IF p. 86)\n\n\n\nPositivity\nThere is a non-zero probability of receiving each treatment level for all strata of the observed covariates. This means that every individual has some chance of being in either treatment or control group."
   }
 ]

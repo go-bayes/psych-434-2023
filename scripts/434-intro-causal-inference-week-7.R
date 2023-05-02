@@ -14,6 +14,9 @@
 source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
 
 
+######### PART 1: DATA EXCERCISE ##############
+
+
 # Create a folder called "data", in your Rstudio project. Download this file, add it to your the folder called "data" in your Rstudio project.
 # "https://www.dropbox.com/s/vwqijg4ha17hbs1/nzavs_dat_synth_t10_t12?dl=0"
 
@@ -351,7 +354,7 @@ summary(sim_estimand_r2)
 
 
 
-######################## potential solution ####################
+######################## solution to data excercise ####################
 
 
 # inspect column names
@@ -691,6 +694,7 @@ summary(sim_estimand_r2_mine_ad_hoc)
 
 
 
+######### PART 2: CAUSAL GRAPHS &  EXCERCISE ##############
 
 
 ########################################### DAGS #####################################################################
