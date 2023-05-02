@@ -131,8 +131,7 @@ colnames(prep_reflective)
 ```{r}
 
 library(tidyverse) # should be loaded
-
-dt_ref <- prep_reflective |>
+ dt_ref <- prep_reflective |>
   mutate(id = factor(1:nrow(prep_reflective))) |>
   mutate(t1_perfectionism = round(t1_perfectionism)) |> # we create a three-level exposure to enable clear causal contrasts. We could also use a continous variable.
   mutate(
@@ -359,7 +358,7 @@ sim_estimand_r2_focal <-
 
 
 # RD describes the causal contrast on the risk difference scale.
-summary(sim_estimand_r2)
+summary(sim_estimand_r2_focal)
 
 
 # The ATE for the effect of moving from low to high is .26 a standard deviation unit in meaning.  What this means is that the expected loss of meaning from perfectionism is about a quarter standard deviation
