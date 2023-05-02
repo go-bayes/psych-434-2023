@@ -78,6 +78,25 @@ Open in browser [here](/slides/07-slides.html){target="_blank"}
 
 
 
+## Excercises
+
+[PREVIEW](/slides/07-exercise.html)
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="/slides/07-exercise.html"></iframe>
+```
+
+</div>
+
+Open in browser [here](/slides/07-exercise.html){target="_blank"}
+
+
+
+
+
+
 ## Downloads
 
 Below is a link to the R script that will allow you to download the data and exercises. Copy the contents on your screen to a new R script, and run the script from the begging. Before class, it will be useful for you to: 

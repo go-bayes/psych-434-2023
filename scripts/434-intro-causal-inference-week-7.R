@@ -211,6 +211,9 @@ baseline_vars_reflective_cont
 dt_ref = as.data.frame(dt_ref)
 
 
+# for simplicity
+df = dt_ref
+
 # create our formula string, this time for the categorical variable.
 formula_str_X <-
   paste(Y,
