@@ -1137,8 +1137,8 @@
     "objectID": "slides/07-slides.html#goals",
     "href": "slides/07-slides.html#goals",
     "title": "Introduction to Causal Inference",
-    "section": "",
-    "text": "Understand the definition of “causality” as it is used in the human and health sciences.\nUnderstand the assumptions required for consistently estimating causal effects.\nUnderstand how to use causal diagrammes to assess these assumptions.\n\n\n\n\n\nCause/Effect\nConfounder\nCollider"
+    "section": "Goals",
+    "text": "Goals\nBy the end of this seminaryou will be able to:\n\nUnderstand the definition of “causality” as it is used in the human and health sciences.\nUnderstand the assumptions required for consistently estimating causal effects.\nUnderstand how to use causal diagrammes to assess these assumptions.\n\nKey Concepts\n\nCause/Effect\nConfounder\nCollider"
   },
   {
     "objectID": "slides/07-slides.html#recall-where-does-psychology-start",
@@ -1439,7 +1439,7 @@
     "href": "slides/07-slides.html#causal-graphs",
     "title": "Introduction to Causal Inference",
     "section": "Causal Graphs",
-    "text": "Causal Graphs\nPsychology starts with a question. “Does A cause Y?”\n\n\n\ncg-1"
+    "text": "Causal Graphs\nPsychology starts with a question. “Does A cause Y?”\n\ncg-1"
   },
   {
     "objectID": "slides/07-slides.html#problem-y---a-might-cause-marriage",
@@ -1467,28 +1467,28 @@
     "href": "slides/07-slides.html#question",
     "title": "Introduction to Causal Inference",
     "section": "Question:",
-    "text": "Question:\n\n\n\ncg-2"
+    "text": "Question:\n\ncg-2"
   },
   {
     "objectID": "slides/07-slides.html#one-problem",
     "href": "slides/07-slides.html#one-problem",
     "title": "Introduction to Causal Inference",
     "section": "One Problem",
-    "text": "One Problem\n\n\n\ncg-3"
+    "text": "One Problem\n\ncg-3"
   },
   {
     "objectID": "slides/07-slides.html#solution-collect-time-series-data",
     "href": "slides/07-slides.html#solution-collect-time-series-data",
     "title": "Introduction to Causal Inference",
     "section": "Solution: collect time-series data",
-    "text": "Solution: collect time-series data\n\n\n\ncg-4"
+    "text": "Solution: collect time-series data\n\ncg-4"
   },
   {
     "objectID": "slides/07-slides.html#why-time-series-data-are-critical",
     "href": "slides/07-slides.html#why-time-series-data-are-critical",
     "title": "Introduction to Causal Inference",
     "section": "Why time series data are critical",
-    "text": "Why time series data are critical\n\n\n\ncg-5"
+    "text": "Why time series data are critical\n\ncg-5"
   },
   {
     "objectID": "slides/07-slides.html#solution-to-problem-of-common-causes",
@@ -1509,7 +1509,7 @@
     "href": "slides/07-slides.html#conditioning-on-a-mediator-is-a-common-problem",
     "title": "Introduction to Causal Inference",
     "section": "Conditioning on a mediator is a common problem",
-    "text": "Conditioning on a mediator is a common problem\n\n\n\ncg-9"
+    "text": "Conditioning on a mediator is a common problem\n\ncg-9"
   },
   {
     "objectID": "slides/07-slides.html#aside-in-the-weeks-ahead-we-will-discuss-inferring-mediated-causal-effects",
@@ -1530,7 +1530,7 @@
     "href": "slides/07-slides.html#collider-bias",
     "title": "Introduction to Causal Inference",
     "section": "Collider bias",
-    "text": "Collider bias\n\n\n\ncg-13"
+    "text": "Collider bias\n\ncg-13"
   },
   {
     "objectID": "slides/07-slides.html#collider-bias-1",
@@ -1544,14 +1544,14 @@
     "href": "slides/07-slides.html#conditioning-on-descendants",
     "title": "Introduction to Causal Inference",
     "section": "Conditioning on descendants",
-    "text": "Conditioning on descendants\n\n\n\ncg-14"
+    "text": "Conditioning on descendants\n\ncg-14"
   },
   {
     "objectID": "slides/07-slides.html#summary",
     "href": "slides/07-slides.html#summary",
     "title": "Introduction to Causal Inference",
     "section": "Summary",
-    "text": "Summary\n\n\n\ncg-15"
+    "text": "Summary\n\ncg-15"
   },
   {
     "objectID": "slides/07-slides.html#advice-some-unconventional",
@@ -1593,28 +1593,28 @@
     "href": "slides/07-slides.html#another-problem-common-causes-of-a-an-y-d-separation",
     "title": "Introduction to Causal Inference",
     "section": "Another problem: common causes of A an Y (D-separation)",
-    "text": "Another problem: common causes of A an Y (D-separation)\n\n\n\ncg-6"
+    "text": "Another problem: common causes of A an Y (D-separation)\n\ncg-6"
   },
   {
     "objectID": "slides/07-slides.html#solution-condition-on-common-causes-to-ensure-d-separation",
     "href": "slides/07-slides.html#solution-condition-on-common-causes-to-ensure-d-separation",
     "title": "Introduction to Causal Inference",
     "section": "Solution: condition on common causes to ensure d-separation",
-    "text": "Solution: condition on common causes to ensure d-separation\n\n\n\ncg-8"
+    "text": "Solution: condition on common causes to ensure d-separation\n\ncg-8"
   },
   {
     "objectID": "slides/07-slides.html#another-problem-conditioning-on-a-mediator",
     "href": "slides/07-slides.html#another-problem-conditioning-on-a-mediator",
     "title": "Introduction to Causal Inference",
     "section": "Another problem: conditioning on a mediator",
-    "text": "Another problem: conditioning on a mediator\n\n\n\ncg-7"
+    "text": "Another problem: conditioning on a mediator\n\ncg-7"
   },
   {
     "objectID": "slides/07-slides.html#collider-bias-solution-do-not-condition-on-a-collider",
     "href": "slides/07-slides.html#collider-bias-solution-do-not-condition-on-a-collider",
     "title": "Introduction to Causal Inference",
     "section": "Collider bias: solution do not condition on a collider",
-    "text": "Collider bias: solution do not condition on a collider\n\n\n\ncg-13"
+    "text": "Collider bias: solution do not condition on a collider\n\ncg-13"
   },
   {
     "objectID": "slides/07-slides.html#clear-advice-for-drawing-causal-graphs",
