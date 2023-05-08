@@ -1,4 +1,5 @@
 
+
 # PSYCH 434 WEEK 8: subsample estimation
 # May 2023
 # questions: joseph.bulbulia@vuw.ac.nz
@@ -10,7 +11,9 @@
 source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
 
 # experimental functions
-source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/experimental_funs.R")
+source(
+  "https://raw.githubusercontent.com/go-bayes/templates/main/functions/experimental_funs.R"
+)
 
 
 ######### PART 1: DATA EXCERCISE ##############
@@ -42,7 +45,7 @@ nzavs_synth <- nzavs_synth |>
   mutate(perfectionism = round(perfectionism)) |> # we create a three-level exposure to enable clear causal contrasts.
   mutate(
     perfectionism_coarsen = cut(
-    perfectionism,
+      perfectionism,
       breaks = c(1, 4, 5, 7),
       include.lowest = TRUE,
       include.highest = TRUE,
@@ -50,7 +53,7 @@ nzavs_synth <- nzavs_synth |>
       right = FALSE
     ),
     perfectionism_coarsen = factor(
-    perfectionism_coarsen,
+      perfectionism_coarsen,
       levels = c("[1,4)", "[4,5)", "[5,7]"),
       labels = c("low", "medium", "high"),
       ordered = TRUE
@@ -189,7 +192,7 @@ exposure_var = c("perfectionism", "perfectionism_coarsen")
 outcome_vars_reflective = c("meaning_purpose",
                             "meaning_sense")
 
-colnames( nzavs_synth )
+colnames(nzavs_synth)
 
 
 # the function "create_wide_data" should be in your environment.
@@ -210,7 +213,7 @@ prep_reflective <-
 
 # I have created a function that will allow you to take a data frame and
 # create a table
-create_table_output( prep_reflective, output_format = "html")
+create_table_output(prep_reflective, output_format = "html")
 
 
 # if you just want a nice html table, do this:
@@ -219,60 +222,38 @@ library(table1) # should be in your environment
 # get data into shape
 dt_new <- prep_reflective %>%
   select(starts_with("t0")) %>%
-  rename_all(~stringr::str_replace(., "^t0_", "")) %>%
+  rename_all( ~ stringr::str_replace(., "^t0_", "")) %>%
   mutate(wave = factor(rep("baseline", nrow(df)))) |>
   janitor::clean_names(case = "screaming_snake")
 
 
-# create a formulat string
+# create a formula string
 
 baseline_vars_names <- dt_new %>%
-    select(-WAVE) %>%
-    colnames()
+  select(-WAVE) %>%
+  colnames()
 
 table_baseline_vars <- paste(baseline_vars_names, collapse = "+")
 
-formula_string_table_baseline <- paste("~", table_baseline_vars, "|WAVE")
+formula_string_table_baseline <-
+  paste("~", table_baseline_vars, "|WAVE")
 
 
-# Custom rendering functions for table1
-# my_render_cont <- function(x) {
-#   with(stats.apply.rounding(stats.default(x), digits = 3),
-#        c("", "Mean (SD)" = sprintf("%s (&plusmn; %s)", MEAN, SD)))
-# }
-
-# my_render_cat <- function(x) {
-#   c("", sapply(stats.default(x), function(y) {
-#     with(y, sprintf("%d (%0.0f %%)", FREQ, PCT))
-#   }))
-# }
-
-
-table1::table1(
-    as.formula(formula_string_table_baseline),
-    data = dt_new,
-    overall = FALSE
-  )
+table1::table1(as.formula(formula_string_table_baseline),
+               data = dt_new,
+               overall = FALSE)
 
 
 # another method
 
 
-x <- table1::table1(
-  as.formula(formula_string_table_baseline),
-  data = dt_new,
-  overall = FALSE
-)
+x <- table1::table1(as.formula(formula_string_table_baseline),
+                    data = dt_new,
+                    overall = FALSE)
 
 # some options, see: https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html
 table1::t1kable(x, format = "html", booktabs = TRUE) |>
   kable_material(c("striped", "hover"))
-
-
-
-# note the counts
-# euro   māori pacific   asian
-# 8641     821     190     348
 
 
 
@@ -302,22 +283,20 @@ dt_8 <- prep_reflective |>
     t0_rural_gch2018 = as.factor(t0_rural_gch2018),
     t0_gen_cohort = as.factor(t0_gen_cohort)
   ) |>
-  dplyr::filter(t0_eth_cat == "euro"| t0_eth_cat == "māori") |> # Too few asian and pacific
-  mutate(t0_urban = factor(ifelse(t0_rural_gch2018 == "medium_urban_accessibility" | t0_rural_gch2018 == "high_urban_accessibility",
-                            "urban","rural"))) |>
+  dplyr::filter(t0_eth_cat == "euro" |
+                  t0_eth_cat == "māori") |> # Too few asian and pacific
+  mutate(t0_urban = factor(
+    ifelse(
+      t0_rural_gch2018 == "medium_urban_accessibility" |
+        t0_rural_gch2018 == "high_urban_accessibility",
+      "urban",
+      "rural"
+    )
+  )) |>
   group_by(id) |>
   dplyr::mutate(t2_meaning = mean(c(t2_meaning_purpose,
                                     t2_meaning_sense),
                                   na.rm = TRUE)) |>
-  # dplyr::mutate(t2_pwi = mean(. # for next week
-  #   c(
-  #     t2_pwi_health,
-  #     t2_pwi_relationships,
-  #     t2_pwi_security,
-  #     t2_pwi_standardliving,
-  #     na.rm = TRUE
-  #   )
-  # )) |>
   ungroup() |>
   # transform numeric variables into z scores (improves estimation)
   dplyr::mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z")) %>%
@@ -326,7 +305,7 @@ dt_8 <- prep_reflective |>
   select(id, # category is too sparse
          where(is.factor),
          t1_perfectionism, # for comparison
-         ends_with("_z"), ) |>
+         ends_with("_z"),) |>
   # tidy data frame so that the columns are ordered by time (useful for more complex models)
   relocate(id, .before = starts_with("t1_"))   |>
   relocate(starts_with("t0_"), .before = starts_with("t1_"))  |>
@@ -374,7 +353,7 @@ levels_list
 
 # Next we generate propensity scores.  Instead of modelling the outcome (t2_y) we will model the exposure (t1_x) as predicted by baseline indicators (t0_c) that we assume may be associated with the outcome and the exposure.
 
-# first step, obtain the baseline variables. note that we must remove "t0_eth_cat" because we are performing separate weighting for each stratum within this variable. here's the code:
+# First step, obtain the baseline variables. note that we must remove "t0_eth_cat" because we are performing separate weighting for each stratum within this variable. here's the code:
 
 
 baseline_vars_reflective_propensity = dt_8 |>
@@ -394,7 +373,10 @@ X <- "t1_perfectionism_coarsen"
 S <- "t0_eth_cat"
 
 # next we use our trick for creating a formula string, which will reduce our work
-formula_str_prop <- paste(X, "~", paste(baseline_vars_reflective_propensity, collapse = "+"))
+formula_str_prop <-
+  paste(X,
+        "~",
+        paste(baseline_vars_reflective_propensity, collapse = "+"))
 
 formula_str_prop
 
@@ -405,7 +387,7 @@ formula_str_prop
 # we need our data to be a data frame, you did this before but do again :)
 
 
-dt_8 <- data.frame( dt_8 )
+dt_8 <- data.frame(dt_8)
 
 
 
@@ -438,7 +420,7 @@ bal.tab(dt_match$māori, thresholds = c(m = .05))  # ok # Note we do have balanc
 #bal.tab(test$asian)  # not good but won't use in contrasts
 
 
-# blows up :)
+# this blows up :)
 # dt_match_ebal <- match_mi_general(
 #   data = dt_8,
 #   X = X,
@@ -458,8 +440,9 @@ dt_match_ps <- match_mi_general(
   method = "ps"
 )
 
+# check balance
 bal.tab(dt_match_ps$euro, thresholds = c(m = .05)) # not good
-bal.tab(dt_match_ps$māori,thresholds = c(m = .05)) # not good
+bal.tab(dt_match_ps$māori, thresholds = c(m = .05)) # not good
 
 
 # other options
@@ -473,11 +456,12 @@ dt_match_cbps <- match_mi_general(
   method = "cbps"
 )
 
+# check balance
 bal.tab(dt_match_cbps$euro) # not good
 bal.tab(dt_match_cbps$māori) # not good
 
 library("SuperLearner")
-baseline_vars_reflective_propensity
+
 dt_match_super <- match_mi_sub(
   data = dt_8,
   X = X,
@@ -486,21 +470,19 @@ dt_match_super <- match_mi_sub(
   estimand = "ATE",
   method = "super",
   super = TRUE,
-  SL.library = c("SL.glm","SL.ranger",
-                 "SL.glm.interaction"))
+  SL.library = c("SL.glm", "SL.ranger",
+                 "SL.glm.interaction")
+)
 
 
-
+# check balance
 bal.tab(dt_match_super$euro) #  good
 bal.tab(dt_match_super$māori) # not good
 
+# save data
 saveRDS(dt_match_super, here::here("data", "dt_match_super"))
 
-
-
-
-
-
+# check balance
 bal.tab(dt_match$euro)
 bal.tab(dt_match$māori)
 
@@ -515,11 +497,19 @@ plot(sum_m)
 #plot(sum_p)
 #plot(sum_a)
 
-love.plot(dt_match$euro, binary = "std", thresholds = c(m = .1))
-love.plot(dt_match$māori, binary = "std", thresholds = c(m = .1))
+love.plot(dt_match$euro,
+          binary = "std",
+          thresholds = c(m = .1))
+love.plot(dt_match$māori,
+          binary = "std",
+          thresholds = c(m = .1))
 
-love.plot(dt_match$pacific, binary = "std", thresholds = c(m = .1))
-love.plot(dt_match$asian, binary = "std", thresholds = c(m = .1))
+love.plot(dt_match$pacific,
+          binary = "std",
+          thresholds = c(m = .1))
+love.plot(dt_match$asian,
+          binary = "std",
+          thresholds = c(m = .1))
 
 
 # prepare data
@@ -529,25 +519,11 @@ dt_ref_e$weights <- dt_match$euro$weights
 # prepare data
 dt_ref_m <- subset(dt_8, t0_eth_cat == "māori")
 dt_ref_m$weights <- dt_match$māori$weights
-# prepare data
-#  dt_ref_p <- subset(dt_8, t0_eth_cat == "pacific")
-#  dt_ref_p$weights <- dt_match$pacific$weights
-# # # prepare data
-#  dt_ref_a <- subset(dt_8, t0_eth_cat == "asian")
-#  dt_ref_a$weights <- dt_match$asian$weights
-#
-#
-# # inspect exposures
-# table(dt_ref_e$t1_perfectionism_coarsen)/nrow(dt_ref_e)
-# table(dt_ref_m$t1_perfectionism_coarsen)/nrow(dt_ref_m)
-#
-# # inspect outcomes
-# hist(dt_ref_e$t2_meaning_z, breaks = 20)
-# hist(dt_ref_m$t2_meaning_z, breaks = 20)
 
 # combine
 dt_ref_all <- rbind(dt_ref_e, dt_ref_m)
 
+# call dataframe `df`
 df = dt_ref_all
 
 
@@ -558,7 +534,8 @@ baseline_vars_full
 
 # Euro
 mod_ref_meaning   <- gcomp_sim(
-  df = df,  # note change
+  df = df,
+  # note change
   Y = "t2_meaning_z",
   X = X,
   baseline_vars = baseline_vars_reflective_propensity,
@@ -576,13 +553,11 @@ mod_ref_meaning   <- gcomp_sim(
   new_name = "t2_meaning_z (composite)"
 )
 
-# ATE
+# ATE. we will cover "evalues" next week
 mod_ref_meaning
 
 
-
 ### SUBGROUP analysis
-
 df = dt_ref_all
 Y = "t2_meaning_z"
 X = "t1_perfectionism_coarsen"
@@ -600,7 +575,20 @@ S = "t0_eth_cat"
 
 # not we interact the subclass X treatment X covariates
 
-formula_str <- paste(Y, "~", S, "*", "(", X , "*", "(", paste(baseline_vars_reflective_propensity, collapse = "+"), ")", ")")
+formula_str <-
+  paste(
+    Y,
+    "~",
+    S,
+    "*",
+    "(",
+    X ,
+    "*",
+    "(",
+    paste(baseline_vars_reflective_propensity, collapse = "+"),
+    ")",
+    ")"
+  )
 
 formula_str
 
@@ -611,12 +599,13 @@ fit_all_all  <- glm(
   weights = weights,
   # weights = if (!is.null(weight_var)) weight_var else NULL,
   family = family,
-  data = df)
+  data = df
+)
 
 summary(fit_all_all)
 
 coefs <- coef(fit_all_all)
-table( is.na(coefs) )#     t0_eth_catmāori:t1_perfectionism_coarsen.Q:t0_gen_cohort.C
+table(is.na(coefs))#     t0_eth_catmāori:t1_perfectionism_coarsen.Q:t0_gen_cohort.C
 
 # #FALSE  TRUE
 # 344     4
@@ -628,158 +617,189 @@ sim_model_all <- sim(fit_all_all, n = nsims, vcov = "HC1")
 
 
 # simulate effect as modified in europeans
-sim_estimand_all_e <- sim_ame(sim_model_all,
-                              var = X,
-                              cl = cores,
-                              subset = t0_eth_cat == "euro",
-                              verbose = FALSE)
+sim_estimand_all_e <- sim_ame(
+  sim_model_all,
+  var = X,
+  cl = cores,
+  subset = t0_eth_cat == "euro",
+  verbose = FALSE
+)
 
-sim_estimand_all_e <- transform(sim_estimand_all_e, RD = `E[Y(low)]` - `E[Y(high)]`)
+sim_estimand_all_e <-
+  transform(sim_estimand_all_e, RD = `E[Y(low)]` - `E[Y(high)]`)
 sim_estimand_all_e
 
 
 # simulate effect as modified in māori
-sim_estimand_all_m <- sim_ame(sim_model_all,
-                              var = X,
-                              cl = cores,
-                              subset = t0_eth_cat == "māori",
-                              verbose = FALSE)
+sim_estimand_all_m <- sim_ame(
+  sim_model_all,
+  var = X,
+  cl = cores,
+  subset = t0_eth_cat == "māori",
+  verbose = FALSE
+)
 
-sim_estimand_all_m <- transform(sim_estimand_all_m, RD = `E[Y(low)]` - `E[Y(high)]`)
+# combine
+sim_estimand_all_m <-
+  transform(sim_estimand_all_m, RD = `E[Y(low)]` - `E[Y(high)]`)
 
 
-
+# summary
 summary(sim_estimand_all_e)
 summary(sim_estimand_all_m)
 
-names(sim_estimand_all_e) <- paste(names(sim_estimand_all_e), "e", sep = "_")
+# rearrange
+names(sim_estimand_all_e) <-
+  paste(names(sim_estimand_all_e), "e", sep = "_")
 
-names(sim_estimand_all_m) <- paste(names(sim_estimand_all_m), "m", sep = "_")
+names(sim_estimand_all_m) <-
+  paste(names(sim_estimand_all_m), "m", sep = "_")
 
-sim_estimand_all_m
-sim_estimand_all_e
 
 est_all <- cbind(sim_estimand_all_m, sim_estimand_all_e)
 est_all <- transform(est_all, `RD_m - RD_e` = RD_m - RD_e)
 
 
-# KEY SUMMARY
+# view summary
 summary(est_all)
 
 
 
 
-## only regression
+###### ###### ###### TRY ONLY G-COMPUTATION (leaving out Propensity Scores) ###### ######
 
-# recall:
+# check formula:
 formula_str
 
 # fit model
-fit_all_r <- glm(
-  as.formula(formula_str),
-  #  weights = weights,  # remove weights
-  family = family,
-  data = df)
+fit_all_r <- glm(as.formula(formula_str),
+                 #  weights = weights,  # remove weights
+                 family = family,
+                 data = df)
 
 # simulate coefficients
 sim_model_r <- sim(fit_all_r, n = nsims, vcov = "HC1")
 
 
 # simulate effect as modified in europeans
-sim_estimand_r_e <- sim_ame(sim_model_r,
-                            var = X,
-                            cl = cores,
-                            subset = t0_eth_cat == "euro",
-                            verbose = FALSE)
+sim_estimand_r_e <- sim_ame(
+  sim_model_r,
+  var = X,
+  cl = cores,
+  subset = t0_eth_cat == "euro",
+  verbose = FALSE
+)
 
-sim_estimand_r_e <- transform(sim_estimand_r_e, RD = `E[Y(low)]` - `E[Y(high)]`)
+# wrangle
+sim_estimand_r_e <-
+  transform(sim_estimand_r_e, RD = `E[Y(low)]` - `E[Y(high)]`)
 sim_estimand_r_e
 
 
 # simulate effect as modified in māori
-sim_estimand_r_m <- sim_ame(sim_model_r,
-                            var = X,
-                            cl = cores,
-                            subset = t0_eth_cat == "māori",
-                            verbose = FALSE)
+sim_estimand_r_m <- sim_ame(
+  sim_model_r,
+  var = X,
+  cl = cores,
+  subset = t0_eth_cat == "māori",
+  verbose = FALSE
+)
 
-sim_estimand_r_m <- transform(sim_estimand_r_m, RD = `E[Y(low)]` - `E[Y(high)]`)
+# wrangle
+sim_estimand_r_m <-
+  transform(sim_estimand_r_m, RD = `E[Y(low)]` - `E[Y(high)]`)
 
 
-
+# view
 summary(sim_estimand_r_e)
 summary(sim_estimand_r_m)
 
-names(sim_estimand_r_e) <- paste(names(sim_estimand_r_e), "e", sep = "_")
+# rearrange
+names(sim_estimand_r_e) <-
+  paste(names(sim_estimand_r_e), "e", sep = "_")
 
-names(sim_estimand_r_m) <- paste(names(sim_estimand_r_m), "m", sep = "_")
+names(sim_estimand_r_m) <-
+  paste(names(sim_estimand_r_m), "m", sep = "_")
 
-sim_estimand_r_m
-sim_estimand_r_e
 
 est_r <- cbind(sim_estimand_r_e, sim_estimand_r_m)
 est_r <- transform(est_r, `RD_m - RD_e` = RD_m - RD_e)
 
+# doubly robust
 summary(est_all)
+
+# g-computation
 summary(est_r)
 
 
-# only propensity score
+# only propensity score (no regression stratification)
 
 # fit model
 fit_all_p <- glm(
-  t2_meaning_z  ~ t1_perfectionism_coarsen * t0_eth_cat,
-  weights = weights,  # remove weights
+  t2_meaning_z  ~ t1_perfectionism_coarsen * t0_eth_cat, ## note we do not have covariates -- don't need them because we have weighted by the covariates on the exposure to acheive balance.
+  weights = weights,
   family = family,
-  data = df)
+  data = df
+)
 
 # simulate coefficients
 sim_model_p <- sim(fit_all_p, n = nsims, vcov = "HC1")
 
 
 # simulate effect as modified in europeans
-sim_estimand_p_e <- sim_ame(sim_model_p,
-                            var = X,
-                            cl = cores,
-                            subset = t0_eth_cat == "euro",
-                            verbose = FALSE)
+sim_estimand_p_e <- sim_ame(
+  sim_model_p,
+  var = X,
+  cl = cores,
+  subset = t0_eth_cat == "euro",
+  verbose = FALSE
+)
 
-sim_estimand_p_e <- transform(sim_estimand_p_e, RD = `E[Y(low)]` - `E[Y(high)]`)
-sim_estimand_p_e
-
+sim_estimand_p_e <-
+  transform(sim_estimand_p_e, RD = `E[Y(low)]` - `E[Y(high)]`)
 
 # simulate effect as modified in māori
-sim_estimand_p_m <- sim_ame(sim_model_p,
-                            var = X,
-                            cl = cores,
-                            subset = t0_eth_cat == "māori",
-                            verbose = FALSE)
+sim_estimand_p_m <- sim_ame(
+  sim_model_p,
+  var = X,
+  cl = cores,
+  subset = t0_eth_cat == "māori",
+  verbose = FALSE
+)
 
-sim_estimand_p_m <- transform(sim_estimand_p_m, RD = `E[Y(low)]` - `E[Y(high)]`)
+# wrangle
+sim_estimand_p_m <-
+  transform(sim_estimand_p_m, RD = `E[Y(low)]` - `E[Y(high)]`)
 
 
+# wrangle
 
-summary(sim_estimand_p_e)
-summary(sim_estimand_p_m)
+# wrangle
+names(sim_estimand_p_e) <-
+  paste(names(sim_estimand_p_e), "e", sep = "_")
 
-names(sim_estimand_p_e) <- paste(names(sim_estimand_p_e), "e", sep = "_")
-
-names(sim_estimand_p_m) <- paste(names(sim_estimand_p_m), "m", sep = "_")
+names(sim_estimand_p_m) <-
+  paste(names(sim_estimand_p_m), "m", sep = "_")
 
 
 est_p <- cbind(sim_estimand_p_e, sim_estimand_p_m)
 est_p <- transform(est_p, `RD_m - RD_e` = RD_m - RD_e)
 
+
+# summary of all three approaches are similar
 summary(est_all)
 summary(est_r)
 summary(est_p)
 
 
-### CONTINUOUS X  (Note generally bad idea to do propensity scores) # so we use  g-comp only, but lets expore this:
+
+
+### ### ### ### ### CONTINUOUS EXPOSURE   ### ### ### ### ### ### ### ###
 
 X_cont <- "t1_perfectionism_z"
 
 
+# Only use Engergy balancing for a continuous exposure
 dt_match_cont <- match_mi_general(
   data = dt_8,
   X = X_cont,
@@ -795,9 +815,6 @@ saveRDS(dt_match_cont, here::here("data", "dt_match_cont"))
 
 bal.tab(dt_match_cont$euro, thresholds = c(m = .05))   #  good
 bal.tab(dt_match_cont$māori, thresholds = c(m = .05))  # ok
-
-
-
 
 
 # prepare data
@@ -819,7 +836,8 @@ df = dt_ref_all_cont
 # let's make the contrasts between low and high perfectionism.
 
 mod_ref_meaning_cont   <- gcomp_sim(
-  df = dt_ref_all_cont,  # note change
+  df = dt_ref_all_cont,
+  # note change
   Y = "t2_meaning_z",
   X = X_cont,
   baseline_vars = baseline_vars_full,
@@ -841,46 +859,66 @@ mod_ref_meaning_cont   <- gcomp_sim(
 mod_ref_meaning_cont
 
 
-formula_str_cont <- paste(Y, "~", S, "*", "(", X_cont , "*", "(", paste(baseline_vars_reflective_propensity, collapse = "+"), ")", ")")
+formula_str_cont <-
+  paste(
+    Y,
+    "~",
+    S,
+    "*",
+    "(",
+    X_cont ,
+    "*",
+    "(",
+    paste(baseline_vars_reflective_propensity, collapse = "+"),
+    ")",
+    ")"
+  )
+
+
 formula_str_cont
 
 
 # fit model
-fit_all_r_cont <- glm(
-  as.formula(formula_str_cont),
-  #  weights = weights,  # remove weights
-  family = family,
-  data = dt_ref_all_cont)
+fit_all_r_cont <- glm(as.formula(formula_str_cont),
+                      #  weights = weights,  # remove weights
+                      family = family,
+                      data = dt_ref_all_cont)
 
 # simulate coefficients
 sim_model_r_cont <- sim(fit_all_r_cont, n = nsims, vcov = "HC3")
 
 
 # simulate effect as modified in europeans
-sim_estimand_r_e_cont <- sim_ame(sim_model_r_cont,
-                            var = X_cont,
-                            cl = cores,
-                            subset = t0_eth_cat == "euro",
-                            verbose = FALSE)
+sim_estimand_r_e_cont <- sim_ame(
+  sim_model_r_cont,
+  var = X_cont,
+  cl = cores,
+  subset = t0_eth_cat == "euro",
+  verbose = FALSE
+)
 
-summary( sim_estimand_r_e_cont)
+summary(sim_estimand_r_e_cont)
 
 
 
 # simulate effect as modified in māori
-sim_estimand_r_m_cont <- sim_ame(sim_model_r_cont,
-                            var = X_cont,
-                            cl = cores,
-                            subset = t0_eth_cat == "māori",
-                            verbose = FALSE)
+sim_estimand_r_m_cont <- sim_ame(
+  sim_model_r_cont,
+  var = X_cont,
+  cl = cores,
+  subset = t0_eth_cat == "māori",
+  verbose = FALSE
+)
 sim_estimand_r_m_cont <- transform(sim_estimand_r_m_cont)
 summary(sim_estimand_r_m_cont)
 
 
 
-names(sim_estimand_r_e_cont) <- paste(names(sim_estimand_r_e_cont), "e", sep = "_")
+names(sim_estimand_r_e_cont) <-
+  paste(names(sim_estimand_r_e_cont), "e", sep = "_")
 
-names(sim_estimand_r_m_cont) <- paste(names(sim_estimand_r_m_cont), "m", sep = "_")
+names(sim_estimand_r_m_cont) <-
+  paste(names(sim_estimand_r_m_cont), "m", sep = "_")
 
 summary(sim_estimand_r_e_cont)
 
@@ -890,7 +928,8 @@ sim_estimand_r_e_cont
 names(sim_estimand_r_e_cont) <- "estimate_e"
 names(sim_estimand_r_m_cont) <- "estimate_m"
 est_r_cont <- cbind(sim_estimand_r_e_cont, sim_estimand_r_m_cont)
-est_r_cont <- transform(est_r_cont, `estimate_m - estimate_e` =estimate_m - estimate_e)
+est_r_cont <-
+  transform(est_r_cont, `estimate_m - estimate_e` = estimate_m - estimate_e)
 
 # no difference
 summary(est_r_cont)
@@ -898,20 +937,27 @@ summary(est_r_cont)
 
 
 # What do we make of this?
+# the estimand is different here. We are considering people who are moving from average perfectionsim to +1 standard deviation higher.
+
+# i.e. from
+mean(dt_ref_all_cont$t1_perfectionism) #[1] 3.020397
+
+# to
+
+sd(dt_ref_all_cont$t1_perfectionism) + mean(dt_ref_all_cont$t1_perfectionism) #4.426781
+
+# so this is in the range of low to medium in our coarsen variable.  Note that in this range of the data, the causal effects are similar for maori and nz europeans.
 
 
 
-
-
-
-
+#################### THE FOLLOWING IS JUST FOR INTEREST. IT IS A MULTI-LEVEL MODEL, WHICH WOULD BE STANDARD IN LONGITUDINAL PSYCHOLOGY.  HOWEVER IT IS UNCLEAR WHAT WE LEARN FROM IT #################### #################### ###############
 
 #####. multi-level model
 ##### This is how we would generally model "change over time"
 
 
 dt_ml <- nzavs_synth |>
-  mutate(time = as.numeric(wave)-1)|>
+  mutate(time = as.numeric(wave) - 1) |>
   group_by(id, wave) |>
   dplyr::mutate(meaning = mean(c(meaning_purpose,
                                  meaning_sense),
@@ -922,7 +968,7 @@ dt_ml <- nzavs_synth |>
   # select only factors and numeric values that are z-scores
   select(id,
          where(is.factor),
-         perfectionism,# for comparison
+         perfectionism, # for comparison
          time,
          ends_with("_z")) |>
   data.frame()
@@ -952,7 +998,22 @@ baseline_vars_ml = c(
 Y_ml = "meaning_z"
 X_ml = "perfectionism_z"
 
-formula_str_ml <- paste(Y_ml, "~",   "time", "*",  "(", X_ml , "*", "(", paste(baseline_vars_ml, collapse = "+"), ")", "+", "(1|id)", ")")
+formula_str_ml <-
+  paste(
+    Y_ml,
+    "~",
+    "time",
+    "*",
+    "(",
+    X_ml ,
+    "*",
+    "(",
+    paste(baseline_vars_ml, collapse = "+"),
+    ")",
+    "+",
+    "(1|id)",
+    ")"
+  )
 
 formula_str_ml
 
@@ -970,28 +1031,49 @@ plot(tab_ml)
 library(ggeffects)
 
 
-graph_ml <- plot(
-  ggeffects::ggpredict(model_ml, terms = c("time", "perfectionism_z","eth_cat"))
-)
+graph_ml <- plot(ggeffects::ggpredict(model_ml, terms = c("time", "perfectionism_z", "eth_cat")))
 
 
 # note we see regression to the mean.  this is common. but we do not have causal effects.
 graph_ml
 
 
+######################################## ################### ########################################
+######################################## STUDENT PROBLEM SET ########################################
+######################################## ################### ########################################
 
 
-
-########## ##### ##### ##### #####  PROBLEM SET ##### ##### #####
-
-#Model the CATE of hours_exercise on meaning of life, as these effects are modified by euro or māori ethnicity.
+# Your task: model the (conditional) ATE of hours_exercise on meaning of life, as these effects are modified by euro or māori ethnicity.
 # Find a sensible cut points for hours_exercise and model the causal effect of moving from low exercise to active on life meaning
 
-quantile(round( nzavs_synth$hours_exercise,1))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################## ################### ########################################
+########################################       SOLUTION     ########################################
+######################################## ################### ########################################
+
+
+
+# find meaningful cut points
+quantile(round(nzavs_synth$hours_exercise, 1))
 
 #.0-2 = low,
-# 2-4 = some
-# 4-7 = active
+# 2-7 = some
+# => 7 = active
 
 
 # prepare data
@@ -1024,11 +1106,7 @@ dt_exposure_check <- dt_prep |>
   mutate(hours_exercise_coarsen_n = as.numeric(hours_exercise_coarsen))
 
 
-# next we check for change in the original responses
-
-
-
-# lets look at the coarsened variable
+# next we check for change in the exposure
 msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_check) |>
   kbl() |>
   kable_paper(full_width = F)
@@ -1036,25 +1114,23 @@ msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_c
 
 
 # lets break this down by ethnicity
-dt_exposure_check_e <- dt_exposure_check |> filter(eth_cat == "euro")
-dt_exposure_check_m <- dt_exposure_check |> filter(eth_cat == "māori")
+dt_exposure_check_e <-
+  dt_exposure_check |> filter(eth_cat == "euro")
+dt_exposure_check_m <-
+  dt_exposure_check |> filter(eth_cat == "māori")
 
-
-# euro continuous
+# euro coarsen
 msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_check_e) |>
   kbl() |>
   kable_paper(full_width = F)
 
-# euro coarsen
+# maori coarsen
 msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_check_m) |>
   kbl() |>
   kable_paper(full_width = F)
 
 
-# data wrangle
-
-
-
+# data wrangling
 
 # step 1: choose baseline variables.  here we select standard demographic variablees plus personality variables.
 
@@ -1109,7 +1185,7 @@ prep_execercise
 
 # I have created a function that will allow you to take a data frame and
 # create a table
-create_table_output( prep_execercise, output_format = "html")
+create_table_output(prep_execercise, output_format = "html")
 
 
 ### ### ### ### ### ### SUBGROUP DATA ANALYSIS: DATA WRANGLING  ### ### ### ###
@@ -1121,14 +1197,21 @@ dt_x <- prep_execercise |>
     t0_rural_gch2018 = as.factor(t0_rural_gch2018),
     t0_gen_cohort = as.factor(t0_gen_cohort)
   ) |>
-  dplyr::filter(t0_eth_cat == "euro"| t0_eth_cat == "māori") |> # Too few asian and pacific
-  mutate(t0_urban = factor(ifelse(t0_rural_gch2018 == "medium_urban_accessibility" | t0_rural_gch2018 == "high_urban_accessibility",
-                                  "urban","rural"))) |>
- # group_by(id) |>
+  dplyr::filter(t0_eth_cat == "euro" |
+                  t0_eth_cat == "māori") |> # Too few asian and pacific
+  mutate(t0_urban = factor(
+    ifelse(
+      t0_rural_gch2018 == "medium_urban_accessibility" |
+        t0_rural_gch2018 == "high_urban_accessibility",
+      "urban",
+      "rural"
+    )
+  )) |>
+  # group_by(id) |>
   # dplyr::mutate(t2_meaning = mean(c(t2_meaning_purpose,
   #                                   t2_meaning_sense),
   #                                 na.rm = TRUE)) |>
- # ungroup() |>
+  # ungroup() |>
   # transform numeric variables into z scores (improves estimation)
   dplyr::mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z")) %>%
   dplyr::select(-t0_rural_gch2018) |>
@@ -1198,7 +1281,10 @@ X <- "t1_hours_exercise_coarsen"
 S <- "t0_eth_cat"
 
 # next we use our trick for creating a formula string, which will reduce our work
-formula_str_prop_x <- paste(X, "~", paste(baseline_vars_reflective_propensity_x, collapse = "+"))
+formula_str_prop_x <-
+  paste(X,
+        "~",
+        paste(baseline_vars_reflective_propensity_x, collapse = "+"))
 
 formula_str_prop_x
 
@@ -1229,7 +1315,7 @@ bal.tab(dt_match_x$euro, thresholds = c(m = .05))   #  good
 bal.tab(dt_match_x$māori, thresholds = c(m = .05))  # good
 
 
-#
+# match
 dt_match_ebal_x <- match_mi_general(
   data = dt_x,
   X = X,
@@ -1254,35 +1340,35 @@ dt_match_ps_x <- match_mi_general(
 )
 
 bal.tab(dt_match_ps_x$euro, thresholds = c(m = .05)) # not good
-bal.tab(dt_match_ps_x$māori,thresholds = c(m = .05)) # not good
+bal.tab(dt_match_ps_x$māori, thresholds = c(m = .05)) # not good
 
 
 
-
+# compare first energy
 sum_e_x <- summary(dt_match_x$euro)
 sum_m_x <- summary(dt_match_x$māori)
-
-
 
 plot(sum_e_x)
 plot(sum_m_x)
 
 
-love.plot(dt_match_x$euro, binary = "std", thresholds = c(m = .1))
-love.plot(dt_match_x$māori, binary = "std", thresholds = c(m = .1))
+love.plot(dt_match_x$euro,
+          binary = "std",
+          thresholds = c(m = .1))
+love.plot(dt_match_x$māori,
+          binary = "std",
+          thresholds = c(m = .1))
 
 
 sum_e_x <- summary(dt_match_x$euro)
 sum_m_x <- summary(dt_match_x$māori)
-
-
 
 plot(sum_e_x)
 plot(sum_m_x)
 
 
 
-# ebal looks a little better
+# next look at ebal -- which looks a little better
 
 sum_e_bal_x <- summary(dt_match_ebal_x$euro)
 sum_m_bal_x <- summary(dt_match_ebal_x$māori)
@@ -1290,8 +1376,12 @@ plot(sum_e_bal_x)
 plot(sum_m_bal_x)
 
 
-love.plot(dt_match_ebal_x$euro, binary = "std", thresholds = c(m = .1))
-love.plot(dt_match_ebal_x$māori, binary = "std", thresholds = c(m = .1))
+love.plot(dt_match_ebal_x$euro,
+          binary = "std",
+          thresholds = c(m = .1))
+love.plot(dt_match_ebal_x$māori,
+          binary = "std",
+          thresholds = c(m = .1))
 
 
 
@@ -1307,7 +1397,7 @@ dt_ref_m_x$weights <- dt_match_ebal_x$māori$weights
 dt_xx  <- rbind(dt_ref_e_x, dt_ref_m_x)
 
 
-### SUBGROUP analysis
+### subgroup analysis
 df = dt_xx
 df$weights
 
@@ -1328,24 +1418,38 @@ S = "t0_eth_cat"
 
 # not we interact the subclass X treatment X covariates
 
-formula_str <- paste(Y, "~", S, "*", "(", X , "*", "(", paste(baseline_vars_reflective_propensity_x, collapse = "+"), ")", ")")
+formula_str <-
+  paste(
+    Y,
+    "~",
+    S,
+    "*",
+    "(",
+    X ,
+    "*",
+    "(",
+    paste(baseline_vars_reflective_propensity_x, collapse = "+"),
+    ")",
+    ")"
+  )
 
 formula_str
 
 
 # fit model
-fit_all_all_x  <- glm(
- # t2_hlth_fatigue_z ~ t0_eth_cat *  t1_hours_exercise_coarsen,
+fit_all_all_x  <- glm(# t2_hlth_fatigue_z ~ t0_eth_cat *  t1_hours_exercise_coarsen,
   formula_str,
   weights = weights,
   # weights = if (!is.null(weight_var)) weight_var else NULL,
   family = family,
   data = dt_xx)
 
+# this tells us little
 summary(fit_all_all_x)
 
+# check that all parameters have been estimated.
 coefs <- coef(fit_all_all_x)
-table( is.na(coefs) )#
+table(is.na(coefs))#
 
 
 # simulate coefficients
@@ -1353,36 +1457,41 @@ sim_model_all_x <- sim(fit_all_all_x, n = nsims, vcov = "HC3")
 
 
 # simulate effect as modified in europeans
-sim_estimand_all_e <- sim_ame(sim_model_all_x,
-                              var = X,
-                              cl = cores,
-                              subset = t0_eth_cat == "euro",
-                              verbose = FALSE)
+sim_estimand_all_e <- sim_ame(
+  sim_model_all_x,
+  var = X,
+  cl = cores,
+  subset = t0_eth_cat == "euro",
+  verbose = FALSE
+)
 
-sim_estimand_all_e <- transform(sim_estimand_all_e, RD = `E[Y(low)]` - `E[Y(high)]`)
+# wrangle
+sim_estimand_all_e <-
+  transform(sim_estimand_all_e, RD = `E[Y(low)]` - `E[Y(high)]`)
 sim_estimand_all_e
 
 
 # simulate effect as modified in māori
-sim_estimand_all_m <- sim_ame(sim_model_all_x,
-                              var = X,
-                              cl = cores,
-                              subset = t0_eth_cat == "māori",
-                              verbose = FALSE)
+sim_estimand_all_m <- sim_ame(
+  sim_model_all_x,
+  var = X,
+  cl = cores,
+  subset = t0_eth_cat == "māori",
+  verbose = FALSE
+)
 
-sim_estimand_all_m <- transform(sim_estimand_all_m, RD = `E[Y(low)]` - `E[Y(high)]`)
+# wrangle
+sim_estimand_all_m <-
+  transform(sim_estimand_all_m, RD = `E[Y(low)]` - `E[Y(high)]`)
 
+# wrangle
 
+names(sim_estimand_all_e) <-
+  paste(names(sim_estimand_all_e), "e", sep = "_")
 
-summary(sim_estimand_all_e)
-summary(sim_estimand_all_m)
+names(sim_estimand_all_m) <-
+  paste(names(sim_estimand_all_m), "m", sep = "_")
 
-names(sim_estimand_all_e) <- paste(names(sim_estimand_all_e), "e", sep = "_")
-
-names(sim_estimand_all_m) <- paste(names(sim_estimand_all_m), "m", sep = "_")
-
-sim_estimand_all_m
-sim_estimand_all_e
 
 est_all <- cbind(sim_estimand_all_m, sim_estimand_all_e)
 est_all <- transform(est_all, `RD_m - RD_e` = RD_m - RD_e)
@@ -1390,20 +1499,5 @@ est_all <- transform(est_all, `RD_m - RD_e` = RD_m - RD_e)
 
 # summary
 summary(est_all)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
