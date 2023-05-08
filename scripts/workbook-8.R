@@ -2,8 +2,6 @@
 # PSYCH 434 WEEK 8: subsample estimation
 # May 2023
 # questions: joseph.bulbulia@vuw.ac.nz
-
-
 # Running this command will download the functions and packages you need to complete this worksheet.
 # You many find the code by pointing your browser to the webpage that is contained in the link
 
@@ -11,11 +9,14 @@
 
 source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
 
+# experimental functions
+source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/experimental_funs.R")
+
 
 ######### PART 1: DATA EXCERCISE ##############
 
 
-#  You should have created a folder called "data", in your Rstudio project. If not, download this file, add it to your the folder called "data" in your Rstudio project. # "https://www.dropbox.com/s/vwqijg4ha17hbs1/nzavs_dat_synth_t10_t12?dl=0"
+#  If you haven't already, you should have created a folder called "data", in your Rstudio project. If not, download this file, add it to your the folder called "data" in your Rstudio project. # "https://www.dropbox.com/s/vwqijg4ha17hbs1/nzavs_dat_synth_t10_t12?dl=0"
 
 
 
@@ -35,14 +36,124 @@ colnames(nzavs_synth)
 str(nzavs_synth)
 
 
+# We will make the coarsen variable for the exposure early
+
+nzavs_synth <- nzavs_synth |>
+  mutate(perfectionism = round(perfectionism)) |> # we create a three-level exposure to enable clear causal contrasts.
+  mutate(
+    perfectionism_coarsen = cut(
+    perfectionism,
+      breaks = c(1, 4, 5, 7),
+      include.lowest = TRUE,
+      include.highest = TRUE,
+      na.rm = TRUE,
+      right = FALSE
+    ),
+    perfectionism_coarsen = factor(
+    perfectionism_coarsen,
+      levels = c("[1,4)", "[4,5)", "[5,7]"),
+      labels = c("low", "medium", "high"),
+      ordered = TRUE
+    )
+  )
 
 
-# next we will select variables for baseline confounders. recall from lecture that these are variables that may be associated with both an exposure and an outcome.  To find out more about these variables go here:
 
-## https://github.com/go-bayes/psych-434-2023/blob/main/data/readme.qmd
+# Today will we again be looking at the causal effect (ATE) of perfectionism on life meaning
+
+# Recall that for an association to be causal, a change in the exposure must change the world relative to how it would have been had the exposure not occurred
+# lets look at how much the exposure changed?
+
+# inspect change in the exposure
+library(msm) # this will allow us to quicky inspect the data for instances of change.
+
+# we only inspect change between the baseline condition and the exposure year
+dt_18_19 <- nzavs_synth |>
+  filter(wave == "2018" | wave == "2019") |>
+  select(id, wave, perfectionism, perfectionism_coarsen, eth_cat) |> # the categorical variable needs to be numeric for us to use msm package to investigate change
+  mutate(perfectionism_coarsen_n = as.numeric(perfectionism_coarsen))
+
+
+# next we check for change in the original responses
+
+
+# read the rows as a response and the columns as the response. the diagonal is the stable response
+# the off diagonal is the change in the response. Note that we are confronted with sparseness
+
+
+msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19) |>
+  kbl() |>
+  kable_paper(full_width = F)
+
+
+# we can count the instances
+
+msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19) |>
+  data.frame() |>  # adding this code does the trick of counting
+  kbl() |>
+  kable_paper(full_width = F)
+
+
+
+# lets look at the coarsened variable
+msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19) |>
+  kbl() |>
+  kable_paper(full_width = F)
+
+
+# here we see better coverage
+# recall that clinical psychologists look at 4 and 5 on the 1-7 perfectionism scale as cut off points,
+
+msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19) |>
+  data.frame() |>
+  kbl() |>
+  kable_paper(full_width = F)
+
+
+# lets break this down by ethnicity
+dt_18_19_e <- dt_18_19 |> filter(eth_cat == "euro")
+dt_18_19_m <- dt_18_19 |> filter(eth_cat == "māori")
+
+
+# euro continuous
+msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19_e) |>
+  kbl() |>
+  kable_paper(full_width = F)
+
+# euro coarsen
+msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19_e) |>
+  kbl() |>
+  kable_paper(full_width = F)
+
+#  māori continuous
+msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19_m) |>
+  kbl() |>
+  kable_paper(full_width = F)
+
+# māori coarsen -- again this looks a little better
+msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19_m) |>
+  kbl() |>
+  kable_paper(full_width = F)
+
+
+# we can see there are not many "natural experiments" among māori
+# this is a challenge in observational cultural research -- even with large samples (we started with N = 10,000!) we did not have many "natural experiments"
+
+####  ####  ####  ####  ####  ####  ####  ####  ####  ####  ####
+####  ####  ####  CREATE DATA FRAME FOR ANALYSIS ####  ####  ####
+####  ####  ####  ####  ####  ####  ####  ####  ####  ####  ####
+
+# To find out more about our dataset go here:
+# https://github.com/go-bayes/psych-434-2023/blob/main/data/readme.qmd
+
+
+
+# recall from the previous lecture that confounders are variables that may be associated with both an exposure and an outcome.
 
 
 # I have created a function that will put the data into the correct shape. Here are the steps.
+
+
 
 # step 1: choose baseline variables.  here we select standard demographic variablees plus personality variables.
 
@@ -71,23 +182,20 @@ baseline_vars = c(
 
 ## Step 2, select the exposure variable.  This is the "cause"
 
-exposure_var = c("perfectionism")
+exposure_var = c("perfectionism", "perfectionism_coarsen")
 
 
 ## step 3. select the outcome variable.  These are the outcomes.
 outcome_vars_reflective = c("meaning_purpose",
-                            "meaning_sense",
-                            "pwi_relationships",
-                            "pwi_standardliving",
-                            "pwi_security",
-                            "pwi_health")
+                            "meaning_sense")
 
 colnames( nzavs_synth )
-# optional: select exclusion variables (this will not be necessary most of the time)
-exclude_vars = c("year_measured")
 
 
-# the function "create_wide_data" should be in your environment. If not, make sure to run the first line of code in this script once more.  You may ignore the warnings.
+# the function "create_wide_data" should be in your environment.
+
+#If not, make sure to run the first line of code in this script once more.  You may ignore the warnings. or uncomment and run the code below
+# source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
 
 prep_reflective <-
   create_wide_data(
@@ -99,31 +207,80 @@ prep_reflective <-
   )
 
 
-# check. Note that any column that is the exposure or an outcome is added to "t0_".  This ensures the strongest possible confounding control, as described by VanderWeele:
-# https://cdn1.sph.harvard.edu/wp-content/uploads/sites/603/2020/09/OutcomeWide_StatisticalScience.pdf
 
-str(prep_reflective)
-
-
-
-# if the data is not working, you much run the code below to make the object in an object of the class dataframe.
-# prep_reflective <- as.data.frame(prep_reflective)
+# I have created a function that will allow you to take a data frame and
+# create a table
+create_table_output( prep_reflective, output_format = "html")
 
 
+# if you just want a nice html table, do this:
+library(table1) # should be in your environment
 
-# create composite scores for the constructs. make sure the tidyverse library is loaded:
+# get data into shape
+dt_new <- prep_reflective %>%
+  select(starts_with("t0")) %>%
+  rename_all(~stringr::str_replace(., "^t0_", "")) %>%
+  mutate(wave = factor(rep("baseline", nrow(df)))) |>
+  janitor::clean_names(case = "screaming_snake")
 
-library(tidyverse) # should be loaded
 
-colnames( prep_reflective)
+# create a formulat string
 
-levels(prep_reflective$t0_rural_gch2018)
+baseline_vars_names <- dt_new %>%
+    select(-WAVE) %>%
+    colnames()
+
+table_baseline_vars <- paste(baseline_vars_names, collapse = "+")
+
+formula_string_table_baseline <- paste("~", table_baseline_vars, "|WAVE")
 
 
+# Custom rendering functions for table1
+# my_render_cont <- function(x) {
+#   with(stats.apply.rounding(stats.default(x), digits = 3),
+#        c("", "Mean (SD)" = sprintf("%s (&plusmn; %s)", MEAN, SD)))
+# }
+
+# my_render_cat <- function(x) {
+#   c("", sapply(stats.default(x), function(y) {
+#     with(y, sprintf("%d (%0.0f %%)", FREQ, PCT))
+#   }))
+# }
+
+
+table1::table1(
+    as.formula(formula_string_table_baseline),
+    data = dt_new,
+    overall = FALSE
+  )
+
+
+# another method
+
+
+x <- table1::table1(
+  as.formula(formula_string_table_baseline),
+  data = dt_new,
+  overall = FALSE
+)
+
+# some options, see: https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html
+table1::t1kable(x, format = "html", booktabs = TRUE) |>
+  kable_material(c("striped", "hover"))
+
+
+
+# note the counts
+# euro   māori pacific   asian
+# 8641     821     190     348
+
+
+
+### ### ### ### ### ### SUBGROUP DATA ANALYSIS: DATA WRANGLING  ### ### ### ###
 
 dt_8 <- prep_reflective |>
   mutate(id = factor(1:nrow(prep_reflective))) |>
-  mutate(t1_perfectionism = round(t1_perfectionism)) |> # we create a three-level exposure to enable clear causal contrasts. We could also use a continous variable.
+  mutate(t1_perfectionism = round(t1_perfectionism)) |> # we create a three-level exposure to enable clear causal contrasts. We could also use a continous variable
   mutate(
     t1_perfectionism_coarsen = cut(
       t1_perfectionism,
@@ -132,6 +289,12 @@ dt_8 <- prep_reflective |>
       include.highest = TRUE,
       na.rm = TRUE,
       right = FALSE
+    ),
+    t1_perfectionism_coarsen = factor(
+      t1_perfectionism_coarsen,
+      levels = c("[1,4)", "[4,5)", "[5,7]"),
+      labels = c("low", "medium", "high"),
+      ordered = TRUE
     )
   ) |>
   mutate(
@@ -139,22 +302,22 @@ dt_8 <- prep_reflective |>
     t0_rural_gch2018 = as.factor(t0_rural_gch2018),
     t0_gen_cohort = as.factor(t0_gen_cohort)
   ) |>
-  dplyr::filter(t0_eth_cat == "euro"| t0_eth_cat == "māori") |>
+  dplyr::filter(t0_eth_cat == "euro"| t0_eth_cat == "māori") |> # Too few asian and pacific
   mutate(t0_urban = factor(ifelse(t0_rural_gch2018 == "medium_urban_accessibility" | t0_rural_gch2018 == "high_urban_accessibility",
                             "urban","rural"))) |>
   group_by(id) |>
   dplyr::mutate(t2_meaning = mean(c(t2_meaning_purpose,
                                     t2_meaning_sense),
                                   na.rm = TRUE)) |>
-  dplyr::mutate(t2_pwi = mean(
-    c(
-      t2_pwi_health,
-      t2_pwi_relationships,
-      t2_pwi_security,
-      t2_pwi_standardliving,
-      na.rm = TRUE
-    )
-  )) |>
+  # dplyr::mutate(t2_pwi = mean(. # for next week
+  #   c(
+  #     t2_pwi_health,
+  #     t2_pwi_relationships,
+  #     t2_pwi_security,
+  #     t2_pwi_standardliving,
+  #     na.rm = TRUE
+  #   )
+  # )) |>
   ungroup() |>
   # transform numeric variables into z scores (improves estimation)
   dplyr::mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z")) %>%
@@ -171,24 +334,17 @@ dt_8 <- prep_reflective |>
   droplevels()
 
 
-# inspect
-table(dt_8$t0_eth_cat)
-
-
-# rename levels
-dt_8$t1_perfectionism_coarsen <-
-  factor(
-    dt_8$t1_perfectionism_coarsen,
-    levels = c("[1,4)", "[4,5)", "[5,7]"),
-    labels = c("low", "medium", "high"),
-    ordered = TRUE
-  )
 
 
 
 # view object
 skimr::skim(dt_8)
 
+
+# in a non-snythetic dataset we would inspect for missingness
+# you should report missingness in real data, and describe how you will handle missing data.  we're talking about this in my lab today after class. All are invited.
+
+naniar::vis_miss(dt_8)
 
 # save your dataframe for future use
 
@@ -200,20 +356,20 @@ saveRDS(dt_8, here::here("data", "dt_8"))
 
 
 # read -- you may start here if you need to repeat the analysis
-
 dt_8 <- readRDS(here::here("data", "dt_8"))
 
 
 ## Check the ethnicity levels
 
-
-# we can do this contrasts for subgroups. Here lets compare Māori with NZ Europeans.
-
 # find names
 levels_list <- unique(dt_8[["t0_eth_cat"]])
 
-# we have four levels of ethnicity.
+# we have in this dataset we have 2 levels of ethnicity.
 levels_list
+
+
+
+####### PROPENSITY SCORES AND WEIGHTING #####
 
 
 # Next we generate propensity scores.  Instead of modelling the outcome (t2_y) we will model the exposure (t1_x) as predicted by baseline indicators (t0_c) that we assume may be associated with the outcome and the exposure.
@@ -224,10 +380,11 @@ levels_list
 baseline_vars_reflective_propensity = dt_8 |>
   dplyr::select(starts_with("t0"), -t0_eth_cat) |> colnames()
 
-# only for gcomp without stratification
+baseline_vars_reflective_propensity
+
+# only for gcomp without stratification (used later)
 baseline_vars_full = dt_8 |>
   dplyr::select(starts_with("t0")) |> colnames()
-
 
 
 # define our exposure
@@ -239,21 +396,26 @@ S <- "t0_eth_cat"
 # next we use our trick for creating a formula string, which will reduce our work
 formula_str_prop <- paste(X, "~", paste(baseline_vars_reflective_propensity, collapse = "+"))
 
-
+formula_str_prop
 
 # I have created a function called "match_mi_general" that will perform the matching for us.
 # For the purposes of our work, we will examine the "ATE" or average treatment effect.
 # Additionally, this week we will only use the coarsened treatment variable
 
 # we need our data to be a data frame, you did this before but do again :)
+
+
 dt_8 <- data.frame( dt_8 )
 
 
 
-# Greifer recommends trying several approaches, so let us try four matching approaches, as defined by the "method" option in the code:
+# Noah Greifer recommends trying several approaches, so let us try four matching approaches, as defined by the "method" option in the code:
 # the methods we will try are: # tried cbps, ps, ebal, bart, and energy. of these energy worked best
 # see: https://ngreifer.github.io/WeightIt/
+# we might try cbps, ps, bart, and energy, super. Of these, energy worked best:
 
+
+# to forshadow, "energy" works best for us.
 
 dt_match <- match_mi_general(
   data = dt_8,
@@ -261,25 +423,30 @@ dt_match <- match_mi_general(
   baseline_vars = baseline_vars_reflective_propensity,
   subgroup = "t0_eth_cat",
   estimand = "ATE",
-  #focal = "high",
+  #focal = "high", # for use with ATT
   method = "energy"
 )
 
-bal.tab(dt_match$euro)   #  good
-bal.tab(dt_match$māori)  # ok
-bal.tab(test$māori)  # ok, except perfectionism
+saveRDS(dt_match, here::here("data", "dt_match"))
+
+
+# next we inspect balance. "Max.Diff.Adj" should ideally be less than .05
+
+bal.tab(dt_match$euro, thresholds = c(m = .05))   #  good
+bal.tab(dt_match$māori, thresholds = c(m = .05))  # ok # Note we do have balance on the coarsened exposure
+#bal.tab(dt_match$pacific)  # not good but won't use in contrasts
+#bal.tab(test$asian)  # not good but won't use in contrasts
 
 
 # blows up :)
-dt_match_ebal <- match_mi_general(
-  data = dt_8,
-  X = X,
-  baseline_vars = baseline_vars_reflective_propensity,
-  subgroup = "t0_eth_cat",
-  estimand = "ATE",
-  method = "ebal"
-)
-
+# dt_match_ebal <- match_mi_general(
+#   data = dt_8,
+#   X = X,
+#   baseline_vars = baseline_vars_reflective_propensity,
+#   subgroup = "t0_eth_cat",
+#   estimand = "ATE",
+#   method = "ebal"
+#)
 
 # not good
 dt_match_ps <- match_mi_general(
@@ -291,10 +458,12 @@ dt_match_ps <- match_mi_general(
   method = "ps"
 )
 
-bal.tab(dt_match_ps$euro) # not good
-bal.tab(dt_match_ps$māori) # not good
+bal.tab(dt_match_ps$euro, thresholds = c(m = .05)) # not good
+bal.tab(dt_match_ps$māori,thresholds = c(m = .05)) # not good
 
 
+# other options
+# see "weightit" documentation
 dt_match_cbps <- match_mi_general(
   data = dt_8,
   X = X,
@@ -308,100 +477,97 @@ bal.tab(dt_match_cbps$euro) # not good
 bal.tab(dt_match_cbps$māori) # not good
 
 library("SuperLearner")
-dt_match_super <- match_mi_general(
+baseline_vars_reflective_propensity
+dt_match_super <- match_mi_sub(
   data = dt_8,
   X = X,
   baseline_vars = baseline_vars_reflective_propensity,
   subgroup = "t0_eth_cat",
   estimand = "ATE",
   method = "super",
-  SL.library = c("SL.glm", "SL.stepAIC",
+  super = TRUE,
+  SL.library = c("SL.glm","SL.ranger",
                  "SL.glm.interaction"))
 
-bal.tab(dt_match_cbps$euro) # not good
-bal.tab(dt_match_cbps$māori) # not good
+
+
+bal.tab(dt_match_super$euro) #  good
+bal.tab(dt_match_super$māori) # not good
+
+saveRDS(dt_match_super, here::here("data", "dt_match_super"))
 
 
 
 
 
-
-Y = "t2_meaning_z"
-X = "t1_perfectionism_z"
-
-
-baseline_vars_reflective_propensity
-# tried cbps, ps, bart, and energy. of these energy worked best
-library("CBPS")
-
-dt_ref <- data.frame( dt_ref )
-dt_match <- match_mi_general(
-  data = dt_ref,
-  X = X_pc,
-  baseline_vars = baseline_vars_reflective_propensity,
-  subgroup = "t0_eth_cat",
-  estimand = "ATE",
-  #focal = "high", # for use with the att
-  method = "energy"
-)
-
-saveRDS(dt_match, here::here("data", "dt_match"))
 
 bal.tab(dt_match$euro)
 bal.tab(dt_match$māori)
-bal.tab(dt_match$asian)
-bal.tab(dt_match$pacific)
 
 sum_e <- summary(dt_match$euro)
 sum_m <- summary(dt_match$māori)
-sum_p <- summary(dt_match$pacific)
-sum_a <- summary(dt_match$asian)
+# sum_p <- summary(dt_match$pacific)
+# sum_a <- summary(dt_match$asian)
 
 
 plot(sum_e)
 plot(sum_m)
-plot(sum_p)
-plot(sum_a)
+#plot(sum_p)
+#plot(sum_a)
 
 love.plot(dt_match$euro, binary = "std", thresholds = c(m = .1))
 love.plot(dt_match$māori, binary = "std", thresholds = c(m = .1))
+
 love.plot(dt_match$pacific, binary = "std", thresholds = c(m = .1))
 love.plot(dt_match$asian, binary = "std", thresholds = c(m = .1))
 
 
 # prepare data
-dt_ref_e <- subset(dt_ref, t0_eth_cat == "euro")
+dt_ref_e <- subset(dt_8, t0_eth_cat == "euro")
 dt_ref_e$weights <- dt_match$euro$weights
 
 # prepare data
-dt_ref_m <- subset(dt_ref, t0_eth_cat == "māori")
+dt_ref_m <- subset(dt_8, t0_eth_cat == "māori")
 dt_ref_m$weights <- dt_match$māori$weights
 # prepare data
-dt_ref_p <- subset(dt_ref, t0_eth_cat == "pacific")
-dt_ref_p$weights <- dt_match$pacific$weights
-# prepare data
-dt_ref_a <- subset(dt_ref, t0_eth_cat == "asian")
-dt_ref_a$weights <- dt_match$asian$weights
+#  dt_ref_p <- subset(dt_8, t0_eth_cat == "pacific")
+#  dt_ref_p$weights <- dt_match$pacific$weights
+# # # prepare data
+#  dt_ref_a <- subset(dt_8, t0_eth_cat == "asian")
+#  dt_ref_a$weights <- dt_match$asian$weights
+#
+#
+# # inspect exposures
+# table(dt_ref_e$t1_perfectionism_coarsen)/nrow(dt_ref_e)
+# table(dt_ref_m$t1_perfectionism_coarsen)/nrow(dt_ref_m)
+#
+# # inspect outcomes
+# hist(dt_ref_e$t2_meaning_z, breaks = 20)
+# hist(dt_ref_m$t2_meaning_z, breaks = 20)
 
 # combine
-dt_ref_all <- rbind(dt_ref_e, dt_ref_m, dt_ref_p, dt_ref_a)
+dt_ref_all <- rbind(dt_ref_e, dt_ref_m)
 
+df = dt_ref_all
 
 
 # Let's calculate the ATE for the entire group, ignoring the subclasses.
 # let's make the contrasts between low and high perfectionism.
+baseline_vars_reflective_propensity
+baseline_vars_full
 
+# Euro
 mod_ref_meaning   <- gcomp_sim(
-  df = dt_ref_all,  # note change
+  df = df,  # note change
   Y = "t2_meaning_z",
-  X = X_pc,
-  baseline_vars = baseline_vars_reflective_cont,
+  X = X,
+  baseline_vars = baseline_vars_reflective_propensity,
   treat_1 = "high",
   treat_0 = "low",
   estimand = "ATE",
   scale = "RD",
   type = "RD",
-  nsims = 200,
+  nsims = 1000,
   cores = 8,
   family = gaussian,
   weights = TRUE,
@@ -410,6 +576,7 @@ mod_ref_meaning   <- gcomp_sim(
   new_name = "t2_meaning_z (composite)"
 )
 
+# ATE
 mod_ref_meaning
 
 
@@ -422,30 +589,6 @@ X = "t1_perfectionism_coarsen"
 baseline_vars = baseline_vars_reflective_cont
 treat_0 = "medium"
 treat_1 = "high"
-estimand = "ATT"
-scale = "RD"
-nsims = 200
-family = "gaussian"
-continuous_X = FALSE
-splines = FALSE
-cores = parallel::detectCores()
-S = "t0_eth_cat"
-
-
-S = "t0_eth_cat"
-# not we interact the subclass X treatment X covariates
-
-formula_str <- paste(Y, "~", S, "*", "(", X , "*", "(", paste(baseline_vars, collapse = "+"), ")", ")")
-
-
-
-## Subgroup Euro
-df = dt_ref_all
-Y = "t2_meaning_z"
-X = "t1_perfectionism_coarsen"
-baseline_vars = baseline_vars_reflective_propensity
-treat_0 = "low"
-treat_1 = "high"
 estimand = "ATE"
 scale = "RD"
 nsims = 1000
@@ -453,6 +596,13 @@ family = "gaussian"
 continuous_X = FALSE
 splines = FALSE
 cores = parallel::detectCores()
+S = "t0_eth_cat"
+
+# not we interact the subclass X treatment X covariates
+
+formula_str <- paste(Y, "~", S, "*", "(", X , "*", "(", paste(baseline_vars_reflective_propensity, collapse = "+"), ")", ")")
+
+formula_str
 
 
 # fit model
@@ -465,8 +615,16 @@ fit_all_all  <- glm(
 
 summary(fit_all_all)
 
+coefs <- coef(fit_all_all)
+table( is.na(coefs) )#     t0_eth_catmāori:t1_perfectionism_coarsen.Q:t0_gen_cohort.C
+
+# #FALSE  TRUE
+# 344     4
+
+insight::get_varcov(fit_all_all)
+
 # simulate coefficients
-sim_model_all <- sim(fit_all_all, n = nsims, vcov = "HC3")
+sim_model_all <- sim(fit_all_all, n = nsims, vcov = "HC1")
 
 
 # simulate effect as modified in europeans
@@ -504,6 +662,8 @@ sim_estimand_all_e
 est_all <- cbind(sim_estimand_all_m, sim_estimand_all_e)
 est_all <- transform(est_all, `RD_m - RD_e` = RD_m - RD_e)
 
+
+# KEY SUMMARY
 summary(est_all)
 
 
@@ -511,6 +671,8 @@ summary(est_all)
 
 ## only regression
 
+# recall:
+formula_str
 
 # fit model
 fit_all_r <- glm(
@@ -520,7 +682,7 @@ fit_all_r <- glm(
   data = df)
 
 # simulate coefficients
-sim_model_r <- sim(fit_all_r, n = nsims)
+sim_model_r <- sim(fit_all_r, n = nsims, vcov = "HC1")
 
 
 # simulate effect as modified in europeans
@@ -572,7 +734,7 @@ fit_all_p <- glm(
   data = df)
 
 # simulate coefficients
-sim_model_p <- sim(fit_all_p, n = nsims)
+sim_model_p <- sim(fit_all_p, n = nsims, vcov = "HC1")
 
 
 # simulate effect as modified in europeans
@@ -587,7 +749,7 @@ sim_estimand_p_e
 
 
 # simulate effect as modified in māori
-sim_estimand_p_m <- sim_ame(sim_model,
+sim_estimand_p_m <- sim_ame(sim_model_p,
                             var = X,
                             cl = cores,
                             subset = t0_eth_cat == "māori",
@@ -606,111 +768,147 @@ names(sim_estimand_p_m) <- paste(names(sim_estimand_p_m), "m", sep = "_")
 
 
 est_p <- cbind(sim_estimand_p_e, sim_estimand_p_m)
-est_p <- transform(est, `RD_m - RD_e` = RD_m - RD_e)
+est_p <- transform(est_p, `RD_m - RD_e` = RD_m - RD_e)
 
 summary(est_all)
 summary(est_r)
 summary(est_p)
 
 
+### CONTINUOUS X  (Note generally bad idea to do propensity scores) # so we use  g-comp only, but lets expore this:
 
-## DO THE SAME WITH LOW AND MEDIUM
+X_cont <- "t1_perfectionism_z"
+
+
+dt_match_cont <- match_mi_general(
+  data = dt_8,
+  X = X_cont,
+  baseline_vars = baseline_vars_reflective_propensity,
+  subgroup = "t0_eth_cat",
+  estimand = "ATE",
+  #focal = "high", # for use with ATT
+  method = "energy"
+)
+
+saveRDS(dt_match_cont, here::here("data", "dt_match_cont"))
+
+
+bal.tab(dt_match_cont$euro, thresholds = c(m = .05))   #  good
+bal.tab(dt_match_cont$māori, thresholds = c(m = .05))  # ok
+
+
+
+
+
+# prepare data
+dt_ref_e_cont <- subset(dt_8, t0_eth_cat == "euro")
+dt_ref_e_cont$weights <- dt_match_cont$euro$weights
+
+# prepare data
+dt_ref_m_cont <- subset(dt_8, t0_eth_cat == "māori")
+dt_ref_m_cont$weights <- dt_match_cont$māori$weights
+
+
+# combine
+dt_ref_all_cont <- rbind(dt_ref_e_cont, dt_ref_m_cont)
+
+df = dt_ref_all_cont
+
+
+# Let's calculate the ATE for the entire group, ignoring the subclasses.
+# let's make the contrasts between low and high perfectionism.
+
+mod_ref_meaning_cont   <- gcomp_sim(
+  df = dt_ref_all_cont,  # note change
+  Y = "t2_meaning_z",
+  X = X_cont,
+  baseline_vars = baseline_vars_full,
+  treat_1 = "high",
+  treat_0 = "low",
+  estimand = "ATE",
+  scale = "RD",
+  type = "RD",
+  nsims = 1000,
+  cores = 8,
+  family = gaussian,
+  weights = TRUE,
+  continuous_X = TRUE,
+  splines = FALSE,
+  new_name = "t2_meaning_z (composite)"
+)
+
+
+mod_ref_meaning_cont
+
+
+formula_str_cont <- paste(Y, "~", S, "*", "(", X_cont , "*", "(", paste(baseline_vars_reflective_propensity, collapse = "+"), ")", ")")
+formula_str_cont
+
+
+# fit model
+fit_all_r_cont <- glm(
+  as.formula(formula_str_cont),
+  #  weights = weights,  # remove weights
+  family = family,
+  data = dt_ref_all_cont)
 
 # simulate coefficients
-sim_model_all <- sim(fit_all_all, n = nsims)
+sim_model_r_cont <- sim(fit_all_r_cont, n = nsims, vcov = "HC3")
 
 
 # simulate effect as modified in europeans
-sim_estimand_all_e <- sim_ame(sim_model_all,
-                              var = X,
-                              cl = cores,
-                              subset = t0_eth_cat == "euro",
-                              verbose = FALSE)
+sim_estimand_r_e_cont <- sim_ame(sim_model_r_cont,
+                            var = X_cont,
+                            cl = cores,
+                            subset = t0_eth_cat == "euro",
+                            verbose = FALSE)
 
-sim_estimand_all_e_lo <- transform(sim_estimand_all_e, RD = `E[Y(low)]` - `E[Y(medium)]`)
+summary( sim_estimand_r_e_cont)
 
 
 
 # simulate effect as modified in māori
-sim_estimand_all_m <- sim_ame(sim_model_all,
-                              var = X,
-                              cl = cores,
-                              subset = t0_eth_cat == "māori",
-                              verbose = FALSE)
-
-sim_estimand_all_m_lo <- transform(sim_estimand_all_m, RD = `E[Y(low)]` - `E[Y(medium)]`)
-
-
-
-summary(sim_estimand_all_e_lo)
-summary(sim_estimand_all_m_lo)
-
-names(sim_estimand_all_e_lo) <- paste(names(sim_estimand_all_e_lo), "e", sep = "_")
-
-names(sim_estimand_all_m_lo) <- paste(names(sim_estimand_all_m_lo), "m", sep = "_")
-
-
-est_all_lo <- cbind(sim_estimand_all_e_lo, sim_estimand_all_m_lo)
-est_all_lo <- transform(est_all_lo, `RD_m - RD_e` = RD_m - RD_e)
-
-summary(est_all)
-summary(est_all_med)
-
-# reveals a strong sensitivity
-summary(est_all_lo)
+sim_estimand_r_m_cont <- sim_ame(sim_model_r_cont,
+                            var = X_cont,
+                            cl = cores,
+                            subset = t0_eth_cat == "māori",
+                            verbose = FALSE)
+sim_estimand_r_m_cont <- transform(sim_estimand_r_m_cont)
+summary(sim_estimand_r_m_cont)
 
 
 
+names(sim_estimand_r_e_cont) <- paste(names(sim_estimand_r_e_cont), "e", sep = "_")
 
+names(sim_estimand_r_m_cont) <- paste(names(sim_estimand_r_m_cont), "m", sep = "_")
 
-## DO THE SAME WITH MEDIUM AND HIGH
+summary(sim_estimand_r_e_cont)
 
-# simulate coefficients
-sim_model_all <- sim(fit_all_all, n = nsims)
+summary(sim_estimand_r_m_cont)
+summary(est_r_cont)
+sim_estimand_r_e_cont
+names(sim_estimand_r_e_cont) <- "estimate_e"
+names(sim_estimand_r_m_cont) <- "estimate_m"
+est_r_cont <- cbind(sim_estimand_r_e_cont, sim_estimand_r_m_cont)
+est_r_cont <- transform(est_r_cont, `estimate_m - estimate_e` =estimate_m - estimate_e)
 
-
-# simulate effect as modified in europeans
-sim_estimand_all_e <- sim_ame(sim_model_all,
-                              var = X,
-                              cl = cores,
-                              subset = t0_eth_cat == "euro",
-                              verbose = FALSE)
-
-sim_estimand_all_e_med <- transform(sim_estimand_all_e, RD = `E[Y(medium)]` - `E[Y(high)]`)
-
-
-
-# simulate effect as modified in māori
-sim_estimand_all_m <- sim_ame(sim_model_all,
-                              var = X,
-                              cl = cores,
-                              subset = t0_eth_cat == "māori",
-                              verbose = FALSE)
-
-sim_estimand_all_m_med <- transform(sim_estimand_all_m, RD = `E[Y(medium)]` - `E[Y(high)]`)
+# no difference
+summary(est_r_cont)
 
 
 
-summary(sim_estimand_all_e_med)
-summary(sim_estimand_all_m_med)
-
-names(sim_estimand_all_e_med) <- paste(names(sim_estimand_all_e_med), "e", sep = "_")
-
-names(sim_estimand_all_m_med) <- paste(names(sim_estimand_all_m_med), "m", sep = "_")
-
-
-est_all_med <- cbind(sim_estimand_all_m_med, sim_estimand_all_e_med)
-est_all_med <- transform(est_all_med, `RD_m - RD_e` = RD_m - RD_e)
-
-summary(est_all)
-summary(est_all_med)
+# What do we make of this?
 
 
 
 
-## multi-level model
 
-str(nzavs_synth)
+
+
+
+#####. multi-level model
+##### This is how we would generally model "change over time"
+
 
 dt_ml <- nzavs_synth |>
   mutate(time = as.numeric(wave)-1)|>
@@ -728,10 +926,6 @@ dt_ml <- nzavs_synth |>
          time,
          ends_with("_z")) |>
   data.frame()
-
-
-
-
 
 baseline_vars_ml = c(
   "eth_cat",
@@ -758,18 +952,18 @@ baseline_vars_ml = c(
 Y_ml = "meaning_z"
 X_ml = "perfectionism_z"
 
-formula_str <- paste(Y_ml, "~",   "time", "*",  "(", X_ml , "*", "(", paste(baseline_vars_ml, collapse = "+"), ")", "+", "(1|id)", ")")
+formula_str_ml <- paste(Y_ml, "~",   "time", "*",  "(", X_ml , "*", "(", paste(baseline_vars_ml, collapse = "+"), ")", "+", "(1|id)", ")")
 
-formula_str
+formula_str_ml
 
 library(lme4)
-as.formula(formula_str)
+as.formula(formula_str_ml)
 
-model_ml <- lmer(as.formula(formula_str), data = dt_ml)
+model_ml <- lmer(as.formula(formula_str_ml), data = dt_ml)
 
 
 tab_ml <- parameters::model_parameters(model_ml, effects = "fixed")
-
+tab_ml
 plot(tab_ml)
 
 
@@ -780,59 +974,89 @@ graph_ml <- plot(
   ggeffects::ggpredict(model_ml, terms = c("time", "perfectionism_z","eth_cat"))
 )
 
+
+# note we see regression to the mean.  this is common. but we do not have causal effects.
 graph_ml
 
 
 
 
 
+########## ##### ##### ##### #####  PROBLEM SET ##### ##### #####
+
+#Model the CATE of hours_exercise on meaning of life, as these effects are modified by euro or māori ethnicity.
+# Find a sensible cut points for hours_exercise and model the causal effect of moving from low exercise to active on life meaning
+
+quantile(round( nzavs_synth$hours_exercise,1))
+
+#.0-2 = low,
+# 2-4 = some
+# 4-7 = active
+
+
+# prepare data
+dt_prep <- nzavs_synth |>
+  mutate(hours_exercise = round(hours_exercise)) |> # we create a three-level exposure to enable clear causal contrasts.
+  mutate(
+    hours_exercise_coarsen = cut(
+      hours_exercise,
+      breaks = c(0, 2, 7, 200),
+      include.lowest = TRUE,
+      include.highest = TRUE,
+      na.rm = TRUE,
+      right = FALSE
+    ),
+    hours_exercise_coarsen = factor(
+      hours_exercise_coarsen,
+      levels = c("[0,2)", "[2,7)", "[7,200]"),
+      labels = c("low", "medium", "high"),
+      ordered = TRUE
+    )
+  )
 
 
 
 
+# we only inspect change between the baseline condition and the exposure year
+dt_exposure_check <- dt_prep |>
+  filter(wave == "2018" | wave == "2019") |>
+  select(id, wave, hours_exercise, hours_exercise_coarsen, eth_cat) |> # the categorical variable needs to be numeric for us to use msm package to investigate change
+  mutate(hours_exercise_coarsen_n = as.numeric(hours_exercise_coarsen))
+
+
+# next we check for change in the original responses
+
+
+
+# lets look at the coarsened variable
+msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_check) |>
+  kbl() |>
+  kable_paper(full_width = F)
+
+
+
+# lets break this down by ethnicity
+dt_exposure_check_e <- dt_exposure_check |> filter(eth_cat == "euro")
+dt_exposure_check_m <- dt_exposure_check |> filter(eth_cat == "māori")
+
+
+# euro continuous
+msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_check_e) |>
+  kbl() |>
+  kable_paper(full_width = F)
+
+# euro coarsen
+msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_check_m) |>
+  kbl() |>
+  kable_paper(full_width = F)
+
+
+# data wrangle
 
 
 
 
-
-
-# We interpret these contrasts as the expected effects were everyone "low" verses everyone assigned "medium" versus everyone assigned "high"
-
-
-
-
-# 1.  model the causal effect (ATE) of graditude on life satisfaction Do this in two ways: first model the causal effect of a standard deviation increase in gratitude from average gratitude. 2. model the causal effect of movement from medium gratitude to high gratitude. Experts tell us low is <5, medium is 5 <6, and high is >6.  Briefly, report your findings.
-
-
-
-
-
-
-
-
-
-
-
-
-######################## solution to data excercise ####################
-
-
-# inspect column names
-colnames(nzavs_synth)
-
-# what is the mean of gratitude?
-mean(nzavs_synth$gratitude, na.rm = TRUE)
-
-# what is the standard deviation?
-sd(nzavs_synth$gratitude, na.rm = TRUE)
-
-# inspect responses
-hist(nzavs_synth$gratitude, breaks = 100)
-
-
-# data wrangling
-
-# step 1: choose baseline variables.
+# step 1: choose baseline variables.  here we select standard demographic variablees plus personality variables.
 
 baseline_vars = c(
   "edu",
@@ -857,617 +1081,326 @@ baseline_vars = c(
 )
 
 
-## step 2: select exposure
+## Step 2, select the exposure variable.  This is the "cause"
 
-exposure_var = c("gratitude")
-
-
-## step 3. select the outcome variable.  see, the "readme" file for information on the labels, and also for information on the NZAVS
-# https://github.com/go-bayes/psych-434-2023/tree/main/data
-
-outcome_vars_reflective = c("lifesat_satlife",
-                            "lifesat_ideal")
+exposure_var = c("hours_exercise_coarsen")
 
 
-# step 4. prepare data
-# the function "create_wide_data" should be in your environment. If not, make sure to run the first line of code in this script once more.  You may ignore the warnings.
+## step 3. select the outcome variable.  These are the outcomes.
+outcome_vars = c("hlth_fatigue")
 
-prep_data <-
+
+# the function "create_wide_data" should be in your environment.
+
+#If not, make sure to run the first line of code in this script once more.  You may ignore the warnings. or uncomment and run the code below
+# source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
+
+prep_execercise <-
   create_wide_data(
-    dat_long = nzavs_synth,
+    dat_long = dt_prep,
     #nzavs_synth,
     baseline_vars = baseline_vars,
     exposure_var = exposure_var,
-    outcome_vars = outcome_vars_reflective
+    outcome_vars = outcome_vars
   )
 
-
-# check. Note that any column that is the exposure or an outcome is added to "t0_".  This ensures the strongest possible confounding control, as described by VanderWeele:
-# https://cdn1.sph.harvard.edu/wp-content/uploads/sites/603/2020/09/OutcomeWide_StatisticalScience.pdf
-
-str(prep_data)
+prep_execercise
 
 
+# I have created a function that will allow you to take a data frame and
+# create a table
+create_table_output( prep_execercise, output_format = "html")
 
-# create composite scores for the constructs. make sure the tidyverse library is loaded:
 
-dt <- prep_data |>
-  mutate(id = factor(1:nrow(prep_data))) |>
-  mutate(t1_gratitude = round(t1_gratitude)) |> # we create a three-level exposure to enable clear causal contrasts. We could also use a continous variable.
-  mutate(
-    t1_gratitude_coarsen = cut(
-      t1_gratitude,
-      breaks = c(1, 5, 6, 7),
-      include.lowest = TRUE,
-      include.highest = TRUE,
-      na.rm = TRUE,
-      right = FALSE
-    )
-  ) |>
+### ### ### ### ### ### SUBGROUP DATA ANALYSIS: DATA WRANGLING  ### ### ### ###
+
+dt_x <- prep_execercise |>
+  mutate(id = factor(1:nrow(prep_execercise))) |>
   mutate(
     t0_eth_cat = as.factor(t0_eth_cat),
     t0_rural_gch2018 = as.factor(t0_rural_gch2018),
     t0_gen_cohort = as.factor(t0_gen_cohort)
   ) |>
-  group_by(id) |>
-  dplyr::mutate(t2_lifsat = mean(c(t2_lifesat_satlife,
-                                  t2_lifesat_ideal),
-                                  na.rm = TRUE)) |>
-  ungroup() |>
+  dplyr::filter(t0_eth_cat == "euro"| t0_eth_cat == "māori") |> # Too few asian and pacific
+  mutate(t0_urban = factor(ifelse(t0_rural_gch2018 == "medium_urban_accessibility" | t0_rural_gch2018 == "high_urban_accessibility",
+                                  "urban","rural"))) |>
+ # group_by(id) |>
+  # dplyr::mutate(t2_meaning = mean(c(t2_meaning_purpose,
+  #                                   t2_meaning_sense),
+  #                                 na.rm = TRUE)) |>
+ # ungroup() |>
   # transform numeric variables into z scores (improves estimation)
   dplyr::mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z")) %>%
+  dplyr::select(-t0_rural_gch2018) |>
   # select only factors and numeric values that are z-scores
-  select(id,
-         where(is.factor),
-         t1_gratitude, # for continuous model, if we do not wish use SD units
-         ends_with("_z"), ) |>
+  select(id, # category is too sparse
+         where(is.factor), # for comparison
+         ends_with("_z")) |>
   # tidy data frame so that the columns are ordered by time (useful for more complex models)
   relocate(id, .before = starts_with("t1_"))   |>
   relocate(starts_with("t0_"), .before = starts_with("t1_"))  |>
-  relocate(starts_with("t2_"), .after = starts_with("t1_"))
+  relocate(starts_with("t2_"), .after = starts_with("t1_")) |>
+  droplevels()
 
 
-# inspect
-levels(dt$t1_gratitude_coarsen)
-
-table(dt$t1_gratitude_coarsen)
 
 
-# rename levels
-dt$t1_gratitude_coarsen <-
-  factor(
-    dt$t1_gratitude_coarsen,
-    levels = c("[1,5)", "[5,6)", "[6,7]"),
-    labels = c("low", "medium", "high"),
-    ordered = TRUE
-  )
-
-
-table(dt$t1_gratitude_coarsen)
 
 # view object
-skimr::skim(dt)
+skimr::skim(dt_x)
+
+
+# in a non-snythetic dataset we would inspect for missingness
+# you should report missingness in real data, and describe how you will handle missing data.  we're talking about this in my lab today after class. All are invited.
+
+naniar::vis_miss(dt_x)
+
+# save your dataframe for future use
 
 # make dataframe
-dt = as.data.frame(dt)
+dt_x = as.data.frame(dt_x)
 
-colnames(dt)
-
-## NEXT we write two simple models, one with a continous exposure and one with a categorical exposure.
-# To make this easier we will assign key columns to variables
-
-# this is the continuous exposure
-X = "t1_gratitude_z"
-
-# this is a categorical exposure
-X_c <- "t1_gratitude_coarsen"
+# save data
+saveRDS(dt_x, here::here("data", "dt_x"))
 
 
-# set our outcome variable:
-Y = "t2_lifsat_z" #note that we have created all numeric values into z-scores.  This will facilitate estimation and also interpretation. The outcome is expressed in standard deviation units
+# read -- you may start here if you need to repeat the analysis
+dt_x <- readRDS(here::here("data", "dt_x"))
 
 
-# Get baseline names
-baseline_vars_mine = dt |>
-  dplyr::select(starts_with("t0")) |> colnames()
+## Check the ethnicity levels
 
-# See what we have created:  These are all the "t0_" variables.
-baseline_vars_mine
+# find names
+levels_list <- unique(dt_x[["t0_eth_cat"]])
 
-
-# to run these models our data need to be a dataframe (not a tibble or another kind of obect)
-# above we've made the data a dataframe, but lets repeat in case you skipped that steip
-
-dt = as.data.frame(dt)
-
-
-# create our formula string, this time for the categorical variable.
-formula_str_X <-
-  paste(Y,
-        "~",
-        X ,
-        "*",
-        "(",
-        paste(baseline_vars_mine, collapse = "+"),
-        ")")
-formula_str_X
-
-## regression based control
-
-
-# fit model
-m1_mine <- glm(as.formula(formula_str_X),
-          # shortcut
-          #  weights = weights, # will use weights with propensity score models
-          family = "gaussian",
-          data = dt)
-
-# we can look at the coefficients of this model, but again, it would be a mistake to interpret them
-summary(m1_mine)
+# we have in this dataset we have 2 levels of ethnicity.
+levels_list
 
 
 
-# another way of presenting the model
-# run to install latest version of easystats.
-# parameters::model_parameters(m1_mine)
+####### PROPENSITY SCORES AND WEIGHTING #####
 
 
-# simulate coefficients for the continuous exposure
-library(clarify)
-nsims = 200
-sim_model_r_mine <- sim(m1_mine, n = nsims)
+# Next we generate propensity scores.  Instead of modelling the outcome (t2_y) we will model the exposure (t1_x) as predicted by baseline indicators (t0_c) that we assume may be associated with the outcome and the exposure.
+
+# first step, obtain the baseline variables. note that we must remove "t0_eth_cat" because we are performing separate weighting for each stratum within this variable. here's the code:
 
 
-# set to number of cores on your machine, e.g.
-cores = 2
+baseline_vars_reflective_propensity_x = dt_x |>
+  dplyr::select(starts_with("t0"), -t0_eth_cat) |> colnames()
 
-# simulate effect as modified
-sim_model_r_mine <- sim_ame(sim_model_r_mine,
-                          var = X,
-                          cl = cores,
-                          verbose = FALSE)
+baseline_vars_reflective_propensity_x
+
+# define our exposure
+X <- "t1_hours_exercise_coarsen"
+
+# define subclasses
+S <- "t0_eth_cat"
+
+# next we use our trick for creating a formula string, which will reduce our work
+formula_str_prop_x <- paste(X, "~", paste(baseline_vars_reflective_propensity_x, collapse = "+"))
+
+formula_str_prop_x
+
+# I have created a function called "match_mi_general" that will perform the matching for us.
+# For the purposes of our work, we will examine the "ATE" or average treatment effect.
+# Additionally, this week we will only use the coarsened treatment variable
 
 
-# this is the difference in expectations between everyone in the population being subject to a one standard deviation increase in perfectionism
-# and everyone being subject to an average level of perfectionism.
+baseline_vars_reflective_propensity_x
+# to forshadow, "energy" works best for us.
+
+dt_match_x <- match_mi_general(
+  data = dt_x,
+  X = X,
+  baseline_vars = baseline_vars_reflective_propensity_x,
+  subgroup = "t0_eth_cat",
+  estimand = "ATE",
+  #focal = "high", # for use with ATT
+  method = "energy"
+)
+
+saveRDS(dt_match_x, here::here("data", "dt_match_x"))
 
 
-summary(sim_model_r_mine)
+# next we inspect balance. "Max.Diff.Adj" should ideally be less than .05
 
-# > summary(sim_model_r_mine)
-# Estimate 2.5 % 97.5 %
-#   dY/d(t1_gratitude_z)    0.115 0.097  0.134
+bal.tab(dt_match_x$euro, thresholds = c(m = .05))   #  good
+bal.tab(dt_match_x$māori, thresholds = c(m = .05))  # good
+
+
 #
+dt_match_ebal_x <- match_mi_general(
+  data = dt_x,
+  X = X,
+  baseline_vars = baseline_vars_reflective_propensity_x,
+  subgroup = "t0_eth_cat",
+  estimand = "ATE",
+  method = "ebal"
+)
+
+bal.tab(dt_match_ebal_x$euro, thresholds = c(m = .05))   #  good
+bal.tab(dt_match_ebal_x$māori, thresholds = c(m = .05))  # good
 
 
-# Brief interpretation
+# not good
+dt_match_ps_x <- match_mi_general(
+  data = dt_x,
+  X = X,
+  baseline_vars = baseline_vars_reflective_propensity_x,
+  subgroup = "t0_eth_cat",
+  estimand = "ATE",
+  method = "ps"
+)
 
-# - The sample consists of a representative group of New Zealanders (N = 10,000), with synthesized data from respondents to the NZAVS across three waves (2018-2020).
-# - G-computation was employed to estimate the causal effect (ATE) of a one standard deviation change in baseline gratitude on life satisfaction.
-# - The projected marginal effect of gratitude on life satisfaction for the relevant population is an increase of 0.115 standard deviation units.
-# - The model's assumptions include positivity, conditional exchangeability based on baseline control variables, and consistency. Additionally, the model assumes no interference, accurate variable measurement, and correct statistical model specification.
-# - A primary limitation of this model is its assumption that sample attrition is unbiased.
-# - This result is significant because it demonstrates the potential positive impact of gratitude on life satisfaction, highlighting the importance of fostering gratitude in daily life and informing potential interventions to improve overall well-being.
-
-
-# b. Next we model the causal effect of moving from medium gratitude to high gratitude on life satisfaction.
+bal.tab(dt_match_ps_x$euro, thresholds = c(m = .05)) # not good
+bal.tab(dt_match_ps_x$māori,thresholds = c(m = .05)) # not good
 
 
 
-# In this case we will use the coarsened variable.
 
-# create our formula string:
-formula_str_X_c <-
-  paste(Y,
-        "~",
-        X_c ,
-        "*",
-        "(",
-        paste(baseline_vars_mine, collapse = "+"),
-        ")")
+sum_e_x <- summary(dt_match_x$euro)
+sum_m_x <- summary(dt_match_x$māori)
 
-formula_str_X_c
 
+
+plot(sum_e_x)
+plot(sum_m_x)
+
+
+love.plot(dt_match_x$euro, binary = "std", thresholds = c(m = .1))
+love.plot(dt_match_x$māori, binary = "std", thresholds = c(m = .1))
+
+
+sum_e_x <- summary(dt_match_x$euro)
+sum_m_x <- summary(dt_match_x$māori)
+
+
+
+plot(sum_e_x)
+plot(sum_m_x)
+
+
+
+# ebal looks a little better
+
+sum_e_bal_x <- summary(dt_match_ebal_x$euro)
+sum_m_bal_x <- summary(dt_match_ebal_x$māori)
+plot(sum_e_bal_x)
+plot(sum_m_bal_x)
+
+
+love.plot(dt_match_ebal_x$euro, binary = "std", thresholds = c(m = .1))
+love.plot(dt_match_ebal_x$māori, binary = "std", thresholds = c(m = .1))
+
+
+
+# prepare data
+dt_ref_e_x <- subset(dt_x, t0_eth_cat == "euro")
+dt_ref_e_x$weights <- dt_match_ebal_x$euro$weights
+
+# prepare data
+dt_ref_m_x <- subset(dt_x, t0_eth_cat == "māori")
+dt_ref_m_x$weights <- dt_match_ebal_x$māori$weights
+
+# combine
+dt_xx  <- rbind(dt_ref_e_x, dt_ref_m_x)
+
+
+### SUBGROUP analysis
+df = dt_xx
+df$weights
+
+
+Y = "t2_hlth_fatigue_z"
+X = "t1_hours_exercise_coarsen"
+baseline_vars = baseline_vars_reflective_propensity_x
+treat_0 = "low"
+treat_1 = "high"
+estimand = "ATE"
+scale = "RD"
+nsims = 1000
+family = "gaussian"
+continuous_X = FALSE
+splines = FALSE
+cores = parallel::detectCores()
+S = "t0_eth_cat"
+
+# not we interact the subclass X treatment X covariates
+
+formula_str <- paste(Y, "~", S, "*", "(", X , "*", "(", paste(baseline_vars_reflective_propensity_x, collapse = "+"), ")", ")")
+
+formula_str
 
 
 # fit model
-m2_mine  <- glm(as.formula(formula_str_X_c),
-          # shortcut
-          #  weights = weights, # will use weights with propensity score models
-          family = "gaussian",
-          data = dt)
+fit_all_all_x  <- glm(
+ # t2_hlth_fatigue_z ~ t0_eth_cat *  t1_hours_exercise_coarsen,
+  formula_str,
+  weights = weights,
+  # weights = if (!is.null(weight_var)) weight_var else NULL,
+  family = family,
+  data = dt_xx)
 
-# we can look at the coefficients of this model, but again it would be a mistake to interpret them
+summary(fit_all_all_x)
 
-summary(m2_mine)
+coefs <- coef(fit_all_all_x)
+table( is.na(coefs) )#
+
 
 # simulate coefficients
-library(clarify)
-nsims = 200
-sim_model_r2_mine <- sim(m2_mine, n = nsims)
+sim_model_all_x <- sim(fit_all_all_x, n = nsims, vcov = "HC3")
 
 
-# set to number of cores on your machine, e.g.
-cores = 2
+# simulate effect as modified in europeans
+sim_estimand_all_e <- sim_ame(sim_model_all_x,
+                              var = X,
+                              cl = cores,
+                              subset = t0_eth_cat == "euro",
+                              verbose = FALSE)
 
-# simulate effect as modified
-sim_estimand_r2_mine <- sim_ame(sim_model_r2_mine,
-                           var = X_c,
-                           cl = cores,
-                           verbose = FALSE)
+sim_estimand_all_e <- transform(sim_estimand_all_e, RD = `E[Y(low)]` - `E[Y(high)]`)
+sim_estimand_all_e
 
 
+# simulate effect as modified in māori
+sim_estimand_all_m <- sim_ame(sim_model_all_x,
+                              var = X,
+                              cl = cores,
+                              subset = t0_eth_cat == "māori",
+                              verbose = FALSE)
 
+sim_estimand_all_m <- transform(sim_estimand_all_m, RD = `E[Y(low)]` - `E[Y(high)]`)
 
-summary(sim_estimand_r2_mine)
 
 
-# suppose we want to contrast everyone being assigned to medium with everyone being assigned to high.
+summary(sim_estimand_all_e)
+summary(sim_estimand_all_m)
 
-sim_estimand_r2_mine_focal <-
-  transform(sim_estimand_r2, RD = `E[Y(medium)]` - `E[Y(high)]`)
+names(sim_estimand_all_e) <- paste(names(sim_estimand_all_e), "e", sep = "_")
 
+names(sim_estimand_all_m) <- paste(names(sim_estimand_all_m), "m", sep = "_")
 
-# RD describes the causal contrast on the risk difference scale.
-summary(sim_estimand_r2_mine_focal)
+sim_estimand_all_m
+sim_estimand_all_e
 
+est_all <- cbind(sim_estimand_all_m, sim_estimand_all_e)
+est_all <- transform(est_all, `RD_m - RD_e` = RD_m - RD_e)
 
 
-# > summary(sim_estimand_r2_mine_focal)
-# Estimate    2.5 %   97.5 %
-#   E[Y(low)]     0.07471  0.05191  0.09501
-# E[Y(medium)] -0.12200 -0.15339 -0.07879
-# E[Y(high)]   -0.18718 -0.24076 -0.13596
-# RD            0.06518  0.00223  0.12873
+# summary
+summary(est_all)
 
 
 
 
-sim_estimand_r2_mine_ad_hoc <-
-  transform(sim_estimand_r2, RD = `E[Y(low)]` - `E[Y(high)]`)
 
 
-# RD describes the causal contrast on the risk difference scale.
-summary(sim_estimand_r2_mine_ad_hoc)
 
 
-# > summary(sim_estimand_r2_mine_ad_hoc)
-# Estimate   2.5 %  97.5 %
-#   E[Y(low)]      0.0747  0.0519  0.0950
-# E[Y(medium)]  -0.1220 -0.1534 -0.0788
-# E[Y(high)]    -0.1872 -0.2408 -0.1360
-# RD             0.2619  0.2071  0.3115
 
 
-# Brief interpretation
 
-# - The sample consists of a representative group of New Zealanders, with synthesised data from respondents to the NZAVS across three waves (2018-2020).
-# - The continuous gratitude exposure variable was trichotomised into low (1 to <5), medium (5 to <6), and high (6-7) levels.
-# - G-computation was employed to estimate the causal risk differences of moving between gratitude levels on life satisfaction.
-# - The estimated causal risk difference for moving from low to high gratitude levels is 0.2619 (95% CI: 0.2071 - 0.3115).
-# - The causal risk difference for moving from medium to high gratitude levels, which was the study's original focus, is 0.06518 (95% CI: 0.00223 - 0.12873).
-# - The model's assumptions include positivity, conditional exchangeability based on baseline control variables, and consistency. Additionally, the model assumes no interference, accurate variable measurement, and correct statistical model specification.
-# - A primary limitation of this model is its assumption that sample attrition is unbiased.
-# - The results emphasize the importance of moving from medium to high gratitude levels in order to improve life satisfaction, providing a targeted area for potential interventions and well-being improvement strategies. Were there interventions that could move people from low to high levels of gratitude, we would expect even larger causal effects.
-
-
-
-
-
-######### PART 2: CAUSAL GRAPHS &  EXCERCISE ##############
-
-
-########################################### DAGS #####################################################################
-
-# First GGDAG exercises.
-# also load the ggdag package
-if(!require(ggdag)){
-  # Install the package if it is not already installed
-  install.packages("ggdag")
-}
-# load the ggdag package
-library(ggdag)
-
-
-## Motivating Examples
-
-# 1. **Bilingualism and cognitive abilities:** does bilingualism improve cognitive abilitiaes in children, and what factors might contribute to the observed relationship?
-#   2. **Cultural values and well-being:** how do cultural values influence well-being, and are there confounding factors that might explain the association?
-#   3. **Acculturation and mental health:** do different acculturation strategies impact mental health outcomes among migrants, and how can we account for potential confounders?
-#   4. **Social media use and life satisfaction:** does social media use affect life satisfaction, or are there underlying factors driving the relationship?
-#   5. **Parenting styles and children's self-esteem:** How do parenting styles influence children's self-esteem, and what role do cultural and demographic factors play?
-#   6. **Migration and stress:** Is there a causal link between migration and stress levels, and how can we address potential confounding variables?
-#   7. **Religion and well-being:** How does religious affiliation or practice affect well-being, and what factors may explain the observed associations?
-#   8. **Ethnic identity and self-esteem:** What is the relationship between ethnic identity and self-esteem, and how can we account for potential confounders?
-#   9. **Language proficiency and job satisfaction:** Does language proficiency have a causal impact on job satisfaction among migrants, and what factors may influence the relationship?
-#   10. **Education and intercultural competence:** How does education level affect intercultural competence, and how can we address potential confounding factors?
-
-
-
-## Problem 1: bilingualism on cognitive abilities
-
-## Using the DAG below as a starting point, create a DAG in R using the `ggdag` package that represents the causal relationships among bilingualism (B), cognitive abilities (C), and socioeconomic status (S).
-
-
-# Assume:
-# S -> B -> C
-# S ------> C
-
-## Problem 2: Cultural values on well-being*
-
-## Create a DAG in R using the `ggdag` package that represents the causal relationships among cultural values (V), well-being (W), and social support (SS)
-
-
-# Assume
-# V -> W
-# V -> SS
-# SS -> W
-
-
-## Problem 3: acculturation and mental health
-
-## Create a DAG that represents the causal relationships among acculturation (A), mental health (MH), language proficiency (LP), and social network size (SN).
-
-## assume
-
-# A -> MH
-# A -> LP
-# LP -> MH
-# A -> SN
-# SN -> MH
-
-
-## Problem 4: Social media use and life satisfaction
-
-# Create a DAG that represents the causal relationships among social media use (SM), life satisfaction (LS), and perceived social support (PSS).
-
-## assume
-
-# SM -> LS
-# PSS -> LS
-# PSS <- SM
-
-
-## Problem 5: parenting styles on children's self-esteem
-
-# Create a that represents the causal relationships among parenting styles (PS), children's self-esteem (SE), and children's academic achievement (AA).
-
-# assume:
-# PS -> SE
-# PS -> AA
-# SE -> AA
-
-
-## Problem 6: Migration on distress
-# Create a DAG that represents the causal relationships among migration status (M), stress levels (S), social support (SS), and coping strategies (CS).
-
-# assume
-#
-# M -> S
-# M -> SS
-# SS -> S
-# M -> CS
-# CS -> S
-
-
-# problem 7: religion on well-being
-
-# create a DAG that represents the causal relationships among religiosity (R), well-being (W), and social support (SS).
-
-# assume:
-# R -> W
-# R -> SS
-# SS -> W
-
-
-## Problem 8: ethnic identity on self-esteem
-
-# Create a DAG that represents the causal relationships among ethnic identity (EI), self-esteem (SE), and social support (SS).
-
-## assume:
-# EI -> SE
-# EI -> SS
-# SS -> SE
-
-
-## Problem 9: Language proficiency on job satisfaction
-
-# create a DAG in R that represents the causal relationships among language proficiency (LP), job satisfaction (JS), and job opportunities (JO).
-
-# assume
-# LP -> JS
-# LP -> JO
-# JO -> JS
-
-
-## Problem 10: education on intercultural competence
-
-# Create a DAG that represents the causal relationships among education (E), intercultural competence (IC), and cultural exposure (CE).
-
-# assume:
-# E -> IC
-# E -> CE
-# CE -> IC
-
-
-
-## Solutions
-library(ggdag)
-library(ggplot2)
-
-#set the default theme for all plots
-
-theme_set(theme_dag_blank())
-
-
-## Problem 1: bilingualism on cognitive abilities
-## Using the DAG below as a starting point, create a DAG in R using the `ggdag` package that represents the causal relationships among bilingualism (B), cognitive abilities (C), and socioeconomic status (S).
-
-
-
-dag1 <- dagify(C ~ B + S,
-               B ~ S,
-               coords = list(x = c(S = 1, B = 2, C = 3),
-                             y = c(S = 1, B = 2, C = 1)),
-               exposure = "B",
-               outcome = "C")
-
-# inspect
-tidy_dagitty(dag1)
-
-dag1_t <- tidy_dagitty(dag1)
-
-# plot
-ggdag(dag1_t)
-
-# view
-ggdag::ggdag_paths(dag1_t)
-
-# inspect
-ggdag_parents(dag1_t, "B")
-
-# find adjustment set: adjusting for S is sufficient to control for confounding (on the model's assumptions)
-ggdag_adjustment_set(dag1_t)
-
-
-
-## Problem 2: Cultural values and well-being
-## Create a DAG in R using the `ggdag` package that represents the causal relationships among cultural values (V), well-being (W), and social support (SS)
-
-dag2 <- dagify(W ~ V + SS,
-               SS ~ V,
-               coords = list(x = c(V = 1, SS = 2, W = 3),
-                             y = c(V = 1, SS = 2, W = 1)),
-               exposure = "V",
-               outcome = "W")
-ggdag(dag2)
-
-
-ggdag_adjustment_set(dag2)
-
-
-## Problem 3: acculturation and mental health
-## Create a DAG that represents the causal relationships among acculturation (A), mental health (MH), language proficiency (LP), and social network size (SN).
-
-
-dag3 <- dagify(MH ~ A + LP + SN,
-               LP ~ A,
-               SN ~ A,
-               coords = list(x = c(A = 1, LP = 2, SN = 2, MH = 3),
-                             y = c(A = 1, LP = 2, SN = 1, MH = 1)),
-               exposure = "A",
-               outcome = "MH")
-ggdag(dag3)
-
-
-ggdag_adjustment_set(dag3)
-
-
-## Problem 4: Social media use and life satisfaction
-# Create a DAG that represents the causal relationships among social media use (SM), life satisfaction (LS), and perceived social support (PSS).
-
-dag4 <- dagify(LS ~ SM + PSS,
-               PSS ~ SM,
-               coords = list(x = c(SM = 1, PSS = 2, LS = 3),
-                             y = c(SM = 1, PSS = 2, LS = 1)),
-               exposure = "SM",
-               outcome = "LS")
-ggdag(dag4)
-
-ggdag_adjustment_set(dag4)
-
-
-## Problem 5: parenting styles on children's self-esteem
-# Create a that represents the causal relationships among parenting styles (PS), children's self-esteem (SE), and children's academic achievement (AA).
-
-
-dag5 <- dagify(SE ~ PS,
-               AA ~ PS + SE,
-               coords = list(x = c(PS = 1, SE = 2, AA = 3),
-                             y = c(PS = 1, SE = 2, AA = 1)),
-               exposure = "PS",
-               outcome = "SE")
-ggdag(dag5)
-
-ggdag_adjustment_set(dag5)
-
-# if we condition on AA PS and SE are no longer "d-separated" (which is bad)
-ggdag::ggdag_dseparated(dag5)
-
-
-## Problem 6: Migration on distress
-# Create a DAG that represents the causal relationships among migration status (M), stress levels (S), social support (SS), and coping strategies (CS).
-
-
-dag6 <- dagify(S ~ M + SS + CS,
-               SS ~ M,
-               CS ~ M,
-               exposure = "M",
-               outcome = "S")
-ggdag(dag6)
-
-
-ggdag_adjustment_set(dag6)
-
-
-## Problem 7: religion on well-being
-# create a DAG that represents the causal relationships among religiosity (R), well-being (W), and social support (SS).
-
-dag7 <- dagify(W ~ R + SS,
-               SS ~ R,
-               coords = list(x = c(R = 1, SS = 2, W = 3),
-                             y = c(R = 1, SS = 1, W = 1)),
-               exposure = "R",
-               outcome = "W")
-ggdag(dag7)
-
-ggdag_adjustment_set(dag7)
-
-# do not condition on a mediator
-ggdag::ggdag_dseparated(dag7)
-
-## Problem 8: ethnic identity on self-esteem
-# Create a DAG that represents the causal relationships among ethnic identity (EI), self-esteem (SE), and social support (SS).
-
-
-dag8 <- dagify(SE ~ EI + SS,
-               SS ~ EI,
-               coords = list(x = c(EI = 1, SS = 2, SE = 3),
-                             y = c(EI = 1, SS = 1, SE = 1)),
-               exposure = "EI",
-               outcome = "SE")
-ggdag(dag8)
-
-ggdag_adjustment_set(dag8)
-
-## Problem 9: Language proficiency on job satisfaction
-# create a DAG in R that represents the causal relationships among language proficiency (LP), job satisfaction (JS), and job opportunities (JO).
-
-dag9 <- dagify(JS ~ LP + JO,
-               JO ~ LP,
-               coords = list(x = c(LP = 1, JO = 2, JS = 3),
-                             y = c(LP = 1, JO = 1, JS = 1)),
-               exposure = "LP",
-               outcome = "JS")
-ggdag(dag9)
-
-ggdag_adjustment_set(dag9)
-
-
-
-
-## Problem 10: education on intercultural competence
-# Create a DAG that represents the causal relationships among education (E), intercultural competence (IC), and cultural exposure (CE).
-
-dag10 <- dagify(IC ~ E + CE,
-                CE ~ E,
-                coords = list(x = c(E = 1, CE = 2, IC = 3),
-                              y = c(E = 1, CE = 1, IC = 1)),
-                exposure = "E",
-                outcome = "IC")
-ggdag(dag10)
-
-ggdag_adjustment_set(dag10)
 
 
 
