@@ -76,9 +76,13 @@ exposure_var = c("perfectionism")
 
 ## step 3. select the outcome variable.  These are the outcomes.
 outcome_vars_reflective = c("meaning_purpose",
-                            "meaning_sense")
+                            "meaning_sense",
+                            "pwi_relationships",
+                            "pwi_standardliving",
+                            "pwi_security",
+                            "pwi_health")
 
-
+colnames( nzavs_synth )
 # optional: select exclusion variables (this will not be necessary most of the time)
 exclude_vars = c("year_measured")
 
@@ -111,7 +115,13 @@ str(prep_reflective)
 
 library(tidyverse) # should be loaded
 
-dt_ref <- prep_reflective |>
+colnames( prep_reflective)
+
+levels(prep_reflective$t0_rural_gch2018)
+
+
+
+dt_8 <- prep_reflective |>
   mutate(id = factor(1:nrow(prep_reflective))) |>
   mutate(t1_perfectionism = round(t1_perfectionism)) |> # we create a three-level exposure to enable clear causal contrasts. We could also use a continous variable.
   mutate(
@@ -129,32 +139,46 @@ dt_ref <- prep_reflective |>
     t0_rural_gch2018 = as.factor(t0_rural_gch2018),
     t0_gen_cohort = as.factor(t0_gen_cohort)
   ) |>
+  dplyr::filter(t0_eth_cat == "euro"| t0_eth_cat == "māori") |>
+  mutate(t0_urban = factor(ifelse(t0_rural_gch2018 == "medium_urban_accessibility" | t0_rural_gch2018 == "high_urban_accessibility",
+                            "urban","rural"))) |>
   group_by(id) |>
   dplyr::mutate(t2_meaning = mean(c(t2_meaning_purpose,
                                     t2_meaning_sense),
                                   na.rm = TRUE)) |>
+  dplyr::mutate(t2_pwi = mean(
+    c(
+      t2_pwi_health,
+      t2_pwi_relationships,
+      t2_pwi_security,
+      t2_pwi_standardliving,
+      na.rm = TRUE
+    )
+  )) |>
   ungroup() |>
   # transform numeric variables into z scores (improves estimation)
   dplyr::mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z")) %>%
+  dplyr::select(-t0_rural_gch2018) |>
   # select only factors and numeric values that are z-scores
-  select(id,
+  select(id, # category is too sparse
          where(is.factor),
          t1_perfectionism, # for comparison
          ends_with("_z"), ) |>
   # tidy data frame so that the columns are ordered by time (useful for more complex models)
   relocate(id, .before = starts_with("t1_"))   |>
   relocate(starts_with("t0_"), .before = starts_with("t1_"))  |>
-  relocate(starts_with("t2_"), .after = starts_with("t1_"))
+  relocate(starts_with("t2_"), .after = starts_with("t1_")) |>
+  droplevels()
 
 
 # inspect
-levels(dt_ref$t1_perfectionism_coarsen)
+table(dt_8$t0_eth_cat)
 
 
 # rename levels
-dt_ref$t1_perfectionism_coarsen <-
+dt_8$t1_perfectionism_coarsen <-
   factor(
-    dt_ref$t1_perfectionism_coarsen,
+    dt_8$t1_perfectionism_coarsen,
     levels = c("[1,4)", "[4,5)", "[5,7]"),
     labels = c("low", "medium", "high"),
     ordered = TRUE
@@ -163,21 +187,21 @@ dt_ref$t1_perfectionism_coarsen <-
 
 
 # view object
-skimr::skim(dt_ref)
+skimr::skim(dt_8)
 
 
 # save your dataframe for future use
 
 # make dataframe
-dt_ref = as.data.frame(dt_ref)
+dt_8 = as.data.frame(dt_8)
 
 # save data
-saveRDS(dt_ref, here::here("data", "dt_ref"))
+saveRDS(dt_8, here::here("data", "dt_8"))
 
 
 # read -- you may start here if you need to repeat the analysis
 
-dt_ref <- readRDS(here::here("data", "dt_ref"))
+dt_8 <- readRDS(here::here("data", "dt_8"))
 
 
 ## Check the ethnicity levels
@@ -186,7 +210,7 @@ dt_ref <- readRDS(here::here("data", "dt_ref"))
 # we can do this contrasts for subgroups. Here lets compare Māori with NZ Europeans.
 
 # find names
-levels_list <- unique(dt_ref[["t0_eth_cat"]])
+levels_list <- unique(dt_8[["t0_eth_cat"]])
 
 # we have four levels of ethnicity.
 levels_list
@@ -197,21 +221,23 @@ levels_list
 # first step, obtain the baseline variables. note that we must remove "t0_eth_cat" because we are performing separate weighting for each stratum within this variable. here's the code:
 
 
-baseline_vars_reflective_propensity = dt_ref |>
+baseline_vars_reflective_propensity = dt_8 |>
   dplyr::select(starts_with("t0"), -t0_eth_cat) |> colnames()
 
-# inspect
-baseline_vars_reflective_cont = dt_ref |>
+# only for gcomp without stratification
+baseline_vars_full = dt_8 |>
   dplyr::select(starts_with("t0")) |> colnames()
 
-baseline_vars_reflective_cont
 
 
 # define our exposure
-X_pc <- "t1_perfectionism_coarsen"
+X <- "t1_perfectionism_coarsen"
+
+# define subclasses
+S <- "t0_eth_cat"
 
 # next we use our trick for creating a formula string, which will reduce our work
-formula_str_prop <- paste(X_pc, "~", paste(baseline_vars_reflective_propensity, collapse = "+"))
+formula_str_prop <- paste(X, "~", paste(baseline_vars_reflective_propensity, collapse = "+"))
 
 
 
@@ -220,19 +246,18 @@ formula_str_prop <- paste(X_pc, "~", paste(baseline_vars_reflective_propensity, 
 # Additionally, this week we will only use the coarsened treatment variable
 
 # we need our data to be a data frame, you did this before but do again :)
-dt_ref <- data.frame( dt_ref )
+dt_8 <- data.frame( dt_8 )
 
-# define our exposure
-X_pc <- "t1_perfectionism_coarsen"
+
 
 # Greifer recommends trying several approaches, so let us try four matching approaches, as defined by the "method" option in the code:
-# the methods we will try are: # tried cbps, ps, bart, and energy. of these energy worked best
+# the methods we will try are: # tried cbps, ps, ebal, bart, and energy. of these energy worked best
 # see: https://ngreifer.github.io/WeightIt/
 
 
 dt_match <- match_mi_general(
-  data = dt_ref,
-  X = X_pc,
+  data = dt_8,
+  X = X,
   baseline_vars = baseline_vars_reflective_propensity,
   subgroup = "t0_eth_cat",
   estimand = "ATE",
@@ -240,20 +265,70 @@ dt_match <- match_mi_general(
   method = "energy"
 )
 
+bal.tab(dt_match$euro)   #  good
+bal.tab(dt_match$māori)  # ok
+bal.tab(test$māori)  # ok, except perfectionism
+
+
+# blows up :)
+dt_match_ebal <- match_mi_general(
+  data = dt_8,
+  X = X,
+  baseline_vars = baseline_vars_reflective_propensity,
+  subgroup = "t0_eth_cat",
+  estimand = "ATE",
+  method = "ebal"
+)
+
+
+# not good
+dt_match_ps <- match_mi_general(
+  data = dt_8,
+  X = X,
+  baseline_vars = baseline_vars_reflective_propensity,
+  subgroup = "t0_eth_cat",
+  estimand = "ATE",
+  method = "ps"
+)
+
+bal.tab(dt_match_ps$euro) # not good
+bal.tab(dt_match_ps$māori) # not good
+
+
+dt_match_cbps <- match_mi_general(
+  data = dt_8,
+  X = X,
+  baseline_vars = baseline_vars_reflective_propensity,
+  subgroup = "t0_eth_cat",
+  estimand = "ATE",
+  method = "cbps"
+)
+
+bal.tab(dt_match_cbps$euro) # not good
+bal.tab(dt_match_cbps$māori) # not good
+
+library("SuperLearner")
+dt_match_super <- match_mi_general(
+  data = dt_8,
+  X = X,
+  baseline_vars = baseline_vars_reflective_propensity,
+  subgroup = "t0_eth_cat",
+  estimand = "ATE",
+  method = "super",
+  SL.library = c("SL.glm", "SL.stepAIC",
+                 "SL.glm.interaction"))
+
+bal.tab(dt_match_cbps$euro) # not good
+bal.tab(dt_match_cbps$māori) # not good
+
+
+
 
 
 
 Y = "t2_meaning_z"
 X = "t1_perfectionism_z"
 
-df = as.data.frame(dt_ref)
-
-baseline_vars = baseline_vars_reflective_cont
-
-baseline_vars
-
-levels_list <- unique(df[["t0_eth_cat"]])
-levels_list
 
 baseline_vars_reflective_propensity
 # tried cbps, ps, bart, and energy. of these energy worked best
@@ -311,14 +386,18 @@ dt_ref_a$weights <- dt_match$asian$weights
 # combine
 dt_ref_all <- rbind(dt_ref_e, dt_ref_m, dt_ref_p, dt_ref_a)
 
-# ignore warning
+
+
+# Let's calculate the ATE for the entire group, ignoring the subclasses.
+# let's make the contrasts between low and high perfectionism.
+
 mod_ref_meaning   <- gcomp_sim(
   df = dt_ref_all,  # note change
   Y = "t2_meaning_z",
   X = X_pc,
   baseline_vars = baseline_vars_reflective_cont,
   treat_1 = "high",
-  treat_0 = "medium",
+  treat_0 = "low",
   estimand = "ATE",
   scale = "RD",
   type = "RD",
@@ -335,165 +414,386 @@ mod_ref_meaning
 
 
 
+### SUBGROUP analysis
+
+df = dt_ref_all
+Y = "t2_meaning_z"
+X = "t1_perfectionism_coarsen"
+baseline_vars = baseline_vars_reflective_cont
+treat_0 = "medium"
+treat_1 = "high"
+estimand = "ATT"
+scale = "RD"
+nsims = 200
+family = "gaussian"
+continuous_X = FALSE
+splines = FALSE
+cores = parallel::detectCores()
+S = "t0_eth_cat"
+
+
+S = "t0_eth_cat"
+# not we interact the subclass X treatment X covariates
+
+formula_str <- paste(Y, "~", S, "*", "(", X , "*", "(", paste(baseline_vars, collapse = "+"), ")", ")")
 
 
 
-
-## NEXT we write two simple models, one with a continous exposure and one with a categorical exposure.
-# To make this easier we will assign key columns to variables
-
-# this is the continuous exposure
-X = "t1_perfectionism_z"
-
-# this is a categorical exposure
-X_pc <- "t1_perfectionism_coarsen"
-
-
-# set our outcome variable:
-Y = "t2_meaning_z" #note that we have created all numeric values into z-scores.  This will facilitate estimation and also interpretation. The outcome is expressed in standard deviation units
-
-
-# Get baseline names
-baseline_vars_reflective_cont = dt_ref |>
-  dplyr::select(starts_with("t0")) |> colnames()
-
-# See what we have created:  These are all the "t0_" variables.
-baseline_vars_reflective_cont
-
-
-# to run these models our data need to be a dataframe (not a tibble or another kind of obect)
-# above we've made the data a dataframe, but lets repeat in case you skipped that steip
-
-dt_ref = as.data.frame(dt_ref)
-
-
-# for simplicity
-df = dt_ref
-
-# create our formula string, this time for the categorical variable.
-formula_str_X <-
-  paste(Y,
-        "~",
-        X ,
-        "*",
-        "(",
-        paste(baseline_vars_reflective_cont, collapse = "+"),
-        ")")
-formula_str_X
-
-## regression based control
-
-
-# fit model
-m1 <- glm(as.formula(formula_str_X),
-          # shortcut
-          #  weights = weights, # will use weights with propensity score models
-          family = "gaussian",
-          data = df)
-
-# we can look at the coefficients of this model, but again, it would be a mistake to interpret them
-summary(m1)
-
-
-
-# another way of presenting the model
-# run to install latest version of easystats.
-# parameters::model_parameters(m1)
-
-
-# simulate coefficients for the continuous exposure
-library(clarify)
+## Subgroup Euro
+df = dt_ref_all
+Y = "t2_meaning_z"
+X = "t1_perfectionism_coarsen"
+baseline_vars = baseline_vars_reflective_propensity
+treat_0 = "low"
+treat_1 = "high"
+estimand = "ATE"
+scale = "RD"
 nsims = 1000
-sim_model_r <- sim(m1, n = nsims,
-                   vcov = "HC3"). # robust standard errors, see: "https://iqss.github.io/clarify/articles/clarify.html"
-
-
-# set to number of cores on your machine, e.g.
-cores = 2
-
-# simulate effect as modified
-sim_estimand_r <- sim_ame(sim_model_r,
-                          var = X,
-                          cl = cores,
-                          verbose = FALSE)
-
-
-# this is the difference in expectations between everyone in the population being subject to a one standard deviation increase in perfectionism
-# and everyone being subject to an average level of perfectionism.
-
-
-# Estimate  2.5 % 97.5 %
-#   dY/d(t1_perfectionism_z)   -0.160 -0.178 -0.140
-
-summary(sim_estimand_r,  null = c(`RD` = 0))
-
-
-# In this case we will use the coarsened variable.
-
-# create our formula string:
-formula_str_X_pc <-
-  paste(Y,
-        "~",
-        X_pc ,
-        "*",
-        "(",
-        paste(baseline_vars_reflective_cont, collapse = "+"),
-        ")")
-
-formula_str_X_pc
-
+family = "gaussian"
+continuous_X = FALSE
+splines = FALSE
+cores = parallel::detectCores()
 
 
 # fit model
-m2 <- glm(as.formula(formula_str_X_pc),
-          # shortcut
-          #  weights = weights, # will use weights with propensity score models
-          family = "gaussian",
-          data = df)
+fit_all_all  <- glm(
+  as.formula(formula_str),
+  weights = weights,
+  # weights = if (!is.null(weight_var)) weight_var else NULL,
+  family = family,
+  data = df)
 
-# we can look at the coefficients of this model, but again it would be a mistake to interpret them
-
-summary(m2)
+summary(fit_all_all)
 
 # simulate coefficients
-library(clarify)
-nsims = 1000
-sim_model_r2 <- sim(m2, n = nsims, vcov = "HC3")
+sim_model_all <- sim(fit_all_all, n = nsims, vcov = "HC3")
 
 
-# set to number of cores on your machine, e.g.
-cores = 4
+# simulate effect as modified in europeans
+sim_estimand_all_e <- sim_ame(sim_model_all,
+                              var = X,
+                              cl = cores,
+                              subset = t0_eth_cat == "euro",
+                              verbose = FALSE)
 
-# simulate effect as modified
-sim_estimand_r2 <- sim_ame(sim_model_r2,
-                           var = X_pc,
-                           cl = cores,
-                           verbose = FALSE)
-
-
-
-
-summary(sim_estimand_r2)
+sim_estimand_all_e <- transform(sim_estimand_all_e, RD = `E[Y(low)]` - `E[Y(high)]`)
+sim_estimand_all_e
 
 
-# suppose we want to contrast everyone being assigned to medium with everyone being assigned to high.
+# simulate effect as modified in māori
+sim_estimand_all_m <- sim_ame(sim_model_all,
+                              var = X,
+                              cl = cores,
+                              subset = t0_eth_cat == "māori",
+                              verbose = FALSE)
 
-sim_estimand_r2_focal <-
-  transform(sim_estimand_r2, RD = `E[Y(low)]` - `E[Y(high)]`)
-
-
-# RD describes the causal contrast on the risk difference scale.
-summary(sim_estimand_r2)
-
-
-# The ATE for the effect of moving from low to high is .26 a standard deviation unit in meaning.  What this means is that the expected loss of meaning from perfectionism is about a quarter standard deviation
+sim_estimand_all_m <- transform(sim_estimand_all_m, RD = `E[Y(low)]` - `E[Y(high)]`)
 
 
-# > summary(sim_estimand_r2)
-# Estimate   2.5 %  97.5 %
-#   E[Y(low)]      0.0747  0.0519  0.0950
-# E[Y(medium)]  -0.1220 -0.1534 -0.0788
-# E[Y(high)]    -0.1872 -0.2408 -0.1360
+
+summary(sim_estimand_all_e)
+summary(sim_estimand_all_m)
+
+names(sim_estimand_all_e) <- paste(names(sim_estimand_all_e), "e", sep = "_")
+
+names(sim_estimand_all_m) <- paste(names(sim_estimand_all_m), "m", sep = "_")
+
+sim_estimand_all_m
+sim_estimand_all_e
+
+est_all <- cbind(sim_estimand_all_m, sim_estimand_all_e)
+est_all <- transform(est_all, `RD_m - RD_e` = RD_m - RD_e)
+
+summary(est_all)
+
+
+
+
+## only regression
+
+
+# fit model
+fit_all_r <- glm(
+  as.formula(formula_str),
+  #  weights = weights,  # remove weights
+  family = family,
+  data = df)
+
+# simulate coefficients
+sim_model_r <- sim(fit_all_r, n = nsims)
+
+
+# simulate effect as modified in europeans
+sim_estimand_r_e <- sim_ame(sim_model_r,
+                            var = X,
+                            cl = cores,
+                            subset = t0_eth_cat == "euro",
+                            verbose = FALSE)
+
+sim_estimand_r_e <- transform(sim_estimand_r_e, RD = `E[Y(low)]` - `E[Y(high)]`)
+sim_estimand_r_e
+
+
+# simulate effect as modified in māori
+sim_estimand_r_m <- sim_ame(sim_model_r,
+                            var = X,
+                            cl = cores,
+                            subset = t0_eth_cat == "māori",
+                            verbose = FALSE)
+
+sim_estimand_r_m <- transform(sim_estimand_r_m, RD = `E[Y(low)]` - `E[Y(high)]`)
+
+
+
+summary(sim_estimand_r_e)
+summary(sim_estimand_r_m)
+
+names(sim_estimand_r_e) <- paste(names(sim_estimand_r_e), "e", sep = "_")
+
+names(sim_estimand_r_m) <- paste(names(sim_estimand_r_m), "m", sep = "_")
+
+sim_estimand_r_m
+sim_estimand_r_e
+
+est_r <- cbind(sim_estimand_r_e, sim_estimand_r_m)
+est_r <- transform(est_r, `RD_m - RD_e` = RD_m - RD_e)
+
+summary(est_all)
+summary(est_r)
+
+
+# only propensity score
+
+# fit model
+fit_all_p <- glm(
+  t2_meaning_z  ~ t1_perfectionism_coarsen * t0_eth_cat,
+  weights = weights,  # remove weights
+  family = family,
+  data = df)
+
+# simulate coefficients
+sim_model_p <- sim(fit_all_p, n = nsims)
+
+
+# simulate effect as modified in europeans
+sim_estimand_p_e <- sim_ame(sim_model_p,
+                            var = X,
+                            cl = cores,
+                            subset = t0_eth_cat == "euro",
+                            verbose = FALSE)
+
+sim_estimand_p_e <- transform(sim_estimand_p_e, RD = `E[Y(low)]` - `E[Y(high)]`)
+sim_estimand_p_e
+
+
+# simulate effect as modified in māori
+sim_estimand_p_m <- sim_ame(sim_model,
+                            var = X,
+                            cl = cores,
+                            subset = t0_eth_cat == "māori",
+                            verbose = FALSE)
+
+sim_estimand_p_m <- transform(sim_estimand_p_m, RD = `E[Y(low)]` - `E[Y(high)]`)
+
+
+
+summary(sim_estimand_p_e)
+summary(sim_estimand_p_m)
+
+names(sim_estimand_p_e) <- paste(names(sim_estimand_p_e), "e", sep = "_")
+
+names(sim_estimand_p_m) <- paste(names(sim_estimand_p_m), "m", sep = "_")
+
+
+est_p <- cbind(sim_estimand_p_e, sim_estimand_p_m)
+est_p <- transform(est, `RD_m - RD_e` = RD_m - RD_e)
+
+summary(est_all)
+summary(est_r)
+summary(est_p)
+
+
+
+## DO THE SAME WITH LOW AND MEDIUM
+
+# simulate coefficients
+sim_model_all <- sim(fit_all_all, n = nsims)
+
+
+# simulate effect as modified in europeans
+sim_estimand_all_e <- sim_ame(sim_model_all,
+                              var = X,
+                              cl = cores,
+                              subset = t0_eth_cat == "euro",
+                              verbose = FALSE)
+
+sim_estimand_all_e_lo <- transform(sim_estimand_all_e, RD = `E[Y(low)]` - `E[Y(medium)]`)
+
+
+
+# simulate effect as modified in māori
+sim_estimand_all_m <- sim_ame(sim_model_all,
+                              var = X,
+                              cl = cores,
+                              subset = t0_eth_cat == "māori",
+                              verbose = FALSE)
+
+sim_estimand_all_m_lo <- transform(sim_estimand_all_m, RD = `E[Y(low)]` - `E[Y(medium)]`)
+
+
+
+summary(sim_estimand_all_e_lo)
+summary(sim_estimand_all_m_lo)
+
+names(sim_estimand_all_e_lo) <- paste(names(sim_estimand_all_e_lo), "e", sep = "_")
+
+names(sim_estimand_all_m_lo) <- paste(names(sim_estimand_all_m_lo), "m", sep = "_")
+
+
+est_all_lo <- cbind(sim_estimand_all_e_lo, sim_estimand_all_m_lo)
+est_all_lo <- transform(est_all_lo, `RD_m - RD_e` = RD_m - RD_e)
+
+summary(est_all)
+summary(est_all_med)
+
+# reveals a strong sensitivity
+summary(est_all_lo)
+
+
+
+
+
+## DO THE SAME WITH MEDIUM AND HIGH
+
+# simulate coefficients
+sim_model_all <- sim(fit_all_all, n = nsims)
+
+
+# simulate effect as modified in europeans
+sim_estimand_all_e <- sim_ame(sim_model_all,
+                              var = X,
+                              cl = cores,
+                              subset = t0_eth_cat == "euro",
+                              verbose = FALSE)
+
+sim_estimand_all_e_med <- transform(sim_estimand_all_e, RD = `E[Y(medium)]` - `E[Y(high)]`)
+
+
+
+# simulate effect as modified in māori
+sim_estimand_all_m <- sim_ame(sim_model_all,
+                              var = X,
+                              cl = cores,
+                              subset = t0_eth_cat == "māori",
+                              verbose = FALSE)
+
+sim_estimand_all_m_med <- transform(sim_estimand_all_m, RD = `E[Y(medium)]` - `E[Y(high)]`)
+
+
+
+summary(sim_estimand_all_e_med)
+summary(sim_estimand_all_m_med)
+
+names(sim_estimand_all_e_med) <- paste(names(sim_estimand_all_e_med), "e", sep = "_")
+
+names(sim_estimand_all_m_med) <- paste(names(sim_estimand_all_m_med), "m", sep = "_")
+
+
+est_all_med <- cbind(sim_estimand_all_m_med, sim_estimand_all_e_med)
+est_all_med <- transform(est_all_med, `RD_m - RD_e` = RD_m - RD_e)
+
+summary(est_all)
+summary(est_all_med)
+
+
+
+
+## multi-level model
+
+str(nzavs_synth)
+
+dt_ml <- nzavs_synth |>
+  mutate(time = as.numeric(wave)-1)|>
+  group_by(id, wave) |>
+  dplyr::mutate(meaning = mean(c(meaning_purpose,
+                                 meaning_sense),
+                               na.rm = TRUE)) |>
+  ungroup() |>
+  # transform numeric variables into z scores (improves estimation)
+  dplyr::mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z")) %>%
+  # select only factors and numeric values that are z-scores
+  select(id,
+         where(is.factor),
+         perfectionism,# for comparison
+         time,
+         ends_with("_z")) |>
+  data.frame()
+
+
+
+
+
+baseline_vars_ml = c(
+  "eth_cat",
+  "edu_z",
+  "male",
+  "employed_z",
+  "gen_cohort",
+  "nz_dep2018_z",
+  "nzsei13_z",
+  "partner_z",
+  "parent_z",
+  "pol_orient_z",
+  "rural_gch2018",
+  "agreeableness_z",
+  "conscientiousness_z",
+  "extraversion_z",
+  "honesty_humility_z",
+  "openness_z",
+  "neuroticism_z",
+  "modesty_z",
+  "religion_identification_level_z"
+)
+
+Y_ml = "meaning_z"
+X_ml = "perfectionism_z"
+
+formula_str <- paste(Y_ml, "~",   "time", "*",  "(", X_ml , "*", "(", paste(baseline_vars_ml, collapse = "+"), ")", "+", "(1|id)", ")")
+
+formula_str
+
+library(lme4)
+as.formula(formula_str)
+
+model_ml <- lmer(as.formula(formula_str), data = dt_ml)
+
+
+tab_ml <- parameters::model_parameters(model_ml, effects = "fixed")
+
+plot(tab_ml)
+
+
+library(ggeffects)
+
+
+graph_ml <- plot(
+  ggeffects::ggpredict(model_ml, terms = c("time", "perfectionism_z","eth_cat"))
+)
+
+graph_ml
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # We interpret these contrasts as the expected effects were everyone "low" verses everyone assigned "medium" versus everyone assigned "high"
