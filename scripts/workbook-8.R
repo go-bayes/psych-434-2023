@@ -1,5 +1,3 @@
-
-
 # PSYCH 434 WEEK 8: subsample estimation
 # May 2023
 # questions: joseph.bulbulia@vuw.ac.nz
@@ -15,8 +13,9 @@ source(
   "https://raw.githubusercontent.com/go-bayes/templates/main/functions/experimental_funs.R"
 )
 
-
-######### PART 1: DATA EXCERCISE ##############
+############## ############## ############## ############## ############## ############## ############## ########
+#########  ############## ############## IMPORT DATA ##############  ############## ############## ##############
+############## ############## ############## ############## ############## ############## ############## ########
 
 
 #  If you haven't already, you should have created a folder called "data", in your Rstudio project. If not, download this file, add it to your the folder called "data" in your Rstudio project. # "https://www.dropbox.com/s/vwqijg4ha17hbs1/nzavs_dat_synth_t10_t12?dl=0"
@@ -61,35 +60,33 @@ nzavs_synth <- nzavs_synth |>
   )
 
 
+############## ############## ############## ############## ############## ############## ############## ########
+############## ############## ############## Checks Exposure ############## ############## ######## ##############
 
-# Today will we again be looking at the causal effect (ATE) of perfectionism on life meaning
+# Today will we again be looking at the conditonal causal effect (CATE) of perfectionism on life meaning stratified by ethnicity (euro and māori)
 
-# Recall that for an association to be causal, a change in the exposure must change the world relative to how it would have been had the exposure not occurred
-# lets look at how much the exposure changed?
+# Recall that for an association to be causal, a change in the exposure must affect the world
+# Lets look at how much the exposure has changed. No change, no effects!
 
 # inspect change in the exposure
 library(msm) # this will allow us to quicky inspect the data for instances of change.
 
-# we only inspect change between the baseline condition and the exposure year
+# We only inspect change between the baseline condition and the exposure year
 dt_18_19 <- nzavs_synth |>
   filter(wave == "2018" | wave == "2019") |>
   select(id, wave, perfectionism, perfectionism_coarsen, eth_cat) |> # the categorical variable needs to be numeric for us to use msm package to investigate change
   mutate(perfectionism_coarsen_n = as.numeric(perfectionism_coarsen))
 
 
-# next we check for change in the original responses
 
-
-# read the rows as a response and the columns as the response. the diagonal is the stable response
-# the off diagonal is the change in the response. Note that we are confronted with sparseness
-
+# Consider the original response scale
 
 msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19) |>
   kbl() |>
   kable_paper(full_width = F)
 
 
-# we can count the instances
+# We can count the instances
 
 msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19) |>
   data.frame() |>  # adding this code does the trick of counting
@@ -98,14 +95,15 @@ msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19) |>
 
 
 
-# lets look at the coarsened variable
+# Lets look at the coarsened variable
+
 msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19) |>
   kbl() |>
   kable_paper(full_width = F)
 
 
-# here we see better coverage
-# recall that clinical psychologists look at 4 and 5 on the 1-7 perfectionism scale as cut off points,
+# Here we see better coverage
+# Recall that clinical psychologists look at 4 and 5 on the 1-7 perfectionism scale as cut off points,
 
 msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19) |>
   data.frame() |>
@@ -142,9 +140,9 @@ msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19_m) |>
 # we can see there are not many "natural experiments" among māori
 # this is a challenge in observational cultural research -- even with large samples (we started with N = 10,000!) we did not have many "natural experiments"
 
-####  ####  ####  ####  ####  ####  ####  ####  ####  ####  ####
-####  ####  ####  CREATE DATA FRAME FOR ANALYSIS ####  ####  ####
-####  ####  ####  ####  ####  ####  ####  ####  ####  ####  ####
+############## ############## ############## ############## ############## ############## ############## ########
+####  ####  ####  CREATE DATA FRAME FOR ANALYSIS ####  ####  ################## ############## ######## #########
+############## ############## ############## ############## ############## ############## ############# #########
 
 # To find out more about our dataset go here:
 # https://github.com/go-bayes/psych-434-2023/blob/main/data/readme.qmd
@@ -156,9 +154,7 @@ msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19_m) |>
 
 # I have created a function that will put the data into the correct shape. Here are the steps.
 
-
-
-# step 1: choose baseline variables.  here we select standard demographic variablees plus personality variables.
+# Step 1: choose baseline variables.  here we select standard demographic variablees plus personality variables.
 
 baseline_vars = c(
   "edu",
@@ -196,8 +192,7 @@ colnames(nzavs_synth)
 
 
 # the function "create_wide_data" should be in your environment.
-
-#If not, make sure to run the first line of code in this script once more.  You may ignore the warnings. or uncomment and run the code below
+# If not, make sure to run the first line of code in this script once more.  You may ignore the warnings. or uncomment and run the code below
 # source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
 
 prep_reflective <-
@@ -244,9 +239,7 @@ table1::table1(as.formula(formula_string_table_baseline),
                overall = FALSE)
 
 
-# another method
-
-
+# another method for making a table
 x <- table1::table1(as.formula(formula_string_table_baseline),
                     data = dt_new,
                     overall = FALSE)
@@ -311,8 +304,6 @@ dt_8 <- prep_reflective |>
   relocate(starts_with("t0_"), .before = starts_with("t1_"))  |>
   relocate(starts_with("t2_"), .after = starts_with("t1_")) |>
   droplevels()
-
-
 
 
 
