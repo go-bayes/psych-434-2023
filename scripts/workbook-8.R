@@ -21,7 +21,7 @@ source(
 
 #  If you haven't already, you should have created a folder called "data", in your Rstudio project. If not, download this file, add it to your the folder called "data" in your Rstudio project. # "https://www.dropbox.com/s/vwqijg4ha17hbs1/nzavs_dat_synth_t10_t12?dl=0"
 
-
+hist(scale(nzavs_synth$hlth_sleep_hours))
 
 # This will read the synthetic data into Rstudio.  Note that the arrow package allows us to have lower memory demands in the storage and retrieval of data.
 nzavs_synth <-
@@ -214,7 +214,7 @@ colnames(prep_reflective)
 
 # I have created a function that will allow you to take a data frame and
 # create a table
-create_table_output(prep_reflective, output_format = "html")
+baseline_table(prep_reflective, output_format = "html")
 
 
 # if you just want a nice html table, do this:
@@ -1192,7 +1192,7 @@ prep_execercise
 
 # I have created a function that will allow you to take a data frame and
 # create a table
-create_table_output(prep_execercise, output_format = "html")
+baseline_table(prep_execercise, output_format = "html")
 
 
 ### ### ### ### ### ### SUBGROUP DATA ANALYSIS: DATA WRANGLING  ### ### ### ###

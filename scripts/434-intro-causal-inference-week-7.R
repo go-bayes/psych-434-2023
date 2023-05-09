@@ -1014,6 +1014,17 @@ ggdag_adjustment_set(dag10)
 
 
 
+## Create dag
 
+dag3 <- dagify(Y ~ A + L1 + L2 + L3 + L4,
+               A ~ L1 + L2 + L3,
+               L2 ~ L3,
+               exposure = "A",
+               outcome = "Y")
+
+ggdag(dag3) + theme_dag_blank()
+
+
+ggdag_adjustment_set(dag3)+ theme_dag_blank()
 
 
