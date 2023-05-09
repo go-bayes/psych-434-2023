@@ -15,7 +15,7 @@ library(extrafont)
 loadfonts(device = "win")
 
 # read functions
-source("/Users/joseph/GIT/templates/functions/funs.R")
+#source("/Users/joseph/GIT/templates/functions/funs.R")
 ```
 
 ## Downloads
