@@ -63,7 +63,7 @@ nzavs_synth <- nzavs_synth |>
 ############## ############## ############## ############## ############## ############## ############## ########
 ############## ############## ############## Checks Exposure ############## ############## ######## ##############
 
-# Today will we again be looking at the conditonal causal effect (CATE) of perfectionism on life meaning stratified by ethnicity (euro and māori)
+# Today will we again be looking at the Average Treatment Effect of perfectionism on life meaning in two different "treatment groups" - Māori and New Zealand Europeans. We'll assess evidence for whether ATE differs between the groups.
 
 # Recall that for an association to be causal, a change in the exposure must affect the world
 # Lets look at how much the exposure has changed. No change, no effects!

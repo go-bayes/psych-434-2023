@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.3.340">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Joseph Bulbulia">
 <meta name="dcterms.date" content="2023-05-09">
 
-<title>PSYC 434 Conducting Research Across Cultures: Trimester 1, 2023 - Causal Inference: Target Trial Emulation</title>
+<title>PSYC 434 Conducting Research Across Cultures: Trimester 1, 2023 - Causal Inference: Propensity Scores &amp; Subgroup Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,7 +19,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -61,6 +61,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -76,28 +92,74 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">PSYC 434 Conducting Research Across Cultures: Trimester 1, 2023</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-content" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-content" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Content</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-content">    
         <li>
-    <a class="dropdown-item" href="../content/index.html">
+    <a class="dropdown-item" href="../content/index.html" rel="" target="">
  <span class="dropdown-text">Preliminaries</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../content/01-content.html">
- <span class="dropdown-text">1: How to ask a why question</span></a>
+    <a class="dropdown-item" href="../content/01-content.html" rel="" target="">
+ <span class="dropdown-text">1: Asking questions in cross-cultural psychology</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/02-content.html" rel="" target="">
+ <span class="dropdown-text">2: Getting started with R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/03-content.html" rel="" target="">
+ <span class="dropdown-text">3: Lost in Translation? Measurement and Language</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/04-content.html" rel="" target="">
+ <span class="dropdown-text">4: Dealing with Data (Factor Analysis)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/05-content.html" rel="" target="">
+ <span class="dropdown-text">5: Dealing with Data (Multi-Group CFA)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/06-content.html" rel="" target="">
+ <span class="dropdown-text">6: Dealing with Data (Partial Invariance)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/07-content.html" rel="" target="">
+ <span class="dropdown-text">7: Causal Inference: Causal Graphs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/08-content.html" rel="" target="">
+ <span class="dropdown-text">8: Causal Inference: Target Trial Emulation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/09-content.html" rel="" target="">
+ <span class="dropdown-text">9: Causal inference: Reconsidering measurement and selection biases</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/10-content.html" rel="" target="">
+ <span class="dropdown-text">10: Causal Inference: Cross-Cultural Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/11-content.html" rel="" target="">
+ <span class="dropdown-text">11: Ethics and Ownership</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/12-content.html" rel="" target="">
+ <span class="dropdown-text">12: Future Horizons</span></a>
   </li>  
     </ul>
   </li>
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -106,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Causal Inference: Target Trial Emulation</h1>
+      <h1 class="title">Causal Inference: Propensity Scores &amp; Subgroup Analysis</h1>
                       </div>
   </div>
     
@@ -115,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
     <div class="quarto-title-meta-heading">Affiliation</div>
     
       <div class="quarto-title-meta-contents">
-      Joseph Bulbulia <a href="https://orcid.org/0000-0002-5861-2056" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
+      <p class="author">Joseph Bulbulia <a href="https://orcid.org/0000-0002-5861-2056" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
     </div>
       <div class="quarto-title-meta-contents">
           <p class="affiliation">
@@ -146,8 +208,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides">Slides</a></li>
+  <li><a href="#downloads" id="toc-downloads" class="nav-link active" data-scroll-target="#downloads">Downloads</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#why-is-this-important" id="toc-why-is-this-important" class="nav-link" data-scroll-target="#why-is-this-important">Why is this important?</a></li>
+  </ul></li>
+  <li><a href="#review-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem" id="toc-review-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem" class="nav-link" data-scroll-target="#review-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem">Review: The Fundamental Problem of Causal Inference as a Missing Data Problem</a></li>
+  <li><a href="#propensity-scores-and-confounding-control" id="toc-propensity-scores-and-confounding-control" class="nav-link" data-scroll-target="#propensity-scores-and-confounding-control">Propensity Scores and Confounding Control</a></li>
+  <li><a href="#doubly-robust-estimation" id="toc-doubly-robust-estimation" class="nav-link" data-scroll-target="#doubly-robust-estimation">Doubly Robust Estimation</a></li>
+  <li><a href="#subgroup-analysis" id="toc-subgroup-analysis" class="nav-link" data-scroll-target="#subgroup-analysis">Subgroup analysis</a></li>
+  <li><a href="#readings" id="toc-readings" class="nav-link" data-scroll-target="#readings">Readings:</a></li>
   </ul>
 </nav>
     </div>
@@ -157,16 +228,138 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<section id="downloads" class="level2">
+<h2 class="anchored" data-anchor-id="downloads">Downloads</h2>
+<p>Below is a link to the R script that will allow you to download the data and exercises. Copy the contents on your screen to a new R script, and run the script from the begging. Before class, it will be useful for you to:</p>
+<ol type="1">
+<li>Run “source()” file.</li>
+<li>Last we you should have downloaded the synthetic data, and placed the dataset in a folder in your R project called “data.”</li>
+<li>If you are stuck with this step, let us know.</li>
+</ol>
+<p><a href="https://github.com/go-bayes/psych-434-2023/blob/main/scripts/workbook-8.R">link to script for this week</a></p>
+</section>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<section id="goals" class="level3">
+<h3 class="anchored" data-anchor-id="goals">Goals</h3>
+<p>By the end of this lecture, you will understand the following concepts</p>
+<ol type="1">
+<li>Propensity-score weighting: modelling the exposure or treatment, not the outcome.</li>
+<li>Doubly robust estimation: model both the treatment and the outcome.</li>
+<li>Subgroup analysis by doubly-robust estimation.</li>
+</ol>
 </section>
-<section id="slides" class="level2">
-<h2 class="anchored" data-anchor-id="slides">Slides</h2>
+<section id="why-is-this-important" class="level3">
+<h3 class="anchored" data-anchor-id="why-is-this-important">Why is this important?</h3>
+<p>Recall that in psychology our task is to answer some question about how people think and behave. In cross-cultural psychology these questions are typically comparative.</p>
+<p>Our first task is clearly define that question. Our second task is to answer that question.</p>
+<p>The methods you will learn today will help you to define and answer comparative questions in psychology.</p>
+</section>
+</section>
+<section id="review-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem" class="level2">
+<h2 class="anchored" data-anchor-id="review-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem">Review: The Fundamental Problem of Causal Inference as a Missing Data Problem</h2>
+<p>Recall the fundamental problem of causal inference, returning to the question of whether bilingualism improves cognitive abilities:</p>
+<p><span class="math inline">Y_i^{a = 1}</span>: The cognitive ability of child <span class="math inline">i</span> if they were bilingual. This is the counterfactual outcome when A = 1. <span class="math inline">Y_i^{a = 0}</span>:: The cognitive ability of child <span class="math inline">i</span> if they were monolingual. This is the counterfactual outcome when A = 0.</p>
+<p>The causal effect of bilingualism on cognitive ability for individual <span class="math inline">i</span> is then defined as the difference between these potential outcomes:</p>
+<p><span class="math display">
+\text{Causal Effect}_i = Y^{a=1} - Y^{a=0}
+</span></p>
+<p>We say there is a causal effect if:</p>
+<p><span class="math display">
+Y^{a=1} - Y^{a=0}  \neq 0
+</span></p>
+<p>However, we only observe one of the potential outcomes for each child. The other outcome is not observed because physics prevents a child from both receiving and not receiving bilingual exposure.</p>
+<p>The fact that causal contrasts are not observed on individuals is called “The fundamental problem of causal inference.”</p>
+<p>Although we typically cannot observe individual causal effects, under certain assumptions we can obtain average causal effects.</p>
+<p><span class="math display">
+\begin{align}
+E(\delta) = E(Y^{a=1} - Y^{a=0})\\
+          ~  = E(Y^{a=1}) - E(Y^{a=0}) \\
+          ~  = ATE
+\end{align}
+</span> We may identify average causal effects from the data when the following assumptions are met:</p>
+<ul>
+<li>Causal Consistency: The values of exposure under comparisons correspond to well-defined interventions that, in turn, correspond to the versions of treatment in the data.(see: Chatton, Hernan &amp; Robbins)</li>
+<li>Positivity: The probability of receiving every value of the exposure within all strata of co-variates is greater than zero</li>
+<li>Exchangeablility: The conditional probability of receiving every value of an exposure level, though not decided by the investigators, depends only on the measured covariates (see: Chatton, Hernan &amp; Robbins)</li>
+</ul>
+<p>Further assumptions:</p>
+<ul>
+<li>No Interference: also known as the Stable Unit Treatment Value Assumption (SUTVA), requires that the treatment given to one unit (e.g., person, group, organization) does not interfere with the potential outcomes of another unit. Put differently, there are no “spillover” effects. Note: this assumption may be thought to be part of causal consistency, namely individual has only one potential outcome under each treatment condition.</li>
+<li>Correctly specified model: the requirement that the underlying statistical model used to estimate causal effects accurately represents the true relationships between the variables of interest. We say the model should be able to capture “the functional form” of the relationship between the treatment, the outcome, and any covariates. The functional form of the model should be flexible enough to capture the true underlying relationship. If the model’s functional form is incorrect, the estimated causal effects may be biased. Additionally, the model must handle omitted variable bias by including all relevant confounders and should correctly handle missing data. We will return to the bias arising from missing data in the weeks ahead. For now, it is important to note that an assumption of causal inference is that our model is correctly specified.</li>
+</ul>
+</section>
+<section id="propensity-scores-and-confounding-control" class="level2">
+<h2 class="anchored" data-anchor-id="propensity-scores-and-confounding-control">Propensity Scores and Confounding Control</h2>
+<p>Recall that last week, we considered confounding control by regression adjustment.</p>
+<p><span class="math display">
+\begin{aligned}
+ATE = E[Y^{a=1}|L = l] - E[Y^{a=0}|L = l] ~ \text{for any value}~l
+\end{aligned}
+</span></p>
+<blockquote class="blockquote">
+<p>“We say that a set L of measured non-descendants of L is a sufficient set for confounding adjustment when conditioning on L blocks all backdoor paths–that is, the treated and the untreated are exchangeable within levels of L” (Hernan &amp; Robins, What IF p.&nbsp;86)</p>
+</blockquote>
+<p>The equation you provided represents the average treatment effect (ATE) when conditioning on a set of covariates <code>L</code>:</p>
+<p><span class="math display">
+\begin{aligned}
+ATE = E[Y^{a=1}|L = l] - E[Y^{a=0}|L = l] ~ \text{for any value}~l
+\end{aligned}
+</span></p>
+<p>This formula calculates the expected difference in outcomes between treated (a=1) and untreated (a=0) groups, given a specific value of the covariates <code>l</code>.</p>
+<p>Now, we will expand this explanation to include causal estimation by weighting of the covariates <code>L</code> on the exposure.</p>
+<p>One common method for causal estimation by weighting is the inverse probability of treatment weighting (IPTW) using propensity scores. Propensity scores are the estimated probabilities of receiving the treatment given the covariates <code>L</code>. Denote the propensity score as <span class="math inline">e(L) = P(a=1|L).</span></p>
+<p>This estimator involves two steps:</p>
+<ol type="1">
+<li>Estimate the propensity score e(L) using logistic regression or another appropriate method.</li>
+</ol>
+<p>The weights are indeed calculated as follows:</p>
+<p>For exposed individuals <span class="math inline">(A_i = 1)</span>: The weight is the inverse of the propensity score, <span class="math inline">\frac{1} {e(L_i)}</span>. This means that exposed individuals with a lower probability of exposure (e.g., those with lower propensity scores) receive larger weights, increasing their influence on the comparison.</p>
+<p>For unexposed individuals <span class="math inline">(A_i = 0)</span>: The weight is the inverse of (1 - propensity score), <span class="math inline">\frac{1}{(1 - e(L_i))}</span>. This means that unexposed individuals with a higher probability of exposure (e.g., those with higher propensity scores) receive larger weights, also increasing their influence on the comparison.</p>
+<ol start="2" type="1">
+<li>Calculate the average treatment effect by weighting each individual’s outcome by the inverse probability of receiving their observed treatment, given the covariates <code>L</code>.</li>
+</ol>
+<p>The IPTW estimator for the average treatment effect can be defined as:</p>
+<p><span class="math display">
+\begin{aligned}
+ATE_{IPTW} = \frac{1}{N} \sum_{i=1}^{N} \frac{A_i Y_i}{e(L_i)} - \frac{1}{N} \sum_{i=1}^{N} \frac{(1 - A_i) Y_i}{1 - e(L_i)}
+\end{aligned}
+</span></p>
+<p>where <code>N</code> is the number of observations, <code>a_i</code> is the treatment indicator for individual <code>i</code>, <code>Y_i</code> is the observed outcome for individual <code>i</code>, and <code>L_i</code> represents the covariates for individual <code>i</code>.</p>
+<p>The IPTW estimator attempts to balance the distribution of the covariates <code>L</code> between treated and untreated groups by assigning weights based on the propensity scores. This approach aims to create a pseudo-population in which treatment assignment is independent of the covariates, allowing for an unbiased estimation of the average treatment effect, conditional on a correct specification of the model for the exposure.</p>
+</section>
+<section id="doubly-robust-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="doubly-robust-estimation">Doubly Robust Estimation</h2>
+<p>We can combine regression based estimation and doubly robust estimation. I will walk you through the steps in today’s exercises. The TL;DR is this: doubly robust estimation leads to lower reliance on correct model specification. If either the PS model or the regression model is correctly specified, the model will be unbiased – if the other assumptions of causal inference are met.</p>
+<p>We cannot know whether these assumptions are met, we will need to do sensitivity analysis, the topic of next week.</p>
+</section>
+<section id="subgroup-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="subgroup-analysis">Subgroup analysis</h2>
+<p>In causal inference, these two concepts are related but have distinct meanings.</p>
+<p>Let <span class="math inline">Y_{a}</span> denote the counterfactual outcome Y when the experimental intervention <span class="math inline">A</span> is set to level <span class="math inline">a</span>. Let <span class="math inline">Y_{r}</span> denote the counterfactual outcome <span class="math inline">Y</span> when another experimental intervention <span class="math inline">R</span> is set to level <span class="math inline">r</span>. Following VanderWeele (2009), we can define interaction and effect modification as follows:</p>
+<ol type="1">
+<li>Interaction (causal interaction) on the difference scale, conditional on confounders <span class="math inline">L</span>, occurs when:</li>
+</ol>
+<p><span class="math display">E(Y^{a1,r1}|L=l) - E(Y^{a0,r1}|L=l) \neq E(Y^{a1,r0}|L=l) - E(Y^{a0,r0}|L=l)</span></p>
+<p>In this case, we are considering a double intervention, and interaction occurs when the combined effect of interventions <span class="math inline">A</span> and <span class="math inline">R</span> is not equal to the sum of their individual effects.</p>
+<ol start="2" type="1">
+<li>Effect Modification (also known as “heterogeneity of treatment effects”) occurs when the causal effect of intervention <span class="math inline">A</span> varies across different levels of another variable <span class="math inline">R</span>:</li>
+</ol>
+<p><span class="math display">E(Y^{a=1}|R=r_1, L=l) - E(Y^{a=0}|R=r_1, L=l) \neq E(Y^{a=1}|R=r_2, L=l) - E(Y^{a=0}|R=r_2, L=l)</span></p>
+<p>Effect modification indicates that the magnitude of the causal effect of intervention <span class="math inline">A</span> depends on the level of the modifier variable <span class="math inline">R</span>. It is important to note that effect modification can be observed even when there is no direct causal interaction between the treatment and the modifier variable.</p>
+<p>In short, interaction in causal inference refers to a situation where the combined effect of two interventions is not equal to the sum of their individual effects. Effect modification, on the other hand, occurs when the causal effect of one intervention varies across different levels of another variable.</p>
+<p>By clearly distinguishing between these two concept, researchers can better ask, and answer, questions about human thinking and behaviour. For comparative research, we are typically interested in effect-modification which requires subgroup analysis.</p>
+<p>In today’s workbook, you will learn how to conduct doubly robust subgroup analysis.</p>
+</section>
+<section id="readings" class="level2">
+<h2 class="anchored" data-anchor-id="readings">Readings:</h2>
+<p>Noah Griefer’s Software and Blogs: <a href="https://ngreifer.github.io/blog/">https://ngreifer.github.io/blog/subgroup-analysis-psm/</a></p>
+<p>Kat Hoffman’s blog</p>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><div>MIT</div></div></section></div></main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>MIT</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -194,9 +387,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -261,6 +468,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
