@@ -259,7 +259,10 @@ ul.task-list li input[type="checkbox"] {
 <section id="review-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem" class="level2">
 <h2 class="anchored" data-anchor-id="review-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem">Review: The Fundamental Problem of Causal Inference as a Missing Data Problem</h2>
 <p>Recall the fundamental problem of causal inference, returning to the question of whether bilingualism improves cognitive abilities:</p>
-<p><span class="math inline">Y_i^{a = 1}</span>: The cognitive ability of child <span class="math inline">i</span> if they were bilingual. This is the counterfactual outcome when A = 1. <span class="math inline">Y_i^{a = 0}</span>:: The cognitive ability of child <span class="math inline">i</span> if they were monolingual. This is the counterfactual outcome when A = 0.</p>
+<ul>
+<li><span class="math inline">Y_i^{a = 1}</span>: The cognitive ability of child <span class="math inline">i</span> if they were bilingual. This is the counterfactual outcome when A = 1.</li>
+<li><span class="math inline">Y_i^{a = 0}</span>:: The cognitive ability of child <span class="math inline">i</span> if they were monolingual. This is the counterfactual outcome when A = 0.</li>
+</ul>
 <p>The causal effect of bilingualism on cognitive ability for individual <span class="math inline">i</span> is then defined as the difference between these potential outcomes:</p>
 <p><span class="math display">
 \text{Causal Effect}_i = Y^{a=1} - Y^{a=0}
@@ -271,13 +274,12 @@ Y^{a=1} - Y^{a=0}  \neq 0
 <p>However, we only observe one of the potential outcomes for each child. The other outcome is not observed because physics prevents a child from both receiving and not receiving bilingual exposure.</p>
 <p>The fact that causal contrasts are not observed on individuals is called “The fundamental problem of causal inference.”</p>
 <p>Although we typically cannot observe individual causal effects, under certain assumptions we can obtain average causal effects.</p>
-<p><span class="math display">
-\begin{align}
+<span class="math display">\begin{align}
 E(\delta) = E(Y^{a=1} - Y^{a=0})\\
           ~  = E(Y^{a=1}) - E(Y^{a=0}) \\
           ~  = ATE
-\end{align}
-</span> We may identify average causal effects from the data when the following assumptions are met:</p>
+\end{align}</span>
+<p>We may identify average causal effects from the data when the following assumptions are met:</p>
 <ul>
 <li>Causal Consistency: The values of exposure under comparisons correspond to well-defined interventions that, in turn, correspond to the versions of treatment in the data.(see: Chatton, Hernan &amp; Robbins)</li>
 <li>Positivity: The probability of receiving every value of the exposure within all strata of co-variates is greater than zero</li>
@@ -354,7 +356,6 @@ ATE_{IPTW} = \frac{1}{N} \sum_{i=1}^{N} \frac{A_i Y_i}{e(L_i)} - \frac{1}{N} \su
 <section id="readings" class="level2">
 <h2 class="anchored" data-anchor-id="readings">Readings:</h2>
 <p>Noah Griefer’s Software and Blogs: <a href="https://ngreifer.github.io/blog/">https://ngreifer.github.io/blog/subgroup-analysis-psm/</a></p>
-<p>Kat Hoffman’s blog</p>
 
 
 </section>

@@ -530,45 +530,44 @@
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># should be loaded</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a></span>
-<span id="cb7-3"><a href="#cb7-3"></a>dt_ref <span class="ot">&lt;-</span> prep_reflective <span class="sc">|&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(prep_reflective))) <span class="sc">|&gt;</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">mutate</span>(<span class="at">t1_perfectionism =</span> <span class="fu">round</span>(t1_perfectionism)) <span class="sc">|&gt;</span> <span class="co"># we create a three-level exposure to enable clear causal contrasts. We could also use a continous variable.</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb7-7"><a href="#cb7-7"></a>    <span class="at">t1_perfectionism_coarsen =</span> <span class="fu">cut</span>(</span>
-<span id="cb7-8"><a href="#cb7-8"></a>      t1_perfectionism,</span>
-<span id="cb7-9"><a href="#cb7-9"></a>      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>),</span>
-<span id="cb7-10"><a href="#cb7-10"></a>      <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb7-11"><a href="#cb7-11"></a>      <span class="at">include.highest =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb7-12"><a href="#cb7-12"></a>      <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb7-13"><a href="#cb7-13"></a>      <span class="at">right =</span> <span class="cn">FALSE</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a>    )</span>
-<span id="cb7-15"><a href="#cb7-15"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb7-17"><a href="#cb7-17"></a>    <span class="at">t0_eth_cat =</span> <span class="fu">as.factor</span>(t0_eth_cat),</span>
-<span id="cb7-18"><a href="#cb7-18"></a>    <span class="at">t0_rural_gch2018 =</span> <span class="fu">as.factor</span>(t0_rural_gch2018),</span>
-<span id="cb7-19"><a href="#cb7-19"></a>    <span class="at">t0_gen_cohort =</span> <span class="fu">as.factor</span>(t0_gen_cohort)</span>
-<span id="cb7-20"><a href="#cb7-20"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb7-21"><a href="#cb7-21"></a>  <span class="fu">group_by</span>(id) <span class="sc">|&gt;</span></span>
-<span id="cb7-22"><a href="#cb7-22"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">t2_meaning =</span> <span class="fu">mean</span>(<span class="fu">c</span>(t2_meaning_purpose,</span>
-<span id="cb7-23"><a href="#cb7-23"></a>                                    t2_meaning_sense),</span>
-<span id="cb7-24"><a href="#cb7-24"></a>                                  <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb7-25"><a href="#cb7-25"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb7-26"><a href="#cb7-26"></a>  <span class="co"># transform numeric variables into z scores (improves estimation)</span></span>
-<span id="cb7-27"><a href="#cb7-27"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> <span class="fu">scale</span>(.x), <span class="at">.names =</span> <span class="st">"{col}_z"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-28"><a href="#cb7-28"></a>  <span class="co"># select only factors and numeric values that are z-scores</span></span>
-<span id="cb7-29"><a href="#cb7-29"></a>  <span class="fu">select</span>(id,</span>
-<span id="cb7-30"><a href="#cb7-30"></a>         <span class="fu">where</span>(is.factor),</span>
-<span id="cb7-31"><a href="#cb7-31"></a>         t1_perfectionism, <span class="co"># for comparison</span></span>
-<span id="cb7-32"><a href="#cb7-32"></a>         <span class="fu">ends_with</span>(<span class="st">"_z"</span>), ) <span class="sc">|&gt;</span></span>
-<span id="cb7-33"><a href="#cb7-33"></a>  <span class="co"># tidy data frame so that the columns are ordered by time (useful for more complex models)</span></span>
-<span id="cb7-34"><a href="#cb7-34"></a>  <span class="fu">relocate</span>(id, <span class="at">.before =</span> <span class="fu">starts_with</span>(<span class="st">"t1_"</span>))   <span class="sc">|&gt;</span></span>
-<span id="cb7-35"><a href="#cb7-35"></a>  <span class="fu">relocate</span>(<span class="fu">starts_with</span>(<span class="st">"t0_"</span>), <span class="at">.before =</span> <span class="fu">starts_with</span>(<span class="st">"t1_"</span>))  <span class="sc">|&gt;</span></span>
-<span id="cb7-36"><a href="#cb7-36"></a>  <span class="fu">relocate</span>(<span class="fu">starts_with</span>(<span class="st">"t2_"</span>), <span class="at">.after =</span> <span class="fu">starts_with</span>(<span class="st">"t1_"</span>))</span>
+<span id="cb7-2"><a href="#cb7-2"></a> dt_ref <span class="ot">&lt;-</span> prep_reflective <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(prep_reflective))) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">mutate</span>(<span class="at">t1_perfectionism =</span> <span class="fu">round</span>(t1_perfectionism)) <span class="sc">|&gt;</span> <span class="co"># we create a three-level exposure to enable clear causal contrasts. We could also use a continous variable.</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="at">t1_perfectionism_coarsen =</span> <span class="fu">cut</span>(</span>
+<span id="cb7-7"><a href="#cb7-7"></a>      t1_perfectionism,</span>
+<span id="cb7-8"><a href="#cb7-8"></a>      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>),</span>
+<span id="cb7-9"><a href="#cb7-9"></a>      <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-10"><a href="#cb7-10"></a>      <span class="at">include.highest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-11"><a href="#cb7-11"></a>      <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-12"><a href="#cb7-12"></a>      <span class="at">right =</span> <span class="cn">FALSE</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>    )</span>
+<span id="cb7-14"><a href="#cb7-14"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="at">t0_eth_cat =</span> <span class="fu">as.factor</span>(t0_eth_cat),</span>
+<span id="cb7-17"><a href="#cb7-17"></a>    <span class="at">t0_rural_gch2018 =</span> <span class="fu">as.factor</span>(t0_rural_gch2018),</span>
+<span id="cb7-18"><a href="#cb7-18"></a>    <span class="at">t0_gen_cohort =</span> <span class="fu">as.factor</span>(t0_gen_cohort)</span>
+<span id="cb7-19"><a href="#cb7-19"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a>  <span class="fu">group_by</span>(id) <span class="sc">|&gt;</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">t2_meaning =</span> <span class="fu">mean</span>(<span class="fu">c</span>(t2_meaning_purpose,</span>
+<span id="cb7-22"><a href="#cb7-22"></a>                                    t2_meaning_sense),</span>
+<span id="cb7-23"><a href="#cb7-23"></a>                                  <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a>  <span class="co"># transform numeric variables into z scores (improves estimation)</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> <span class="fu">scale</span>(.x), <span class="at">.names =</span> <span class="st">"{col}_z"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a>  <span class="co"># select only factors and numeric values that are z-scores</span></span>
+<span id="cb7-28"><a href="#cb7-28"></a>  <span class="fu">select</span>(id,</span>
+<span id="cb7-29"><a href="#cb7-29"></a>         <span class="fu">where</span>(is.factor),</span>
+<span id="cb7-30"><a href="#cb7-30"></a>         t1_perfectionism, <span class="co"># for comparison</span></span>
+<span id="cb7-31"><a href="#cb7-31"></a>         <span class="fu">ends_with</span>(<span class="st">"_z"</span>), ) <span class="sc">|&gt;</span></span>
+<span id="cb7-32"><a href="#cb7-32"></a>  <span class="co"># tidy data frame so that the columns are ordered by time (useful for more complex models)</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a>  <span class="fu">relocate</span>(id, <span class="at">.before =</span> <span class="fu">starts_with</span>(<span class="st">"t1_"</span>))   <span class="sc">|&gt;</span></span>
+<span id="cb7-34"><a href="#cb7-34"></a>  <span class="fu">relocate</span>(<span class="fu">starts_with</span>(<span class="st">"t0_"</span>), <span class="at">.before =</span> <span class="fu">starts_with</span>(<span class="st">"t1_"</span>))  <span class="sc">|&gt;</span></span>
+<span id="cb7-35"><a href="#cb7-35"></a>  <span class="fu">relocate</span>(<span class="fu">starts_with</span>(<span class="st">"t2_"</span>), <span class="at">.after =</span> <span class="fu">starts_with</span>(<span class="st">"t1_"</span>))</span>
+<span id="cb7-36"><a href="#cb7-36"></a></span>
 <span id="cb7-37"><a href="#cb7-37"></a></span>
-<span id="cb7-38"><a href="#cb7-38"></a></span>
-<span id="cb7-39"><a href="#cb7-39"></a><span class="co"># inspect</span></span>
-<span id="cb7-40"><a href="#cb7-40"></a><span class="fu">levels</span>(dt_ref<span class="sc">$</span>t1_perfectionism_coarsen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-38"><a href="#cb7-38"></a><span class="co"># inspect</span></span>
+<span id="cb7-39"><a href="#cb7-39"></a><span class="fu">levels</span>(dt_ref<span class="sc">$</span>t1_perfectionism_coarsen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "[1,4)" "[4,5)" "[5,7]"</code></pre>
@@ -1536,9 +1535,9 @@ Number of Fisher Scoring iterations: 2</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Estimate   2.5 %  97.5 %
-E[Y(low)]      0.0747  0.0551  0.0914
-E[Y(medium)]  -0.1220 -0.1649 -0.0854
-E[Y(high)]    -0.1872 -0.2350 -0.1252</code></pre>
+E[Y(low)]      0.0747  0.0548  0.0916
+E[Y(medium)]  -0.1220 -0.1617 -0.0849
+E[Y(high)]    -0.1872 -0.2440 -0.1236</code></pre>
 </div>
 </div>
 </section>
@@ -1552,13 +1551,14 @@ E[Y(high)]    -0.1872 -0.2350 -0.1252</code></pre>
 <span id="cb23-3"><a href="#cb23-3"></a></span>
 <span id="cb23-4"><a href="#cb23-4"></a></span>
 <span id="cb23-5"><a href="#cb23-5"></a><span class="co"># RD describes the causal contrast on the risk difference scale.</span></span>
-<span id="cb23-6"><a href="#cb23-6"></a><span class="fu">summary</span>(sim_estimand_r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-6"><a href="#cb23-6"></a><span class="fu">summary</span>(sim_estimand_r2_focal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Estimate   2.5 %  97.5 %
-E[Y(low)]      0.0747  0.0551  0.0914
-E[Y(medium)]  -0.1220 -0.1649 -0.0854
-E[Y(high)]    -0.1872 -0.2350 -0.1252</code></pre>
+E[Y(low)]      0.0747  0.0548  0.0916
+E[Y(medium)]  -0.1220 -0.1617 -0.0849
+E[Y(high)]    -0.1872 -0.2440 -0.1236
+RD             0.2619  0.1987  0.3161</code></pre>
 </div>
 <details>
 <summary>Code</summary>
@@ -1643,7 +1643,7 @@ E[Y(high)]    -0.1872 -0.2350 -0.1252</code></pre>
 
 </div>
 
-<img data-src="07-exercise_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"><div class="footer footer-default">
+<img data-src="07-exercise_files/figure-html/unnamed-chunk-13-1.png" width="672" class="r-stretch"><div class="footer footer-default">
 
 </div>
 </section></section>
@@ -1841,44 +1841,6 @@ E[Y(high)]    -0.1872 -0.2350 -0.1252</code></pre>
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

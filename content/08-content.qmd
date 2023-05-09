@@ -1,6 +1,8 @@
 ---
 title: "Causal Inference: Propensity Scores & Subgroup Analysis"
 date: "2023-MAY-09"
+execute:
+  warning: false
 ---
 
 ```{r}
@@ -170,5 +172,3 @@ In today's workbook, you will learn how to conduct doubly robust subgroup analys
 ## Readings:
 
 Noah Griefer's Software and Blogs: [https://ngreifer.github.io/blog/subgroup-analysis-psm/](https://ngreifer.github.io/blog/)
-
-Kat Hoffman's blog
