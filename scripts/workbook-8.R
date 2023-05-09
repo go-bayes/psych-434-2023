@@ -8,6 +8,7 @@
 
 source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
 
+
 # experimental functions
 source(
   "https://raw.githubusercontent.com/go-bayes/templates/main/functions/experimental_funs.R"
@@ -116,6 +117,7 @@ dt_18_19_e <- dt_18_19 |> filter(eth_cat == "euro")
 dt_18_19_m <- dt_18_19 |> filter(eth_cat == "māori")
 
 
+
 # euro continuous
 msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19_e) |>
   kbl() |>
@@ -155,6 +157,9 @@ msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19_m) |>
 # I have created a function that will put the data into the correct shape. Here are the steps.
 
 # Step 1: choose baseline variables.  here we select standard demographic variablees plus personality variables.
+
+colnames(nzavs_synth)
+head(nzavs_synth)
 
 baseline_vars = c(
   "edu",
@@ -205,6 +210,7 @@ prep_reflective <-
   )
 
 
+colnames(prep_reflective)
 
 # I have created a function that will allow you to take a data frame and
 # create a table
@@ -218,7 +224,7 @@ library(table1) # should be in your environment
 dt_new <- prep_reflective %>%
   select(starts_with("t0")) %>%
   rename_all( ~ stringr::str_replace(., "^t0_", "")) %>%
-  mutate(wave = factor(rep("baseline", nrow(df)))) |>
+  mutate(wave = factor(rep("baseline", nrow(prep_reflective)))) |>
   janitor::clean_names(case = "screaming_snake")
 
 
@@ -233,6 +239,7 @@ table_baseline_vars <- paste(baseline_vars_names, collapse = "+")
 formula_string_table_baseline <-
   paste("~", table_baseline_vars, "|WAVE")
 
+formula_string_table_baseline
 
 table1::table1(as.formula(formula_string_table_baseline),
                data = dt_new,
@@ -254,22 +261,22 @@ table1::t1kable(x, format = "html", booktabs = TRUE) |>
 
 dt_8 <- prep_reflective |>
   mutate(id = factor(1:nrow(prep_reflective))) |>
-  mutate(t1_perfectionism = round(t1_perfectionism)) |> # we create a three-level exposure to enable clear causal contrasts. We could also use a continous variable
-  mutate(
-    t1_perfectionism_coarsen = cut(
-      t1_perfectionism,
-      breaks = c(1, 4, 5, 7),
-      include.lowest = TRUE,
-      include.highest = TRUE,
-      na.rm = TRUE,
-      right = FALSE
-    ),
-    t1_perfectionism_coarsen = factor(
-      t1_perfectionism_coarsen,
-      levels = c("[1,4)", "[4,5)", "[5,7]"),
-      labels = c("low", "medium", "high"),
-      ordered = TRUE
-    )
+  # mutate(t1_perfectionism = round(t1_perfectionism)) |> # we create a three-level exposure to enable clear causal contrasts. We could also use a continous variable
+  # mutate(
+  #   t1_perfectionism_coarsen = cut(
+  #     t1_perfectionism,
+  #     breaks = c(1, 4, 5, 7),
+  #     include.lowest = TRUE,
+  #     include.highest = TRUE,
+  #     na.rm = TRUE,
+  #     right = FALSE
+  #   ),
+  #   t1_perfectionism_coarsen = factor(
+  #     t1_perfectionism_coarsen,
+  #     levels = c("[1,4)", "[4,5)", "[5,7]"),
+  #     labels = c("low", "medium", "high"),
+  #     ordered = TRUE
+  #   )
   ) |>
   mutate(
     t0_eth_cat = as.factor(t0_eth_cat),
@@ -338,6 +345,9 @@ levels_list <- unique(dt_8[["t0_eth_cat"]])
 levels_list
 
 
+colnames(dt_8)
+
+
 
 ####### PROPENSITY SCORES AND WEIGHTING #####
 
@@ -362,6 +372,7 @@ X <- "t1_perfectionism_coarsen"
 
 # define subclasses
 S <- "t0_eth_cat"
+
 
 # next we use our trick for creating a formula string, which will reduce our work
 formula_str_prop <-
@@ -401,6 +412,8 @@ dt_match <- match_mi_general(
 )
 
 saveRDS(dt_match, here::here("data", "dt_match"))
+
+dt_match<- readRDS(here::here("data", "dt_match"))
 
 
 # next we inspect balance. "Max.Diff.Adj" should ideally be less than .05
@@ -477,11 +490,14 @@ saveRDS(dt_match_super, here::here("data", "dt_match_super"))
 bal.tab(dt_match$euro)
 bal.tab(dt_match$māori)
 
+
+# code for summar
 sum_e <- summary(dt_match$euro)
 sum_m <- summary(dt_match$māori)
 # sum_p <- summary(dt_match$pacific)
 # sum_a <- summary(dt_match$asian)
-
+sum_e
+sum_m
 
 plot(sum_e)
 plot(sum_m)
@@ -523,13 +539,13 @@ df = dt_ref_all
 baseline_vars_reflective_propensity
 baseline_vars_full
 
-# Euro
+#  GENERAL ATE (Not adjusting for subgroups)
 mod_ref_meaning   <- gcomp_sim(
   df = df,
   # note change
   Y = "t2_meaning_z",
   X = X,
-  baseline_vars = baseline_vars_reflective_propensity,
+  baseline_vars = baseline_vars_full,
   treat_1 = "high",
   treat_0 = "low",
   estimand = "ATE",
@@ -552,8 +568,8 @@ mod_ref_meaning
 df = dt_ref_all
 Y = "t2_meaning_z"
 X = "t1_perfectionism_coarsen"
-baseline_vars = baseline_vars_reflective_cont
-treat_0 = "medium"
+baseline_vars = baseline_vars_reflective_propensity
+treat_0 = "low"
 treat_1 = "high"
 estimand = "ATE"
 scale = "RD"
