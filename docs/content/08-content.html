@@ -309,26 +309,15 @@ ATE = E[Y^{a=1}|L = l] - E[Y^{a=0}|L = l] ~ \text{for any value}~l
 \end{aligned}
 </span></p>
 <p>This formula calculates the expected difference in outcomes between treated (a=1) and untreated (a=0) groups, given a specific value of the covariates <code>l</code>.</p>
-<p>Now, we will expand this explanation to include causal estimation by weighting of the covariates <code>L</code> on the exposure.</p>
-<p>One common method for causal estimation by weighting is the inverse probability of treatment weighting (IPTW) using propensity scores. Propensity scores are the estimated probabilities of receiving the treatment given the covariates <code>L</code>. Denote the propensity score as <span class="math inline">e(L) = P(a=1|L).</span></p>
-<p>This estimator involves two steps:</p>
-<ol type="1">
-<li>Estimate the propensity score e(L) using logistic regression or another appropriate method.</li>
-</ol>
-<p>The weights are indeed calculated as follows:</p>
-<p>For exposed individuals <span class="math inline">(A_i = 1)</span>: The weight is the inverse of the propensity score, <span class="math inline">\frac{1} {e(L_i)}</span>. This means that exposed individuals with a lower probability of exposure (e.g., those with lower propensity scores) receive larger weights, increasing their influence on the comparison.</p>
-<p>For unexposed individuals <span class="math inline">(A_i = 0)</span>: The weight is the inverse of (1 - propensity score), <span class="math inline">\frac{1}{(1 - e(L_i))}</span>. This means that unexposed individuals with a higher probability of exposure (e.g., those with higher propensity scores) receive larger weights, also increasing their influence on the comparison.</p>
-<ol start="2" type="1">
-<li>Calculate the average treatment effect by weighting each individual’s outcome by the inverse probability of receiving their observed treatment, given the covariates <code>L</code>.</li>
-</ol>
-<p>The IPTW estimator for the average treatment effect can be defined as:</p>
-<p><span class="math display">
-\begin{aligned}
-ATE_{IPTW} = \frac{1}{N} \sum_{i=1}^{N} \frac{A_i Y_i}{e(L_i)} - \frac{1}{N} \sum_{i=1}^{N} \frac{(1 - A_i) Y_i}{1 - e(L_i)}
-\end{aligned}
-</span></p>
-<p>where <code>N</code> is the number of observations, <code>a_i</code> is the treatment indicator for individual <code>i</code>, <code>Y_i</code> is the observed outcome for individual <code>i</code>, and <code>L_i</code> represents the covariates for individual <code>i</code>.</p>
-<p>The IPTW estimator attempts to balance the distribution of the covariates <code>L</code> between treated and untreated groups by assigning weights based on the propensity scores. This approach aims to create a pseudo-population in which treatment assignment is independent of the covariates, allowing for an unbiased estimation of the average treatment effect, conditional on a correct specification of the model for the exposure.</p>
+<p>Inverse probability of treatment weighting (IPTW) is a technique used in causal inference to estimate the average treatment effect (ATE) when comparing two groups in observational studies. The idea is to create a pseudo-population where the treatment assignment is independent of the observed covariates by assigning weights to each individual based on their propensity scores (i.e., the probability of receiving the treatment given their covariates).</p>
+<p>Let’s denote the treatment indicator by <span class="math inline">A</span>, where <span class="math inline">A = 1</span> if an individual receives treatment and <span class="math inline">A = 0</span>otherwise. Let <span class="math inline">L</span> represent the vector of observed covariates, and <span class="math inline">Y^a</span> be the potential outcomes. The propensity score, <span class="math inline">e(L)</span>, is defined as the probability of receiving treatment given the observed covariates:</p>
+<p><span class="math display">e(L) = P(A = 1 \mid L)</span></p>
+<p>To estimate the ATE using IPTW, we first compute the inverse probability of treatment weights, which are defined as:</p>
+<p><span class="math display">W_i = \frac{A_i}{e(L_i)} + \frac{1 - A_i}{1 - e(L_i)}</span></p>
+<p>where <span class="math inline">W_i</span> is the IPTW weight for individual <span class="math inline">i</span>, <span class="math inline">A_i</span> is the treatment indicator for individual <span class="math inline">i</span>, and <span class="math inline">e(L_i)</span> is the propensity score for individual <span class="math inline">i</span>.</p>
+<p>Now, the ATE can be estimated as:</p>
+<p><span class="math display">ATE_{\text{iptw}} = \frac{\sum [W_i \cdot (A_i \cdot Y_i)]}{\sum [W_i \cdot A_i]} - \frac{\sum [W_i \cdot ((1 - A_i) \cdot Y_i)]}{\sum [W_i \cdot (1 - A_i)]}</span></p>
+<p>In this equation, the numerator of the first term represents the sum of the weighted potential outcomes for the treated group, and the denominator is the sum of the weights for the treated group. The second term is similar but for the control group (those who did not receive the treatment). The <span class="math inline">ATE_{\text{iptw}}</span> represents the difference in outcomes between the treated and control groups in the pseudo-population created by applying IPTW.</p>
 </section>
 <section id="doubly-robust-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="doubly-robust-estimation">Doubly Robust Estimation</h2>

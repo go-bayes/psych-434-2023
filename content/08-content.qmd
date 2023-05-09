@@ -111,33 +111,24 @@ $$
 
 This formula calculates the expected difference in outcomes between treated (a=1) and untreated (a=0) groups, given a specific value of the covariates `l`.
 
-Now, we will expand this explanation to include causal estimation by weighting of the covariates `L` on the exposure.
+Inverse probability of treatment weighting (IPTW) is a technique used in causal inference to estimate the average treatment effect (ATE) when comparing two groups in observational studies. The idea is to create a pseudo-population where the treatment assignment is independent of the observed covariates by assigning weights to each individual based on their propensity scores (i.e., the probability of receiving the treatment given their covariates).
 
-One common method for causal estimation by weighting is the inverse probability of treatment weighting (IPTW) using propensity scores. Propensity scores are the estimated probabilities of receiving the treatment given the covariates `L`. Denote the propensity score as $e(L) = P(a=1|L).$
+Let's denote the treatment indicator by $A$, where $A = 1$ if an individual receives treatment and $A = 0$otherwise. Let $L$ represent the vector of observed covariates, and $Y^a$ be the potential outcomes. The propensity score, $e(L)$, is defined as the probability of receiving treatment given the observed covariates:
 
-This estimator involves two steps:
+$$e(L) = P(A = 1 \mid L)$$
 
-1.  Estimate the propensity score e(L) using logistic regression or another appropriate method.
+To estimate the ATE using IPTW, we first compute the inverse probability of treatment weights, which are defined as:
 
-The weights are indeed calculated as follows:
+$$W_i = \frac{A_i}{e(L_i)} + \frac{1 - A_i}{1 - e(L_i)}$$
 
-For exposed individuals $(A_i = 1)$: The weight is the inverse of the propensity score, $\frac{1} {e(L_i)}$. This means that exposed individuals with a lower probability of exposure (e.g., those with lower propensity scores) receive larger weights, increasing their influence on the comparison.
+where $W_i$ is the IPTW weight for individual $i$, $A_i$ is the treatment indicator for individual $i$, and $e(L_i)$ is the propensity score for individual $i$.
 
-For unexposed individuals $(A_i = 0)$: The weight is the inverse of (1 - propensity score), $\frac{1}{(1 - e(L_i))}$. This means that unexposed individuals with a higher probability of exposure (e.g., those with higher propensity scores) receive larger weights, also increasing their influence on the comparison.
+Now, the ATE can be estimated as:
 
-2.  Calculate the average treatment effect by weighting each individual's outcome by the inverse probability of receiving their observed treatment, given the covariates `L`.
+$$ATE_{\text{iptw}} = \frac{\sum [W_i \cdot (A_i \cdot Y_i)]}{\sum [W_i \cdot A_i]} - \frac{\sum [W_i \cdot ((1 - A_i) \cdot Y_i)]}{\sum [W_i \cdot (1 - A_i)]}$$
 
-The IPTW estimator for the average treatment effect can be defined as:
+In this equation, the numerator of the first term represents the sum of the weighted potential outcomes for the treated group, and the denominator is the sum of the weights for the treated group. The second term is similar but for the control group (those who did not receive the treatment). The $ATE_{\text{iptw}}$ represents the difference in outcomes between the treated and control groups in the pseudo-population created by applying IPTW.
 
-$$
-\begin{aligned}
-ATE_{IPTW} = \frac{1}{N} \sum_{i=1}^{N} \frac{A_i Y_i}{e(L_i)} - \frac{1}{N} \sum_{i=1}^{N} \frac{(1 - A_i) Y_i}{1 - e(L_i)}
-\end{aligned}
-$$
-
-where `N` is the number of observations, `a_i` is the treatment indicator for individual `i`, `Y_i` is the observed outcome for individual `i`, and `L_i` represents the covariates for individual `i`.
-
-The IPTW estimator attempts to balance the distribution of the covariates `L` between treated and untreated groups by assigning weights based on the propensity scores. This approach aims to create a pseudo-population in which treatment assignment is independent of the covariates, allowing for an unbiased estimation of the average treatment effect, conditional on a correct specification of the model for the exposure.
 
 ## Doubly Robust Estimation
 
