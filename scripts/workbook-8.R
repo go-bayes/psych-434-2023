@@ -214,7 +214,7 @@ colnames(prep_reflective)
 
 # I have created a function that will allow you to take a data frame and
 # create a table
-baseline_table(prep_reflective, output_format = "html")
+baseline_table(prep_reflective, output_format = "markdown")
 
 
 # if you just want a nice html table, do this:
@@ -411,6 +411,7 @@ dt_match <- match_mi_general(
   method = "energy"
 )
 
+
 saveRDS(dt_match, here::here("data", "dt_match"))
 
 dt_match<- readRDS(here::here("data", "dt_match"))
@@ -490,7 +491,6 @@ saveRDS(dt_match_super, here::here("data", "dt_match_super"))
 bal.tab(dt_match$euro)
 bal.tab(dt_match$māori)
 
-
 # code for summar
 sum_e <- summary(dt_match$euro)
 sum_m <- summary(dt_match$māori)
@@ -507,6 +507,7 @@ plot(sum_m)
 love.plot(dt_match$euro,
           binary = "std",
           thresholds = c(m = .1))
+
 love.plot(dt_match$māori,
           binary = "std",
           thresholds = c(m = .1))
@@ -561,7 +562,6 @@ mod_ref_meaning   <- gcomp_sim(
 )
 
 # ATE. we will cover "evalues" next week
-mod_ref_meaning
 
 
 ### SUBGROUP analysis
@@ -818,6 +818,7 @@ dt_match_cont <- match_mi_general(
 )
 
 saveRDS(dt_match_cont, here::here("data", "dt_match_cont"))
+dt_match_cont <- readRDS(here::here("data", "dt_match_cont"))
 
 
 bal.tab(dt_match_cont$euro, thresholds = c(m = .05))   #  good
@@ -864,7 +865,6 @@ mod_ref_meaning_cont   <- gcomp_sim(
 
 
 mod_ref_meaning_cont
-
 
 formula_str_cont <-
   paste(
