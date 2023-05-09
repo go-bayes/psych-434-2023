@@ -277,7 +277,7 @@ dt_8 <- prep_reflective |>
   #     labels = c("low", "medium", "high"),
   #     ordered = TRUE
   #   )
-  ) |>
+  #) |>
   mutate(
     t0_eth_cat = as.factor(t0_eth_cat),
     t0_rural_gch2018 = as.factor(t0_rural_gch2018),
