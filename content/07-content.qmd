@@ -13,7 +13,7 @@ execute:
 # read libraries
 library("tinytex")
 library(extrafont)
-loadfonts(device = "win")
+loadfonts(device = "all")
 
 # read libraries
 source("/Users/joseph/GIT/templates/functions/libs2.R")

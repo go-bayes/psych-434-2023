@@ -1192,9 +1192,9 @@ prep_execercise
 
 # I have created a function that will allow you to take a data frame and
 # create a table
-baseline_table(prep_execercise, output_format = "html")
+baseline_table(prep_execercise, output_format = "markdown")
 
-
+colnames(prep_execercise)
 ### ### ### ### ### ### SUBGROUP DATA ANALYSIS: DATA WRANGLING  ### ### ### ###
 
 dt_x <- prep_execercise |>

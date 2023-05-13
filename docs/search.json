@@ -1811,5 +1811,47 @@
     "title": "Introduction to Causal Inference",
     "section": "",
     "text": "#|label: source\nsource(\"https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R\")"
+  },
+  {
+    "objectID": "content/common_graphs.html",
+    "href": "content/common_graphs.html",
+    "title": "Causal Graphs: A Practical Guide",
+    "section": "",
+    "text": "Figure 1: Causal graph reveals bias\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Causal graph reveals bias: solve by stratification\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: Causal graph reveals bias from pre-exosure indicator\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Causal graph reveals bias from pre-exosure indicator\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 5: Causal graph:more general panel design\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 6: Causal graph: three-wave panel design\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: Causal graph: three-wave panel design with selection bias\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8: Causal graph: three-wave panel design with selection bias\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: Confounder Treatement Feedback"
+  },
+  {
+    "objectID": "content/common_graphs.html#common-causal-graphs",
+    "href": "content/common_graphs.html#common-causal-graphs",
+    "title": "Causal Graphs: A Practical Guide",
+    "section": "",
+    "text": "Figure 1: Causal graph reveals bias\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Causal graph reveals bias: solve by stratification\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: Causal graph reveals bias from pre-exosure indicator\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Causal graph reveals bias from pre-exosure indicator\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 5: Causal graph:more general panel design\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 6: Causal graph: three-wave panel design\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: Causal graph: three-wave panel design with selection bias\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8: Causal graph: three-wave panel design with selection bias\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: Confounder Treatement Feedback"
+  },
+  {
+    "objectID": "content/common_graphs.html#common-cause-of-exposure-and-outcome.",
+    "href": "content/common_graphs.html#common-cause-of-exposure-and-outcome.",
+    "title": "Causal Graphs: A Practical Guide",
+    "section": "Common cause of exposure and outcome.",
+    "text": "Common cause of exposure and outcome.\n\nOpen back door\n\n\n\n\n\nFigure 1: Causal graph reveals bias\n\n\n\n\n\n\nSolution: Adjust for Confounder\n\n\n\n\n\nFigure 2: Causal graph reveals bias: solve by stratification\n\n\n\n\n\n\nBias: exposure at baseline is a common cause of the exposure at t1 and outcome at t2\n\n\n\n\n\nFigure 3: Causal graph reveals bias from pre-exosure indicator\n\n\n\n\n\n\nSolution: adjust for confounder at baseline\n\n\n\n\n\nFigure 4: Causal graph reveals bias from pre-exosure indicator: solve by stratification on this indicator"
+  },
+  {
+    "objectID": "content/common_graphs.html#more-general-3-wave-panel-design",
+    "href": "content/common_graphs.html#more-general-3-wave-panel-design",
+    "title": "Causal Graphs: A Practical Guide",
+    "section": "More general 3-wave panel design",
+    "text": "More general 3-wave panel design\n\nA more general solution\n\n\n\n\n\nFigure 7: Causal graph reveals bias from pre-exosure indicator: solve by stratification on this indicator"
+  },
+  {
+    "objectID": "content/common_graphs.html#graphs-of-canonical-confounders",
+    "href": "content/common_graphs.html#graphs-of-canonical-confounders",
+    "title": "Causal Graphs: A Practical Guide",
+    "section": "Graphs of Canonical confounders",
+    "text": "Graphs of Canonical confounders\n\nFirst Problem: there is a common cause of an exposure and outcome\n\n\n\n\n\nFigure 1: Causal graph reveals bias\n\n\n\n\n\n\nSolution: adjust for the pre-exposure confounder\n\n\n\n\n\nFigure 2: Causal graph reveals bias: solve by stratification\n\n\n\n\n\n\nSecond problem: conditioning on a common effect\n\n\n\n\n\nFigure 3: Causal graph reveals bias: solve by stratification\n\n\n\n\n\n\nSolution: ensure confounders are measured before the exposure\n\n\n\n\n\nFigure 4: Causal graph reveals bias: solve by stratification\n\n\n\n\n\n\nThird problem: conditioning on a mediator\n\n\n\n\n\nFigure 5: Causal graph reveals bias\n\n\n\n\n\n\nSolution: ensure confounders are measured before the exposure.\n\n\n\n\n\nFigure 6: Causal graph reveals bias\n\n\n\n\n\n\nFourth problem: conditioning on a descendant\n\n\n\n\n\nFigure 7: Causal graph reveals bias\n\n\n\n\n\n\nSolution: ensure that counfounders are measured before the exposure\nNote that that ensuring the confounder is measured before the exposure has a benefiting property. If the unmeasured confounder is associated with both A and Y, as well as with L, adjusting for L will diminish confounding arising from the unmeasured confounder.\n\n\n\n\n\nFigure 8: Causal graph reveals bias"
+  },
+  {
+    "objectID": "content/common_graphs.html#examples",
+    "href": "content/common_graphs.html#examples",
+    "title": "Causal Graphs: A Practical Guide",
+    "section": "EXAMPLES",
+    "text": "EXAMPLES\n\nCommon cause of exposure and outcome.\n\n\n\n\n\nFigure 9: Causal graph reveals bias\n\n\n\n\n\n\nSolution: Adjust for Confounder\n\n\n\n\n\nFigure 10: Causal graph reveals bias: solve by stratification\n\n\n\n\n\n\nBias: exposure at baseline is a common cause of the exposure at t1 and outcome at t2\n\n\n\n\n\nFigure 11: Causal graph reveals bias from pre-exosure indicator\n\n\n\n\n\n\nSolution: adjust for confounder at baseline\n\n\n\n\n\nFigure 12: Causal graph reveals bias from pre-exosure indicator\n\n\n\n\n\n\nA more general solution\n\n\n\n\n\nFigure 13: Causal graph:more general panel design\n\n\n\n\n\n\n3-wave panel design\n\n\n\n\n\nFigure 14: Causal graph: three-wave panel design\n\n\n\n\n\n\nSelection bias version 1\n\n\n\n\n\nFigure 15: Causal graph: three-wave panel design with selection bias\n\n\n\n\n\n\nSelection bias version 2\n\n\n\n\n\nFigure 16: Causal graph: three-wave panel design with selection bias\n\n\n\n\n\n\nConfounder-Treatment Feedback\n\n\n\n\n\nFigure 17: Confounder Treatement Feedback"
   }
 ]
