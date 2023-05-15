@@ -123,6 +123,10 @@ div.csl-indent {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-content">    
         <li>
+    <a class="dropdown-item" href="../content/common_graphs.html" rel="" target="">
+ <span class="dropdown-text">Background: Causal Graphs</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../content/index.html" rel="" target="">
  <span class="dropdown-text">Preliminaries</span></a>
   </li>  
@@ -227,7 +231,8 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#motivations-for-a-three-wave-longitudinal-design-for-observational-causal-inference." id="toc-motivations-for-a-three-wave-longitudinal-design-for-observational-causal-inference." class="nav-link" data-scroll-target="#motivations-for-a-three-wave-longitudinal-design-for-observational-causal-inference.">Motivations for a Three-Wave Longitudinal Design for Observational Causal Inference.</a>
   <ul class="collapse">
   <li><a href="#common-cause-of-exposure-and-outcome." id="toc-common-cause-of-exposure-and-outcome." class="nav-link" data-scroll-target="#common-cause-of-exposure-and-outcome.">Common cause of exposure and outcome.</a></li>
   <li><a href="#solution-adjust-for-confounder" id="toc-solution-adjust-for-confounder" class="nav-link" data-scroll-target="#solution-adjust-for-confounder">Solution: Adjust for Confounder</a></li>
@@ -270,10 +275,21 @@ div.csl-indent {
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>Recall that psychology begings with a question about cognition and behavior. What do we want to know? Before all else, we must ask, and motivate this question.</p>
-<p>Suppose we have defined a question. How can we address it using observational data?</p>
-<p>This is the topic of today’s seminar. Before that I will use causal graphs to motivate using 3-wave panel designs of the kind that VanderWeele and colleagues describe.</p>
-<p>I’ll then review a checklist for causal inference studies that I’ve developed to help you with your assessment. The checklist is is tailored for three-wave panel designs using the NZAVS simulated data. We’ll go through each point. Then I’ll explain what they mean and why they’re important. Let’s dive in.</p>
+<p>Recall that psychology begins with a question. What do I want to know about thought and behaviour? In cross-cultural psychology, these questions relate to differences, and similarities, between groups.</p>
+<p>Suppose we have asked a question. How can we address it using observational data?</p>
+<p>Too fast.</p>
+<p>We must ask a question in such a way that it might be addressed by data. That is, our question must be precise. In this course, so far, our focus has been on observational data. Today, we will develop a step-by-step process for asking, and answering, comparative psychological questions using observational data. To refine our focus, we will examine the 3-wave panel design that VanderWeele and colleagues describe <span class="citation" data-cites="vanderweele2020">(<a href="#ref-vanderweele2020" role="doc-biblioref">VanderWeele, Mathur, and Chen 2020</a>)</span>.</p>
+<p>The order is as follows:</p>
+<ol type="1">
+<li><strong>Motivate Three Wave Longitudinal Designs Using Causal Graphs</strong></li>
+<li><strong>Checklist For Causal Estimation in Three Wave Longitudinal Designs</strong></li>
+<li><strong>Explanation of the the Checklist</strong></li>
+</ol>
+<p>Let’s dive in!</p>
+</section>
+<section id="motivations-for-a-three-wave-longitudinal-design-for-observational-causal-inference." class="level2">
+<h2 class="anchored" data-anchor-id="motivations-for-a-three-wave-longitudinal-design-for-observational-causal-inference.">Motivations for a Three-Wave Longitudinal Design for Observational Causal Inference.</h2>
+<p>Causal Diagrammes (DAGS) are a remarkably powerful and simple tool for understanding confounding <a href=""></a></p>
 <section id="common-cause-of-exposure-and-outcome." class="level3">
 <h3 class="anchored" data-anchor-id="common-cause-of-exposure-and-outcome.">Common cause of exposure and outcome.</h3>
 <p>Our question: does visiting a clinical psychologist reduce the 10 year incidence of heart attacks?</p>
@@ -752,6 +768,9 @@ Danaei, Goodarz, Mohammad Tavakkoli, and Miguel A. Hernán. 2012. <span>“Bias 
 </div>
 <div id="ref-greifer2023" class="csl-entry" role="listitem">
 Greifer, Noah, Steven Worthington, Stefano Iacus, and Gary King. 2023. <em>Clarify: Simulation-Based Inference for Regression Models</em>. <a href="https://iqss.github.io/clarify/">https://iqss.github.io/clarify/</a>.
+</div>
+<div id="ref-vanderweele2020" class="csl-entry" role="listitem">
+VanderWeele, Tyler J, Maya B Mathur, and Ying Chen. 2020. <span>“Outcome-Wide Longitudinal Designs for Causal Inference: A New Template for Empirical Studies.”</span> <em>Statistical Science</em> 35 (3): 437466.
 </div>
 </div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>MIT</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
