@@ -9,7 +9,7 @@ format:
  html:      
   html-math-method: katex
 ---
-  
+
 ```{r}
 #| include: false
 #| echo: false
@@ -26,95 +26,310 @@ source("/Users/joseph/GIT/templates/functions/libs2.R")
 #source("/Users/joseph/GIT/templates/functions/funs.R")
 ```
 
-  
 ## Overview
-  
 
-Recall that psychology begings with a question about cognition and behavior. What do we want to know? Before all else, we must ask, and motivate this question. 
+Recall that psychology begings with a question about cognition and behavior. What do we want to know? Before all else, we must ask, and motivate this question.
 
-Suppose we have defined a question. How can we address it using observational data? 
+Suppose we have defined a question. How can we address it using observational data?
 
-This is the topic of today's seminar.
-  
-  
+This is the topic of today's seminar. Before that I will use causal graphs to motivate using 3-wave panel designs of the kind that VanderWeele and colleagues describe. 
 
-## How do we do causal estimation?
 
-There are two steps to causal estimation:
-
-1. State a causal question
-2. Answer that question [Cite Hernan]
+I'll then review a checklist for causal inference studies that I've developed to help you with your assessment. The checklist is is tailored for three-wave panel designs using the NZAVS simulated data. We'll go through each point. Then I'll explain what they mean and why they're important. Let's dive in.
 
 
 
-## STEP 1: ASK A CAUSAL QUESTION
+### Common cause of exposure and outcome. 
 
-Stating a causal question requires describing: a. outcome(s), b. exposure, c. measured confounders, d. (suspected) unmeasured confounders, e. scale of causal contrasts, f. target population for whom the inferences apply. 
-
-We consider each of these processes in turn.
+Our question: does visiting a clinical psychologist reduce the 10 year incidence of heart attacks? 
 
 
+```{tikz}
+#| label: fig-dag-1
+#| fig-cap: "Common cause of exposure and outcome: example"
+#| out-width: 100%
+#| echo: false
 
-### a. Identify the outcome(s) of interest
-
-We use *Y* to denote an outcome of interest. This is the "effect" of interest.  
-
-#### Consider:
-
-- The outcome might be binary (severely distressed/not severely distressed), continuous (the average of the sum of the indicators), or a rate variable (the sum of the indicators).
-- It is crucial to specify the units in which the outcome is measured. 
-- Transforming the outcome into standard deviation units can be beneficial.
-- The outcome must occur after the exposure or treatment.
-- We must designate a time period within which the outcome occurs, e.g, "the one-year effect of a treatment on well-being as measured by Kessler-6."
-- We may be interested in multiple outcomes. This is the rational behind outcomewide science [cite tyler]
-- We must remember that the outcome might be measured with error, that such errors may be affected by the treatment or correlated with the measurement error of the treatment. (A topic of future seminars, which we will set to the side for now)
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
 
 
-Here, imagine we are interested in understanding only one outcome in our study: well-being as measured by the Kessler-6 depression/anxiety scale. 
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [ellipse, draw=white] (L) at (0, 0) {t0/Male};
+\node [rectangle, draw=white] (A) at (4, 0) {t1/DoctorVisit};
+\node [rectangle, draw=white] (Y) at (8, 0) {t2/Heart Attack};
+\draw [-latex, draw=red, dashed] (A) to (Y);
+\draw [-latex, bend left, draw =black] (L) to (Y);
+\draw [-latex, black] (L) to (A);
+\end{tikzpicture}
+```
+
+### Solution: Adjust for Confounder
+
+```{tikz}
+#| label: fig-dag-2
+#| fig-cap: "Solution to this problem."
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
 
 
-###  b. Define the exposure or intervention 
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [rectangle, draw=black] (L) at (0, 0) {t0/Male};
+\node [ellipse, draw=white] (A) at (4, 0) {t1/DoctorVisit};
+\node [rectangle, draw=white] (Y) at (8, 0) {t2/Heart Attack};
+\draw [-latex, draw=white] (A) to (Y);
+\draw [-latex, bend left, draw =black] (L) to (Y);
+\draw [-latex, black] (L) to (A);
+\end{tikzpicture}
 
-We use *A* to denote the the exposure or treatment. This is the variable that we hypothesise might affect the outcome.  This variable denotes the cause of interest. We will restrict our focus to consider in which there is only one treatment (i.e. we will not consider complex multi-treatment regimes.)
-
-Here, imagine we are interested in understanding the causal effect of 'Church attendance'. 
-
-#### Consider:
-
-- To affect *Y*, *A* must occur before *Y*. 
-- What does *A* indicate?  We may characterise 'Church Attendance' as a binary exposure (attend/not attend) or as a continuous exposure (attend weekly/attend monthly). The exposure, in this instance, remains nebulous until we delineate the unit change in *A* we are interested in investigating.
-- For theoretical and practical purpose we might want to trunctate the variable into categories: (none/some; none/less than weekly, weekly or more)... Why? Because our causal question requires stating the contrast between the states of the world in which we are interested. Additionally, experts often make decisions on the basis of discrete thresholds (has risk of depression/does not).
-- We must remember that an exposure or treatment might be measured with error, that such errors might be correlated with the measurement error of the outcome or affect it. (Again, a topic of future seminars, which we will set to the side for now).
-- It must be conceptually possible to intervene within all stratums of baseline confounders (strong positivity).
-- It must be conceptually possible to understand an intervention on the exposure (consistency)
-- The multiple version of the intervention must exchangeable within levels of measured baseline confounders (consistency).
+```
 
 
 
-### c. Identify pre-exposure covariates for confounding control
+### Bias: exposure at baseline is a common cause of the exposure at t1 and outcome at t2
 
-We use **L** to denote the set of measured baseline confounders of the the exposure-outcome association. For a three-wave panel design, we employ VanderWeele's modified disjunctive cause criterion, we advises: control for any covariate that is a cause of the exposure, the outcome, or both, excluding any instrumental variable and incorporating any proxy for an unmeasured variable that is a common cause of both the exposure and the outcome.
 
-#### Consider: 
+```{tikz}
+#| label: fig-dag-3
+#| fig-cap: "Causal graph reveals bias from pre-exosure indicator"
+#| out-width: 100%
+#| echo: false
 
-  - To affect *Y*,  *L* must occur before *Y*.  
-  - To affect *A*, *L* must occur before *A*. 
-  - We must acheive balence within levels of the exposure such that $A\coprod Y| L$
-  - Although we may gain precision by including an *L* that affects *Y* but is unrelated to *A*, including variables that occur after *A* will be hazardous if it is possible that *A* affects *L* (or its measurement).
-  - A useful  set of default counfounders in NZAVS studies is given in your workbooks. 
-  - Note we have left out the concept of "selection bias." There are indeed sources of bias that may occure after *A*. This is another topic for the week ahead. 
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
 
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [rectangle, draw=white] (L) at (0, 0) {t0/Doctor Visit};
+\node [ellipse, draw=white] (A) at (4, 0) {t1/Doctor Visit};
+\node [rectangle, draw=white] (Y) at (8, 0) {t2/Heart Attack};
+\draw [-latex, draw=red, dashed] (A) to (Y);
+\draw [-latex, bend left, draw =black] (L) to (Y);
+\draw [-latex, black] (L) to (A);
+\end{tikzpicture}
+
+```
+
+
+
+
+### Solution: adjust for confounder at baseline
+
+
+
+```{tikz}
+#| label: fig-dag-4
+#| fig-cap: "Solution to this problem"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [rectangle, draw=white, align=left] (L) at (0, 0) {t0/Heart Attack};
+\node [ellipse, draw=white] (A) at (4, 0) {t1/Doctor Visit};
+\node [rectangle, draw=white] (Y) at (8, 0) {t2/Heart Attack};
+\draw [-latex, draw=red, dashed] (A) to (Y);
+\draw [-latex, bend left, draw =black] (L) to (Y);
+\draw [-latex, black] (L) to (A);
+\end{tikzpicture}
+
+```
+
+
+
+
+###  A more thorough confounding control
+
+```{tikz}
+#| label: fig-dag-5
+#| fig-cap: "Causal graph:more general panel design"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [rectangle, draw=white, align=left] (L) at (0, 0) {t0/Male \\t0/Heart Attack \\t0/Heart Attack};
+\node [ellipse, draw=white] (A) at (4, 0) {t1/Doctor Visit};
+\node [rectangle, draw=white] (Y) at (8, 0) {t2/Heart Attack};
+\draw [-latex, draw=red, dashed] (A) to (Y);
+\draw [-latex, bend left, draw =black] (L) to (Y);
+\draw [-latex, black] (L) to (A);
+\end{tikzpicture}
+
+
+```
+
+
+###  Generic 3-wave panel design (VanderWeeele 2020)
+
+```{tikz}
+#| label: fig-dag-6
+#| fig-cap: "Causal graph: three-wave panel design"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [rectangle, draw=white] (U) at (0, 0) {U};
+\node [rectangle, draw=black, align=left] (L) at (2, 0) {t0/L \\t0/A \\t0/Y};
+\node [rectangle, draw=white] (A) at (4, 0) {t1/A};
+\node [ellipse, draw=white] (Y) at (6, 0) {t2/Y};
+\draw [-latex, draw=black] (U) to (L);
+\draw [-latex, draw=black] (L) to (A);
+\draw [-latex, draw=red, dotted] (A) to (Y);
+\draw [-latex, bend left=50, draw =black] (L) to (Y);
+\draw [-latex, bend right=50, draw =black, dotted] (U) to (Y);
+\draw [-latex, bend left=50, draw =black, dotted] (U) to (A);
+
+
+\end{tikzpicture}
+```
+
+
+
+
+
+
+
+## Comprehensive Checklist for Detailed Reporting of a Causal Inferenctial Study (E.g. Assessment 3 option 2)
+
+### Formulating the Research Question
+
+-   **Stating the Question:** Is my question clearly stated? If not, state it.
+-   **Relevance of the Question:** Have I explained its importance? If not, explain.
+-   **Causality of the Question:** Is my question causal? If not, refine your question.
+-   **Subgroup Analysis:** Does my question involve a subgroup (e.g., cultural group)? If not, develop a subgroup analysis question.
+-   **Understanding the Framework:** Can I explain the potential outcomes framework, individual causal effects, the experimental method to obtain average causal effects, the fundamental assumptions of causal inference, and the estimation of causal effects in observational data? If not, review course materials.
+
+#### Data Requirements
+
+-   **Type of Data:** Is my data experimental? If yes, your project may not fit this course.
+-   **Time-Series Data:** Is my data time-series? If not, reconsider your causal question.
+-   **Data Waves:** Do I have at least three waves of data? If not, beware of confounding control issues.
+-   **Data Source:** Is my data from the NZAVS simulated data set? If not, consult with me.
+
+#### Defining the Outcome
+
+-   **Outcome Variable:** Is the outcome variable *Y* defined? If not, define it.
+-   **Multiple Outcomes:** Are there multiple outcomes? If yes, write them down.
+-   **Outcome Relevance:** Can I explain how the outcome variable/s relate to my question? If not, clarify.
+-   **Outcome Type:** Is my outcome binary and rare? If yes, consider logistic regression. If my outcome is continuous, consider z-transforming it or categorising it (consult an expert).
+-   **Outcome Timing:** Does the outcome appear after the exposure? It should.
+
+#### Determining the Exposure
+
+-   **Exposure Variable:** Is the exposure variable *A* defined? If not, define it.
+-   **Multiple Exposures:** Are there multiple exposures? If yes, proceed; if not, reassess.
+-   **Exposure Relevance:** Can I explain how the exposure variable relates to my question? If not, clarify.
+-   **Positivity:** Can we intervene on the exposure at all levels of the covariates? We should be able to.
+-   **Consistency:** Can I interpret what it means to intervene on the exposure? I should be able to.
+-   **Exchangeability:** Are different versions of the exposure conditionally exchangeable given measured baseline confounders? They should be.
+-   **Exposure Type:** Is the exposure binary or continuous? If continuous, z-transform it or consider categorising it (consult an expert).
+-   **Exposure Timing:** Does the exposure appear before the outcome? It should.
+
+#### Accounting for Confounders
+
+-   **Baseline Confounders:** Have I defined my baseline confounders *L*? I should have.
+-   **Justification:** Can I explain how the baseline confounders could affect both *A* and *Y*? I should be able to.
+-   **Timing:** Are the baseline confounders measured before the exposure? They should be.
+-   **Inclusion:** Is the baseline measure of the exposure and the baseline outcome included in the set of baseline confounders? They should be.
+-   **Sufficiency:** Are the baseline confounders sufficient to ensure balance on the exposure, such that *A* is independent of *Y* given *L*? If not, plan a sensitivity analysis.
+-   **Confounder Type:** Are the confounders continuous or binary? If so, consider converting them to z-scores. If they are categorical with three or more levels, do not convert them to z-scores.
+
+#### Drawing a Causal Diagram with Unmeasured Confounders
+
+-   **Unmeasured Confounders:** Does previous science suggest the presence of unmeasured confounders? If not, expand your understanding.
+-   **Causal Diagram:** Have I drawn a causal diagram (DAG) to highlight both measured and unmeasured sources of confounding? I should have.
+-   **M-Bias:** Have I considered the possibility of M-Bias? If not familiar, we'll discuss later.
+-   **Measurement Error:** Have I described potential biases from measurement errors? If not, we'll discuss later.
+-   **Temporal Order:** Does my DAG have time indicators to ensure correct temporal order? It should.
+-   **Time Consistency:** Is my DAG organized so that time follows in a consistent direction? It should.
+
+#### Identifying the Estimand
+
+-   **Causal Estimand:** Is my causal estimand one of the following:
+
+$$ATE_{G,(A,A')} = E[Y(1) - Y(0)|G, L]$$
+
+$$ATE_{G,(A/A')} = \frac{E[Y(1)|G, L]}{E[Y(0)|G, L]}$$
+
+If yes, you're on the right track.
+
+#### Understanding Source and Target Populations
+
+-   **Populations Identified:** Have I differentiated between my source and target populations? I should have.
+-   **Generalisability and Transportability:** Have I considered whether my results generalise to the source population and transport to a different population? I should have.
+
+#### Setting Eligibility Criteria
+
+-   **Criteria Stated:** Have I stated the eligibility criteria for the study? I should have.
+
+#### Describing Sample Characteristics
+
+-   **Descriptive Statistics:** Have I provided descriptive statistics for demographic information taken at baseline? I should have.
+-   **Exposure Change:** Have I demonstrated the magnitudes of change in the exposure from baseline to the exposure interval? I should have.
+-   **References:** Have I included references for more information about the sample? I should have.
+
+#### Addressing Missing Data
+
+-   **Missing Data Check:** Have I checked for missing data? I should have.
+-   **Missing Data Plan:** If there is missing data, have I described how I will address it? I should have.
+
+#### Selecting the Model Approach
+
+-   **Approach Decision:** Have I decided on using G-computation, IPTW, or Doubly-Robust Estimation? I should have.
+-   **Interaction Inclusion:** Have I included the interaction of the exposure and baseline covariates? I should have.
+-   **Large Data Set:** If I have a large data set, should I include the interaction of the exposure, group, and baseline confounders? I should consider it.
+-   **Model Specification:** Have I double-checked the model specification? I should.
+-   **Outcome Specifics:** If the outcome is rare and binary, have I specified logistic regression? If it's continuous, have I considered converting it to z-scores?
+-   **Sensitivity Analysis:** Am I planning a sensitivity analysis using simulation? If yes, describe it (e.g. E-values.)
 
 ### d. Highlight unmeasured pre-treatment covariates
 
-Let **U** denoted unmeasured pre-treatment covariates that may potentially bias the statistical association between *A* and *Y* independently of the measured covariates. 
+Let **U** denoted unmeasured pre-treatment covariates that may potentially bias the statistical association between *A* and *Y* independently of the measured covariates.
 
 #### Consider:
-  - To affect *Y* and *A*, *U* must occur before *A*.
-  - It is useful to draw a causal diagramme to illustrate all potential sources of bias. 
-  - Causal diagrammes are qualitative tools that require specialist expertise. We cannot typically obtain a causal graph from the data.
-  - A causal diagramme should include only as much information as is required to assess confounding. See @fig-dag-outcomewide for an example.
-  - Because we cannot ensure the absence of unmeasured confounders in observational settings, it is vital to conduct sensitivity analyses for the results. For sensitivity analyeses, we use E-values, a topic for a latter seminar. 
+
+-   To affect *Y* and *A*, *U* must occur before *A*.
+-   It is useful to draw a causal diagramme to illustrate all potential sources of bias.
+-   Causal diagrammes are qualitative tools that require specialist expertise. We cannot typically obtain a causal graph from the data.
+-   A causal diagramme should include only as much information as is required to assess confounding. See @fig-dag-outcomewide for an example.
+-   Because we cannot ensure the absence of unmeasured confounders in observational settings, it is vital to conduct sensitivity analyses for the results. For sensitivity analyeses, we use E-values, a topic for a latter seminar.
 
 ```{tikz}
 #| label: fig-dag-outcomewide
@@ -145,10 +360,9 @@ Let **U** denoted unmeasured pre-treatment covariates that may potentially bias 
 \end{tikzpicture}
 ```
 
+### e. Choose the scale for a causal contrast
 
-### e. Choose the scale for a causal contrast 
-
-Average causal effects can be inferred by contrasting the expected outcome when a population is exposed to an exposure level, $E[Y(A = a)]$, with the expected outcome under a different exposure level, $E[Y(A=a')]$. 
+Average causal effects can be inferred by contrasting the expected outcome when a population is exposed to an exposure level, $E[Y(A = a)]$, with the expected outcome under a different exposure level, $E[Y(A=a')]$.
 
 For a binary treatment with levels $A=0$ and $A=1$, the Average Treatment Effect (ATE), on the difference scale, is expressed:
 
@@ -158,12 +372,11 @@ On the risk ratio scale, the ATE is expressed:
 
 $$ATE_{\text{risk ratio}} = \frac{E[Y(1)|L]}{E[Y(0)|L]}$$
 
-Other effect scales, such as the incidence rate ratio, incidence rate difference, or hazard ratio, might also be of interest. We can also define the Average Treatment Effect on the Treated (ATT) : 
+Other effect scales, such as the incidence rate ratio, incidence rate difference, or hazard ratio, might also be of interest. We can also define the Average Treatment Effect on the Treated (ATT) :
 
 $$ATT_{\text{risk difference}} = E[Y(1) - Y(0)|A=1,L]$$
 
 $$ATT_{\text{risk ratio}} = \frac{E[Y(1)|A=1,L]}{E[Y(0)|A=1, L]}$$
-
 
 Another common estimand is the Population Average Treatment Effect (PATE), which denotes the effect the treatment would have on the entire population if applied universally to that population. This quantity can be expressed:
 
@@ -171,24 +384,20 @@ $$PATE_{\text{risk difference}} = f(E[Y(1) - Y(0)|L], W)$$
 
 $$PATE_{\text{risk ratio}} = f\left(\frac{E[Y(1)|L]}{E[Y(0)|L]}, W\right)$$
 
-where $f$ is a function that incorporates weights $W$ into the estimation of the expected outcomes. These weights may correspond to the inverse probability of being sampled or in the case of NZAVS data, the survey weights are given from census estimates for the wider population.  Note: I will show you how to use weights in future seminars.
+where $f$ is a function that incorporates weights $W$ into the estimation of the expected outcomes. These weights may correspond to the inverse probability of being sampled or in the case of NZAVS data, the survey weights are given from census estimates for the wider population. Note: I will show you how to use weights in future seminars.
 
-We might also be interested in identifying effects specific to certain strata, such as risk differences or risk ratios, as they are modified by baseline indicators.  Denote a stratum of interest by $G$. We may then compute: 
+We might also be interested in identifying effects specific to certain strata, such as risk differences or risk ratios, as they are modified by baseline indicators. Denote a stratum of interest by $G$. We may then compute:
 
 $$ATE_{G,\text{risk difference}} = E[Y(1) - Y(0)|G, L]$$
 
 $$ATE_{G,\text{risk ratio}} = \frac{E[Y(1)|G, L]}{E[Y(0)|G, L]}$$
 
+#### Consider:
 
-#### Consider: 
-
-- ** In this course, we are interested in stratum specific comparisons **
-- In the causal inference literature, the concept we use to make sense of stratum specific comparisons is called "effect modification." 
-- By inferring effects within stratums, we may evaluate whether the effects of different exposures or treatments on some well-defined outcome (measured in some well-defined time-period after the exposure) differ depending on group measurement. 
-- The logic of effect modification differs from that of intereaction. 
-
-
-
+-   \*\* In this course, we are interested in stratum specific comparisons \*\*
+-   In the causal inference literature, the concept we use to make sense of stratum specific comparisons is called "effect modification."
+-   By inferring effects within stratums, we may evaluate whether the effects of different exposures or treatments on some well-defined outcome (measured in some well-defined time-period after the exposure) differ depending on group measurement.
+-   The logic of effect modification differs from that of intereaction.
 
 #### Aside: extensions
 
@@ -202,24 +411,21 @@ Likewise:
 
 $$ATE_{A/A'} = \frac{E[Y(A)| L]}{E[Y(A')| L]}$$
 
-This defines the contrast of $A$ and $A'$ on a ratio scale. 
+This defines the contrast of $A$ and $A'$ on a ratio scale.
 
-#### f. Describe the population(s) for whom the intended study is meant to generalise by distinguishing between source and target populations. 
-
+#### f. Describe the population(s) for whom the intended study is meant to generalise by distinguishing between source and target populations.
 
 Consider the following concepts:
 
-- **Source population**: A source population is where we gather our data for a study. We pull our specific sample from this group. It needs to mirror the broader group for our conclusions to be valid and widely applicable.
+-   **Source population**: A source population is where we gather our data for a study. We pull our specific sample from this group. It needs to mirror the broader group for our conclusions to be valid and widely applicable.
 
+-   **Target population**: The target population is the larger group we aim to apply our study's results to. It could be defined by location, demographics, or specific conditions. The closer the source matches the target in ways that are relevant to our causal questions, the stronger our causal inferences about the target population will be.
 
-- **Target population**: The target population is the larger group we aim to apply our study's results to. It could be defined by location, demographics, or specific conditions. The closer the source matches the target in ways that are relevant to our causal questions, the stronger our causal inferences about the target population will be.
-
-
-  - **Generalisability** refers to the ability to apply the causal effects estimated from a sample to the population it was drawn from. In simpler terms, it deals with the extrapolation of causal knowledge from a sample to the broader population. This concept is also called "external validity".  
+    -   **Generalisability** refers to the ability to apply the causal effects estimated from a sample to the population it was drawn from. In simpler terms, it deals with the extrapolation of causal knowledge from a sample to the broader population. This concept is also called "external validity".
 
 $$\text{Generalisability} = PATE \approx ATE_{\text{sample}}$$
 
-  - **Transportability** refers to the ability to extrapolate causal effects learned from a source population to a target population when certain conditions are met. It deals with the transfer of causal knowledge across different settings or populations.
+-   **Transportability** refers to the ability to extrapolate causal effects learned from a source population to a target population when certain conditions are met. It deals with the transfer of causal knowledge across different settings or populations.
 
 $$\text{Transportability} = ATE_{\text{target}} \approx f(ATE_{\text{source}}, T)$$
 
@@ -227,72 +433,141 @@ where $f$ is a function and $T$ is a function that maps the results from our sou
 
 ### Summary Step 1: Consider how much we need to do when asking a causal question!
 
-We discover that asking a causal question is a multifaceted task. It demands careful definition of the outcome, including its timing, the exposure, and covariates. It also requires selecting the appropriate scale for causal contrast, controlling for confounding, and potentially adjusting for sample weights or stratification. Finally, when asking a causal question, we must consider for whom the results apply. Only after following these steps can we then ask: "How may we answer this causal question?" 
-
+We discover that asking a causal question is a multifaceted task. It demands careful definition of the outcome, including its timing, the exposure, and covariates. It also requires selecting the appropriate scale for causal contrast, controlling for confounding, and potentially adjusting for sample weights or stratification. Finally, when asking a causal question, we must consider for whom the results apply. Only after following these steps can we then ask: "How may we answer this causal question?"
 
 ## STEP 2: ANSWER A CAUSAL QUESTION
 
 #### Obtain longitudinal data
 
-Note that causal inference from observational data turns on the appropriate temporal ordering of the key variables involved in the study. 
+Note that causal inference from observational data turns on the appropriate temporal ordering of the key variables involved in the study.
 
-Recall we have defined. 
+Recall we have defined.
 
-- **A**: Our exposure or treatment variable, denoted as **A**.  Here we consider the example of 'Church attendance'.
+-   **A**: Our exposure or treatment variable, denoted as **A**. Here we consider the example of 'Church attendance'.
 
-- **Y**: The outcome variable we are interested in, represented by **Y**, is psychological distress. We operationalise this variable through the 'Kessler-6' distress scale.
+-   **Y**: The outcome variable we are interested in, represented by **Y**, is psychological distress. We operationalise this variable through the 'Kessler-6' distress scale.
 
-- **L**: The confounding variables, collectively referred to as **L**, represent factors that can independently influence both **A** and **Y**. For example, socio-economic status could be a confounder that impacts both the likelihood of church attendance and the levels of psychological distress.
+-   **L**: The confounding variables, collectively referred to as **L**, represent factors that can independently influence both **A** and **Y**. For example, socio-economic status could be a confounder that impacts both the likelihood of church attendance and the levels of psychological distress.
 
+Given the importance of temporal ordering, we must now define time:
 
-Given the importance of temporal ordering, we must now define time: 
+-   **t** $\in$ T: Let $t$ denote within a multiwave panel study with **T** measurement intervals.
 
+Where $t/\text{{exposure}}$ denotes the measurement interval for the exposure. Longitudinal data collection provides us the ability to establish a causal model such that:
 
-- **t $\in$ T**: Let $t$ denote within a multiwave panel study with **T** measurement intervals.
-  
-Where $t/\text{{exposure}}$ denotes the measurement interval for the exposure. Longitudinal data collection provides us the ability to establish a causal model such that: 
-
-$$t_{confounders} < t_{exposure}< t_{outcome}$$ 
+$$t_{confounders} < t_{exposure}< t_{outcome}$$
 
 To minimise the posibility of time-varying confounding and obtain the clearest effect estimates, we should acquire the most recent values of $\mathbf{L}$ preceding $A$ and the latest values of $A$ before $Y$.
 
-Note in @fig-dag-outcomewide,  We use the prefixes "t0, t1, and t2" to denote temporal ordering. We include in the set of baseline confounders the pre-exposure measurement of *A* and *Y*. This allows for more substantial confounding control. For unmeasured confounder to affect both the exposure and the outcome, it would need to do so independently of the pre-exposure confounders. Additionally, including the baseline exposure gives us an effect estimate for the incidence exposure, rather than the prevelance of the exposure. This helps us to assess the expected change in the outcome were we to initate a change in the exposure.
-
+Note in @fig-dag-outcomewide, We use the prefixes "t0, t1, and t2" to denote temporal ordering. We include in the set of baseline confounders the pre-exposure measurement of *A* and *Y*. This allows for more substantial confounding control. For unmeasured confounder to affect both the exposure and the outcome, it would need to do so independently of the pre-exposure confounders. Additionally, including the baseline exposure gives us an effect estimate for the incidence exposure, rather than the prevelance of the exposure. This helps us to assess the expected change in the outcome were we to initate a change in the exposure.
 
 ### Include the measured exposure with baseline covariates
 
-Controlling for prior exposure enables the interpretation of the effect estimate as a change in the exposure in a manner akin to a randomised trial. We propose that the effect estimate with prior control for the exposure estimates the "incidence exposure" rather than the "prevalence exposure" [Hernan Danaei, Tavakkoli and Hernán, 2012, Hernán, 2015]. It is crucial to estimate the incidence exposure because if the effects of an exposure are harmful in the short term such that these effects are not subsequently measured, a failure to adjust for prior exposure will yield the illusion that the exposure is beneficial. Furthermore, this approach aids in controlling for unmeasured confounding. For such a confounder to dismiss the observed exposure-outcome association, it would need to do so independently of the prior level of the exposure and outcome.
+Controlling for prior exposure enables the interpretation of the effect estimate as a change in the exposure in a manner akin to a randomised trial. We propose that the effect estimate with prior control for the exposure estimates the "incidence exposure" rather than the "prevalence exposure" [@danaei2012]. It is crucial to estimate the incidence exposure because if the effects of an exposure are harmful in the short term such that these effects are not subsequently measured, a failure to adjust for prior exposure will yield the illusion that the exposure is beneficial. Furthermore, this approach aids in controlling for unmeasured confounding. For such a confounder to explain away the observed exposure-outcome association, it would need to do so independently of the prior level of the exposure and outcome.
 
 ### State the eligibility criteria for participation
 
-This step is invaluable for assessing whether we are answering the causal question that we have asked. 
+This step is invaluable for assessing whether we are answering the causal question that we have asked.
 
-#### Consider: 
+#### Consider:
 
-  - Generalisability: we cannot evaluate inferences to a target group from the source popuation if we do not describe the source population
-  - Eligibility criteria will help us to ensure whether we have correctly evaluated potential measurement bias/error in our instruments.
+-   Generalisability: we cannot evaluate inferences to a target group from the source population if we do not describe the source population
+-   Eligibility criteria will help us to ensure whether we have correctly evaluated potential measurement bias/error in our instruments.
 
- For example, the New Zealand Attitudes and Values Study is a National Probability study of New Zealanders. The details provided in the supplementary materials describe how individuals were randomly selected from the country's electoral roll. From these invitations there was typically less than 15% response rate. How might this process of recruitment affect generalisability and transportability of our results? 
+For example, the New Zealand Attitudes and Values Study is a National Probability study of New Zealanders. The details provided in the supplementary materials describe how individuals were randomly selected from the country's electoral roll. From these invitations there was typically less than 15% response rate. How might this process of recruitment affect generalisability and transportability of our results?
 
-  - (Aside: discuss per protocol effects/ intention to treat effects) 
+-   Aside: discuss per protocol effects/ intention to treat effects
 
 ### Determine how missing data will be handled
 
-  - As we will consider in the upcoming weeks, loss to follow up and non-response opens sources for bias. We must develop a strategy for handling missing data. 
-  
+-   As we will consider in the upcoming weeks, loss to follow up and non-response opens sources for bias. We must develop a strategy for handling missing data.
 
-### State a statistical model  
+### State a statistical model
 
-The models we have considered in this course are G-computation, Inverse Probability of Treatement Weighting, and Doubly-Robust estimation.  
+The models we have considered in this course are G-computation, Inverse Probability of Treatement Weighting, and Doubly-Robust estimation.
 
+
+
+### Reporting
+
+Consider the following ideas about how to report one's model:
+
+- **Estimator**: Doubly robust where possible. 
+- **Propensity Score Reporting:** Detail the process of propensity score derivation, including the model used and any variable transformations.
+- **WeightIt Package Utilisation:** Explicitly mention the use of the 'WeightIt' package in R, including any specific options or parameters used in the propensity score estimation process.
+- **Method Variations:** Report if different methods were used to obtain propensity scores, and the reasons behind the choice of methods such as 'ebal', 'energy', and 'ps'. 
+- **Continuous Exposures:** Highlight that for continuous exposures, only the 'energy' option was used for propensity score estimation.
+- **Subgroup Estimation:** Confirm that the propensity scores for subgroups were estimated separately, and discuss how the weights were subsequently combined with the original data.
+- **Covariate Balance:** Include a Love plot to visually represent covariate balance on the exposure both before and after weighting.
+- **Weighting Algorithm Statistics:** Report the statistics for the weighting algorithms as provided by the WeightIt package, including any measures of balance or fit.
+- **Outcome Regression Model:** Clearly report the type of regression model used to estimate outcome model coefficients (e.g., linear regression, Poisson, binomial), and mention if the exposure was interacted with the baseline covariates. Do not report model coefficients as these have no interpretation. 
+- **Subgroup Interaction:** Address whether the subgroup was included separately as an interaction in the outcome model, and if the model successfully converged.
+- **Model Coefficients:** Note that the model coefficients should not be interpreted, as they are not meaningful in this context.
+- **Confidence Intervals and Standard Errors:** Describe the methods used to derive confidence intervals and standard errors, noting the use of the 'clarify' package in R for simulation based inference.
+
+
+
+### Example of how to report a doubly robust method in your report
+
+I have included the technical details of the doubly robust method in the Appendix. Here is a how you might report a doubly robust causal inference method in your report:
+
+Our study employs a Doubly Robust Estimation for Subgroup Analysis algorithm, combining the best of the IPTW and G-computation methodologies. The method hinges on the specification of either the propensity score or the outcome model to provide unbiased estimates.
+
+Firstly, the propensity score, representing the conditional probability of exposure given covariates and subgroup indicators, is estimated using logistic regression or a suitable alternative. We then calculate individual weights based on these estimated propensity scores. Importantly, these scores are computed separately within strata of the subgroup where effect modification is of interest, before being recombined into the complete data set.
+
+Secondly, we estimate the outcome model, aiming to capture the relationship between the outcome, exposure, confounders, and subgroups. This model helps us predict the average outcome given specific values of exposure, covariates, propensity scores, and subgroup indicators.
+
+The third step involves simulating potential outcomes for each individual in each subgroup under hypothetical scenarios. We calculate these outcomes under varying exposure levels, using the previously estimated outcome model.
+
+The fourth step estimates the average causal effect for each subgroup by computing the expected value of potential outcomes under each intervention level. This information is then used to calculate the estimated difference, which represents the average causal effect of altering the exposure within each subgroup.
+
+Lastly, we compare differences in causal effects between groups by computing the estimated causal effect differences between different subgroups. This step identifies the difference in average causal effects between the subgroups. To quantify uncertainty around the estimated causal effects, we calculate standard errors and confidence intervals using simulation-based inference methods.
+
+This five-step process provides a robust and nuanced examination of causal effects, considering exposure, outcome, covariates, and subgroup indicators, to deliver an accurate and comprehensive analysis of causal relationships in our study population."
+
+### Inference
+
+Consider the following ideas about what to discuss in one's findings:
+
+1.  **Interpretation of Propensity Scores:** Understand and articulate the meaning of the propensity scores, and how they relate to the exposure of interest in the study.
+
+2.  **Analysis of Outcome Models:** Analyze the outcome models to understand the relationships between the outcome, exposure, confounders, and subgroups.
+
+3.  **Hypothetical Scenarios:** Reason through the hypothetical scenarios used in the simulation of potential outcomes, and discuss their relevance to the research question.
+
+4.  **Effect of Intervention Levels:** Consider the implications of different intervention levels on potential outcomes, and how they inform the average causal effect within each subgroup.
+
+5.  **Causal Effect Interpretation:** Interpret the average causal effect of changing the exposure level within each subgroup, and discuss its relevance to the research question.
+
+6.  **Comparison of Subgroups:** Analyze and discuss the differences in causal effects between different subgroups, and how these differences contribute to the overall findings of the study.
+
+7.  **Uncertainty and Confidence Intervals:** Consider the uncertainty around the estimated causal effects, and interpret the confidence intervals to understand the precision of the estimates.
+
+8.  **Assumptions and Limitations:** Reflect on the assumptions made during the study and identify any limitations in the methodology that could affect the interpretation of results.
+
+9.  **Replication and Future Research:** Consider how the study could be replicated or expanded upon in future research, and how the findings contribute to the existing body of knowledge in the field.
+
+10. **Positivity Violations:** Reflect on any violations of the positivity assumption. Ensure that for each combination of covariates, there is a positive probability of receiving each level of treatment.
+
+11. **Causal Consistency and Treatment Heterogeneity:** Consider the assumption of causal consistency and the potential for treatment heterogeneity. Discuss whether the same version of treatment was consistently applied and if different versions of treatment might lead to different outcomes.
+
+12. **Interpretation of E-values:** Interpret the E-values used for sensitivity analysis. Understand what they represent in terms of the robustness of the findings to potential unmeasured confounding.
+
+13. **Generalisability and Transportability:** Reflect on the generalizability of the study results to other contexts or populations. Discuss any factors that might influence the transportability of the causal effects found in the study.
+
+14. **Considerations of Transportability:** Discuss how the causal effects could be transported or applied to other settings, populations, or contexts, and what factors might affect this transportability.
+
+15. **Real-world Implications:** Discuss the real-world implications of the findings, and how they could be applied in policy, practice, or further research.
+
+## Appendix
 
 ### **G-computation for Subgroup Analysis Algorithm**
 
 **Step 1** Estimate the outcome model. Fit a model for the outcome $Y$, conditional on both the exposure $A$, the covariates $L$, and subgroup indicator $G$. This model can be a linear regression, logistic regression, or another statistical model. The goal is to capture the relationship between the outcome, exposure, confounders, and subgroups.
 
-$$ E(Y|A,L,G) = f_Y(A,L,G, \theta_Y) $$ 
+$$ E(Y|A,L,G) = f_Y(A,L,G, \theta_Y) $$
 
-This equation represents the expected value of the outcome $Y$ given the exposure $A$, covariates $L$, and subgroup $G$ as modeled by the function $f_Y$ with parameters $\theta_Y$. This formulation allows for the prediction of the average outcome $Y$ given certain values of $A$, $L$, and $G$. 
+This equation represents the expected value of the outcome $Y$ given the exposure $A$, covariates $L$, and subgroup $G$ as modeled by the function $f_Y$ with parameters $\theta_Y$. This formulation allows for the prediction of the average outcome $Y$ given certain values of $A$, $L$, and $G$.
 
 **Step 2** Simulate potential outcomes. For each individual $i$ in each subgroup $g$, predict their potential outcome $\hat{Y}_{i,g}(a)$ under the intervention $A=a$ using the estimated outcome model.
 
@@ -302,7 +577,7 @@ and also under the intervention $A=a^{\prime}$:
 
 $$\hat{Y}_{i,g}(a^{\prime}) = E[Y|A=a^{\prime},L_i,G=g; \hat{\theta}_Y]$$
 
-This step involves simulating the outcomes under each intervention level for every individual within each subgroup, as if they were exposed to treatment level $a$ or $a^{\prime}$. 
+This step involves simulating the outcomes under each intervention level for every individual within each subgroup, as if they were exposed to treatment level $a$ or $a^{\prime}$.
 
 **Step 3** Estimate the average causal effect for each subgroup. Compute the estimated expected value of the potential outcomes under each intervention level for each subgroup $g$:
 
@@ -316,29 +591,21 @@ $$\hat{\delta}_g = \hat{E}[Y(a)|G=g] - \hat{E}[Y(a^{\prime})|G=g]$$
 
 This difference represents the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ within subgroup $g$.
 
-**Step 5** Compare differences in causal effects by subgroups. 
-
+**Step 5** Compare differences in causal effects by subgroups.
 
 Compute the differences in the estimated causal effects between different subgroups:
 
 $$\hat{\gamma}_s = \hat{\delta}_g - \hat{\delta}_{g^{\prime}}$$
 
-This difference $\hat{\gamma}_s$ represents the difference in the average causal effects between the subgroups $g$ and $g^{\prime}$. 
+This difference $\hat{\gamma}_s$ represents the difference in the average causal effects between the subgroups $g$ and $g^{\prime}$.
 
-
-Or more fully: 
-
+Or more fully:
 
 $$\hat{\gamma}_{s} = \overbrace{\big( E[Y(a)|G=g] - E[Y(a^{\prime})|G=g] \big)}^{\hat{\delta_g}} - \overbrace{\big(E[Y(a^{\prime})|G=g^{\prime}]- E[Y(a)|G=g^{\prime}]\big)}^{\hat{\delta_{g^{\prime}}}} $$
 
+This difference, $\gamma_s$, represents the difference in the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ between subgroup $g$ and subgroup $g^{\prime}$. It measures the interaction effect of the exposure $A$ and the subgroup $G$ on the outcome $Y$.
 
-
-This difference, $\gamma_s$, represents the difference in the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ between subgroup $g$ and subgroup $g^{\prime}$. It measures the interaction effect of the exposure $A$ and the subgroup $G$ on the outcome $Y$. 
-
-
-We use simulation-based inference methods to compute standard errors and confidence intervals [@greifer2023] 
-
-
+We use simulation-based inference methods to compute standard errors and confidence intervals [@greifer2023]
 
 ### **Inverse Probability of Treatment Weighting (IPTW) for Subgroup Analysis Algorithm**
 
@@ -354,11 +621,11 @@ $$v_i = \left(\frac{A_i}{\hat{e}(L_i)} + \frac{1 - A_i}{1 - \hat{e}(L_i)}\right)
 
 Note that we estimate propensity scores *separately* within strata of the subgroup for whom we are interested in effect modification."
 
-$v_i$ is the weight for individual $i$ in a given subgroup $G$. It calculated using the propensity score estimated within the same subgroup, these weights are then recombined into the full data set with all groups. 
+$v_i$ is the weight for individual $i$ in a given subgroup $G$. It calculated using the propensity score estimated within the same subgroup, these weights are then recombined into the full data set with all groups.
 
 **Step 2** Fit a weighted outcome model. Using the weights calculated from the estimated propensity scores, fit a model for the outcome $Y$, conditional on the exposure $A$, subgroup $G$, and covariates $L$:
 
-$$ \hat{E}(Y|A, G, L) = f_Y(A, G; \theta_Y, V) $$ 
+$$ \hat{E}(Y|A, G, L) = f_Y(A, G; \theta_Y, V) $$
 
 where $f_Y$ is a weighted function (such as a weighted regression model) with parameters $\theta_Y$, and $V$ represents the weights. This formulation allows for the prediction of the outcome $Y$ given certain values of $A$, $G$, and $L$, taking into account the inverse probability of treatment weights.
 
@@ -380,17 +647,15 @@ Then calculate the estimated difference for each subgroup $g$:
 
 $$\hat{\delta}_g = \hat{E}[Y(a)|G=g] - \hat{E}[Y(a^{\prime})|G=g]$$
 
-The difference $\hat{\delta}_g$ represents the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ within each subgroup $g$. 
-
+The difference $\hat{\delta}_g$ represents the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ within each subgroup $g$.
 
 **Step 5** Compare differences in causal effects by groups. Compute the differences in the estimated causal effects between different subgroups:
 
 $$\hat{\gamma}_s = \hat{\delta}_g - \hat{\delta}_{g^{\prime}}$$
 
-This difference $\hat{\gamma}_s$ represents the difference in the average causal effects between the subgroups $g$ and $g^{\prime}$. 
+This difference $\hat{\gamma}_s$ represents the difference in the average causal effects between the subgroups $g$ and $g^{\prime}$.
 
-We compute standard errors and confidence intervals. Again, to obtain standard errors and confidence intervals for these differences in subgroup-specific causal effects, we use simulation-based inference methods [@greifer2023]. 
-
+We compute standard errors and confidence intervals. Again, to obtain standard errors and confidence intervals for these differences in subgroup-specific causal effects, we use simulation-based inference methods [@greifer2023].
 
 ### Doubly Robust Estimation for Subgroup Analysis Algorithm
 
@@ -410,15 +675,13 @@ Note that we estimate propensity scores **separately** within strata of the subg
 
 $v_i$ is the weight for individual $i$ in a given subgroup $G$. It calculated using the propensity score estimated within the same subgroup, these weights are then recombined into the full data set with all groups.
 
-
-**Step 2** Estimate the outcome model. 
+**Step 2** Estimate the outcome model.
 
 Fit a model for the outcome $Y$, conditional on both the exposure $A$, the covariates $L$, subgroup indicator $G$, and the propensity scores $V$. This model can be a linear regression, logistic regression, or another statistical model. The goal is to capture the relationship between the outcome, exposure, confounders, and subgroups.
 
-$$ E(Y|A,L,V,G) = f_Y(A,L,V,G, \theta_Y) $$ 
+$$ E(Y|A,L,V,G) = f_Y(A,L,V,G, \theta_Y) $$
 
-This equation represents the expected value of the outcome $Y$ given the exposure $A$, covariates $L$, the propensity score $v_i$, and subgroup $G$ as modeled by the function $f_Y$ with parameters $\theta_Y$. This formulation allows for the prediction of the average outcome $Y$ given certain values of $A$, $L$, $V$,and $G$. 
-
+This equation represents the expected value of the outcome $Y$ given the exposure $A$, covariates $L$, the propensity score $v_i$, and subgroup $G$ as modeled by the function $f_Y$ with parameters $\theta_Y$. This formulation allows for the prediction of the average outcome $Y$ given certain values of $A$, $L$, $V$,and $G$.
 
 **Step 3** Simulate potential outcomes. For each individual $i$ in each subgroup $g$, simulate their potential outcome $\hat{Y}_{i,g}(a)$ under the hypothetical scenario where everyone in the subgroup is exposed to the intervention $A=a$ regardless of their actual exposure level:
 
@@ -427,7 +690,6 @@ $$\hat{Y}_{i,g}(a) = E[Y|A=a,G=g; \hat{\theta}_Y,L_i, v_i]$$
 and also under the hypothetical scenario where everyone is exposed to intervention $A=a^{\prime}$:
 
 $$\hat{Y}_{i,g}(a^{\prime}) = E[Y|A=a^{\prime},G=g; \hat{\theta}_Y,,L_i, v_i]$$
-
 
 **Step 4** Estimate the average causal effect for each subgroup. Compute the estimated expected value of the potential outcomes under each intervention level for each subgroup $g$:
 
@@ -439,135 +701,28 @@ Then calculate the estimated difference for each subgroup $g$:
 
 $$\hat{\delta}_g = \hat{E}[Y(a)|G=g] - \hat{E}[Y(a^{\prime})|G=g]$$
 
-The difference $\hat{\delta}_g$ represents the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ within each subgroup $g$. 
-
+The difference $\hat{\delta}_g$ represents the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ within each subgroup $g$.
 
 **Step 5** Compare differences in causal effects by groups. Compute the differences in the estimated causal effects between different subgroups:
 
 $$\hat{\gamma}_s = \hat{\delta}_g - \hat{\delta}_{g^{\prime}}$$
 
-This difference $\hat{\gamma}_s$ represents the difference in the average causal effects between the subgroups $g$ and $g^{\prime}$. 
+This difference $\hat{\gamma}_s$ represents the difference in the average causal effects between the subgroups $g$ and $g^{\prime}$.
 
 Again we can see this explicitly:
 
-
 $$\hat{\gamma}_{s} = \overbrace{\big( E[Y(a)|G=g] - E[Y(a^{\prime})|G=g] \big)}^{\hat{\delta_g}} - \overbrace{\big(E[Y(a^{\prime})|G=g^{\prime}]- E[Y(a)|G=g^{\prime}]\big)}^{\hat{\delta_{g^{\prime}}}} $$
 
-
 We again calculate standard errors and confidence intervals using simulation-based inference methods [@greifer2023]. This helps to quantify the uncertainty around the estimated causal effects.
-
-
-
-
-
-### Provided Detailed Reporting: Checklist as follows
-
-#### Have a question
-
-  - Did I state my question? No$\to$state it. Yes$\to$proceed.
-  - So what? Did I explain why this question is important? No-> explain. Yes $\to$ proceed.
-  - Do I have a causal question. No $\to$ Stop. Your question might not be important, return to the previous step.   Yes$\to$Proceed.
-  - Do you have a question about a subgroup -- for example a cultural group? Yes$\to$proceed. No that's okay but your assessment requires a subgroup analysis. Return to the start and develop a subgroup analysis question then $\to$ proceed. 
-  - Are you familiar with the potential outcomes framework such that you can explain the following: why are individual causal effects not identified? how do experiments obtain average causal effects? Can you roughly explain the fundamental assumptions of causal inference? Can you roughly explain how causal effects are estimated in observational data by predicting potential outcomes for everyone under specific levels of an exposure, regardless of whether they recieved it? No $\to$ study your notes and the course materials. If you still can't understand $\to$ see me.  Yes $\to$ proceed.
-  
-#### Data  
-
-  - Do I have experimental data? Yes $\to$ You are not in this course. No $\to$ you must emulate a target trial, proceed.
-  - Do I have time-series data. No $\to$ stop, you should not ask a causal question. Yes $\to$ proceed. 
-  - Do have at least three-waves of data.  No $\to$ stop, danger zone. Confounding control requires much stronger assumptions. Yes $\to$ proceed. 
-  - Are the time-series data the NZAVS simulated data? No $\to$ Talk to me. Yes $\to$ proceed. 
-  
-#### Outcome 
-
-  - Have you defined the outcome variable *Y*? No $\to$write it down. Yes $\to$ proceed. 
-  - Is there more than one outcome? No $\to$ proceed. Yes, write them down, $\to$ proceed.
-   - Can you explain how your outcome variable/s are relevant to your question?   Only if yes $\to$ proceed. 
-  - Do you have a binary outcome? Yes $\to$ Is it rare? $\to$ you may use logistic regression, note this, then $\to$ proceed. No? Is your outcome continuous? Consider whether to z-transform it, consider whether to truncate it into categories (after expert consultation). Note this, then $\to$ proceed. 
-  - Does your outcome appear after your exposure? Yes $\to$ proceed. 
-
-  
-#### Exposure 
-
- - Have you defined the exposure variable *A*? No $\to$write it down. Yes $\to$ proceed. 
-  - Is there more than one exposure? No $\to$ stop, you're confused. Yes $\to$ proceed.
- - Can you explain how your exposure variable is relevant to your question?   Only if yes $\to$ proceed. 
- - Is it conceptually possible to intervene on your exposure at all levels of the covariates (positivity)? Only if yes $\to$ proceed. 
- - Can you interpret what it would mean to intervene on the exposure (consistency)?   Only if yes $\to$ proceed. 
- - Are the different versions of the exposure conditionally exchangeable conditional on measured baseline confounders.   Only if yes $\to$ proceed. 
- - Do you have a binary exposure? Yes note this, then $\to$ proceed. No? Is your exposure continuous?  Z-transform it, Consider whether to truncate it into categories (after expert consultation). Note this, then $\to$ proceed. 
- - Does your exposure appear after before your outcome? Only if yes $\to$ proceed. 
- 
-
-
-#### Confounders 
-
-- Have you defined your baseline confounders $L$ Only if yes $\to$ proceed. 
-- Have you justified why the baseline confounders may affect both $A$ and $Y$. Only if yes $\to$ proceed. 
-- Are the baseline confounders measured before the exposure. Only if yes $\to$ proceed. 
-- Is the baseline measure of the exposure included in the set of baseline confounders? Only if yes $\to$ proceed. 
-Is the baseline outcome included in the set of baseline confounders? Only if yes $\to$ proceed. 
-- Are the baseline confounders sufficient to ensure balance on the exposure, such that $A \coprod Y|L$. If not, write this down and clarify how you will address the problem in your sensitivity analysis, then $\to$ proceed. 
-- Are the confounders continuous? $\to$ convert them to z-scores. 
-- Are the confounders binary? You may convert them to z-scores
-- Are the confounders categorical and have three or more levels? Do not convert them to z-scores.  You may now $\to$ proceed. 
-
-
-#### Causal Diagramme with Unmeasured Confounders
-
- 
-- Do previous science suggestion there may be unmeasured confounders? No $\to$ learn more science. Yes $\to$ briefly explain and $\to$ proceed. 
-- Have you drawn a causal diagramme (DAG) to clarify both measured and unmeasured sources of confounding? Only if yes $\to$ proceed. 
-- Is there a possiblity of M-Bias?  I don't know what M-bias is. That's OK, we'll discuss later $\to$ proceed. 
-- Have I described sources of bias from measurement error differential or correlated measurement errors between the exposure and outcome?  That's OK, we'll discuss later$\to$ proceed. 
-- Do the nodes on my DAG have time indicators so that I can ensure temporal order is correct? Only if yes $\to$ proceed? 
-- Is my DAG organised so that time follows in consistent direction? No?  That's OK, but as you get more experienced you will do better, for now $\to$ proceed? 
-
-
-#### Estimand
-
-
-- Is my causal estimand one of these: 
-
-
-
-$$ATE_{G,\text{risk difference}} = E[Y(1) - Y(0)|G, L]$$
-
-$$ATE_{G,\text{risk ratio}} = \frac{E[Y(1)|G, L]}{E[Y(0)|G, L]}$$
-
-
-if yes, good you are in the right course. You may $\to$ proceed.
-
-
-#### What is my source and target population? 
-
--  Have I distinguished between my source and target population? Only if yes $\to$ proceed.
--  Have I considered whether my results generalise to the source population? Have I considered whether my results transport to a different population? Only if yes $\to$ proceed.
-
-#### Eligibility criteria? 
-
-- Have I stated eligibility criteria for the study? Only if yes $\to$ proceed.
-
-### Desription of the sample characteristics
-
-- Have I provided the desciptive statistics for demographic information taken at baseline? Only if yes $\to$ proceed.
-- Have I demonstrated the magnitudes of change in the exposure from baseline to the exposure interval? Only if yes $\to$ proceed.
-- Have I included references to where my audience can find more information about the sample? Only if yes $\to$ proceed.
-- 
-
-
-### Inference
-- Take care when describing for whome the results generalise. 
-
 
 <!-- ### What we have not done -->
 
 <!-- We have not addressed:  -->
 
 <!-- - measurement error. Our graphs do not incorporate it.  -->
+
 <!-- - selection bias -->
+
 <!-- - Outcome-wide studies -->
+
 <!-- - Sampling weights.  -->
-
-
-
-

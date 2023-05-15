@@ -8,7 +8,7 @@
 
 <meta name="author" content="Joseph Bulbulia">
 
-<title>PSYC 434 Conducting Research Across Cultures: Trimester 1, 2023 - Causal Graphs: A Practical Guide</title>
+<title>PSYC 434 Conducting Research Across Cultures: Trimester 1, 2023 - Temporal Causal Diagrams: Unveiling Causal Order and Indexing Nodes by Time</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -151,7 +151,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Causal Graphs: A Practical Guide</h1>
+      <h1 class="title">Temporal Causal Diagrams: Unveiling Causal Order and Indexing Nodes by Time</h1>
                       </div>
   </div>
     
@@ -181,15 +181,14 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#common-causal-graphs" id="toc-common-causal-graphs" class="nav-link active" data-scroll-target="#common-causal-graphs">Common Causal Graphs</a></li>
   <li><a href="#graphs-of-canonical-confounders" id="toc-graphs-of-canonical-confounders" class="nav-link" data-scroll-target="#graphs-of-canonical-confounders">Graphs of Canonical confounders</a>
   <ul class="collapse">
-  <li><a href="#first-problem-there-is-a-common-cause-of-an-exposure-and-outcome" id="toc-first-problem-there-is-a-common-cause-of-an-exposure-and-outcome" class="nav-link" data-scroll-target="#first-problem-there-is-a-common-cause-of-an-exposure-and-outcome">First Problem: there is a common cause of an exposure and outcome</a></li>
+  <li><a href="#confounding-by-common-cause." id="toc-confounding-by-common-cause." class="nav-link" data-scroll-target="#confounding-by-common-cause.">Confounding by Common Cause.</a></li>
   <li><a href="#solution-adjust-for-the-pre-exposure-confounder" id="toc-solution-adjust-for-the-pre-exposure-confounder" class="nav-link" data-scroll-target="#solution-adjust-for-the-pre-exposure-confounder">Solution: adjust for the pre-exposure confounder</a></li>
-  <li><a href="#second-problem-conditioning-on-a-common-effect" id="toc-second-problem-conditioning-on-a-common-effect" class="nav-link" data-scroll-target="#second-problem-conditioning-on-a-common-effect">Second problem: conditioning on a common effect</a></li>
+  <li><a href="#second-problem-conditioning-on-a-common-effect-collider-stratification" id="toc-second-problem-conditioning-on-a-common-effect-collider-stratification" class="nav-link" data-scroll-target="#second-problem-conditioning-on-a-common-effect-collider-stratification">Second problem: conditioning on a common effect (Collider Stratification)</a></li>
   <li><a href="#solution-ensure-confounders-are-measured-before-the-exposure" id="toc-solution-ensure-confounders-are-measured-before-the-exposure" class="nav-link" data-scroll-target="#solution-ensure-confounders-are-measured-before-the-exposure">Solution: ensure confounders are measured before the exposure</a></li>
   <li><a href="#third-problem-conditioning-on-a-mediator" id="toc-third-problem-conditioning-on-a-mediator" class="nav-link" data-scroll-target="#third-problem-conditioning-on-a-mediator">Third problem: conditioning on a mediator</a></li>
   <li><a href="#solution-ensure-confounders-are-measured-before-the-exposure." id="toc-solution-ensure-confounders-are-measured-before-the-exposure." class="nav-link" data-scroll-target="#solution-ensure-confounders-are-measured-before-the-exposure.">Solution: ensure confounders are measured before the exposure.</a></li>
   <li><a href="#fourth-problem-conditioning-on-a-descendant" id="toc-fourth-problem-conditioning-on-a-descendant" class="nav-link" data-scroll-target="#fourth-problem-conditioning-on-a-descendant">Fourth problem: conditioning on a descendant</a></li>
-  <li><a href="#solution-ensure-that-counfounders-are-measured-before-the-exposure" id="toc-solution-ensure-that-counfounders-are-measured-before-the-exposure" class="nav-link" data-scroll-target="#solution-ensure-that-counfounders-are-measured-before-the-exposure">Solution: ensure that counfounders are measured before the exposure</a></li>
-  <li><a href="#what-if-mediation-is-of-interest" id="toc-what-if-mediation-is-of-interest" class="nav-link" data-scroll-target="#what-if-mediation-is-of-interest">What if mediation is of interest?</a></li>
+  <li><a href="#solution-yet-again-ensure-that-counfounders-are-measured-before-the-exposure" id="toc-solution-yet-again-ensure-that-counfounders-are-measured-before-the-exposure" class="nav-link" data-scroll-target="#solution-yet-again-ensure-that-counfounders-are-measured-before-the-exposure">Solution: (yet again) ensure that counfounders are measured before the exposure</a></li>
   </ul></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">EXAMPLES</a>
   <ul class="collapse">
@@ -200,6 +199,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#a-more-thorough-confounding-control" id="toc-a-more-thorough-confounding-control" class="nav-link" data-scroll-target="#a-more-thorough-confounding-control">A more thorough confounding control</a></li>
   <li><a href="#generic-3-wave-panel-design-vanderweeele-2020" id="toc-generic-3-wave-panel-design-vanderweeele-2020" class="nav-link" data-scroll-target="#generic-3-wave-panel-design-vanderweeele-2020">Generic 3-wave panel design (VanderWeeele 2020)</a></li>
   <li><a href="#selection-bias" id="toc-selection-bias" class="nav-link" data-scroll-target="#selection-bias">Selection bias</a></li>
+  </ul></li>
+  <li><a href="#important-causal-diagrammes" id="toc-important-causal-diagrammes" class="nav-link" data-scroll-target="#important-causal-diagrammes">Important Causal Diagrammes</a>
+  <ul class="collapse">
+  <li><a href="#what-if-mediation-is-of-interest" id="toc-what-if-mediation-is-of-interest" class="nav-link" data-scroll-target="#what-if-mediation-is-of-interest">What if mediation is of interest?</a></li>
   <li><a href="#confounder-treatment-feedback" id="toc-confounder-treatment-feedback" class="nav-link" data-scroll-target="#confounder-treatment-feedback">Confounder-Treatment Feedback</a></li>
   </ul></li>
   </ul>
@@ -216,14 +219,15 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="graphs-of-canonical-confounders" class="level2">
 <h2 class="anchored" data-anchor-id="graphs-of-canonical-confounders">Graphs of Canonical confounders</h2>
-<section id="first-problem-there-is-a-common-cause-of-an-exposure-and-outcome" class="level3">
-<h3 class="anchored" data-anchor-id="first-problem-there-is-a-common-cause-of-an-exposure-and-outcome">First Problem: there is a common cause of an exposure and outcome</h3>
+<section id="confounding-by-common-cause." class="level3">
+<h3 class="anchored" data-anchor-id="confounding-by-common-cause.">Confounding by Common Cause.</h3>
+<p>The problem of confounding by common cause arises when there is an unmeasured or unaccounted-for variable, denoted as “L,” that influences both the treatment variable, denoted as “A,” and the outcome variable, denoted as “Y.” This confounder L creates an association between A and Y that is not solely due to the direct causal effect of A on Y. Instead, the observed association between A and Y may be partially or entirely driven by the presence of L, making it difficult to isolate and accurately estimate the true causal effect of A on Y.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-common-cause" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-common-cause-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: Causal graph reveals bias</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;1: Counfounding by common cause.</figcaption>
 </figure>
 </div>
 </div>
@@ -231,25 +235,27 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="solution-adjust-for-the-pre-exposure-confounder" class="level3">
 <h3 class="anchored" data-anchor-id="solution-adjust-for-the-pre-exposure-confounder">Solution: adjust for the pre-exposure confounder</h3>
+<p>Confounding by a pre-exposure confounder can be addressed by adjusting for it. A pre-exposure confounder refers to a variable that affects both the treatment (A) and the outcome (Y) but is measured before the treatment is assigned. By adjusting for this confounder, typically through statistical techniques such as stratification, regression, or matching, we can account for its influence and isolate the true causal effect of the treatment on the outcome. This adjustment helps to mitigate the bias caused by the confounder, allowing for a more accurate estimation of the causal relationship between the treatment and the outcome.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-common-cause-solution" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-common-cause-solution-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: Causal graph reveals bias: solve by stratification</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2: Solution: adjust for pre-exposure confounder.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="second-problem-conditioning-on-a-common-effect" class="level3">
-<h3 class="anchored" data-anchor-id="second-problem-conditioning-on-a-common-effect">Second problem: conditioning on a common effect</h3>
+<section id="second-problem-conditioning-on-a-common-effect-collider-stratification" class="level3">
+<h3 class="anchored" data-anchor-id="second-problem-conditioning-on-a-common-effect-collider-stratification">Second problem: conditioning on a common effect (Collider Stratification)</h3>
+<p>Conditioning on a common effect refers to a situation where there is a variable, denoted as “L,” that is affected by both the treatment (A) and an outcome (Y). When conditioning on L, it creates a spurious association between A and Y, making it challenging to determine the true causal relationship. This occurs because the relationship between A and Y becomes confounded by the common effect L. Conditioning on L can lead to biased estimates and erroneous conclusions about the causal effect of A on Y, as the observed association may be solely driven by the influence of L.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-common-effect" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-common-effect-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;3: Causal graph reveals bias: solve by stratification</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;3: Solution: ensure confounder is measured prior to the exposure.</figcaption>
 </figure>
 </div>
 </div>
@@ -257,6 +263,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="solution-ensure-confounders-are-measured-before-the-exposure" class="level3">
 <h3 class="anchored" data-anchor-id="solution-ensure-confounders-are-measured-before-the-exposure">Solution: ensure confounders are measured before the exposure</h3>
+<p>To address the problem of conditioning on a common effect, it is crucial to measure all potential confounders before the exposure (A). By measuring confounders prior to exposure, we can ensure that they are not influenced by A and therefore do not lie on the causal pathway between A and Y. This approach allows for proper adjustment and control of confounding variables, ensuring that the estimated causal effect of A on Y is not distorted by conditioning on the common effect L. By measuring all relevant confounders in advance, researchers can minimize bias and obtain more reliable estimates of the true causal relationship between A and Y.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-common-effect-solution" class="quarto-figure quarto-figure-center anchored">
@@ -270,12 +277,13 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="third-problem-conditioning-on-a-mediator" class="level3">
 <h3 class="anchored" data-anchor-id="third-problem-conditioning-on-a-mediator">Third problem: conditioning on a mediator</h3>
+<p>Conditioning on a mediator refers to a situation where a variable, known as the mediator (L), lies on the causal pathway between the treatment (A) and the outcome (Y). When conditioning on M, it can lead to biased estimates of the direct causal effect of A on Y. This occurs because conditioning on L may block or distort the true causal pathway between A and Y, making it challenging to isolate the direct effect of A on Y.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-mediator" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-mediator-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5: Causal graph reveals bias</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;5: Third problem: conditioning on a mediator.</figcaption>
 </figure>
 </div>
 </div>
@@ -283,12 +291,13 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="solution-ensure-confounders-are-measured-before-the-exposure." class="level3">
 <h3 class="anchored" data-anchor-id="solution-ensure-confounders-are-measured-before-the-exposure.">Solution: ensure confounders are measured before the exposure.</h3>
+<p>To address the problem of mediator bias, do not condition on a mediator. Ensure that L occurs before A (and Y). This will set you on the path to grace.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-mediator-solution" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-mediator-solution-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6: Causal graph reveals bias</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6: Do not condition on a mediator</figcaption>
 </figure>
 </div>
 </div>
@@ -296,40 +305,27 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="fourth-problem-conditioning-on-a-descendant" class="level3">
 <h3 class="anchored" data-anchor-id="fourth-problem-conditioning-on-a-descendant">Fourth problem: conditioning on a descendant</h3>
+<p>The problem of confounding by conditioning on a descendant arises when there is a confounder L that is caused by an unobserved variable U, occurring after the exposure A. Additionally, U also causes the outcome Y, which occurs after L. While A causes L, it does not directly cause Y, and U does not cause A. In this scenario, conditioning on L, which is a descendant of A, can lead to bias. This is because conditioning on L may introduce an association between A and Y that arise from A to L and through the backdoorpath from L through U to Y.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-descendent" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-descendent-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;7: Causal graph reveals bias</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;7: Conditioning on a descendant</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="solution-ensure-that-counfounders-are-measured-before-the-exposure" class="level3">
-<h3 class="anchored" data-anchor-id="solution-ensure-that-counfounders-are-measured-before-the-exposure">Solution: ensure that counfounders are measured before the exposure</h3>
-<p>Note that that ensuring the confounder is measured before the exposure has a benefiting property. If the unmeasured confounder is associated with both A and Y, as well as with L, adjusting for L will diminish confounding arising from the unmeasured confounder.</p>
+<section id="solution-yet-again-ensure-that-counfounders-are-measured-before-the-exposure" class="level3">
+<h3 class="anchored" data-anchor-id="solution-yet-again-ensure-that-counfounders-are-measured-before-the-exposure">Solution: (yet again) ensure that counfounders are measured before the exposure</h3>
+<p>Ensuring the confounder (L) is measured before the exposure (A) has two beneficial properties. Firstly, it rules out collider bias, which occurs when conditioning on a collider (L) introduces spurious associations. Secondly, if an unmeasured confounder is associated with both A, Y, and L, adjusting for L helps reduce confounding caused by the unmeasured confounder. By measuring L before A, these advantages can be achieved, allowing for more accurate estimation of the causal effect of A on Y.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-descendent-solution" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-descendent-solution-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;8: Causal graph reveals bias</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="what-if-mediation-is-of-interest" class="level3">
-<h3 class="anchored" data-anchor-id="what-if-mediation-is-of-interest">What if mediation is of interest?</h3>
-<p>Consider the assumptions required for mediation analysis.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-dag-mediation-assuptions" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="common_graphs_files/figure-html/fig-dag-mediation-assuptions-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;9: Assumptions for mediation analysis</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;8: Solution: conditioning on a descendent is part of the solution, not the problem, when baseline confounders are measured before the exposure.</figcaption>
 </figure>
 </div>
 </div>
@@ -345,7 +341,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-1-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;10: Causal graph reveals bias</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;9: Common cause of exposure and outcome: example</figcaption>
 </figure>
 </div>
 </div>
@@ -358,7 +354,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-2-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;11: Causal graph reveals bias: solve by stratification</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;10: Solution to this problem.</figcaption>
 </figure>
 </div>
 </div>
@@ -371,7 +367,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-3-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;12: Causal graph reveals bias from pre-exosure indicator</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;11: Causal graph reveals bias from pre-exosure indicator</figcaption>
 </figure>
 </div>
 </div>
@@ -384,7 +380,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-4-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;13: Causal graph reveals bias from pre-exosure indicator</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;12: Solution to this problem</figcaption>
 </figure>
 </div>
 </div>
@@ -397,7 +393,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-5" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-5-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;14: Causal graph:more general panel design</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;13: Causal graph:more general panel design</figcaption>
 </figure>
 </div>
 </div>
@@ -410,7 +406,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-6" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-6-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;15: Causal graph: three-wave panel design</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14: Causal graph: three-wave panel design</figcaption>
 </figure>
 </div>
 </div>
@@ -451,7 +447,24 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-8" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-8-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;16: Causal graph: three-wave panel design with selection bias</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;15: Causal graph: three-wave panel design with selection bias</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="important-causal-diagrammes" class="level2">
+<h2 class="anchored" data-anchor-id="important-causal-diagrammes">Important Causal Diagrammes</h2>
+<section id="what-if-mediation-is-of-interest" class="level3">
+<h3 class="anchored" data-anchor-id="what-if-mediation-is-of-interest">What if mediation is of interest?</h3>
+<p>Consider the assumptions required for mediation analysis.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-mediation-assuptions" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="common_graphs_files/figure-html/fig-dag-mediation-assuptions-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;16: Assumptions for mediation analysis</figcaption>
 </figure>
 </div>
 </div>
