@@ -1,5 +1,5 @@
 ---
-title: "Causal Inference: steps for causal estimation"
+title: "Causal inference: a step by step guide"
 date: "2023-MAY-16"
 bibliography: references.bib
 theme:
