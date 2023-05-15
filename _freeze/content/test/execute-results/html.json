@@ -1,0 +1,14 @@
+{
+  "hash": "912312a1b04fa0ce770370c2d003c8c2",
+  "result": {
+    "markdown": "---\ntitle: \"Causal Inference: reconsidering measurement and selection biases\"\ndate: \"2023-MAY-16\"\n---\n\n\n\n\n  \n## Overview\n  \n\nRecall that psychology begings with a question about cognition and behavior. What do we want to know? Before all else, we must ask, and motivate this question. \n\nSuppose we have defined a question. How can we address it using observational data? \n\nThis is the topic of today's siminar.\n  \n  \n\n## How do we do causal estimation?\n\nThere are two steps to causal estimation:\n\n1. State a causal question\n2. Answer that question [Cite Hernan]\n\n\n\n## Step 1: State a causal question\n\nStating a causal question requires describing: a. outcome(s), b. exposure, c. measured confounders, d. (suspected) unmeasured confounders, e. scale of causal contrasts, f. target population for whom the inferences apply. \n\nWe consider each of these processes in turn.\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

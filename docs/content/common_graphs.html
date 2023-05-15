@@ -189,6 +189,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#solution-ensure-confounders-are-measured-before-the-exposure." id="toc-solution-ensure-confounders-are-measured-before-the-exposure." class="nav-link" data-scroll-target="#solution-ensure-confounders-are-measured-before-the-exposure.">Solution: ensure confounders are measured before the exposure.</a></li>
   <li><a href="#fourth-problem-conditioning-on-a-descendant" id="toc-fourth-problem-conditioning-on-a-descendant" class="nav-link" data-scroll-target="#fourth-problem-conditioning-on-a-descendant">Fourth problem: conditioning on a descendant</a></li>
   <li><a href="#solution-ensure-that-counfounders-are-measured-before-the-exposure" id="toc-solution-ensure-that-counfounders-are-measured-before-the-exposure" class="nav-link" data-scroll-target="#solution-ensure-that-counfounders-are-measured-before-the-exposure">Solution: ensure that counfounders are measured before the exposure</a></li>
+  <li><a href="#what-if-mediation-is-of-interest" id="toc-what-if-mediation-is-of-interest" class="nav-link" data-scroll-target="#what-if-mediation-is-of-interest">What if mediation is of interest?</a></li>
   </ul></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">EXAMPLES</a>
   <ul class="collapse">
@@ -196,10 +197,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#solution-adjust-for-confounder" id="toc-solution-adjust-for-confounder" class="nav-link" data-scroll-target="#solution-adjust-for-confounder">Solution: Adjust for Confounder</a></li>
   <li><a href="#bias-exposure-at-baseline-is-a-common-cause-of-the-exposure-at-t1-and-outcome-at-t2" id="toc-bias-exposure-at-baseline-is-a-common-cause-of-the-exposure-at-t1-and-outcome-at-t2" class="nav-link" data-scroll-target="#bias-exposure-at-baseline-is-a-common-cause-of-the-exposure-at-t1-and-outcome-at-t2">Bias: exposure at baseline is a common cause of the exposure at t1 and outcome at t2</a></li>
   <li><a href="#solution-adjust-for-confounder-at-baseline" id="toc-solution-adjust-for-confounder-at-baseline" class="nav-link" data-scroll-target="#solution-adjust-for-confounder-at-baseline">Solution: adjust for confounder at baseline</a></li>
-  <li><a href="#a-more-general-solution" id="toc-a-more-general-solution" class="nav-link" data-scroll-target="#a-more-general-solution">A more general solution</a></li>
-  <li><a href="#wave-panel-design" id="toc-wave-panel-design" class="nav-link" data-scroll-target="#wave-panel-design">3-wave panel design</a></li>
-  <li><a href="#selection-bias-version-1" id="toc-selection-bias-version-1" class="nav-link" data-scroll-target="#selection-bias-version-1">Selection bias version 1</a></li>
-  <li><a href="#selection-bias-version-2" id="toc-selection-bias-version-2" class="nav-link" data-scroll-target="#selection-bias-version-2">Selection bias version 2</a></li>
+  <li><a href="#a-more-thorough-confounding-control" id="toc-a-more-thorough-confounding-control" class="nav-link" data-scroll-target="#a-more-thorough-confounding-control">A more thorough confounding control</a></li>
+  <li><a href="#generic-3-wave-panel-design-vanderweeele-2020" id="toc-generic-3-wave-panel-design-vanderweeele-2020" class="nav-link" data-scroll-target="#generic-3-wave-panel-design-vanderweeele-2020">Generic 3-wave panel design (VanderWeeele 2020)</a></li>
+  <li><a href="#selection-bias" id="toc-selection-bias" class="nav-link" data-scroll-target="#selection-bias">Selection bias</a></li>
   <li><a href="#confounder-treatment-feedback" id="toc-confounder-treatment-feedback" class="nav-link" data-scroll-target="#confounder-treatment-feedback">Confounder-Treatment Feedback</a></li>
   </ul></li>
   </ul>
@@ -321,6 +321,20 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
+<section id="what-if-mediation-is-of-interest" class="level3">
+<h3 class="anchored" data-anchor-id="what-if-mediation-is-of-interest">What if mediation is of interest?</h3>
+<p>Consider the assumptions required for mediation analysis.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-mediation-assuptions" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="common_graphs_files/figure-html/fig-dag-mediation-assuptions-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;9: Assumptions for mediation analysis</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">EXAMPLES</h2>
@@ -331,7 +345,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-1-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;9: Causal graph reveals bias</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;10: Causal graph reveals bias</figcaption>
 </figure>
 </div>
 </div>
@@ -344,7 +358,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-2-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;10: Causal graph reveals bias: solve by stratification</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;11: Causal graph reveals bias: solve by stratification</figcaption>
 </figure>
 </div>
 </div>
@@ -357,7 +371,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-3-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;11: Causal graph reveals bias from pre-exosure indicator</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;12: Causal graph reveals bias from pre-exosure indicator</figcaption>
 </figure>
 </div>
 </div>
@@ -370,53 +384,68 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-4-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;12: Causal graph reveals bias from pre-exosure indicator</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;13: Causal graph reveals bias from pre-exosure indicator</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="a-more-general-solution" class="level3">
-<h3 class="anchored" data-anchor-id="a-more-general-solution">A more general solution</h3>
+<section id="a-more-thorough-confounding-control" class="level3">
+<h3 class="anchored" data-anchor-id="a-more-thorough-confounding-control">A more thorough confounding control</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-5" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-5-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;13: Causal graph:more general panel design</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14: Causal graph:more general panel design</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="wave-panel-design" class="level3">
-<h3 class="anchored" data-anchor-id="wave-panel-design">3-wave panel design</h3>
+<section id="generic-3-wave-panel-design-vanderweeele-2020" class="level3">
+<h3 class="anchored" data-anchor-id="generic-3-wave-panel-design-vanderweeele-2020">Generic 3-wave panel design (VanderWeeele 2020)</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-6" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-6-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;14: Causal graph: three-wave panel design</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;15: Causal graph: three-wave panel design</figcaption>
 </figure>
 </div>
 </div>
 </div>
+<!-- ### Selection bias version 1 -->
+<!-- ```{tikz} -->
+<!-- #| label: fig-dag-7 -->
+<!-- #| fig-cap: "Causal graph: three-wave panel design with selection bias" -->
+<!-- #| out-width: 100% -->
+<!-- #| echo: false -->
+<!-- \usetikzlibrary{positioning} -->
+<!-- \usetikzlibrary{shapes.geometric} -->
+<!-- \usetikzlibrary{arrows} -->
+<!-- \usetikzlibrary{decorations} -->
+<!-- \tikzstyle{Arrow} = [->, thin, preaction = {decorate}] -->
+<!-- \tikzset{>=latex} -->
+<!-- \begin{tikzpicture}[{every node/.append style}=draw] -->
+<!-- \node [rectangle, draw=white] (U) at (0, 0) {U}; -->
+<!-- \node [rectangle, draw=black, align=left] (L) at (2, 0) {t0/L \\t0/A \\t0/Y}; -->
+<!-- \node [rectangle, draw=white] (A) at (4, 0) {t1/A}; -->
+<!-- \node [ellipse, draw=white] (Y) at (6, 0) {t2/Y}; -->
+<!-- \node [rectangle, draw=black] (S) at (8, 0) {S}; -->
+<!-- \draw [-latex, draw=black] (U) to (L); -->
+<!-- \draw [-latex, draw=black] (L) to (A); -->
+<!-- \draw [-latex, bend left=50, draw=black] (L) to (Y); -->
+<!-- \draw [-latex, bend right=50, draw=black, dotted] (U) to (Y); -->
+<!-- \draw [-latex, bend left=50, draw=black, dotted] (U) to (A); -->
+<!-- \draw [-latex, draw=black] (Y) to (S); -->
+<!-- \draw [-latex, bend right, draw=black] (A) to (S); -->
+<!-- \draw [-latex, draw=red, dashed] (A) to (Y); -->
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
 </section>
-<section id="selection-bias-version-1" class="level3">
-<h3 class="anchored" data-anchor-id="selection-bias-version-1">Selection bias version 1</h3>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-dag-7" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="common_graphs_files/figure-html/fig-dag-7-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;15: Causal graph: three-wave panel design with selection bias</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="selection-bias-version-2" class="level3">
-<h3 class="anchored" data-anchor-id="selection-bias-version-2">Selection bias version 2</h3>
+<section id="selection-bias" class="level3">
+<h3 class="anchored" data-anchor-id="selection-bias">Selection bias</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-8" class="quarto-figure quarto-figure-center anchored">

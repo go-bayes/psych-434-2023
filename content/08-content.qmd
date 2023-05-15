@@ -3,6 +3,9 @@ title: "Causal Inference: Propensity Scores & Subgroup Analysis"
 date: "2023-MAY-09"
 execute:
   warning: false
+format: 
+ html:      
+  html-math-method: katex
 ---
 
 ```{r}
