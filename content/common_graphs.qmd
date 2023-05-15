@@ -46,7 +46,7 @@ source("/Users/joseph/GIT/templates/functions/libs2.R")
 ### Confounding by Common Cause. 
 
 
-The problem of confounding by common cause arises when there is an unmeasured or unaccounted-for variable, denoted as "L," that influences both the treatment variable, denoted as "A," and the outcome variable, denoted as "Y." This confounder L creates an association between A and Y that is not solely due to the direct causal effect of A on Y. Instead, the observed association between A and Y may be partially or entirely driven by the presence of L, making it difficult to isolate and accurately estimate the true causal effect of A on Y.
+The problem of confounding by common cause arises when there is an unmeasured or unaccounted-for variable, denoted as "L," that influences both the treatment variable, denoted by $A,$ and the outcome variable, denoted as $Y.$ This confounder, $L$,  creates an association between $A$ and $Y$ that is not solely due to the direct causal effect of $A$ on $Y$. Instead, the observed association between $A$ and $Y$ may be partially or entirely driven by the presence of $L$, making it difficult to isolate and accurately estimate the true causal effect of $A$ on $Y$.
 
 ```{tikz}
 #| label: fig-dag-common-cause
@@ -76,7 +76,7 @@ The problem of confounding by common cause arises when there is an unmeasured or
 
 ### Solution: adjust for the pre-exposure confounder
 
-Confounding by a pre-exposure confounder can be addressed by adjusting for it. A pre-exposure confounder refers to a variable that affects both the treatment (A) and the outcome (Y) but is measured before the treatment is assigned. By adjusting for this confounder, typically through statistical techniques such as stratification, regression, or matching, we can account for its influence and isolate the true causal effect of the treatment on the outcome. This adjustment helps to mitigate the bias caused by the confounder, allowing for a more accurate estimation of the causal relationship between the treatment and the outcome.
+Confounding by common cause can be addressed by adjusting for it. If $L$ is measured before the treatment (or exposure) is assigned, we may adjust for this confounder to account for its influence. Typically we adjust through through statistical techniques such as stratification, regression, matching, or inverse probability of treatment weighting. Sucg adjustment helps to mitigate the bias caused by the confounder, allowing for a more accurate estimation of the true causal relationship.
 
 ```{tikz}
 #| label: fig-dag-common-cause-solution
@@ -104,9 +104,9 @@ Confounding by a pre-exposure confounder can be addressed by adjusting for it. A
 ```
 
 
-### Second problem: conditioning on a common effect (Collider Stratification)
+### Second problem: Collider Stratification: conditioning on a common effect.
 
-Conditioning on a common effect refers to a situation where there is a variable, denoted as "L," that is affected by both the treatment (A) and an outcome (Y). When conditioning on L, it creates a spurious association between A and Y, making it challenging to determine the true causal relationship. This occurs because the relationship between A and Y becomes confounded by the common effect L. Conditioning on L can lead to biased estimates and erroneous conclusions about the causal effect of A on Y, as the observed association may be solely driven by the influence of L.
+Conditioning on a common effect refers to a situation where there is a variable, $L$, is affected by both the treatment $A$ and an outcome $Y$.  Conditioning on $L$ creates a spurious association between $A$ and $Y$, biasing the true causal relationship. This occurs because the relationship between $A$ and $Y$ becomes confounded by the common effect $L$. The observed association  between $A$ and $Y$ may be solely driven by the influence of $L$.
 
 ```{tikz}
 #| label: fig-dag-common-effect
@@ -125,7 +125,7 @@ Conditioning on a common effect refers to a situation where there is a variable,
 \begin{tikzpicture}[{every node/.append style}=draw]
 \node [rectangle, draw=white] (A) at (0, 0) {t0/A};
 \node [ellipse, draw=white] (Y) at (4, 0) {t1/Y};
-\node [rectangle, draw=black] (L) at (8, 0) {t1*/L};
+\node [rectangle, draw=black] (L) at (8, 0) {t2/L};
 \draw [-latex, draw=black, bend right] (A) to (L);
 \draw [-latex, draw=black] (Y) to (L);
 \draw [-latex, draw=red, dashed] (A) to (Y);
@@ -136,10 +136,10 @@ Conditioning on a common effect refers to a situation where there is a variable,
 
 
 
-### Solution: ensure confounders are measured before the exposure
+### Solution: ensure all confounders are measured before the exposure
 
 
-To address the problem of conditioning on a common effect, it is crucial to measure all potential confounders before the exposure (A). By measuring confounders prior to exposure, we can ensure that they are not influenced by A and therefore do not lie on the causal pathway between A and Y. This approach allows for proper adjustment and control of confounding variables, ensuring that the estimated causal effect of A on Y is not distorted by conditioning on the common effect L. By measuring all relevant confounders in advance, researchers can minimize bias and obtain more reliable estimates of the true causal relationship between A and Y.
+To address the problem of conditioning on a common effect, it is crucial to ensure that every potential confounder $L$ that may affect $A$ is measured before $A$. If such temporal order is preserved,  $L$ cannot be an effect of $A$, and thus neither of $Y$.  By measuring all relevant confounders in advance, researchers can minimize bias and obtain more reliable estimates of the true causal relationship between A and Y. Note that collider stratification may arise even if $L$ occurs before $A$, when $L$ does not affect $A$ or $Y$. This is called M-bias. We describe this case below. Note, however, that if $L$ is not a common cause of $A$ and $Y$, $L$ should not be included in our model because it is not a source of confounding.
 
 
 ```{tikz}
@@ -173,7 +173,7 @@ To address the problem of conditioning on a common effect, it is crucial to meas
 
 ### Third problem: conditioning on a mediator 
 
-Conditioning on a mediator refers to a situation where a variable, known as the mediator (L), lies on the causal pathway between the treatment (A) and the outcome (Y). When conditioning on M, it can lead to biased estimates of the direct causal effect of A on Y. This occurs because conditioning on L may block or distort the true causal pathway between A and Y, making it challenging to isolate the direct effect of A on Y. 
+Conditioning on a mediator refers to a situation where $L$ lies on the causal pathway between the treatment $A$ and the outcome $Y$.  Conditioning on $L$ can lead to biased estimates by blocking or distort the true causal pathway between $A$ and $Y$, obscuring the total effect of $A$ on $Y$.  Where $L$ is a collider between $A$ and an unmeasured confouder $U$, then including $L$ may increase the strength of association between $A$ and $Y$. We review this second possibility next. In either case, unless one is interested in mediation analysis (see below), conditioning on a post-treatment variable is always a bad idea. 
 
 
 ```{tikz}
@@ -204,7 +204,7 @@ Conditioning on a mediator refers to a situation where a variable, known as the 
 
 ### Solution: ensure confounders are measured before the exposure.
 
-To address the problem of mediator bias, do not condition on a mediator. Ensure that L occurs before A (and Y). This will set you on the path to grace. 
+To address the problem of mediator bias, do not condition on a mediator. Ensure that $L$ occurs before $A$ (and $Y$). Again we discover the importance of an explicit temporal ordering for our variables.  
 
 ```{tikz}
 #| label: fig-dag-mediator-solution
@@ -235,7 +235,7 @@ To address the problem of mediator bias, do not condition on a mediator. Ensure 
 ### Fourth problem: conditioning on a descendant
 
 
-The problem of confounding by conditioning on a descendant arises when there is a confounder L that is caused by an unobserved variable U, occurring after the exposure A. Additionally, U also causes the outcome Y, which occurs after L. While A causes L, it does not directly cause Y, and U does not cause A. In this scenario, conditioning on L, which is a descendant of A, can lead to bias. This is because conditioning on L may introduce an association between A and Y that arise from A to L and through the backdoorpath from L through U to Y. 
+Say $X$ is a cause of $X*$. There is a theorem that proves that when we condition on $X*$ we partially condition on $X$. There are both negative and positive implications for causal estimation. First the negative. Suppose there is a confounder $L$ that is caused by an unobserved variable $U$, and is affected by the treatment $A$. Suppose further that $U$  causes the outcome $Y$. In this scenario, as described in @fig-dag-descendent, conditioning on $L$, which is a descendant of $A$ and $U$, can lead to a spurious association between $A$ and $Y$ through the path $A \to L \to U \to Y$. 
 
 ```{tikz}
 #| label: fig-dag-descendent
@@ -267,10 +267,10 @@ The problem of confounding by conditioning on a descendant arises when there is 
 ```
 
 
-### Solution: (yet again) ensure that counfounders are measured before the exposure
+### Solution: (yet again!) ensure that counfounders are measured before the exposure
 
 
-Ensuring the confounder (L) is measured before the exposure (A) has two beneficial properties. Firstly, it rules out collider bias, which occurs when conditioning on a collider (L) introduces spurious associations. Secondly, if an unmeasured confounder is associated with both A, Y, and L, adjusting for L helps reduce confounding caused by the unmeasured confounder. By measuring L before A, these advantages can be achieved, allowing for more accurate estimation of the causal effect of A on Y.
+Ensuring the confounder (L) is measured before the exposure (A) has two beneficial properties. Firstly, if $L$ is a confounder, that is, if $L$ is a variable which if we fail to condition on it will bias the association between treatment and outcome, the strategy of including only pre-treatment indicators of $L$ will eliminate collider bias. Secondly, there is the positive side to the theorem that conditioning on a descendent is equivalent to partially conditioning on its parent: if an unmeasured confounder is associated with both $A$, $Y$, and $L$, then adjusting for $L$ helps to reduce confounding caused by the unmeasured confounder. By obtaining measure of $L$ that occur before $A$, such advantages can be achieved, allowing for more accurate estimation for the causal effect of $A$ on $Y$. We use the convention of a blue dotted arrow to indicate that the association between $A$ and $Y$ may still be biased, but that bias is reduced by inluding $L$
 
 ```{tikz}
 #| label: fig-dag-descendent-solution
@@ -296,18 +296,22 @@ Ensuring the confounder (L) is measured before the exposure (A) has two benefici
 \draw [-latex, draw=black] (U) to (L);
 \draw [-latex, draw=black] (L) to (A);
 \draw [-latex, draw=blue, dotted] (A) to (Y);
-\draw [-latex, bend left=50, draw =black] (L) to (Y);
-\draw [-latex, bend right=50, draw =black, dotted] (U) to (Y);
+\draw [-latex, bend right=50, draw =black] (U) to (Y);
 \draw [-latex, bend left=50, draw =black, dotted] (U) to (A);
 
 \end{tikzpicture}
 
 ```
 
-## EXAMPLES 
+### This ends the examples of cannoical casual diagrammes  
 
 
-### Common cause of exposure and outcome. 
+
+## Examples 
+
+Next some worked examples.
+
+## Common cause of exposure and outcome. 
 
 
 ```{tikz}
@@ -574,7 +578,109 @@ Ensuring the confounder (L) is measured before the exposure (A) has two benefici
 ```
 
 
+
+
+
+
 ## Important Causal Diagrammes
+
+
+## How do we draw interactions? 
+
+
+
+## Common cause of exposure and outcome. 
+
+
+```{tikz}
+#| label: fig-dag-effect-modfication
+#| fig-cap: "A simple graph for effect-modification."
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [ellipse, draw=white] (G) at (0, 0) {t0/G};
+\node [rectangle, draw=white] (A) at (4, 0) {t1/A};
+\node [rectangle, draw=white] (Y) at (8, 0) {t2/Y};
+\draw [-latex, draw=black] (A) to (Y);
+\draw [-latex, bend left, draw =black] (G) to (Y);
+\end{tikzpicture}
+```
+
+
+### Another graph for interaction 
+
+
+```{tikz}
+#| label: fig-dag-effect-modfication-2
+#| fig-cap: "A simple graph for effect-modification."
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [rectangle, draw=white] (A) at (0, 0) {t0/A};
+\node [ellipse, draw=white] (G) at (4, 0) {t1/G};
+\node [rectangle, draw=white] (Y) at (8, 0) {t2/Y};
+\draw [-latex, bend left, draw=black] (A) to (Y);
+\draw [-latex, draw =black] (G) to (Y);
+\end{tikzpicture}
+```
+
+
+
+### M-Bias
+
+
+```{tikz} 
+#| label: fig-m-bias
+#| fig-cap: "M-bias: confounding control by including previous measures of the outcome"
+#| out-width: 100%
+#| echo: false
+
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzstyle{DoubleArrow} = [-, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (U1) at (0, 2) {U1};
+\node [rectangle, draw=white] (U2) at (0, -2) {U2};
+\node [rectangle, draw=black, align=left] (L) at (4, 0) {t0/L};
+\node [rectangle, draw=white] (A) at (8, 0) {t1/A};
+\node [rectangle, draw=white] (Y) at (12, 0) {t2/Y};
+
+\draw [-latex, draw=black] (U1) to (L);
+\draw [-latex, draw =black] (U2) to (L);
+\draw [-latex, draw=black, bend left] (U1) to (Y);
+\draw [-latex, draw =black, bend right] (U2) to (Y);
+\draw [-latex,  draw=red, red, dashed] (A) to (Y);
+
+
+\end{tikzpicture}
+```
+
+
 
 
 
@@ -582,7 +688,22 @@ Ensuring the confounder (L) is measured before the exposure (A) has two benefici
 ### What if mediation is of interest? 
 
 
-Consider the assumptions required for mediation analysis.
+Consider the assumptions required for mediation analysis:
+
+1. No unmeasured exposure-outcome confounders given  $L$ 
+
+$$Y^{am}\coprod A|L$$
+2. No unmeasured meadiator-outcome confounders given $L$ 
+
+$$Y^{am}\coprod M|L$$
+
+3. No unmeasured exposure-mediator confounders given $L$ 
+
+$$M^{a}\coprod A|L$$
+
+4. No mediator-outcome confounder affected by the exposure (no red arrow)
+
+$$Y^{am}\coprod M^{a*}|L$$
 
 
 ```{tikz}
@@ -602,22 +723,22 @@ Consider the assumptions required for mediation analysis.
 
 
 \node [rectangle, draw=black] (L1) at (0, 1) {t0/L1};
-\node [rectangle, draw=black] (L2) at (0, -1) {t0/L2};
+\node [rectangle, draw=black] (L3) at (0, -1) {t0/L3};
 \node [ellipse, draw=white] (A) at (3, 0) {t1/A};
-\node [rectangle, draw=black](L3) at (6, -1) {t2/L3};
+\node [rectangle, draw=black](L2) at (6, -1) {t2/L2};
 \node [rectangle, draw=white](M) at (9, 0) {t2*/M};
 \node [rectangle, draw=white](Y) at (12, 0) {t3/Y};
 
 
 \draw [-latex, draw=brown] (L1) to (A);
 \draw [-latex, draw=brown, bend left] (L1) to (Y);
-\draw [-latex, draw=green] (L2) to (A);
-\draw [-latex, draw=green] (L2) to (M);
+\draw [-latex, draw=green] (L3) to (A);
+\draw [-latex, draw=green] (L3) to (M);
 \draw [-latex, draw= gray, dashed] (A) to (M);
 \draw [-latex, draw= gray, dashed, bend left] (A) to (Y);
-\draw [-latex, draw=red] (A) to (L3);
-\draw [-latex, draw=purple] (L3) to (M);
-\draw [-latex, draw=purple] (L3) to (Y);
+\draw [-latex, draw=red] (A) to (L2);
+\draw [-latex, draw=blue] (L2) to (M);
+\draw [-latex, draw=blue] (L2) to (Y);
 \draw [-latex, draw= gray, dashed] (M) to (Y);
 
 
@@ -671,3 +792,6 @@ Consider the assumptions required for mediation analysis.
 
 \end{tikzpicture}
 ```
+
+
+## TO DO STILL: Measurement Error

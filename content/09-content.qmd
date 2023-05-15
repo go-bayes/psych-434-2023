@@ -47,7 +47,7 @@ Let's dive in!
 
 ## Motivations for a Three-Wave Longitudinal Design for Observational Causal Inference. 
 
-Causal Diagrammes (DAGS) are a remarkably powerful and simple tool for understanding confounding []() 
+Causal Diagrammes (DAGS) are a remarkably powerful and simple tool for understanding confounding [https://go-bayes.github.io/psych-434-2023/content/common_graphs.html](https://go-bayes.github.io/psych-434-2023/content/common_graphs.html) 
 
 ### Common cause of exposure and outcome.
 
