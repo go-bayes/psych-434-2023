@@ -231,7 +231,8 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#link-to-workbook-for-this-week" id="toc-link-to-workbook-for-this-week" class="nav-link active" data-scroll-target="#link-to-workbook-for-this-week">Link to workbook for this week:</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#motivations-for-a-three-wave-longitudinal-design-for-observational-causal-inference." id="toc-motivations-for-a-three-wave-longitudinal-design-for-observational-causal-inference." class="nav-link" data-scroll-target="#motivations-for-a-three-wave-longitudinal-design-for-observational-causal-inference.">Motivations for a Three-Wave Longitudinal Design for Observational Causal Inference.</a>
   <ul class="collapse">
   <li><a href="#common-cause-of-exposure-and-outcome." id="toc-common-cause-of-exposure-and-outcome." class="nav-link" data-scroll-target="#common-cause-of-exposure-and-outcome.">Common cause of exposure and outcome.</a></li>
@@ -241,9 +242,9 @@ div.csl-indent {
   <li><a href="#a-more-thorough-confounding-control" id="toc-a-more-thorough-confounding-control" class="nav-link" data-scroll-target="#a-more-thorough-confounding-control">A more thorough confounding control</a></li>
   <li><a href="#generic-3-wave-panel-design-vanderweeele-2020" id="toc-generic-3-wave-panel-design-vanderweeele-2020" class="nav-link" data-scroll-target="#generic-3-wave-panel-design-vanderweeele-2020">Generic 3-wave panel design (VanderWeeele 2020)</a></li>
   </ul></li>
-  <li><a href="#comprehensive-checklist-for-detailed-reporting-of-a-causal-inferenctial-study-e.g.-assessment-3-option-2" id="toc-comprehensive-checklist-for-detailed-reporting-of-a-causal-inferenctial-study-e.g.-assessment-3-option-2" class="nav-link" data-scroll-target="#comprehensive-checklist-for-detailed-reporting-of-a-causal-inferenctial-study-e.g.-assessment-3-option-2">Comprehensive Checklist for Detailed Reporting of a Causal Inferenctial Study (E.g. Assessment 3 option 2)</a>
+  <li><a href="#comprehensive-checklist-for-detailed-reporting-of-a-causal-inferenctial-study-e.g.-assessment-3-option-2" id="toc-comprehensive-checklist-for-detailed-reporting-of-a-causal-inferenctial-study-e.g.-assessment-3-option-2" class="nav-link" data-scroll-target="#comprehensive-checklist-for-detailed-reporting-of-a-causal-inferenctial-study-e.g.-assessment-3-option-2">Comprehensive Checklist for Detailed Reporting of a Causal Inferenctial Study (E.g. Assessment 3 option 2)</a></li>
+  <li><a href="#step-1-formulate-the-research-question" id="toc-step-1-formulate-the-research-question" class="nav-link" data-scroll-target="#step-1-formulate-the-research-question">STEP 1 Formulate the Research Question</a>
   <ul class="collapse">
-  <li><a href="#formulating-the-research-question" id="toc-formulating-the-research-question" class="nav-link" data-scroll-target="#formulating-the-research-question">Formulating the Research Question</a></li>
   <li><a href="#d.-highlight-unmeasured-pre-treatment-covariates" id="toc-d.-highlight-unmeasured-pre-treatment-covariates" class="nav-link" data-scroll-target="#d.-highlight-unmeasured-pre-treatment-covariates">d.&nbsp;Highlight unmeasured pre-treatment covariates</a></li>
   <li><a href="#e.-choose-the-scale-for-a-causal-contrast" id="toc-e.-choose-the-scale-for-a-causal-contrast" class="nav-link" data-scroll-target="#e.-choose-the-scale-for-a-causal-contrast">e. Choose the scale for a causal contrast</a></li>
   <li><a href="#summary-step-1-consider-how-much-we-need-to-do-when-asking-a-causal-question" id="toc-summary-step-1-consider-how-much-we-need-to-do-when-asking-a-causal-question" class="nav-link" data-scroll-target="#summary-step-1-consider-how-much-we-need-to-do-when-asking-a-causal-question">Summary Step 1: Consider how much we need to do when asking a causal question!</a></li>
@@ -273,12 +274,17 @@ div.csl-indent {
 
 
 
+<section id="link-to-workbook-for-this-week" class="level2">
+<h2 class="anchored" data-anchor-id="link-to-workbook-for-this-week">Link to workbook for this week:</h2>
+<p><a href="https://github.com/go-bayes/psych-434-2023/blob/main/scripts/workbook-9.R">link to script for this week</a></p>
+</section>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>Recall that psychology begins with a question. What do I want to know about thought and behaviour? In cross-cultural psychology, these questions relate to differences, and similarities, between groups.</p>
 <p>Suppose we have asked a question. How can we address it using observational data?</p>
 <p>Too fast.</p>
-<p>We must ask a question in such a way that it might be addressed by data. That is, our question must be precise. In this course, so far, our focus has been on observational data. Today, we will develop a step-by-step process for asking, and answering, comparative psychological questions using observational data. To refine our focus, we will examine the 3-wave panel design that VanderWeele and colleagues describe <span class="citation" data-cites="vanderweele2020">(<a href="#ref-vanderweele2020" role="doc-biblioref">VanderWeele, Mathur, and Chen 2020</a>)</span>.</p>
+<p>We must ask a question in such a way that it might be addressed by data. That is, our question must be precise.</p>
+<p>In this course, so far, our focus has been on observational data. Today, we will develop a step-by-step process for asking, and answering, comparative psychological questions using observational data. To refine our focus, we will examine the 3-wave panel design that VanderWeele and colleagues describe <span class="citation" data-cites="vanderweele2020">(<a href="#ref-vanderweele2020" role="doc-biblioref">VanderWeele, Mathur, and Chen 2020</a>)</span>.</p>
 <p>The order is as follows:</p>
 <ol type="1">
 <li><strong>Motivate Three Wave Longitudinal Designs Using Causal Graphs</strong></li>
@@ -289,7 +295,7 @@ div.csl-indent {
 </section>
 <section id="motivations-for-a-three-wave-longitudinal-design-for-observational-causal-inference." class="level2">
 <h2 class="anchored" data-anchor-id="motivations-for-a-three-wave-longitudinal-design-for-observational-causal-inference.">Motivations for a Three-Wave Longitudinal Design for Observational Causal Inference.</h2>
-<p>Causal Diagrammes (DAGS) are a remarkably powerful and simple tool for understanding confounding <a href="https://go-bayes.github.io/psych-434-2023/content/common_graphs.html">https://go-bayes.github.io/psych-434-2023/content/common_graphs.html</a></p>
+<p>REVIEW: Causal Diagrammes (DAGS) are a remarkably powerful and simple tool for understanding confounding <a href="https://go-bayes.github.io/psych-434-2023/content/common_graphs.html">https://go-bayes.github.io/psych-434-2023/content/common_graphs.html</a></p>
 <section id="common-cause-of-exposure-and-outcome." class="level3">
 <h3 class="anchored" data-anchor-id="common-cause-of-exposure-and-outcome.">Common cause of exposure and outcome.</h3>
 <p>Our question: does visiting a clinical psychologist reduce the 10 year incidence of heart attacks?</p>
@@ -372,8 +378,9 @@ div.csl-indent {
 </section>
 <section id="comprehensive-checklist-for-detailed-reporting-of-a-causal-inferenctial-study-e.g.-assessment-3-option-2" class="level2">
 <h2 class="anchored" data-anchor-id="comprehensive-checklist-for-detailed-reporting-of-a-causal-inferenctial-study-e.g.-assessment-3-option-2">Comprehensive Checklist for Detailed Reporting of a Causal Inferenctial Study (E.g. Assessment 3 option 2)</h2>
-<section id="formulating-the-research-question" class="level3">
-<h3 class="anchored" data-anchor-id="formulating-the-research-question">Formulating the Research Question</h3>
+</section>
+<section id="step-1-formulate-the-research-question" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-formulate-the-research-question">STEP 1 Formulate the Research Question</h2>
 <ul>
 <li><strong>Stating the Question:</strong> Is my question clearly stated? If not, state it.</li>
 <li><strong>Relevance of the Question:</strong> Have I explained its importance? If not, explain.</li>
@@ -384,10 +391,10 @@ div.csl-indent {
 <section id="data-requirements" class="level4">
 <h4 class="anchored" data-anchor-id="data-requirements">Data Requirements</h4>
 <ul>
-<li><strong>Type of Data:</strong> Is my data experimental? If yes, your project may not fit this course.</li>
-<li><strong>Time-Series Data:</strong> Is my data time-series? If not, reconsider your causal question.</li>
+<li><strong>Type of Data:</strong> Are my data experimental? If yes, your project may not fit this course.</li>
+<li><strong>Time-Series Data:</strong> Are my data time-series? If not, reconsider your causal question.</li>
 <li><strong>Data Waves:</strong> Do I have at least three waves of data? If not, beware of confounding control issues.</li>
-<li><strong>Data Source:</strong> Is my data from the NZAVS simulated data set? If not, consult with me.</li>
+<li><strong>Data Source:</strong> Are my data from the NZAVS simulated data set? If not, consult with me.</li>
 </ul>
 </section>
 <section id="defining-the-outcome" class="level4">
@@ -483,7 +490,6 @@ div.csl-indent {
 <li><strong>Sensitivity Analysis:</strong> Am I planning a sensitivity analysis using simulation? If yes, describe it (e.g.&nbsp;E-values.)</li>
 </ul>
 </section>
-</section>
 <section id="d.-highlight-unmeasured-pre-treatment-covariates" class="level3">
 <h3 class="anchored" data-anchor-id="d.-highlight-unmeasured-pre-treatment-covariates">d.&nbsp;Highlight unmeasured pre-treatment covariates</h3>
 <p>Let <strong>U</strong> denoted unmeasured pre-treatment covariates that may potentially bias the statistical association between <em>A</em> and <em>Y</em> independently of the measured covariates.</p>
@@ -528,10 +534,10 @@ div.csl-indent {
 <section id="consider-1" class="level4">
 <h4 class="anchored" data-anchor-id="consider-1">Consider:</h4>
 <ul>
-<li>** In this course, we are interested in stratum specific comparisons **</li>
+<li><em>In this course, we are interested in stratum specific comparisons</em></li>
 <li>In the causal inference literature, the concept we use to make sense of stratum specific comparisons is called “effect modification.”</li>
 <li>By inferring effects within stratums, we may evaluate whether the effects of different exposures or treatments on some well-defined outcome (measured in some well-defined time-period after the exposure) differ depending on group measurement.</li>
-<li>The logic of effect modification differs from that of intereaction.</li>
+<li>The logic of effect modification differs slightly from that of interaction.</li>
 </ul>
 </section>
 <section id="aside-extensions" class="level4">

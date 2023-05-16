@@ -28,6 +28,7 @@ source("/Users/joseph/GIT/templates/functions/libs2.R")
 
 ## Link to workbook for this week:
 
+[link to script for this week](https://github.com/go-bayes/psych-434-2023/blob/main/scripts/workbook-9.R)
 
 ## Overview
 
@@ -37,7 +38,9 @@ Suppose we have asked a question. How can we address it using observational data
 
 Too fast.
 
-We must ask a question in such a way that it might be addressed by data. That is, our question must be precise. In this course, so far, our focus has been on observational data. Today, we will develop a step-by-step process for asking, and answering, comparative psychological questions using observational data. To refine our focus, we will examine the 3-wave panel design that VanderWeele and colleagues describe [@vanderweele2020].
+We must ask a question in such a way that it might be addressed by data. That is, our question must be precise. 
+
+In this course, so far, our focus has been on observational data. Today, we will develop a step-by-step process for asking, and answering, comparative psychological questions using observational data. To refine our focus, we will examine the 3-wave panel design that VanderWeele and colleagues describe [@vanderweele2020].
 
 The order is as follows:
 
@@ -50,9 +53,12 @@ Let's dive in!
 
 ## Motivations for a Three-Wave Longitudinal Design for Observational Causal Inference. 
 
+REVIEW: 
 Causal Diagrammes (DAGS) are a remarkably powerful and simple tool for understanding confounding [https://go-bayes.github.io/psych-434-2023/content/common_graphs.html](https://go-bayes.github.io/psych-434-2023/content/common_graphs.html) 
 
 ### Common cause of exposure and outcome.
+
+
 
 Our question: does visiting a clinical psychologist reduce the 10 year incidence of heart attacks?
 
@@ -222,7 +228,7 @@ Our question: does visiting a clinical psychologist reduce the 10 year incidence
 
 ## Comprehensive Checklist for Detailed Reporting of a Causal Inferenctial Study (E.g. Assessment 3 option 2)
 
-### Formulating the Research Question
+## STEP 1 Formulate the Research Question
 
 -   **Stating the Question:** Is my question clearly stated? If not, state it.
 -   **Relevance of the Question:** Have I explained its importance? If not, explain.
@@ -232,10 +238,10 @@ Our question: does visiting a clinical psychologist reduce the 10 year incidence
 
 #### Data Requirements
 
--   **Type of Data:** Is my data experimental? If yes, your project may not fit this course.
--   **Time-Series Data:** Is my data time-series? If not, reconsider your causal question.
+-   **Type of Data:** Are my data experimental? If yes, your project may not fit this course.
+-   **Time-Series Data:** Are my data time-series? If not, reconsider your causal question.
 -   **Data Waves:** Do I have at least three waves of data? If not, beware of confounding control issues.
--   **Data Source:** Is my data from the NZAVS simulated data set? If not, consult with me.
+-   **Data Source:** Are my data from the NZAVS simulated data set? If not, consult with me.
 
 #### Defining the Outcome
 
@@ -388,10 +394,10 @@ $$ATE_{G,\text{risk ratio}} = \frac{E[Y(1)|G, L]}{E[Y(0)|G, L]}$$
 
 #### Consider:
 
--   \*\* In this course, we are interested in stratum specific comparisons \*\*
+-   *In this course, we are interested in stratum specific comparisons*
 -   In the causal inference literature, the concept we use to make sense of stratum specific comparisons is called "effect modification."
 -   By inferring effects within stratums, we may evaluate whether the effects of different exposures or treatments on some well-defined outcome (measured in some well-defined time-period after the exposure) differ depending on group measurement.
--   The logic of effect modification differs from that of intereaction.
+-   The logic of effect modification differs slightly from that of interaction.
 
 #### Aside: extensions
 
