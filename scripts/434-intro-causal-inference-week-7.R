@@ -29,29 +29,43 @@ if (!require(ggdag)) {
   install.packages("ggdag")
 }
 
+set.seed(123)
 library(ggdag)
 dag1 <- dagify(Y2 ~ A1 + Y0 + A0 +  La0 + Lb0 + Lc0 + A0 + Y0,
                A1 ~ La0 + Lb0 + Lc0 + A0 + Y0,
                labels = c(
                  Y2 = "t2/outcome",
-                 A1 = "A1/exposure",
-                 A0 = "A0/baseline_exposure",
-                 Y0 = "A0/baseline_exposure",
-                 La0 = "La0/baseline_confounder_1",
-                 Lb0 = "La0/baseline_confounder_2",
-                 Lc0 = "La0/baseline_confounder_3"
+                 A1 = "t1/exposure",
+                 A0 = "t0/baseline_exposure",
+                 Y0 = "t0/baseline_outcome",
+                 La0 = "t0/baseline_confounder_1",
+                 Lb0 = "t0/baseline_confounder_2",
+                 Lc0 = "t0/baseline_confounder_3"
                ),
                exposure = "A1",
                outcome = "Y2")
 
-# inspect
-tidy_dagitty(dag1)
 
-dag1_t <- tidy_dagitty(dag1)
+dag1 |>
+  ggdag_adjustment_set()
 
-# plot
-ggdag(dag1_t) + theme_dag_blank()
+dag1 |>
+  ggdag(text = FALSE,
+        use_labels = "label")
+
+dag1 |>
+  ggdag_adjustment_set()
+
+
 #
+# # inspect
+# tidy_dagitty(dag1)
+#
+# dag1_t <- tidy_dagitty(dag1)
+#
+# # plot
+# ggdag(dag1_t) + theme_dag_blank()
+# #
 # # view
 # ggdag::ggdag_paths(dag1_t)
 #
@@ -59,7 +73,62 @@ ggdag(dag1_t) + theme_dag_blank()
 # ggdag_parents(dag1_t, "A1")
 
 # find adjustment set: adjusting for S is sufficient to control for confounding (on the model's assumptions)
-ggdag_adjustment_set(dag1_t)
+# ggdag_adjustment_set(dag1_t)
+
+
+# aside customise
+ggdag_paths(dag1, text = FALSE, use_labels = "label", shadow = TRUE) +
+  theme_dag(base_size = 14) +
+  theme(legend.position = "none", strip.text = element_blank()) +
+  # set node aesthetics
+  scale_color_manual(values = "#0072B2", na.value = "grey80") +
+  # set label aesthetics
+  scale_fill_manual(values = "#0072B2", na.value = "grey80") +
+  # set arrow aesthetics
+  ggraph::scale_edge_color_manual(values = "#0072B2", na.value = "grey80") +
+  ggtitle("Open paths from smoking to A1 to Y2")
+
+
+
+
+## TASK  Create a Dag for the Study described below on perfectionism
+## hint
+
+baseline_vars = c(
+  "edu",
+  "male",
+  "eth_cat",
+  "employed",
+  "gen_cohort",
+  "nz_dep2018",
+  "nzsei13",
+  "partner",
+  "parent",
+  "pol_orient",
+  "rural_gch2018",
+  "agreeableness",
+  "conscientiousness",
+  "extraversion",
+  "honesty_humility",
+  "openness",
+  "neuroticism",
+  "modesty",
+  "religion_identification_level"
+)
+
+
+## Step 2, select the exposure variable.  This is the "cause"
+
+exposure_var = c("perfectionism")
+
+
+## step 3. select the outcome variable.  These are the outcomes.
+outcome_vars_reflective = c("meaning_purpose",
+                            "meaning_sense")
+
+
+
+### ANSWER HERE
 
 
 
@@ -74,7 +143,15 @@ ggdag_adjustment_set(dag1_t)
 
 
 
-######### PART 3: DATA EXCERCISE ##############
+
+
+
+
+
+
+
+
+######### PART 2: DATA EXCERCISE ##############
 
 
 # Create a folder called "data", in your Rstudio project. Download this file, add it to your the folder called "data" in your Rstudio project.
@@ -143,11 +220,10 @@ outcome_vars_reflective = c("meaning_purpose",
                             "meaning_sense")
 
 
-# optional: select exclusion variables (this will not be necessary most of the time)
-exclude_vars = c("year_measured")
-
 
 # the function "create_wide_data" should be in your environment. If not, make sure to run the first line of code in this script once more.  You may ignore the warnings.
+
+# IGNORE WARNING
 
 prep_reflective <-
   create_wide_data(

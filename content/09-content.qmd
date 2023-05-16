@@ -38,9 +38,9 @@ Suppose we have asked a question. How can we address it using observational data
 
 Too fast.
 
-We must ask a question in such a way that it might be addressed by data. That is, our question must be precise. 
+Our question must be made precise. 
 
-In this course, so far, our focus has been on observational data. Today, we will develop a step-by-step process for asking, and answering, comparative psychological questions using observational data. To refine our focus, we will examine the 3-wave panel design that VanderWeele and colleagues describe [@vanderweele2020].
+Today we will consider how to make psychological questions precise, and how to answer them, using 3-wave panel designs [@vanderweele2020].
 
 The order is as follows:
 
@@ -184,7 +184,7 @@ Our question: does visiting a clinical psychologist reduce the 10 year incidence
 
 
 \begin{tikzpicture}[{every node/.append style}=draw]
-\node [rectangle, draw=white, align=left] (L) at (0, 0) {t0/Male \\t0/Heart Attack \\t0/Heart Attack};
+\node [rectangle, draw=white, align=left] (L) at (0, 0) {t0/Male \\t0/Doctor Visit \\t0/Heart Attack};
 \node [ellipse, draw=white] (A) at (4, 0) {t1/Doctor Visit};
 \node [rectangle, draw=white] (Y) at (8, 0) {t2/Heart Attack};
 \draw [-latex, draw=red, dashed] (A) to (Y);
@@ -254,7 +254,7 @@ Our question: does visiting a clinical psychologist reduce the 10 year incidence
 #### Determining the Exposure
 
 -   **Exposure Variable:** Is the exposure variable *A* defined? If not, define it.
--   **Multiple Exposures:** Are there multiple exposures? If yes, proceed; if not, reassess.
+-   **Multiple Exposures:** Are there multiple exposures? If yes, reassess; if only one exposure, proceed.
 -   **Exposure Relevance:** Can I explain how the exposure variable relates to my question? If not, clarify.
 -   **Positivity:** Can we intervene on the exposure at all levels of the covariates? We should be able to.
 -   **Consistency:** Can I interpret what it means to intervene on the exposure? I should be able to.
@@ -505,21 +505,17 @@ Consider the following ideas about how to report one's model:
 
 ### Example of how to report a doubly robust method in your report
 
-I have included the technical details of the doubly robust method in the Appendix. Here is a how you might report a doubly robust causal inference method in your report:
+The Doubly Robust Estimation method for Subgroup Analysis Estimator is a sophisticated tool combining features of both IPTW and G-computation methods, providing unbiased estimates if either the propensity score or outcome model is correctly specified. The process involves five main steps:
 
-Our study employs a Doubly Robust Estimation for Subgroup Analysis algorithm, combining the best of the IPTW and G-computation methodologies. The method hinges on the specification of either the propensity score or the outcome model to provide unbiased estimates.
+**Step 1** involves the estimation of the propensity score, a measure of the conditional probability of exposure given the covariates and the subgroup indicator. This score is calculated using statistical models such as logistic regression, with the model choice depending on the nature of the data and exposure. Weights for each individual are then calculated using this propensity score. These weights depend on the exposure status and are computed differently for exposed and unexposed individuals. The estimation of propensity scores is performed separately within each subgroup stratum.
 
-Firstly, the propensity score, representing the conditional probability of exposure given covariates and subgroup indicators, is estimated using logistic regression or a suitable alternative. We then calculate individual weights based on these estimated propensity scores. Importantly, these scores are computed separately within strata of the subgroup where effect modification is of interest, before being recombined into the complete data set.
+**Step 2** focuses on fitting a weighted outcome model, making use of the previously calculated weights from the propensity scores. This model estimates the outcome conditional on exposure, covariates, and subgroup, integrating the weights into the estimation process. Unlike in propensity score model estimation, covariates are included as variables in the outcome model. This inclusion makes the method doubly robust - providing a consistent effect estimate if either the propensity score or the outcome model is correctly specified, thereby reducing the assumption of correct model specification.
 
-Secondly, we estimate the outcome model, aiming to capture the relationship between the outcome, exposure, confounders, and subgroups. This model helps us predict the average outcome given specific values of exposure, covariates, propensity scores, and subgroup indicators.
+**Step 3** entails the simulation of potential outcomes for each individual in each subgroup. These hypothetical scenarios assume universal exposure to the intervention within each subgroup, regardless of actual exposure levels. The expectation of potential outcomes is calculated for each individual in each subgroup, using individual-specific weights. These scenarios are performed for both the current and alternative interventions.
 
-The third step involves simulating potential outcomes for each individual in each subgroup under hypothetical scenarios. We calculate these outcomes under varying exposure levels, using the previously estimated outcome model.
+**Step 4** is the estimation of the average causal effect for each subgroup, achieved by comparing the computed expected values of potential outcomes under each intervention level. The difference represents the average causal effect of changing the exposure within each subgroup. 
 
-The fourth step estimates the average causal effect for each subgroup by computing the expected value of potential outcomes under each intervention level. This information is then used to calculate the estimated difference, which represents the average causal effect of altering the exposure within each subgroup.
-
-Lastly, we compare differences in causal effects between groups by computing the estimated causal effect differences between different subgroups. This step identifies the difference in average causal effects between the subgroups. To quantify uncertainty around the estimated causal effects, we calculate standard errors and confidence intervals using simulation-based inference methods.
-
-This five-step process provides a robust and nuanced examination of causal effects, considering exposure, outcome, covariates, and subgroup indicators, to deliver an accurate and comprehensive analysis of causal relationships in our study population."
+**Step 5** involves comparing differences in causal effects across groups by calculating the differences in the estimated causal effects between different subgroups. Confidence intervals and standard errors for these calculations are determined using simulation-based inference methods [@greifer2023]. This step allows for a comprehensive comparison of the impact of different interventions across various subgroups, while encorporating uncertainty.
 
 ### Inference
 
@@ -557,159 +553,183 @@ Consider the following ideas about what to discuss in one's findings:
 
 ## Appendix
 
-### **G-computation for Subgroup Analysis Algorithm**
+### **G-computation for Subgroup Analysis Estimator**
 
-**Step 1** Estimate the outcome model. Fit a model for the outcome $Y$, conditional on both the exposure $A$, the covariates $L$, and subgroup indicator $G$. This model can be a linear regression, logistic regression, or another statistical model. The goal is to capture the relationship between the outcome, exposure, confounders, and subgroups.
+**Step 1** Estimate the outcome model. Fit a model for the outcome $Y$, conditional on the exposure $A$, the covariates $L$, and subgroup indicator $G$. This model can be a linear regression, logistic regression, or another statistical model. The goal is to capture the relationship between the outcome, exposure, confounders, and subgroups.
 
-$$ E(Y|A,L,G) = f_Y(A,L,G, \theta_Y) $$
+$$ \hat{E}(Y|A,L,G) = f_Y(A,L,G; \theta_Y) $$
 
-This equation represents the expected value of the outcome $Y$ given the exposure $A$, covariates $L$, and subgroup $G$ as modeled by the function $f_Y$ with parameters $\theta_Y$. This formulation allows for the prediction of the average outcome $Y$ given certain values of $A$, $L$, and $G$.
+This equation represents the expected value of the outcome $Y$ given the exposure $A$, covariates $L$, and subgroup $G$, as modeled by the function $f_Y$ with parameters $\theta_Y$. This formulation allows for the prediction of the average outcome $Y$ given certain values of $A$, $L$, and $G$.
 
-**Step 2** Simulate potential outcomes. For each individual $i$ in each subgroup $g$, predict their potential outcome $\hat{Y}_{i,g}(a)$ under the intervention $A=a$ using the estimated outcome model.
+**Step 2** Simulate potential outcomes. For each individual in each subgroup, predict their potential outcome under the intervention $A=a$ using the estimated outcome model:
 
-$$\hat{Y}_{i,g}(a) = E[Y|A=a,L_i,G=g; \hat{\theta}_Y]$$
+$$\hat{E}(a|(G=g)  = \hat{E}[Y|A=a,L,G; \hat{\theta}_Y]$$
 
-and also under the intervention $A=a^{\prime}$:
+We also predict the potential outcome for everyone in each subgroup under the causal contrast, setting the intervention for everyone in that group to $A=a'$:
 
-$$\hat{Y}_{i,g}(a^{\prime}) = E[Y|A=a^{\prime},L_i,G=g; \hat{\theta}_Y]$$
+$$\hat{E}(a'|G=g) = E[Y|A=a',L,G; \hat{\theta}_Y]$$
 
-This step involves simulating the outcomes under each intervention level for every individual within each subgroup, as if they were exposed to treatment level $a$ or $a^{\prime}$.
+In these equations, $Y$ represents the potential outcome, $A$ is the intervention, $L$ are the covariates, $G=g$ represents the subgroup, and $\theta_Y$ are the parameters of the outcome model.
 
-**Step 3** Estimate the average causal effect for each subgroup. Compute the estimated expected value of the potential outcomes under each intervention level for each subgroup $g$:
+**Step 3** Calculate the estimated difference for each subgroup $g$:
 
-$$\hat{E}[Y(a)|G=g] = \frac{1}{N_g}\sum_{i:G_i=g}^N \hat{Y}_{i,g}(a)$$
+$$\hat{\delta}_g = \hat{E}[Y(a)|G=g] - \hat{E}[Y(a')|G=g]$$
 
-$$\hat{E}[Y(a^{\prime})|G=g] = \frac{1}{N_g}\sum_{i:G_i=g}^N \hat{Y}_{i,g}(a^{\prime})$$
+This difference $\hat{\delta}_g$ represents the average causal effect of changing the exposure from level $a'$ to level $a$ within each subgroup $g$.
 
-and calculate the estimated difference for each subgroup $g$:
+We use simulation-based inference methods to compute standard errors and confidence intervals [@greifer2023].
 
-$$\hat{\delta}_g = \hat{E}[Y(a)|G=g] - \hat{E}[Y(a^{\prime})|G=g]$$
 
-This difference represents the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ within subgroup $g$.
+**Step 4** Compare differences in causal effects by subgroups:
 
-**Step 5** Compare differences in causal effects by subgroups.
 
-Compute the differences in the estimated causal effects between different subgroups:
+$$\hat{\gamma} = \hat{\delta}_g - \hat{\delta}_{g'}$$
 
-$$\hat{\gamma}_s = \hat{\delta}_g - \hat{\delta}_{g^{\prime}}$$
+where,
 
-This difference $\hat{\gamma}_s$ represents the difference in the average causal effects between the subgroups $g$ and $g^{\prime}$.
+$$\hat{\gamma} = \overbrace{\big( \hat{E}[Y(a)|G=g] - \hat{E}[Y(a^{\prime})|G=g] \big)}^{\hat{\delta_g}} - \overbrace{\big(\hat{E}[Y(a^{\prime})|G=g^{\prime}]- \hat{E}[Y(a)|G=g^{\prime}]\big)}^{\hat{\delta_{g^{\prime}}}}$$
 
-Or more fully:
 
-$$\hat{\gamma}_{s} = \overbrace{\big( E[Y(a)|G=g] - E[Y(a^{\prime})|G=g] \big)}^{\hat{\delta_g}} - \overbrace{\big(E[Y(a^{\prime})|G=g^{\prime}]- E[Y(a)|G=g^{\prime}]\big)}^{\hat{\delta_{g^{\prime}}}} $$
+This difference $\hat{\gamma}$ represents the difference in the average causal effects between the subgroups $g$ and $g'$. It measures the interaction effect of the exposure $A$ and the subgroup $G$ on the outcome $Y$.
 
-This difference, $\gamma_s$, represents the difference in the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ between subgroup $g$ and subgroup $g^{\prime}$. It measures the interaction effect of the exposure $A$ and the subgroup $G$ on the outcome $Y$.
+We again use simulation-based inference methods to compute standard errors and confidence intervals [@greifer2023].
 
-We use simulation-based inference methods to compute standard errors and confidence intervals [@greifer2023]
 
-### **Inverse Probability of Treatment Weighting (IPTW) for Subgroup Analysis Algorithm**
+### **Inverse Probability of Treatment Weighting (IPTW) for Subgroup Analysis Estimator**
 
-**Step 1** Estimate the propensity score. The propensity score $e(L_i, G)$ is the conditional probability of the exposure $A_i = 1$, given the covariates $L_i$ and subgroup indicator $G$. This can be modeled using logistic regression or other suitable methods, depending on the nature of the data and the exposure.
+**Step 1** Estimate the propensity score. The propensity score $e(L, G)$ is the conditional probability of the exposure $A = 1$, given the covariates $L$ and subgroup indicator $G$. This can be modeled using logistic regression or other suitable methods, depending on the nature of the data and the exposure.
 
-$$ e(L_i, G) = P(A_i = 1 | L_i, G) = f_A(L_i, G; \theta_A) $$
+$$e = P(A = 1 | L, G) = f_A(L, G; \theta_A)$$
 
-Here, $f_A(L_i, G; \theta_A)$ is a function (statistical model) that estimates the probability of the exposure $A_i = 1$ given covariates $L_i$ and subgroup $G$. The estimated propensity scores are denoted as $\hat{e}(L_i, G_i)$.
+Here, $f_A(L, G; \theta_A)$ is a function (statistical model) that estimates the probability of the exposure $A = 1$ given covariates $L$ and subgroup $G$. Then, we calculate the weights for each individual, denoted as $v$, using the estimated propensity score:
 
-Then, we calculate the weights for each individual $i$, denoted as $v_i$, using the estimated propensity score:
+$$
+v = 
+\begin{cases} 
+\frac{1}{e} & \text{if } A = 1 \\
+\frac{1}{1-e} & \text{if } A = 0 
+\end{cases}
+$$
 
-$$v_i = \left(\frac{A_i}{\hat{e}(L_i)} + \frac{1 - A_i}{1 - \hat{e}(L_i)}\right)\bigg|_{G}$$
 
-Note that we estimate propensity scores *separately* within strata of the subgroup for whom we are interested in effect modification."
+Thus, $v$ depends on $A$, and is calculated as the inverse of the propensity score for exposed individuals and as the inverse of $1-e$ for unexposed individuals.
 
-$v_i$ is the weight for individual $i$ in a given subgroup $G$. It calculated using the propensity score estimated within the same subgroup, these weights are then recombined into the full data set with all groups.
+Note that we estimate propensity scores *separately* within strata of the subgroup for whom we are interested in effect modification. $v$ is the weight for each individual in a given subgroup $G$.
 
-**Step 2** Fit a weighted outcome model. Using the weights calculated from the estimated propensity scores, fit a model for the outcome $Y$, conditional on the exposure $A$, subgroup $G$, and covariates $L$:
+**Step 2**  Fit a weighted outcome model. Using the weights calculated from the estimated propensity scores, fit a model for the outcome $Y$, conditional on the exposure $A$ and subgroup $G$. This can be represented as:
 
-$$ \hat{E}(Y|A, G, L) = f_Y(A, G; \theta_Y, V) $$
+$$ \hat{E}(Y|A, G; V) = f_Y(A, G ; \theta_Y, V) $$
 
-where $f_Y$ is a weighted function (such as a weighted regression model) with parameters $\theta_Y$, and $V$ represents the weights. This formulation allows for the prediction of the outcome $Y$ given certain values of $A$, $G$, and $L$, taking into account the inverse probability of treatment weights.
+In this model, $f_Y$ is a function (such as a weighted regression model) with parameters $θ_Y$. The weights $V$ are incorporated into the estimation process, affecting how much each observation contributes to the estimation of $θ_Y$, but they are not themselves an additional variable within the model.
 
-**Step 3** Simulate potential outcomes. For each individual $i$ in each subgroup $g$, simulate their potential outcome $\hat{Y}_{i,g}(a)$ under the hypothetical scenario where everyone in the subgroup is exposed to the intervention $A=a$ regardless of their actual exposure level:
+Note that in this formulation, unlike doubly-robust estimation, $L$ is not included as a variable in the outcome model, but its effect is accounted for through the weights $V$, which are calculated based on the estimated propensity scores that do include $L$.
 
-$$\hat{Y}_{i,g}(a) = E[Y|A=a,G=g; \hat{\theta}_Y, v_i]$$
+**Step 3** Simulate potential outcomes. For each individual in each subgroup, simulate their potential outcome under the hypothetical scenario where everyone in the subgroup is exposed to the intervention $A=a$ regardless of their actual exposure level:
 
-and also under the hypothetical scenario where everyone is exposed to intervention $A=a^{\prime}$:
+$$\hat{E}(a|(G=g) = \hat{E}[Y_i|A=a,G=g; \hat{\theta}_Y, v_i]$$
 
-$$\hat{Y}_{i,g}(a^{\prime}) = E[Y|A=a^{\prime},G=g; \hat{\theta}_Y, v_i]$$
+and also under the hypothetical scenario where everyone is exposed to intervention $A=a'$:
 
-**Step 4** Estimate the average causal effect for each subgroup. Compute the estimated expected value of the potential outcomes under each intervention level for each subgroup $g$:
+$$\hat{E}(a'|G=g) = \hat{E}[Y_i|A=a',G=g; \hat{\theta}_Y, v_i]$$
 
-$$\hat{E}[Y(a)|G=g] = \sum_{i:G_i=g}^N \hat{Y}_{i,g}(a)$$
+Thus the expectation is calculated for each individual $i$ in each subgroup $g$, with individual-specific weights $v_i$.
 
-$$\hat{E}[Y(a^{\prime})|G=g] = \sum_{i:G_i=g}^N \hat{Y}_{i,g}(a^{\prime})$$
+**Step 4** Estimate the average causal effect for each subgroup as the difference in the predicted outcomes:
 
-Then calculate the estimated difference for each subgroup $g$:
+$$\hat{\delta}_g = \hat{E}[Y(a)|G=g] - \hat{E}[Y(a')|G=g]$$
 
-$$\hat{\delta}_g = \hat{E}[Y(a)|G=g] - \hat{E}[Y(a^{\prime})|G=g]$$
-
-The difference $\hat{\delta}_g$ represents the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ within each subgroup $g$.
+The estimated difference $\hat{\delta}_g$ represents the average causal effect withing group $g$. We use simulation-based inference methods to compute standard errors and confidence intervals [@greifer2023].
 
 **Step 5** Compare differences in causal effects by groups. Compute the differences in the estimated causal effects between different subgroups:
 
-$$\hat{\gamma}_s = \hat{\delta}_g - \hat{\delta}_{g^{\prime}}$$
+$$\hat{\gamma} = \hat{\delta}_g - \hat{\delta}_{g'}$$
 
-This difference $\hat{\gamma}_s$ represents the difference in the average causal effects between the subgroups $g$ and $g^{\prime}$.
 
-We compute standard errors and confidence intervals. Again, to obtain standard errors and confidence intervals for these differences in subgroup-specific causal effects, we use simulation-based inference methods [@greifer2023].
+where,
 
-### Doubly Robust Estimation for Subgroup Analysis Algorithm
+
+$$\hat{\gamma} = \overbrace{\big( \hat{E}[Y(a)|G=g] - \hat{E}[Y(a^{\prime})|G=g] \big)}^{\hat{\delta_g}} - \overbrace{\big(\hat{E}[Y(a^{\prime})|G=g^{\prime}]- \hat{E}[Y(a)|G=g^{\prime}]\big)}^{\hat{\delta_{g^{\prime}}}}$$
+
+
+We again use simulation-based inference methods to compute standard errors and confidence intervals [@greifer2023].
+
+
+### Doubly Robust Estimation for Subgroup Analysis Estimator
 
 Doubly Robust Estimation is a powerful technique that combines the strengths of both the IPTW and G-computation methods. It uses both the propensity score model and the outcome model, which makes it doubly robust: it produces unbiased estimates if either one of the models is correctly specified.
 
-**Step 1** Estimate the propensity score. The propensity score $e(L_i, G)$ is the conditional probability of the exposure $A_i = 1$, given the covariates $L_i$ and subgroup indicator $G$. This can be modeled using logistic regression or other suitable methods, depending on the nature of the data and the exposure.
 
-$$ e(L_i, G) = P(A_i = 1 | L_i, G) = f_A(L_i, G; \theta_A) $$
+**Step 1** Estimate the propensity score. The propensity score $e(L, G)$ is the conditional probability of the exposure $A = 1$, given the covariates $L$ and subgroup indicator $G$. This can be modeled using logistic regression or other suitable methods, depending on the nature of the data and the exposure.
 
-Here, $f_A(L_i, G; \theta_A)$ is a function (statistical model) that estimates the probability of the exposure $A_i = 1$ given covariates $L_i$ and subgroup $G$. The estimated propensity scores are denoted as $\hat{e}(L_i, G_i)$.
+$$e = P(A = 1 | L, G) = f_A(L, G; \theta_A)$$
 
-Then, we calculate the weights for each individual $i$, denoted as $v_i$, using the estimated propensity score:
+Here, $f_A(L, G; \theta_A)$ is a function (statistical model) that estimates the probability of the exposure $A = 1$ given covariates $L$ and subgroup $G$. Then, we calculate the weights for each individual, denoted as $v$, using the estimated propensity score:
 
-$$v_i = \left(\frac{A_i}{\hat{e}(L_i)} + \frac{1 - A_i}{1 - \hat{e}(L_i)}\right)\bigg|_{G}$$
+$$
+v = 
+\begin{cases} 
+\frac{1}{e} & \text{if } A = 1 \\
+\frac{1}{1-e} & \text{if } A = 0 
+\end{cases}
+$$
 
-Note that we estimate propensity scores **separately** within strata of the subgroup for whom we are interested in effect modification."
 
-$v_i$ is the weight for individual $i$ in a given subgroup $G$. It calculated using the propensity score estimated within the same subgroup, these weights are then recombined into the full data set with all groups.
+Thus, $v$ depends on $A$, and is calculated as the inverse of the propensity score for exposed individuals and as the inverse of $1-e$ for unexposed individuals.
 
-**Step 2** Estimate the outcome model.
+Note that we estimate propensity scores *separately* within strata of the subgroup for whom we are interested in effect modification. $v$ is the weight for each individual in a given subgroup $G$.
 
-Fit a model for the outcome $Y$, conditional on both the exposure $A$, the covariates $L$, subgroup indicator $G$, and the propensity scores $V$. This model can be a linear regression, logistic regression, or another statistical model. The goal is to capture the relationship between the outcome, exposure, confounders, and subgroups.
+**Step 2**  Fit a weighted outcome model. Using the weights calculated from the estimated propensity scores, fit a model for the outcome $Y$, conditional on the exposure $A$ and subgroup $G$. This can be represented as:
 
-$$ E(Y|A,L,V,G) = f_Y(A,L,V,G, \theta_Y) $$
+$$ \hat{E}(Y|A, L, G; V) = f_Y(A, L, G ; \theta_Y, V) $$
 
-This equation represents the expected value of the outcome $Y$ given the exposure $A$, covariates $L$, the propensity score $v_i$, and subgroup $G$ as modeled by the function $f_Y$ with parameters $\theta_Y$. This formulation allows for the prediction of the average outcome $Y$ given certain values of $A$, $L$, $V$,and $G$.
+In this model, $f_Y$ is a function (such as a weighted regression model) with parameters $θ_Y$. The weights $V$ are incorporated into the estimation process, affecting how much each observation contributes to the estimation of $θ_Y$, but they are not themselves an additional variable within the model.
 
-**Step 3** Simulate potential outcomes. For each individual $i$ in each subgroup $g$, simulate their potential outcome $\hat{Y}_{i,g}(a)$ under the hypothetical scenario where everyone in the subgroup is exposed to the intervention $A=a$ regardless of their actual exposure level:
+Note that in this formulation, unlike propensity score model, estimation, $L$ is included as a variable in the outcome model, Although imbalance in $L$ on $A$ is accounted for by the weights $V$, by including $L$ in the outcome model this method is doubly robust insofar as we will obtain a consistent effect estimate if either the propensity score or the outcome model is correctly specified. This property reduces the strength of the assumption of correct model specification.
 
-$$\hat{Y}_{i,g}(a) = E[Y|A=a,G=g; \hat{\theta}_Y,L_i, v_i]$$
+**Step 3** For each individual in each subgroup, simulate their potential outcome under the hypothetical scenario where everyone in the subgroup is exposed to the intervention $A=a$ regardless of their actual exposure level:
 
-and also under the hypothetical scenario where everyone is exposed to intervention $A=a^{\prime}$:
+$$\hat{E}(a|G=g) = \hat{E}[Y_i|A=a,G=g; L,\hat{\theta}_Y, v_i]$$
 
-$$\hat{Y}_{i,g}(a^{\prime}) = E[Y|A=a^{\prime},G=g; \hat{\theta}_Y,,L_i, v_i]$$
+and also under the hypothetical scenario where everyone in each subgroup is exposed to intervention $A=a'$:
 
-**Step 4** Estimate the average causal effect for each subgroup. Compute the estimated expected value of the potential outcomes under each intervention level for each subgroup $g$:
+$$\hat{E}(a'|G=g) = \hat{E}[Y_i|A=a',G=g; L; \hat{\theta}_Y, v_i]$$
 
-$$\hat{E}[Y(a)|G=g] = \sum_{i:G_i=g}^N \hat{Y}_{i,g}(a)$$
+Thus the expectation is calculated for each individual $i$ in each subgroup $g$, with individual-specific weights $v_i$.
 
-$$\hat{E}[Y(a^{\prime})|G=g] = \sum_{i:G_i=g}^N  \hat{Y}_{i,g}(a^{\prime})$$
+**Step 4** Estimate the average causal effect for each subgroup. Compute the estimated expected value of the potential outcomes under each intervention level for each subgroup:
 
-Then calculate the estimated difference for each subgroup $g$:
+$$\hat{\delta}_g = \hat{E}[Y(a)|G=g] - \hat{E}[Y(a')|G=g]$$
 
-$$\hat{\delta}_g = \hat{E}[Y(a)|G=g] - \hat{E}[Y(a^{\prime})|G=g]$$
+The difference $\delta_g$ represents the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ within each subgroup.
 
-The difference $\hat{\delta}_g$ represents the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ within each subgroup $g$.
 
 **Step 5** Compare differences in causal effects by groups. Compute the differences in the estimated causal effects between different subgroups:
 
-$$\hat{\gamma}_s = \hat{\delta}_g - \hat{\delta}_{g^{\prime}}$$
+$$\hat{\gamma} = \hat{\delta}_g - \hat{\delta}_{g'}$$
 
-This difference $\hat{\gamma}_s$ represents the difference in the average causal effects between the subgroups $g$ and $g^{\prime}$.
 
-Again we can see this explicitly:
+where,
 
-$$\hat{\gamma}_{s} = \overbrace{\big( E[Y(a)|G=g] - E[Y(a^{\prime})|G=g] \big)}^{\hat{\delta_g}} - \overbrace{\big(E[Y(a^{\prime})|G=g^{\prime}]- E[Y(a)|G=g^{\prime}]\big)}^{\hat{\delta_{g^{\prime}}}} $$
 
-We again calculate standard errors and confidence intervals using simulation-based inference methods [@greifer2023]. This helps to quantify the uncertainty around the estimated causal effects.
+$$\hat{\gamma} = \overbrace{\big( E[Y(a)|G=g] - E[Y(a^{\prime})|G=g] \big)}^{\hat{\delta_g}} - \overbrace{\big(E[Y(a^{\prime})|G=g^{\prime}]- E[Y(a)|G=g^{\prime}]\big)}^{\hat{\delta_{g^{\prime}}}}$$
+
+
+We use simulation-based inference methods to compute standard errors and confidence intervals [@greifer2023].
+
+
+**Step 5** Compare differences in causal effects by groups. Compute the differences in the estimated causal effects between different subgroups:
+
+$$\hat{\gamma} = \hat{\delta}_g - \hat{\delta}_{g'}$$
+
+
+where,
+
+
+$$\hat{\gamma} = \overbrace{\big( \hat{E}[Y(a)|G=g] - \hat{E}[Y(a^{\prime})|G=g] \big)}^{\hat{\delta_g}} - \overbrace{\big(\hat{E}[Y(a^{\prime})|G=g^{\prime}]- \hat{E}[Y(a)|G=g^{\prime}]\big)}^{\hat{\delta_{g^{\prime}}}}$$
+
+
+We again use simulation-based inference methods to compute standard errors and confidence intervals [@greifer2023].
+
 
 <!-- ### What we have not done -->
 

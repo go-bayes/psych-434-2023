@@ -33,27 +33,59 @@ library(ggdag)
 dag1 <- dagify(Y2 ~ A1 + Y0 + A0 +  La0 + Lb0 + Lc0 + A0 + Y0,
                A1 ~ La0 + Lb0 + Lc0 + A0 + Y0,
                labels = c(
-                 Y2 = "t2/outcome",
-                 A1 = "t1/exposure",
-                 A0 = "t0/baseline_exposure",
-                 Y0 = "t0/baseline_outcome",
-                 La0 = "t0/baseline_confounder_1",
-                 Lb0 = "t0/baseline_confounder_2",
-                 Lc0 = "t0/baseline_confounder_3"
+                 Y2 = "t2/meaning_life",
+                 A1 = "t1/perfectionism_categorical",
+                 A0 = "t0/baseline_perfectionism",
+                 Y0 = "t0/baseline_meaning_life",
+                 La0 = "t0/edu",
+                 Lb0 = "t0/parent",
+                 Lc0 = "t0/partner"
                ),
                exposure = "A1",
                outcome = "Y2")
 
 
-dag1 |>
-  ggdag_adjustment_set()
 
-dag1 |>
+fig_adjustment <- dag1 |>
+  ggdag_adjustment_set() + theme_dag_blank()
+
+fig_dag<- dag1 |>
   ggdag(text = FALSE,
-        use_labels = "label")
+        use_labels = "label")+ theme_dag_blank()
 
-dag1 |>
-  ggdag_adjustment_set()
+
+
+
+
+
+ggsave(
+  fig_dag,
+  path = here::here(here::here("figs", "fig_adjustment")),
+  width = 8,
+  height = 6,
+  units = "in",
+  filename = "fig_dag.png",
+  device = 'png',
+  limitsize = FALSE,
+  dpi = 600
+)
+
+
+
+ggsave(
+  fig_dag,
+  path = here::here(here::here("figs", "gt")),
+  width = 8,
+  height = 6,
+  units = "in",
+  filename = "gt_plot.png",
+  device = 'png',
+  limitsize = FALSE,
+  dpi = 600
+)
+
+
+
 
 
 #
@@ -207,8 +239,11 @@ nzavs_synth <- nzavs_synth |>
       levels = c("[1,4)", "[4,5)", "[5,7]"),
       labels = c("low", "medium", "high"),
       ordered = TRUE
-    )
-  )
+    ))
+
+
+
+
 
 
 ############## ############## ############## ############## ############## ############## ############## ########
@@ -228,11 +263,11 @@ dt_18_19 <- nzavs_synth |>
   select(id, wave, perfectionism, perfectionism_coarsen, eth_cat) |> # the categorical variable needs to be numeric for us to use msm package to investigate change
   mutate(perfectionism_coarsen_n = as.numeric(perfectionism_coarsen))
 
-
+#kessler_6
 
 # Consider the original response scale
 
-msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19) |>
+msm::statetable.msm(round(kessler_depressed, 0), id, data = dt_18_19) |>
   kbl() |>
   kable_paper(full_width = F)
 
@@ -361,11 +396,20 @@ prep_reflective <-
 
 
 colnames(prep_reflective)
+prep_reflective$t0_eth_cat
+
+
+dt_only_2 <- prep_reflective |>
+  select(t0_edu, t0_eth_cat)
 
 # I have created a function that will allow you to take a data frame and
 # create a table
-baseline_table(prep_reflective, output_format = "markdown")
+baseline_table(prep_reflective, output_format = "html")
 
+
+baseline_table(dt_only_2, output_format = "html")
+
+skimr::skim(dt_only_2)
 
 # if you just want a nice html table, do this:
 library(table1) # should be in your environment
