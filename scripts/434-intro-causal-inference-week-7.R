@@ -14,7 +14,67 @@
 source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
 
 
-######### PART 1: DATA EXCERCISE ##############
+
+
+## Part 1. Draw a Dag
+
+
+
+
+## Problem 1: bilingualism on cognitive abilities
+## Using the DAG below as a starting point, create a DAG in R using the `ggdag` package that represents the causal relationships among bilingualism (B), cognitive abilities (C), and socioeconomic status (S).
+
+# Install the package if not already installed
+if (!require(ggdag)) {
+  install.packages("ggdag")
+}
+
+library(ggdag)
+dag1 <- dagify(Y2 ~ A1 + Y0 + A0 +  La0 + Lb0 + Lc0 + A0 + Y0,
+               A1 ~ La0 + Lb0 + Lc0 + A0 + Y0,
+               labels = c(
+                 Y2 = "t2/outcome",
+                 A1 = "A1/exposure",
+                 A0 = "A0/baseline_exposure",
+                 Y0 = "A0/baseline_exposure",
+                 La0 = "La0/baseline_confounder_1",
+                 Lb0 = "La0/baseline_confounder_2",
+                 Lc0 = "La0/baseline_confounder_3"
+               ),
+               exposure = "A1",
+               outcome = "Y2")
+
+# inspect
+tidy_dagitty(dag1)
+
+dag1_t <- tidy_dagitty(dag1)
+
+# plot
+ggdag(dag1_t) + theme_dag_blank()
+#
+# # view
+# ggdag::ggdag_paths(dag1_t)
+#
+# # inspect
+# ggdag_parents(dag1_t, "A1")
+
+# find adjustment set: adjusting for S is sufficient to control for confounding (on the model's assumptions)
+ggdag_adjustment_set(dag1_t)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######### PART 3: DATA EXCERCISE ##############
 
 
 # Create a folder called "data", in your Rstudio project. Download this file, add it to your the folder called "data" in your Rstudio project.

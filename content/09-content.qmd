@@ -26,6 +26,9 @@ source("/Users/joseph/GIT/templates/functions/libs2.R")
 #source("/Users/joseph/GIT/templates/functions/funs.R")
 ```
 
+## Link to workbook for this week:
+
+
 ## Overview
 
 Recall that psychology begins with a question. What do I want to know about thought and behaviour? In cross-cultural psychology, these questions relate to differences, and similarities, between groups.
