@@ -702,18 +702,6 @@ $$\hat{\delta}_g = \hat{E}[Y(a)|G=g] - \hat{E}[Y(a')|G=g]$$
 
 The difference $\delta_g$ represents the average causal effect of changing the exposure from level $a^{\prime}$ to level $a$ within each subgroup.
 
-
-**Step 5** Compare differences in causal effects by groups. Compute the differences in the estimated causal effects between different subgroups:
-
-$$\hat{\gamma} = \hat{\delta}_g - \hat{\delta}_{g'}$$
-
-
-where,
-
-
-$$\hat{\gamma} = \overbrace{\big( E[Y(a)|G=g] - E[Y(a^{\prime})|G=g] \big)}^{\hat{\delta_g}} - \overbrace{\big(E[Y(a^{\prime})|G=g^{\prime}]- E[Y(a)|G=g^{\prime}]\big)}^{\hat{\delta_{g^{\prime}}}}$$
-
-
 We use simulation-based inference methods to compute standard errors and confidence intervals [@greifer2023].
 
 

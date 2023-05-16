@@ -752,10 +752,6 @@ v =
 <p><strong>Step 4</strong> Estimate the average causal effect for each subgroup. Compute the estimated expected value of the potential outcomes under each intervention level for each subgroup:</p>
 <p><span class="math display">\hat{\delta}_g = \hat{E}[Y(a)|G=g] - \hat{E}[Y(a')|G=g]</span></p>
 <p>The difference <span class="math inline">\delta_g</span> represents the average causal effect of changing the exposure from level <span class="math inline">a^{\prime}</span> to level <span class="math inline">a</span> within each subgroup.</p>
-<p><strong>Step 5</strong> Compare differences in causal effects by groups. Compute the differences in the estimated causal effects between different subgroups:</p>
-<p><span class="math display">\hat{\gamma} = \hat{\delta}_g - \hat{\delta}_{g'}</span></p>
-<p>where,</p>
-<p><span class="math display">\hat{\gamma} = \overbrace{\big( E[Y(a)|G=g] - E[Y(a^{\prime})|G=g] \big)}^{\hat{\delta_g}} - \overbrace{\big(E[Y(a^{\prime})|G=g^{\prime}]- E[Y(a)|G=g^{\prime}]\big)}^{\hat{\delta_{g^{\prime}}}}</span></p>
 <p>We use simulation-based inference methods to compute standard errors and confidence intervals <span class="citation" data-cites="greifer2023">(<a href="#ref-greifer2023" role="doc-biblioref">Greifer et al. 2023</a>)</span>.</p>
 <p><strong>Step 5</strong> Compare differences in causal effects by groups. Compute the differences in the estimated causal effects between different subgroups:</p>
 <p><span class="math display">\hat{\gamma} = \hat{\delta}_g - \hat{\delta}_{g'}</span></p>
