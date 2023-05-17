@@ -1,11 +1,10 @@
-# PSYCH 434 WEEK 9: subsample estimation
+# PSYCH 434: Example script for assessment 3 and 5.
 # May 2023
 # questions: joseph.bulbulia@vuw.ac.nz
 # Running this command will download the functions and packages you need to complete this worksheet.
 # You many find the code by pointing your browser to the webpage that is contained in the link
 
 # Before running this source code, make sure to update to the current version of R, and to update all exisiting packages.
-
 source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
 
 
@@ -13,206 +12,6 @@ source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs
 source(
   "https://raw.githubusercontent.com/go-bayes/templates/main/functions/experimental_funs.R"
 )
-
-
-# Before running this source code, make sure to update to the current version of R, and to update all exisiting packages.
-
-source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
-
-
-
-
-# Install the package if not already installed
-if (!require(ggdag)) {
-  install.packages("ggdag")
-}
-
-set.seed(123)*
-library(ggdag)
-dag1 <- dagify(Y2 ~ A1 + Y0 + A0 + L0 + U,
-               A1 ~ Y0 + A0 + L0 + A0 + U,
-               Y0 ~ U,
-               A1 ~ U,
-               labels = c(
-                 Y2 = "t2/Y",
-                 A1 = "t1/A",
-                 A0 = "t0/A",
-                 Y0 = "t0/Y",
-                 L0 = "t0/L",
-                 U = "U"
-               ),
-               exposure = "A1",
-               outcome = "Y2",
-               unmeasured = "U")
-
-dag1 <- dagify(K6_2 ~ Sl_1,
-               labels = c(
-                 Y2 = "t2/Y",
-                 A1 = "t1/A",
-                 A0 = "t0/A",
-                 Y0 = "t0/Y",
-                 L0 = "t0/L"
-                 U = "U"
-               ),
-               exposure = "A1",
-               outcome = "Y2")
-
-
-
-fig_adjustment <- dag1 |>
-  ggdag_adjustment_set() + theme_dag_blank()
-
-
-fig_adjustment
-
-fig_dag<- dag1 |>
-  ggdag(text = FALSE,
-        use_labels = "label")+ theme_dag_blank()
-
-
-fig_adjustment
-
-
-
-
-ggsave(
-  fig_dag,
-  path = here::here(here::here("figs", "fig_adjustment")),
-  width = 8,
-  height = 6,
-  units = "in",
-  filename = "fig_dag.png",
-  device = 'png',
-  limitsize = FALSE,
-  dpi = 600
-)
-
-
-
-ggsave(
-  fig_dag,
-  path = here::here(here::here("figs", "gt")),
-  width = 8,
-  height = 6,
-  units = "in",
-  filename = "gt_plot.png",
-  device = 'png',
-  limitsize = FALSE,
-  dpi = 600
-)
-
-
-
-
-
-#
-# # inspect
-# tidy_dagitty(dag1)
-#
-# dag1_t <- tidy_dagitty(dag1)
-#
-# # plot
-# ggdag(dag1_t) + theme_dag_blank()
-# #
-# # view
-# ggdag::ggdag_paths(dag1_t)
-#
-# # inspect
-# ggdag_parents(dag1_t, "A1")
-
-# find adjustment set: adjusting for S is sufficient to control for confounding (on the model's assumptions)
-# ggdag_adjustment_set(dag1_t)
-
-
-# aside customise
-ggdag_paths(dag1, text = FALSE, use_labels = "label", shadow = TRUE) +
-  theme_dag(base_size = 14) +
-  theme(legend.position = "none", strip.text = element_blank()) +
-  # set node aesthetics
-  scale_color_manual(values = "#0072B2", na.value = "grey80") +
-  # set label aesthetics
-  scale_fill_manual(values = "#0072B2", na.value = "grey80") +
-  # set arrow aesthetics
-  ggraph::scale_edge_color_manual(values = "#0072B2", na.value = "grey80") +
-  ggtitle("Open paths from smoking to A1 to Y2")
-
-
-
-
-## TASK  Create a Dag for the Study described below on perfectionism
-## hint
-
-baseline_vars = c(
-  "edu",
-  "male",
-  "eth_cat",
-  "employed",
-  "gen_cohort",
-  "nz_dep2018",
-  "nzsei13",
-  "partner",
-  "parent",
-  "pol_orient",
-  "rural_gch2018",
-  "agreeableness",
-  "conscientiousness",
-  "extraversion",
-  "honesty_humility",
-  "openness",
-  "neuroticism",
-  "modesty",
-  "religion_identification_level"
-)
-
-
-## Step 2, select the exposure variable.  This is the "cause"
-
-exposure_var = c("perfectionism")
-
-
-## step 3. select the outcome variable.  These are the outcomes.
-outcome_vars_reflective = c("meaning_purpose",
-                            "meaning_sense")
-
-
-
-
-
-##############################################################################
-
-### SIMULATION COSW
-
-
-## Function I made for simulation confounding and performance of methods -- just a demo
-
-#
-results <- run_simulations(
-  num_simulations = 1000,
-  N = 1000,
-  prob_L1 = .5, # maximize probability of the confounder on treatments A
-  A_on_Y = 0,  # effect of treatment on outcome
-  L_on_A = .6,  # effect of confounder on treatement
-  L_on_Y = 1 # effect of confounder on outcome
-)
-
-results |>
-  kbl(format = "markdown")
-
-create_coefficient_plot(results)+ scale_y_continuous(limits = c(-.5,.5))
-
-# note: maximum bias occurs when prob_L1 = 0.5 because this maximizes the variability (and thus the influence) of the confounder L1.
-#
-# When prob_L1 = 0.5, the binary variable L1 is equally likely to be 0 or 1, and thus there is maximum variability or "mixing" of the confounder across the treatment groups. This allows for the maximum potential for confounding, as L1 has the most influence on both the treatment A and the outcome Y.
-
-# If prob_L1 is close to 0 or 1, then almost all subjects will have the same value for L1 (either 0 or 1), and there will be less potential for L1 to confound the relationship between A and Y. This is because, with a lack of variation in L1, its ability to differently affect the treatment groups (and therefore introduce bias) is reduced.
-
-
-
-
-
-
-
-
 
 ############## ############## ############## ############## ############## ############## ############## ########
 #########  ############## ############## IMPORT DATA ##############  ############## ############## ##############
@@ -227,125 +26,446 @@ nzavs_synth <-
   arrow::read_parquet(here::here("data", "nzavs_dat_synth_t10_t12"))
 
 
-# You may inspect the data (optional)
-## one nice method
-skimr::skim(nzavs_synth)
 
-## inspect colnames
+
+## use colnames to inspect the variables
 colnames(nzavs_synth)
 
-## inspect data properties
-str(nzavs_synth)
+
+#  MAKE SURE TO FAMILIARISE YOURSELF ABOUT THE VARIABLES HERE:
+# https://github.com/go-bayes/psych-434-2023/blob/main/data/readme.qmd
+
+#########################
+#########################
+#########################
+# DATA WRANGLING
+#########################
+#########################
+#########################
+
+# Start with the nzavs_synth dataset
+dt_start <- nzavs_synth |>
+
+  # Create a new column 'kessler_6_sum' by summing across Kessler distress scale items
+  mutate(kessler_6_sum = round(rowSums(across(
+    # Specify the Kessler scale items
+    c(
+      kessler_depressed,
+      # During the last 30 days, how often did you feel so depressed that nothing could cheer you up?
+      kessler_hopeless,
+      # During the last 30 days, how often did you feel hopeless?
+      kessler_nervous,
+      # During the last 30 days, how often did you feel nervous?
+      kessler_effort,
+      # During the last 30 days, how often did you feel that everything was an effort?
+      kessler_restless,
+      # During the last 30 days, how often did you feel restless or fidgety?
+      kessler_worthless  # During the last 30 days, how often did you feel worthless?
+    )
+  )),
+  0)) |>  # Round the sum to the nearest whole number) |>
 
 
-# We will make the coarsen variable for the exposure early
-
-nzavs_synth <- nzavs_synth |>
-  mutate(perfectionism = round(perfectionism)) |> # we create a three-level exposure to enable clear causal contrasts.
+  # Create a categorical variable 'kessler_6_coarsen' based on the sum of Kessler scale items
   mutate(
-    perfectionism_coarsen = cut(
-      perfectionism,
-      breaks = c(1, 4, 5, 7),
+    kessler_6_coarsen = cut(
+      kessler_6_sum,
+      breaks = c(0, 5, 13, 24),
+      # Define thresholds for categories
       include.lowest = TRUE,
       include.highest = TRUE,
       na.rm = TRUE,
       right = FALSE
-    ),
-    perfectionism_coarsen = factor(
-      perfectionism_coarsen,
-      levels = c("[1,4)", "[4,5)", "[5,7]"),
-      labels = c("low", "medium", "high"),
+    )
+  ) |>
+
+  # Create a new column 'kessler_6' as the average of sum scores of Kessler scale items
+  mutate(kessler_6  = mean(rowSums(across(
+    # Specify the Kessler scale items
+    c(
+      kessler_depressed,
+      # During the last 30 days, how often did you feel so depressed that nothing could cheer you up?
+      kessler_hopeless,
+      # During the last 30 days, how often did you feel hopeless?
+      kessler_nervous,
+      # During the last 30 days, how often did you feel nervous?
+      kessler_effort,
+      # During the last 30 days, how often did you feel that everything was an effort?
+      kessler_restless,
+      # During the last 30 days, how often did you feel restless or fidgety ?
+      kessler_worthless  # During the last 30 days, how often did you feel worthless?
+    )
+  )))) |>
+
+  # If desired, create a 't2_meaning' column based on the average of 'meaning_purpose' and 'meaning_sense'
+  dplyr::mutate(meaning = mean(rowSums(across(
+    c(meaning_purpose ,  # My life has a clear sense of purpose.
+      meaning_sense)
+  )) , # I have a good sense of what makes my life meaningful.))),
+  na.rm = TRUE)) |>
+
+  # Transform 'hours_exercise' by applying the log function to compress its scale
+  mutate(hours_exercise_log = log(hours_exercise + 1)) |> # Add 1 to avoid undefined log(0). Hours spent exercising/physical activity
+
+  # Coarsen 'hours_exercise' into categories
+  mutate(
+    hours_exercise_coarsen = cut(
+      hours_exercise,
+      # Hours spent exercising/ physical activity
+      breaks = c(-1, 1, 2, 7, 200),
+      labels = c(
+        "inactive",
+        "somewhat_active",
+        "active",
+        "extremely_active"
+      ),
+      # Define thresholds for categories
+      levels = c("(-1,1]", "(1,3]", "(3,7]", "(7,200]"),
       ordered = TRUE
-    ))
+    )
+  ) |>
+
+  # Create a binary 'urban' variable based on the 'rural_gch2018' variable
+  mutate(urban = factor(
+    ifelse(
+      rural_gch2018 == "medium_urban_accessibility" |
+        # Define urban condition
+        rural_gch2018 == "high_urban_accessibility",
+      "urban",
+      # Label 'urban' if condition is met
+      "rural"  # Label 'rural' if condition is not met
+    )
+  ))
 
 
-sd ( nzavs_synth$hlth_sleep_hours )
 
 
-mean ( nzavs_synth$hlth_sleep_hours )
+# do some checks
+levels(dt_start$hours_exercise_coarsen)
+table(dt_start$hours_exercise_coarsen)
+max( dt_start$hours_exercise)
+min( dt_start$hours_exercise)
+
+# checks
+table(is.na(dt_start$kessler_6_coarsen))
+table(is.na(dt_start$hours_exercise_coarsen))
+
+# justification for transforming exercise" has a very long tail
+hist(dt_start$hours_exercise, breaks = 1000)
+
+# consider only those cases below < or = to 20
+hist(subset(dt_start, hours_exercise <= 20)$hours_exercise)
+
+
+# inspect kessler 6
+table(dt_start$kessler_6_coarsen)
+table(dt_start$hours_exercise_coarsen)
+
+# trick
+hist( as.numeric(dt_start$kessler_6_coarsen) )
+hist( as.numeric(dt_start$hours_exercise_coarsen))
 
 
 
-############## ############## ############## ############## ############## ############## ############## ########
-############## ############## ############## Checks Exposure ############## ############## ######## ##############
 
-# Today will we again be looking at the Average Treatment Effect of perfectionism on life meaning in two different "treatment groups" - Māori and New Zealand Europeans. We'll assess evidence for whether ATE differs between the groups.
+#########################
+#########################
+#########################
+# CFA  FOR KESSLER 6
+#########################
+#########################
+#########################
 
-# Recall that for an association to be causal, a change in the exposure must affect the world
-# Lets look at how much the exposure has changed. No change, no effects!
+# Suppose we have reason to think Kessler 6 isn't one thing.
+# Let's put our factor analysis skills to work
+# Here we will use the paramters and see packages for R (part of the Easystats suite)
+
+# for efa/cfa
+if (!require(psych)) {
+  install.packages("psych")
+  library("psych")
+}
+
+# for reporting
+if (!require(parameters)) {
+  install.packages("parameters")
+  library("parameters")
+}
+
+# for graphing
+if (!require(see)) {
+  install.packages("see")
+  library("see")
+}
+
+# for graphing
+if (!require(lavaan)) {
+  install.packages("lavaan")
+  library("lavaan")
+}
+
+dt_only_k6 <- dt_start |> select(kessler_depressed, kessler_effort,kessler_hopeless,
+                                 kessler_worthless, kessler_nervous,
+                                 kessler_restless)
+
+
+# Check factor structure
+performance::check_factorstructure(dt_only_k6)
+
+
+# exploratory factor analysis
+# explore a factor structure made of 2 latent variables
+efa <- psych::fa(dt_only_k6, nfactors = 2) %>%
+  model_parameters(sort = TRUE, threshold = "max")
+
+efa
+
+# fa -- there is no agreed method!
+# method of agreement:
+
+n <- n_factors(dt_only_k6)
+
+# summary
+n
+
+# view data
+as.data.frame(n)
+
+# plot of smmary
+plot(n) + theme_modern()
+
+
+## CFA
+
+# first we partition the data,  set seed for reproducability
+
+partitions <- datawizard::data_partition(dt_only_k6, training_proportion = 0.7, seed = 123)
+training <- partitions$p_0.7
+test <- partitions$test
+
+# create cfa structurees from efa models
+
+# one factor
+structure_k6_one <- psych::fa(training, nfactors = 1) %>%
+  efa_to_cfa()
+
+# two factor model
+structure_k6_two <- psych::fa(training, nfactors = 2) %>%
+  efa_to_cfa()
+
+# three structure model
+structure_k6_three <- psych::fa(training, nfactors = 3) %>%
+  efa_to_cfa()
+
+# inspect models
+structure_k6_one
+structure_k6_two
+structure_k6_three
+
+# fit and compare models
+one_latent <- suppressWarnings(lavaan::cfa(structure_k6_one, data = test))
+two_latents <- suppressWarnings(lavaan::cfa(structure_k6_two, data = test))
+three_latents <- suppressWarnings(lavaan::cfa(structure_k6_three, data = test))
+
+
+compare <- performance::compare_performance(one_latent, two_latents, three_latents, verbose = FALSE)
+
+
+# view table
+as.data.frame(compare)
+
+# view as html table
+as.data.frame(compare)|>
+  kbl(format = "markdown")
+
+# Interpret table
+# using Goodness-of-Fit indices.
+
+# Chi-square (Chi2): this test assesses the difference between the observed covariance matrix and the covariance matrix predicted by the model. A non-significant chi-square (i.e., p-value > .05) indicates a good fit, but this test is sensitive to sample size. Lower chi-square values indicate better fit.
+#
+# Goodness of Fit Index (GFI), Adjusted Goodness of Fit Index (AGFI), Normed Fit Index (NFI), Non-Normed Fit Index (NNFI), Comparative Fit Index (CFI), Incremental Fit Index (IFI), Relative Noncentrality Index (RNI): these are incremental fit indices. Values closer to 1 indicate a better fit.
+#
+# Root Mean Square Error of Approximation (RMSEA): this index is a measure of fit per degrees of freedom, correcting for model complexity. Lower values (usually below .06) suggest a better fit.
+#
+# Standardized Root Mean square Residual (SRMR): this is the standardised difference between the observed correlation and the predicted correlation. Lower values (usually below .08) indicate a better fit.
+#
+# Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC): These are used to compare models, with lower values indicating a better fit.
+#
+# RESULTS
+#
+# The Chi-square is higher in the three-factor model (747.872) than in the two-factor model (317.971), but lower than the one-factor model (1359.717). This indicates that the two-factor model fits the data better than the other two.
+#
+# The GFI, AGFI, NFI, NNFI, CFI, IFI, RNI are all closer to 1 for the two-factor model than for either the one-factor or the three-factor model. This suggests the two-factor model is the best fit.
+#
+# The RMSEA for the two-factor model (0.051) is lower than for both the one-factor (0.103) and three-factor models (0.083). Lower RMSEA values indicate a better model fit, meaning the two-factor model remains preferable. The p-value for the RMSEA of the three-factor model is less than .001, which is not ideal.
+#
+# The SRMR is lowest for the two-factor model (0.023) compared to both the one-factor (0.049) and three-factor models (0.038), once again suggesting the two-factor model is the best fit.
+#
+# AIC and BIC are similar for all models, so they do not provide a clear preference in this case. these values are typically used to compare models with different numbers of parameters, so they may not be the most critical indices in this case.
+#
+# Overall, based on these results, the two-factor model still appears to provide a better fit to the data than the one-factor or the three-factor models according to these indices. Therefore, the two-factor model should still be preferred.
+#
+# The general principle here is that adding more factors (or latent variables) can sometimes improve the model fit, but it can also lead to overfitting, where the model becomes too complex and may not generalize well to other samples. The key is to find the simplest model that provides a good fit to the data, and in this case, that seems to be the two-factor model.
+
+# **** We should not think of KESSLER 6 as one thing ****
+
+
+# So let's create new variables, anxiety and depression
+
+# Reminder of the factor structure
+structure_k6_two
+
+# new dataset
+dt_start2 <- dt_start |>
+  mutate(depression_latent = mean(rowSums(across( c(kessler_depressed, kessler_hopeless, kessler_effort)), na.rm=TRUE)) ) |>
+  mutate(anxiety_latent  = mean(rowSums(across( c(kessler_depressed, kessler_hopeless, kessler_effort)), na.rm=TRUE)) )
+
+
+
+#########################
+#########################
+#########################
+# Change in exposure
+#########################
+#########################
+#########################
+
+
+# Install the package if not already installed
+if (!require(msm)) {
+  install.packages("msm")
+}
 
 # inspect change in the exposure
-library(msm) # this will allow us to quicky inspect the data for instances of change.
 
 # We only inspect change between the baseline condition and the exposure year
-dt_18_19 <- nzavs_synth |>
+
+# full sample
+dt_exposure <- dt_start2 |>
+
+  # select baseline year and exposure year
   filter(wave == "2018" | wave == "2019") |>
-  select(id, wave, perfectionism, perfectionism_coarsen, eth_cat) |> # the categorical variable needs to be numeric for us to use msm package to investigate change
-  mutate(perfectionism_coarsen_n = as.numeric(perfectionism_coarsen))
 
-#kessler_6
+  # select variables of interest
+  select(id, wave, hours_exercise_coarsen,  eth_cat) |>
 
-# Consider the original response scale
-
-msm::statetable.msm(round(kessler_depressed, 0), id, data = dt_18_19) |>
-  kbl() |>
-  kable_paper(full_width = F)
+  # the categorical variable needs to be numeric for us to use msm package to investigate change
+  mutate(hours_exercise_coarsen_n = as.numeric(hours_exercise_coarsen))
 
 
-# We can count the instances
+#  maybe consider people going from active to vary active
+out <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure)
 
-msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19) |>
-  data.frame() |>  # adding this code does the trick of counting
-  kbl() |>
-  kable_paper(full_width = F)
+out
+# the following table shows state change from the baseline wave to the following wave
 
-
-
-# Lets look at the coarsened variable
-
-msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19) |>
-  kbl() |>
-  kable_paper(full_width = F)
+# Here is explanation of the table.
+# state 1 is   "inactive",
+# state 2 is "somewhat_active",
+# state 3 is "active",
+# state 4 is "extremely_active"
+# Freq denotes the number of cases that have move from one state to another.
 
 
-# Here we see better coverage
-# Recall that clinical psychologists look at 4 and 5 on the 1-7 perfectionism scale as cut off points,
+ #Table in markdown
 
-msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19) |>
-  data.frame() |>
-  kbl() |>
-  kable_paper(full_width = F)
+# | From \ To | Inactive (stayed inactive) | Transitioned to Somewhat Active | Transitioned to Active | Transitioned to Extremely Active |
+#   |---|---|---|---|---|
+#   | **Inactive** | 498 | 221 | 488 | 125 |
+#   | **Somewhat Active** | 222 (became Inactive) | 241 (stayed Somewhat Active) | 561 | 115 |
+#   | **Active** | 366 (became Inactive) | 486 (became Somewhat Active) | 3251 (stayed Active) | 1064 |
+#   | **Extremely Active** | 80 (became Inactive) | 78 (became Somewhat Active) | 868 (became Active) | 1336 (stayed Extremely Active) |
 
+   # This table, known as a transition matrix, shows the shifts in physical activity levels between the baseline wave and the following wave. Each cell in the table indicates the number of individuals who moved from the activity level represented by its row to the activity level represented by its column. For example, the cell at the intersection of the 'Inactive' row and the 'Inactive' column (498) represents the number of individuals who were inactive at the baseline wave and remained inactive at the following wave. The cell at the intersection of the 'Inactive' row and the 'Somewhat Active' column (221) represents the number of individuals who were inactive at the baseline wave and became somewhat active at the following wave, and so on.
+# explicit
 
-# lets break this down by ethnicity
-dt_18_19_e <- dt_18_19 |> filter(eth_cat == "euro")
-dt_18_19_m <- dt_18_19 |> filter(eth_cat == "māori")
-
-
-
-# euro continuous
-msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19_e) |>
-  kbl() |>
-  kable_paper(full_width = F)
-
-# euro coarsen
-msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19_e) |>
-  kbl() |>
-  kable_paper(full_width = F)
-
-#  māori continuous
-msm::statetable.msm(round(perfectionism, 0), id, data = dt_18_19_m) |>
-  kbl() |>
-  kable_paper(full_width = F)
-
-# māori coarsen -- again this looks a little better
-msm::statetable.msm(round(perfectionism_coarsen_n, 0), id, data = dt_18_19_m) |>
-  kbl() |>
-  kable_paper(full_width = F)
+# print.
+data.frame(out)
 
 
-# we can see there are not many "natural experiments" among māori
-# this is a challenge in observational cultural research -- even with large samples (we started with N = 10,000!) we did not have many "natural experiments"
+# Maori only
+
+dt_exposure_maori <- dt_exposure |>
+  filter(eth_cat == "māori")
+
+# lower support
+out <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_maori)
+
+
+out <- data.frame(out)
+
+# european
+dt_exposure_euro <- dt_exposure |>
+  filter(eth_cat == "euro")
+
+# lower support
+out <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_euro)
+
+
+state_names <- c("Inactive", "Somewhat Active", "Active", "Extremely Active")
+
+transition_table( data.frame(out), state_names)
+
+
+# |                     | Inactive | Somewhat Active | Active | Extremely Active |
+# |---------------------|----------|-----------------|--------|------------------|
+# | **Inactive**        | 415      | 187             | 403    | 105              |
+# | **Somewhat Active** | 187      | 213             | 471    | 103              |
+# | **Active**          | 293      | 424             | 2837   | 939              |
+# | **Extremely Active**| 66       | 67              | 753    | 1178             |
+
+
+# This transition matrix describes the shifts in physical activity levels from one state to another for the European ethnic subgroup between the baseline wave and the following wave. The numbers in the cells represent the number of individuals who transitioned from one state (rows) to another (columns). For example, 415 individuals remained inactive from the baseline wave to the following wave, while 187 individuals transitioned from being inactive to somewhat active.
+
+transition_table <- function(data, state_names = NULL){
+
+  # Ensure the data is a dataframe
+  if (!is.data.frame(data)) {
+    data <- as.data.frame(data)
+  }
+
+  # Check if state names are provided
+  if(is.null(state_names)){
+    state_names <- paste0("State ", sort(unique(c(data$from, data$to))))
+  }
+
+  # Convert the data frame to a wide format
+  df <- data %>%
+    pivot_wider(names_from = to, values_from = Freq) %>%
+    mutate(from = factor(from, levels = sort(unique(from)))) %>%
+    arrange(from) %>%
+    mutate(from = state_names[from]) %>%
+    setNames(c("From", state_names))
+
+  # Create the markdown table using knitr's kable function
+  markdown_table <- df %>%
+    kable(format = "markdown", align = 'c')
+
+  # Create the explanation
+  explanation <- paste(
+    "This transition matrix describes the shifts from one state to another between the baseline wave and the following wave.",
+    "The numbers in the cells represent the number of individuals who transitioned from one state (rows) to another (columns).",
+    "For example, the cell in the first row and second column shows the number of individuals who transitioned from the first state (indicated by the left-most cell in the row) to the second state.",
+    "The top left cell shows the number of individuals who remained in the first state.")
+
+  list(explanation = explanation, table = markdown_table)
+}
+
+# Test the function
+data <- data.frame(
+  from = rep(1:4, each = 4),
+  to = rep(1:4, 4),
+  Freq = c(415, 187, 293, 66, 187, 213, 424, 67, 403, 471, 2837, 753, 105, 103, 939, 1178)
+)
+data
+state_names <- c("Inactive", "Somewhat Active", "Active", "Extremely Active")
+result <- transition_table(out, state_names)
+result
+# Print the explanation and table
+cat(result$explanation)
+
+
+
 
 ############## ############## ############## ############## ############## ############## ############## ########
 ####  ####  ####  CREATE DATA FRAME FOR ANALYSIS ####  ####  ################## ############## ######## #########
@@ -416,20 +536,11 @@ prep_reflective <-
 
 
 colnames(prep_reflective)
-prep_reflective$t0_eth_cat
-
-
-dt_only_2 <- prep_reflective |>
-  select(t0_edu, t0_eth_cat)
 
 # I have created a function that will allow you to take a data frame and
 # create a table
-baseline_table(prep_reflective, output_format = "html")
+baseline_table(prep_reflective, output_format = "markdown")
 
-
-baseline_table(dt_only_2, output_format = "html")
-
-skimr::skim(dt_only_2)
 
 # if you just want a nice html table, do this:
 library(table1) # should be in your environment
@@ -437,7 +548,7 @@ library(table1) # should be in your environment
 # get data into shape
 dt_new <- prep_reflective %>%
   select(starts_with("t0")) %>%
-  rename_all( ~ stringr::str_replace(., "^t0_", "")) %>%
+  rename_all(~ stringr::str_replace(., "^t0_", "")) %>%
   mutate(wave = factor(rep("baseline", nrow(prep_reflective)))) |>
   janitor::clean_names(case = "screaming_snake")
 
@@ -448,7 +559,8 @@ baseline_vars_names <- dt_new %>%
   select(-WAVE) %>%
   colnames()
 
-table_baseline_vars <- paste(baseline_vars_names, collapse = "+")
+table_baseline_vars <-
+  paste(baseline_vars_names, collapse = "+")
 
 formula_string_table_baseline <-
   paste("~", table_baseline_vars, "|WAVE")
@@ -472,6 +584,7 @@ table1::t1kable(x, format = "html", booktabs = TRUE) |>
 
 
 ### ### ### ### ### ### SUBGROUP DATA ANALYSIS: DATA WRANGLING  ### ### ### ###
+
 dt_8 <- prep_reflective |>
   mutate(id = factor(1:nrow(prep_reflective))) |>
   # mutate(t1_perfectionism = round(t1_perfectionism)) |> # we create a three-level exposure to enable clear causal contrasts. We could also use a continous variable
@@ -498,19 +611,11 @@ mutate(
 ) |>
   dplyr::filter(t0_eth_cat == "euro" |
                   t0_eth_cat == "māori") |> # Too few asian and pacific
-  mutate(t0_urban = factor(
-    ifelse(
-      t0_rural_gch2018 == "medium_urban_accessibility" |
-        t0_rural_gch2018 == "high_urban_accessibility",
-      "urban",
-      "rural"
-    )
-  )) |>
+
   group_by(id) |>
-   dplyr::mutate(t2_meaning = mean(rowSums(across(
-     c(t2_meaning_purpose,t2_meaning_sense)
-     )),
-  na.rm = TRUE)) |>
+  dplyr::mutate(t2_meaning = mean(c(t2_meaning_purpose,
+                                    t2_meaning_sense),
+                                  na.rm = TRUE)) |>
   ungroup() |>
   # transform numeric variables into z scores (improves estimation)
   dplyr::mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z")) %>%
@@ -519,7 +624,7 @@ mutate(
   select(id, # category is too sparse
          where(is.factor),
          t1_perfectionism, # for comparison
-         ends_with("_z"),) |>
+         ends_with("_z"), ) |>
   # tidy data frame so that the columns are ordered by time (useful for more complex models)
   relocate(id, .before = starts_with("t1_"))   |>
   relocate(starts_with("t0_"), .before = starts_with("t1_"))  |>
@@ -560,8 +665,6 @@ levels_list
 
 
 colnames(dt_8)
-
-
 
 
 
@@ -630,7 +733,7 @@ dt_match <- match_mi_general(
 
 saveRDS(dt_match, here::here("data", "dt_match"))
 
-dt_match<- readRDS(here::here("data", "dt_match"))
+dt_match <- readRDS(here::here("data", "dt_match"))
 
 
 # next we inspect balance. "Max.Diff.Adj" should ideally be less than .05
@@ -959,7 +1062,8 @@ summary(est_r)
 
 # fit model
 fit_all_p <- glm(
-  t2_meaning_z  ~ t1_perfectionism_coarsen * t0_eth_cat, ## note we do not have covariates -- don't need them because we have weighted by the covariates on the exposure to acheive balance.
+  t2_meaning_z  ~ t1_perfectionism_coarsen * t0_eth_cat,
+  ## note we do not have covariates -- don't need them because we have weighted by the covariates on the exposure to acheive balance.
   weights = weights,
   family = family,
   data = df
@@ -1150,7 +1254,8 @@ summary(est_r_cont)
 sim_estimand_r_e_cont
 names(sim_estimand_r_e_cont) <- "estimate_e"
 names(sim_estimand_r_m_cont) <- "estimate_m"
-est_r_cont <- cbind(sim_estimand_r_e_cont, sim_estimand_r_m_cont)
+est_r_cont <-
+  cbind(sim_estimand_r_e_cont, sim_estimand_r_m_cont)
 est_r_cont <-
   transform(est_r_cont, `estimate_m - estimate_e` = estimate_m - estimate_e)
 
@@ -1246,7 +1351,8 @@ as.formula(formula_str_ml)
 model_ml <- lmer(as.formula(formula_str_ml), data = dt_ml)
 
 
-tab_ml <- parameters::model_parameters(model_ml, effects = "fixed")
+tab_ml <-
+  parameters::model_parameters(model_ml, effects = "fixed")
 tab_ml
 plot(tab_ml)
 
@@ -1254,7 +1360,8 @@ plot(tab_ml)
 library(ggeffects)
 
 
-graph_ml <- plot(ggeffects::ggpredict(model_ml, terms = c("time", "perfectionism_z", "eth_cat")))
+graph_ml <-
+  plot(ggeffects::ggpredict(model_ml, terms = c("time", "perfectionism_z", "eth_cat")))
 
 
 # note we see regression to the mean.  this is common. but we do not have causal effects.
@@ -1660,12 +1767,13 @@ formula_str
 
 
 # fit model
-fit_all_all_x  <- glm(# t2_hlth_fatigue_z ~ t0_eth_cat *  t1_hours_exercise_coarsen,
-  formula_str,
-  weights = weights,
-  # weights = if (!is.null(weight_var)) weight_var else NULL,
-  family = family,
-  data = dt_xx)
+fit_all_all_x  <-
+  glm(# t2_hlth_fatigue_z ~ t0_eth_cat *  t1_hours_exercise_coarsen,
+    formula_str,
+    weights = weights,
+    # weights = if (!is.null(weight_var)) weight_var else NULL,
+    family = family,
+    data = dt_xx)
 
 # this tells us little
 summary(fit_all_all_x)
@@ -1722,5 +1830,3 @@ est_all <- transform(est_all, `RD_m - RD_e` = RD_m - RD_e)
 
 # summary
 summary(est_all)
-
-
