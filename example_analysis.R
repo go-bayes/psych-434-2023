@@ -331,11 +331,6 @@ dt_start2 <- dt_start |>
 #########################
 
 
-# Install the package if not already installed
-if (!require(msm)) {
-  install.packages("msm")
-}
-
 # inspect change in the exposure
 
 # We only inspect change between the baseline condition and the exposure year
@@ -353,34 +348,19 @@ dt_exposure <- dt_start2 |>
   mutate(hours_exercise_coarsen_n = as.numeric(hours_exercise_coarsen))
 
 
+
 #  maybe consider people going from active to vary active
 out <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure)
 
 out
-# the following table shows state change from the baseline wave to the following wave
 
-# Here is explanation of the table.
-# state 1 is   "inactive",
-# state 2 is "somewhat_active",
-# state 3 is "active",
-# state 4 is "extremely_active"
-# Freq denotes the number of cases that have move from one state to another.
+# for a function I wrote to create state tables
+state_names <- c("Inactive", "Somewhat Active", "Active", "Extremely Active")
+
+# transition table
 
 
- #Table in markdown
-
-# | From \ To | Inactive (stayed inactive) | Transitioned to Somewhat Active | Transitioned to Active | Transitioned to Extremely Active |
-#   |---|---|---|---|---|
-#   | **Inactive** | 498 | 221 | 488 | 125 |
-#   | **Somewhat Active** | 222 (became Inactive) | 241 (stayed Somewhat Active) | 561 | 115 |
-#   | **Active** | 366 (became Inactive) | 486 (became Somewhat Active) | 3251 (stayed Active) | 1064 |
-#   | **Extremely Active** | 80 (became Inactive) | 78 (became Somewhat Active) | 868 (became Active) | 1336 (stayed Extremely Active) |
-
-   # This table, known as a transition matrix, shows the shifts in physical activity levels between the baseline wave and the following wave. Each cell in the table indicates the number of individuals who moved from the activity level represented by its row to the activity level represented by its column. For example, the cell at the intersection of the 'Inactive' row and the 'Inactive' column (498) represents the number of individuals who were inactive at the baseline wave and remained inactive at the following wave. The cell at the intersection of the 'Inactive' row and the 'Somewhat Active' column (221) represents the number of individuals who were inactive at the baseline wave and became somewhat active at the following wave, and so on.
-# explicit
-
-# print.
-data.frame(out)
+transition_table(out, states_names)
 
 
 # Maori only
@@ -402,7 +382,6 @@ dt_exposure_euro <- dt_exposure |>
 out <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_euro)
 
 
-state_names <- c("Inactive", "Somewhat Active", "Active", "Extremely Active")
 
 transition_table( data.frame(out), state_names)
 
@@ -462,8 +441,8 @@ state_names <- c("Inactive", "Somewhat Active", "Active", "Extremely Active")
 result <- transition_table(out, state_names)
 result
 # Print the explanation and table
+print(result$table)
 cat(result$explanation)
-
 
 
 
