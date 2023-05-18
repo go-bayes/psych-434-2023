@@ -4,6 +4,8 @@
 # Running this command will download the functions and packages you need to complete this worksheet.
 # You many find the code by pointing your browser to the webpage that is contained in the link
 
+# QEUSTION 1. DOES EXCERCISE AFFECT DEPRESSION AMONG MAORI AND NZEUROPEANS? DO THESE EFFECTS DIFFER AMONG MAORI AND NZEUROPEANS?
+
 # Before running this source code, make sure to update to the current version of R, and to update all exisiting packages.
 source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
 
@@ -43,44 +45,13 @@ colnames(nzavs_synth)
 #########################
 #########################
 
-# Start with the nzavs_synth dataset
-dt_start <- nzavs_synth |>
 
-  # Create a new column 'kessler_6_sum' by summing across Kessler distress scale items
-  mutate(kessler_6_sum = round(rowSums(across(
-    # Specify the Kessler scale items
-    c(
-      kessler_depressed,
-      # During the last 30 days, how often did you feel so depressed that nothing could cheer you up?
-      kessler_hopeless,
-      # During the last 30 days, how often did you feel hopeless?
-      kessler_nervous,
-      # During the last 30 days, how often did you feel nervous?
-      kessler_effort,
-      # During the last 30 days, how often did you feel that everything was an effort?
-      kessler_restless,
-      # During the last 30 days, how often did you feel restless or fidgety?
-      kessler_worthless  # During the last 30 days, how often did you feel worthless?
-    )
-  )),
-  0)) |>  # Round the sum to the nearest whole number) |>
-
-
-  # Create a categorical variable 'kessler_6_coarsen' based on the sum of Kessler scale items
-  mutate(
-    kessler_6_coarsen = cut(
-      kessler_6_sum,
-      breaks = c(0, 5, 13, 24),
-      # Define thresholds for categories
-      include.lowest = TRUE,
-      include.highest = TRUE,
-      na.rm = TRUE,
-      right = FALSE
-    )
-  ) |>
-
-  # Create a new column 'kessler_6' as the average of sum scores of Kessler scale items
-  mutate(kessler_6  = mean(rowSums(across(
+# create sum score of kessler 6
+dt_start <- nzavs_synth %>%
+  arrange(id, wave) %>%
+  rowwise() %>%
+  mutate(kessler_6  = mean(
+    sum(
     # Specify the Kessler scale items
     c(
       kessler_depressed,
@@ -94,16 +65,28 @@ dt_start <- nzavs_synth |>
       kessler_restless,
       # During the last 30 days, how often did you feel restless or fidgety ?
       kessler_worthless  # During the last 30 days, how often did you feel worthless?
+    )))) |>
+  mutate(kessler_6_sum = round(
+    sum(c (kessler_depressed,
+                   kessler_hopeless,
+                   kessler_nervous,
+                   kessler_effort,
+                   kessler_restless,
+                   kessler_worthless)),
+    digits = 0
+  )) |>  ungroup() |>
+# Create a categorical variable 'kessler_6_coarsen' based on the sum of Kessler scale items
+  mutate(
+    kessler_6_coarsen = cut(
+      kessler_6_sum,
+      breaks = c(0, 5, 13, 24),
+      # Define thresholds for categories
+      include.lowest = TRUE,
+      include.highest = TRUE,
+      na.rm = TRUE,
+      right = FALSE
     )
-  )))) |>
-
-  # If desired, create a 't2_meaning' column based on the average of 'meaning_purpose' and 'meaning_sense'
-  dplyr::mutate(meaning = mean(rowSums(across(
-    c(meaning_purpose ,  # My life has a clear sense of purpose.
-      meaning_sense)
-  )) , # I have a good sense of what makes my life meaningful.))),
-  na.rm = TRUE)) |>
-
+  ) |>
   # Transform 'hours_exercise' by applying the log function to compress its scale
   mutate(hours_exercise_log = log(hours_exercise + 1)) |> # Add 1 to avoid undefined log(0). Hours spent exercising/physical activity
 
@@ -112,15 +95,13 @@ dt_start <- nzavs_synth |>
     hours_exercise_coarsen = cut(
       hours_exercise,
       # Hours spent exercising/ physical activity
-      breaks = c(-1, 1, 2, 7, 200),
+      breaks = c(-1, 3, 8, 200),
       labels = c(
         "inactive",
-        "somewhat_active",
         "active",
-        "extremely_active"
-      ),
+        "very_active"      ),
       # Define thresholds for categories
-      levels = c("(-1,1]", "(1,3]", "(3,7]", "(7,200]"),
+      levels = c("(-1,2]", "(2,8]", "(8,200]"),
       ordered = TRUE
     )
   ) |>
@@ -215,10 +196,29 @@ performance::check_factorstructure(dt_only_k6)
 
 # exploratory factor analysis
 # explore a factor structure made of 2 latent variables
-efa <- psych::fa(dt_only_k6, nfactors = 2) %>%
+efa <- psych::fa(dt_only_k6, nfactors = 3) %>%
   model_parameters(sort = TRUE, threshold = "max")
 
 efa
+
+# This output presents the results of an exploratory factor analysis (EFA), a statistical method used to discover the underlying structure of a relatively large set of variables. It's often used when you don't have a specific hypothesis about what latent factors (unobservable variables) might be influencing the observed variables in your dataset.
+#
+# In this analysis, we've requested three factors (latent variables), and the table presents the loadings of each observed variable on each of these factors. The loadings can be interpreted as the correlations between the observed variables and the latent factors.
+#
+# Here's how to interpret the output:
+#
+#   The variables kessler_depressed, kessler_worthless, and kessler_hopeless load strongly on the first latent factor (MR1), and do not significantly load on the other two. This suggests that these three variables share some common underlying factor.
+#
+# The variable kessler_nervous loads exclusively on the second latent factor (MR2), suggesting it might represent a different latent construct.
+#
+# The variables kessler_restless and kessler_effort load on the third latent factor (MR3), which could represent yet another underlying construct.
+#
+# The "Complexity" column indicates the complexity of each item. Complexity 1 indicates that the item is influenced mostly by a single factor.
+#
+# The "Uniqueness" column represents the proportion of variance in each variable that is not explained by the factors. For example, the uniqueness of kessler_depressed is 0.33, which means that 33% of the variance in this variable is not accounted for by the three factors.
+#
+# Lastly, the total variance explained by the three latent factors is 66.05%, with MR1 explaining 35.14%, MR2 explaining 17.17%, and MR3 explaining 13.73%. This indicates that about two-thirds of the variance in the six observed variables can be explained by the three latent factors extracted in the analysis.
+
 
 # fa -- there is no agreed method!
 # method of agreement:
@@ -237,24 +237,17 @@ plot(n) + theme_modern()
 
 ## CFA
 
-# first we partition the data,  set seed for reproducability
-
-partitions <- datawizard::data_partition(dt_only_k6, training_proportion = 0.7, seed = 123)
-training <- partitions$p_0.7
-test <- partitions$test
-
-# create cfa structurees from efa models
 
 # one factor
-structure_k6_one <- psych::fa(training, nfactors = 1) %>%
+structure_k6_one <- psych::fa(dt_only_k6, nfactors = 1) |>
   efa_to_cfa()
 
 # two factor model
-structure_k6_two <- psych::fa(training, nfactors = 2) %>%
+structure_k6_two <- psych::fa(dt_only_k6, nfactors = 2) |>
   efa_to_cfa()
 
 # three structure model
-structure_k6_three <- psych::fa(training, nfactors = 3) %>%
+structure_k6_three <- psych::fa(dt_only_k6, nfactors = 3) %>%
   efa_to_cfa()
 
 # inspect models
@@ -267,7 +260,6 @@ one_latent <- suppressWarnings(lavaan::cfa(structure_k6_one, data = test))
 two_latents <- suppressWarnings(lavaan::cfa(structure_k6_two, data = test))
 three_latents <- suppressWarnings(lavaan::cfa(structure_k6_three, data = test))
 
-
 compare <- performance::compare_performance(one_latent, two_latents, three_latents, verbose = FALSE)
 
 
@@ -279,47 +271,53 @@ as.data.frame(compare)|>
   kbl(format = "markdown")
 
 # Interpret table
-# using Goodness-of-Fit indices.
-
-# Chi-square (Chi2): this test assesses the difference between the observed covariance matrix and the covariance matrix predicted by the model. A non-significant chi-square (i.e., p-value > .05) indicates a good fit, but this test is sensitive to sample size. Lower chi-square values indicate better fit.
+# This table provides the results of three different Confirmatory Factor Analysis (CFA) models: one that specifies a single latent factor, one that specifies two latent factors, and one that specifies three latent factors. The results include a number of goodness-of-fit statistics, which can be used to assess how well each model fits the data.
 #
-# Goodness of Fit Index (GFI), Adjusted Goodness of Fit Index (AGFI), Normed Fit Index (NFI), Non-Normed Fit Index (NNFI), Comparative Fit Index (CFI), Incremental Fit Index (IFI), Relative Noncentrality Index (RNI): these are incremental fit indices. Values closer to 1 indicate a better fit.
+# One_latent Model: This model assumes that there is only one underlying latent factor contributing to all variables. This model has a chi-square statistic of 1359.7 with 14 degrees of freedom, which is highly significant (p<0.001), indicating a poor fit of the model to the data. Other goodness-of-fit indices like GFI, AGFI, NFI, NNFI, and CFI are all high (above 0.9), generally indicating good fit, but these indices can be misleading in the presence of large sample sizes. RMSEA is above 0.1 which indicates a poor fit. The SRMR is less than 0.08 which suggests a good fit, but given the high Chi-square and RMSEA values, we can't solely rely on this index. The Akaike information criterion (AIC), Bayesian information criterion (BIC) and adjusted BIC are used for comparing models, with lower values indicating better fit.
 #
-# Root Mean Square Error of Approximation (RMSEA): this index is a measure of fit per degrees of freedom, correcting for model complexity. Lower values (usually below .06) suggest a better fit.
+# Two_latents Model: This model assumes that there are two underlying latent factors. The chi-square statistic is lower than the one-factor model (317.97 with 13 df), suggesting a better fit. The p-value is still less than 0.05, indicating a statistically significant chi-square, which typically suggests a poor fit. However, all other fit indices (GFI, AGFI, NFI, NNFI, and CFI) are above 0.9 and the RMSEA is 0.051, which generally indicate good fit. The SRMR is also less than 0.08 which suggests a good fit. This model has the lowest AIC and BIC values among the three models, indicating the best fit according to these criteria.
 #
-# Standardized Root Mean square Residual (SRMR): this is the standardised difference between the observed correlation and the predicted correlation. Lower values (usually below .08) indicate a better fit.
+# Three_latents Model: This model assumes three underlying latent factors. The chi-square statistic is 747.87 with 12 df, higher than the two-factor model, suggesting a worse fit to the data. Other fit indices such as GFI, AGFI, NFI, NNFI, and CFI are below 0.97 and the RMSEA is 0.083, which generally indicate acceptable but not excellent fit. The SRMR is less than 0.08 which suggests a good fit. The AIC and BIC values are higher than the two-factor model but lower than the one-factor model, indicating a fit that is better than the one-factor model but worse than the two-factor model.
 #
-# Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC): These are used to compare models, with lower values indicating a better fit.
-#
-# RESULTS
-#
-# The Chi-square is higher in the three-factor model (747.872) than in the two-factor model (317.971), but lower than the one-factor model (1359.717). This indicates that the two-factor model fits the data better than the other two.
-#
-# The GFI, AGFI, NFI, NNFI, CFI, IFI, RNI are all closer to 1 for the two-factor model than for either the one-factor or the three-factor model. This suggests the two-factor model is the best fit.
-#
-# The RMSEA for the two-factor model (0.051) is lower than for both the one-factor (0.103) and three-factor models (0.083). Lower RMSEA values indicate a better model fit, meaning the two-factor model remains preferable. The p-value for the RMSEA of the three-factor model is less than .001, which is not ideal.
-#
-# The SRMR is lowest for the two-factor model (0.023) compared to both the one-factor (0.049) and three-factor models (0.038), once again suggesting the two-factor model is the best fit.
-#
-# AIC and BIC are similar for all models, so they do not provide a clear preference in this case. these values are typically used to compare models with different numbers of parameters, so they may not be the most critical indices in this case.
-#
-# Overall, based on these results, the two-factor model still appears to provide a better fit to the data than the one-factor or the three-factor models according to these indices. Therefore, the two-factor model should still be preferred.
-#
-# The general principle here is that adding more factors (or latent variables) can sometimes improve the model fit, but it can also lead to overfitting, where the model becomes too complex and may not generalize well to other samples. The key is to find the simplest model that provides a good fit to the data, and in this case, that seems to be the two-factor model.
-
+# In summary, based on these results, the two-latents model seems to provide the best fit to the data among the three models, according to most of the fit indices and the AIC and BIC. However, all models have significant chi-square statistics, which suggests some degree of misfit. It's also important to consider the substantive interpretation of the factors, to make sure the model makes sense theoretically. You could also consider more complex models, if appropriate.
 # **** We should not think of KESSLER 6 as one thing ****
-
 
 # So let's create new variables, anxiety and depression
 
 # Reminder of the factor structure
 structure_k6_two
 
-# new dataset
-dt_start2 <- dt_start |>
-  mutate(depression_latent = mean(rowSums(across( c(kessler_depressed, kessler_hopeless, kessler_effort)), na.rm=TRUE)) ) |>
-  mutate(anxiety_latent  = mean(rowSums(across( c(kessler_depressed, kessler_hopeless, kessler_effort)), na.rm=TRUE)) )
 
+# get two factors
+dt_start2 <- dt_start |>
+  arrange(id, wave) |>
+  rowwise() |>
+  mutate(
+    kessler_latent_depression = mean(c(kessler_depressed, kessler_hopeless, kessler_effort), na.rm = TRUE),
+    kessler_latent_anxiety  = mean(c(kessler_effort, kessler_nervous, kessler_restless), na.rm = TRUE)
+  ) |> ungroup()
+
+
+
+# You are using the dplyr pipeline (%>%) to first arrange the dt_start data frame by the id and wave columns. Then, for each row (rowwise()), you calculate two new variables:
+#
+# kessler_latent_depression, which is the mean of kessler_depressed, kessler_hopeless, and kessler_effort, and
+# kessler_latent_anxiety, which is the mean of kessler_effort, kessler_nervous, and kessler_restless.
+# The na.rm = TRUE argument ensures that NA values are ignored in the computation of the mean. Finally, you are using ungroup() to remove the rowwise grouping.
+#
+# This will result in a data frame dt_start2 with two new columns that represent the mean of the specified Kessler scale items for each row in the data frame. The assumption here is that these means capture some latent (unobservable) characteristics, namely depression and anxiety.
+#
+# Note: creating these latent variables by simply taking the mean of the observed variables is a bit of a simplification. It is only acceptable for a quick exploratory analysis, but in a full analysis, you'd want to confirm these latent factors statistically, for instance using factor analysis or structural equation modeling, as you did previously. Also, ensure that these constructs are theoretically meaningful and in line with previous research.
+
+hist(dt_start2$kessler_latent_anxiety)
+
+hist(dt_start2$kessler_latent_depression)
+
+
+
+#
+# table( dt_start_2$kessler_latent_anxiety == dt_start2$kessler_latent_anxiety )
+#
 
 
 #########################
@@ -345,9 +343,13 @@ dt_exposure <- dt_start2 |>
   select(id, wave, hours_exercise_coarsen,  eth_cat) |>
 
   # the categorical variable needs to be numeric for us to use msm package to investigate change
-  mutate(hours_exercise_coarsen_n = as.numeric(hours_exercise_coarsen))
+  mutate(hours_exercise_coarsen_n = as.numeric(hours_exercise_coarsen)) |>
+  droplevels()
 
 
+# check
+dt_exposure |>
+  tabyl(hours_exercise_coarsen_n, eth_cat,  wave )
 
 #  maybe consider people going from active to vary active
 out <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure)
@@ -359,7 +361,6 @@ state_names <- c("Inactive", "Somewhat Active", "Active", "Extremely Active")
 
 # transition table
 
-
 transition_table(out, states_names)
 
 
@@ -369,7 +370,15 @@ dt_exposure_maori <- dt_exposure |>
   filter(eth_cat == "māori")
 
 # lower support
-out <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_maori)
+out_m <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_maori)
+
+# with this little support we might consider parametric models
+t_tab_m<- transition_table( out_m, state_names)
+
+#interpretation
+cat(t_tab_m$explanation)
+print(t_tab_m$table)
+
 
 
 out <- data.frame(out)
@@ -379,12 +388,17 @@ dt_exposure_euro <- dt_exposure |>
   filter(eth_cat == "euro")
 
 # lower support
-out <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_euro)
+out_e <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_euro)
 
 
 
-transition_table( data.frame(out), state_names)
+t_tab_e <- transition_table( out_e, state_names)
 
+#interpretation
+cat(t_tab_e$explanation)
+
+# table
+print(t_tab_e$table)
 
 # |                     | Inactive | Somewhat Active | Active | Extremely Active |
 # |---------------------|----------|-----------------|--------|------------------|
@@ -395,54 +409,6 @@ transition_table( data.frame(out), state_names)
 
 
 # This transition matrix describes the shifts in physical activity levels from one state to another for the European ethnic subgroup between the baseline wave and the following wave. The numbers in the cells represent the number of individuals who transitioned from one state (rows) to another (columns). For example, 415 individuals remained inactive from the baseline wave to the following wave, while 187 individuals transitioned from being inactive to somewhat active.
-
-transition_table <- function(data, state_names = NULL){
-
-  # Ensure the data is a dataframe
-  if (!is.data.frame(data)) {
-    data <- as.data.frame(data)
-  }
-
-  # Check if state names are provided
-  if(is.null(state_names)){
-    state_names <- paste0("State ", sort(unique(c(data$from, data$to))))
-  }
-
-  # Convert the data frame to a wide format
-  df <- data %>%
-    pivot_wider(names_from = to, values_from = Freq) %>%
-    mutate(from = factor(from, levels = sort(unique(from)))) %>%
-    arrange(from) %>%
-    mutate(from = state_names[from]) %>%
-    setNames(c("From", state_names))
-
-  # Create the markdown table using knitr's kable function
-  markdown_table <- df %>%
-    kable(format = "markdown", align = 'c')
-
-  # Create the explanation
-  explanation <- paste(
-    "This transition matrix describes the shifts from one state to another between the baseline wave and the following wave.",
-    "The numbers in the cells represent the number of individuals who transitioned from one state (rows) to another (columns).",
-    "For example, the cell in the first row and second column shows the number of individuals who transitioned from the first state (indicated by the left-most cell in the row) to the second state.",
-    "The top left cell shows the number of individuals who remained in the first state.")
-
-  list(explanation = explanation, table = markdown_table)
-}
-
-# Test the function
-data <- data.frame(
-  from = rep(1:4, each = 4),
-  to = rep(1:4, 4),
-  Freq = c(415, 187, 293, 66, 187, 213, 424, 67, 403, 471, 2837, 753, 105, 103, 939, 1178)
-)
-data
-state_names <- c("Inactive", "Somewhat Active", "Active", "Extremely Active")
-result <- transition_table(out, state_names)
-result
-# Print the explanation and table
-print(result$table)
-cat(result$explanation)
 
 
 
@@ -462,8 +428,8 @@ cat(result$explanation)
 
 # Step 1: choose baseline variables.  here we select standard demographic variablees plus personality variables.
 
-colnames(nzavs_synth)
-head(nzavs_synth)
+
+colnames(dt_start)
 
 baseline_vars = c(
   "edu",
@@ -476,7 +442,8 @@ baseline_vars = c(
   "partner",
   "parent",
   "pol_orient",
-  "rural_gch2018",
+ # "rural_gch2018",
+   "urban",
   "agreeableness",
   "conscientiousness",
   "extraversion",
@@ -490,42 +457,38 @@ baseline_vars = c(
 
 ## Step 2, select the exposure variable.  This is the "cause"
 
-exposure_var = c("perfectionism", "perfectionism_coarsen")
+exposure_var = c("hours_exercise_coarsen")
 
 
 ## step 3. select the outcome variable.  These are the outcomes.
-outcome_vars_reflective = c("meaning_purpose",
-                            "meaning_sense")
+outcome_vars_reflective = c("kessler_latent_anxiety",
+                            "kessler_latent_depression")
 
-colnames(nzavs_synth)
 
 
 # the function "create_wide_data" should be in your environment.
 # If not, make sure to run the first line of code in this script once more.  You may ignore the warnings. or uncomment and run the code below
 # source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
-
-prep_reflective <-
+dt_prepare <-
   create_wide_data(
-    dat_long = nzavs_synth,
-    #nzavs_synth,
+    dat_long = dt_start2,
     baseline_vars = baseline_vars,
     exposure_var = exposure_var,
     outcome_vars = outcome_vars_reflective
   )
 
 
-colnames(prep_reflective)
 
 # I have created a function that will allow you to take a data frame and
 # create a table
-baseline_table(prep_reflective, output_format = "markdown")
+baseline_table(dt_prepare, output_format = "markdown")
 
 
 # if you just want a nice html table, do this:
 library(table1) # should be in your environment
 
 # get data into shape
-dt_new <- prep_reflective %>%
+dt_new <- dt_prepare %>%
   select(starts_with("t0")) %>%
   rename_all(~ stringr::str_replace(., "^t0_", "")) %>%
   mutate(wave = factor(rep("baseline", nrow(prep_reflective)))) |>
@@ -564,45 +527,21 @@ table1::t1kable(x, format = "html", booktabs = TRUE) |>
 
 ### ### ### ### ### ### SUBGROUP DATA ANALYSIS: DATA WRANGLING  ### ### ### ###
 
-dt_8 <- prep_reflective |>
+dt <- dt_prepare|>
   mutate(id = factor(1:nrow(prep_reflective))) |>
-  # mutate(t1_perfectionism = round(t1_perfectionism)) |> # we create a three-level exposure to enable clear causal contrasts. We could also use a continous variable
-  # mutate(
-  #   t1_perfectionism_coarsen = cut(
-  #     t1_perfectionism,
-  #     breaks = c(1, 4, 5, 7),
-  #     include.lowest = TRUE,
-  #     include.highest = TRUE,
-  #     na.rm = TRUE,
-  #     right = FALSE
-  #   ),
-  #   t1_perfectionism_coarsen = factor(
-#     t1_perfectionism_coarsen,
-#     levels = c("[1,4)", "[4,5)", "[5,7]"),
-#     labels = c("low", "medium", "high"),
-#     ordered = TRUE
-#   )
-#) |>
-mutate(
+  mutate(
   t0_eth_cat = as.factor(t0_eth_cat),
-  t0_rural_gch2018 = as.factor(t0_rural_gch2018),
+  t0_urban = as.factor(t0_urban),
   t0_gen_cohort = as.factor(t0_gen_cohort)
 ) |>
   dplyr::filter(t0_eth_cat == "euro" |
-                  t0_eth_cat == "māori") |> # Too few asian and pacific
-
-  group_by(id) |>
-  dplyr::mutate(t2_meaning = mean(c(t2_meaning_purpose,
-                                    t2_meaning_sense),
-                                  na.rm = TRUE)) |>
+                t0_eth_cat == "māori") |> # Too few asian and pacific
   ungroup() |>
   # transform numeric variables into z scores (improves estimation)
   dplyr::mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z")) %>%
-  dplyr::select(-t0_rural_gch2018) |>
   # select only factors and numeric values that are z-scores
   select(id, # category is too sparse
          where(is.factor),
-         t1_perfectionism, # for comparison
          ends_with("_z"), ) |>
   # tidy data frame so that the columns are ordered by time (useful for more complex models)
   relocate(id, .before = starts_with("t1_"))   |>
@@ -613,41 +552,56 @@ mutate(
 
 
 # view object
-skimr::skim(dt_8)
+skimr::skim(dt)
+
+# quick cross table
+table( dt$t1_hours_exercise_coarsen, dt$t0_eth_cat )
+
+
+# checks
+hist(dt$t2_kessler_latent_depression_z)
+hist(dt$t2_kessler_latent_anxiety_z)
+
+
+
+
+dt |>
+  tabyl(t0_eth_cat, t1_hours_exercise_coarsen ) |>
+  kbl(format = "markdown")
 
 
 # in a non-snythetic dataset we would inspect for missingness
 # you should report missingness in real data, and describe how you will handle missing data.  we're talking about this in my lab today after class. All are invited.
 
-naniar::vis_miss(dt_8)
+naniar::vis_miss(dt)
 
 # save your dataframe for future use
 
 # make dataframe
-dt_8 = as.data.frame(dt_8)
+dt = as.data.frame(dt)
 
 # save data
-saveRDS(dt_8, here::here("data", "dt_8"))
+saveRDS(dt, here::here("data", "dt"))
 
 
 # read -- you may start here if you need to repeat the analysis
-dt_8 <- readRDS(here::here("data", "dt_8"))
+dt <- readRDS(here::here("data", "dt"))
 
 
-## Check the ethnicity levels
-
-# find names
+# useful
 levels_list <- unique(dt_8[["t0_eth_cat"]])
 
-# we have in this dataset we have 2 levels of ethnicity.
-levels_list
 
-
-colnames(dt_8)
+# Here ends the data wrangling --------------------------------------------
 
 
 
-####### PROPENSITY SCORES AND WEIGHTING #####
+
+
+
+
+# propensity scores -------------------------------------------------------
+
 
 
 # Next we generate propensity scores.  Instead of modelling the outcome (t2_y) we will model the exposure (t1_x) as predicted by baseline indicators (t0_c) that we assume may be associated with the outcome and the exposure.
@@ -655,18 +609,15 @@ colnames(dt_8)
 # First step, obtain the baseline variables. note that we must remove "t0_eth_cat" because we are performing separate weighting for each stratum within this variable. here's the code:
 
 
-baseline_vars_reflective_propensity = dt_8 |>
+baseline_vars_reflective_propensity = dt|>
   dplyr::select(starts_with("t0"), -t0_eth_cat) |> colnames()
 
+# check
 baseline_vars_reflective_propensity
-
-# only for gcomp without stratification (used later)
-baseline_vars_full = dt_8 |>
-  dplyr::select(starts_with("t0")) |> colnames()
 
 
 # define our exposure
-X <- "t1_perfectionism_coarsen"
+X <- "t1_hours_exercise_coarsen"
 
 # define subclasses
 S <- "t0_eth_cat"
@@ -678,29 +629,26 @@ formula_str_prop <-
         "~",
         paste(baseline_vars_reflective_propensity, collapse = "+"))
 
+# this shows the exposure variable as predicted by the baseline confounders.
 formula_str_prop
 
-# I have created a function called "match_mi_general" that will perform the matching for us.
-# For the purposes of our work, we will examine the "ATE" or average treatment effect.
-# Additionally, this week we will only use the coarsened treatment variable
 
-# we need our data to be a data frame, you did this before but do again :)
+# Make sure data is in a data frame format
+dt <- data.frame(dt)
 
 
-dt_8 <- data.frame(dt_8)
+colnames()
 
-
-
-# Noah Greifer recommends trying several approaches, so let us try four matching approaches, as defined by the "method" option in the code:
+# Noah Greifer recommends trying several approaches, so let us try thre matching approaches, as defined by the "method" option in the code:
 # the methods we will try are: # tried cbps, ps, ebal, bart, and energy. of these energy worked best
 # see: https://ngreifer.github.io/WeightIt/
 # we might try cbps, ps, bart, and energy, super. Of these, energy worked best:
 
 
-# to forshadow, "energy" works best for us.
+# energy often works well for matching
 
-dt_match <- match_mi_general(
-  data = dt_8,
+dt_match_anxiety <- match_mi_general(
+  data = dt,
   X = X,
   baseline_vars = baseline_vars_reflective_propensity,
   subgroup = "t0_eth_cat",
@@ -710,32 +658,36 @@ dt_match <- match_mi_general(
 )
 
 
-saveRDS(dt_match, here::here("data", "dt_match"))
+saveRDS(dt_match_energy, here::here("data", "dt_match_energy"))
 
-dt_match <- readRDS(here::here("data", "dt_match"))
+dt_match_energy <- readRDS(here::here("data", "dt_match_energy"))
 
 
 # next we inspect balance. "Max.Diff.Adj" should ideally be less than .05
 
-bal.tab(dt_match$euro, thresholds = c(m = .05))   #  good
-bal.tab(dt_match$māori, thresholds = c(m = .05))  # ok # Note we do have balance on the coarsened exposure
-#bal.tab(dt_match$pacific)  # not good but won't use in contrasts
-#bal.tab(test$asian)  # not good but won't use in contrasts
+# very. good
+bal.tab(dt_match_energy$euro)   #  good
+
+#thresholds = c(m = .05)
+bal.tab(dt_match_energy$māori)  # less good
 
 
-# this blows up :)
-# dt_match_ebal <- match_mi_general(
-#   data = dt_8,
-#   X = X,
-#   baseline_vars = baseline_vars_reflective_propensity,
-#   subgroup = "t0_eth_cat",
-#   estimand = "ATE",
-#   method = "ebal"
-#)
+dt_match_ebal <- match_mi_general(
+  data = dt,
+  X = X,
+  baseline_vars = baseline_vars_reflective_propensity,
+  subgroup = "t0_eth_cat",
+  estimand = "ATE",
+  method = "ebal"
+)
+
+
+bal.tab(dt_match_ebal$euro)   #  very good
+bal.tab(dt_match_ebal$māori)  #very good
 
 # not good
 dt_match_ps <- match_mi_general(
-  data = dt_8,
+  data = dt,
   X = X,
   baseline_vars = baseline_vars_reflective_propensity,
   subgroup = "t0_eth_cat",
@@ -744,131 +696,66 @@ dt_match_ps <- match_mi_general(
 )
 
 # check balance
-bal.tab(dt_match_ps$euro, thresholds = c(m = .05)) # not good
-bal.tab(dt_match_ps$māori, thresholds = c(m = .05)) # not good
+bal.tab(dt_match_ps$euro) # not good
+bal.tab(dt_match_ps$māori) # not good
 
 
-# other options
-# see "weightit" documentation
-dt_match_cbps <- match_mi_general(
-  data = dt_8,
-  X = X,
-  baseline_vars = baseline_vars_reflective_propensity,
-  subgroup = "t0_eth_cat",
-  estimand = "ATE",
-  method = "cbps"
-)
 
-# check balance
-bal.tab(dt_match_cbps$euro) # not good
-bal.tab(dt_match_cbps$māori) # not good
-
-library("SuperLearner")
-
-dt_match_super <- match_mi_sub(
-  data = dt_8,
-  X = X,
-  baseline_vars = baseline_vars_reflective_propensity,
-  subgroup = "t0_eth_cat",
-  estimand = "ATE",
-  method = "super",
-  super = TRUE,
-  SL.library = c("SL.glm", "SL.ranger",
-                 "SL.glm.interaction")
-)
-
-
-# check balance
-bal.tab(dt_match_super$euro) #  good
-bal.tab(dt_match_super$māori) # not good
-
-# save data
-saveRDS(dt_match_super, here::here("data", "dt_match_super"))
-
-# check balance
-bal.tab(dt_match$euro)
-bal.tab(dt_match$māori)
 
 # code for summar
-sum_e <- summary(dt_match$euro)
-sum_m <- summary(dt_match$māori)
+sum_e <- summary(dt_match_energy$euro)
+sum_m <- summary(dt_match_energy$māori)
 # sum_p <- summary(dt_match$pacific)
 # sum_a <- summary(dt_match$asian)
 sum_e
 sum_m
 
+dev.off()
 plot(sum_e)
 plot(sum_m)
 #plot(sum_p)
 #plot(sum_a)
 
-love.plot(dt_match$euro,
+love.plot(dt_match_energy$euro,
           binary = "std",
           thresholds = c(m = .1))
 
-love.plot(dt_match$māori,
+love.plot(dt_match_energy$māori,
           binary = "std",
           thresholds = c(m = .1))
 
-love.plot(dt_match$pacific,
-          binary = "std",
-          thresholds = c(m = .1))
-love.plot(dt_match$asian,
-          binary = "std",
-          thresholds = c(m = .1))
+
+
+# prepare data post-weighting ---------------------------------------------
 
 
 # prepare data
-dt_ref_e <- subset(dt_8, t0_eth_cat == "euro")
-dt_ref_e$weights <- dt_match$euro$weights
+dt_ref_e <- subset(dt, t0_eth_cat == "euro")
+dt_ref_e$weights <- dt_match_ebal$euro$weights
 
 # prepare data
-dt_ref_m <- subset(dt_8, t0_eth_cat == "māori")
-dt_ref_m$weights <- dt_match$māori$weights
+dt_ref_m <- subset(dt, t0_eth_cat == "māori")
+dt_ref_m$weights <- dt_match_ebal$māori$weights
 
-# combine
+# combine data into one data frame
 dt_ref_all <- rbind(dt_ref_e, dt_ref_m)
 
 # call dataframe `df`
 df = dt_ref_all
 
 
-# Let's calculate the ATE for the entire group, ignoring the subclasses.
-# let's make the contrasts between low and high perfectionism.
-baseline_vars_reflective_propensity
-baseline_vars_full
 
-#  GENERAL ATE (Not adjusting for subgroups)
-mod_ref_meaning   <- gcomp_sim(
-  df = df,
-  # note change
-  Y = "t2_meaning_z",
-  X = X,
-  baseline_vars = baseline_vars_full,
-  treat_1 = "high",
-  treat_0 = "low",
-  estimand = "ATE",
-  scale = "RD",
-  type = "RD",
-  nsims = 1000,
-  cores = 8,
-  family = gaussian,
-  weights = TRUE,
-  continuous_X = FALSE,
-  splines = FALSE,
-  new_name = "t2_meaning_z (composite)"
-)
+# ANXIETY ANALYSIS --------------------------------------------------------
 
-# ATE. we will cover "evalues" next week
-
+levels(df$t1_hours_exercise_coarsen)
 
 ### SUBGROUP analysis
-df = dt_ref_all
-Y = "t2_meaning_z"
-X = "t1_perfectionism_coarsen"
+df <-  dt_ref_all
+Y <-  "t2_kessler_latent_anxiety_z"
+X <- "t1_hours_exercise_coarsen" # already defined above
 baseline_vars = baseline_vars_reflective_propensity
-treat_0 = "low"
-treat_1 = "high"
+treat_0 = "inactive"
+treat_1 = "very_active"
 estimand = "ATE"
 scale = "RD"
 nsims = 1000
@@ -907,7 +794,6 @@ fit_all_all  <- glm(
   data = df
 )
 
-summary(fit_all_all)
 
 coefs <- coef(fit_all_all)
 table(is.na(coefs))#     t0_eth_catmāori:t1_perfectionism_coarsen.Q:t0_gen_cohort.C
@@ -918,6 +804,7 @@ table(is.na(coefs))#     t0_eth_catmāori:t1_perfectionism_coarsen.Q:t0_gen_coho
 insight::get_varcov(fit_all_all)
 
 # simulate coefficients
+conflicts_prefer(clarify::sim)
 sim_model_all <- sim(fit_all_all, n = nsims, vcov = "HC1")
 
 
@@ -930,8 +817,10 @@ sim_estimand_all_e <- sim_ame(
   verbose = FALSE
 )
 
+
+# note contrast of interest
 sim_estimand_all_e <-
-  transform(sim_estimand_all_e, RD = `E[Y(low)]` - `E[Y(high)]`)
+  transform(sim_estimand_all_e, RD = `E[Y(inactive)]` - `E[Y(very_active)]`)
 sim_estimand_all_e
 
 
@@ -946,7 +835,7 @@ sim_estimand_all_m <- sim_ame(
 
 # combine
 sim_estimand_all_m <-
-  transform(sim_estimand_all_m, RD = `E[Y(low)]` - `E[Y(high)]`)
+  transform(sim_estimand_all_m, RD = `E[Y(inactive)]` - `E[Y(very_active)]`)
 
 
 # summary
@@ -968,754 +857,41 @@ est_all <- transform(est_all, `RD_m - RD_e` = RD_m - RD_e)
 # view summary
 summary(est_all)
 
-
-
-
-###### ###### ###### TRY ONLY G-COMPUTATION (leaving out Propensity Scores) ###### ######
-
-# check formula:
-formula_str
-
-# fit model
-fit_all_r <- glm(as.formula(formula_str),
-                 #  weights = weights,  # remove weights
-                 family = family,
-                 data = df)
-
-# simulate coefficients
-sim_model_r <- sim(fit_all_r, n = nsims, vcov = "HC1")
-
-
-# simulate effect as modified in europeans
-sim_estimand_r_e <- sim_ame(
-  sim_model_r,
-  var = X,
-  cl = cores,
-  subset = t0_eth_cat == "euro",
-  verbose = FALSE
-)
-
-# wrangle
-sim_estimand_r_e <-
-  transform(sim_estimand_r_e, RD = `E[Y(low)]` - `E[Y(high)]`)
-sim_estimand_r_e
-
-
-# simulate effect as modified in māori
-sim_estimand_r_m <- sim_ame(
-  sim_model_r,
-  var = X,
-  cl = cores,
-  subset = t0_eth_cat == "māori",
-  verbose = FALSE
-)
-
-# wrangle
-sim_estimand_r_m <-
-  transform(sim_estimand_r_m, RD = `E[Y(low)]` - `E[Y(high)]`)
-
-
-# view
-summary(sim_estimand_r_e)
-summary(sim_estimand_r_m)
-
-# rearrange
-names(sim_estimand_r_e) <-
-  paste(names(sim_estimand_r_e), "e", sep = "_")
-
-names(sim_estimand_r_m) <-
-  paste(names(sim_estimand_r_m), "m", sep = "_")
-
-
-est_r <- cbind(sim_estimand_r_e, sim_estimand_r_m)
-est_r <- transform(est_r, `RD_m - RD_e` = RD_m - RD_e)
-
-# doubly robust
-summary(est_all)
-
-# g-computation
-summary(est_r)
-
-
-# only propensity score (no regression stratification)
-
-# fit model
-fit_all_p <- glm(
-  t2_meaning_z  ~ t1_perfectionism_coarsen * t0_eth_cat,
-  ## note we do not have covariates -- don't need them because we have weighted by the covariates on the exposure to acheive balance.
-  weights = weights,
-  family = family,
-  data = df
-)
-
-# simulate coefficients
-sim_model_p <- sim(fit_all_p, n = nsims, vcov = "HC1")
-
-
-# simulate effect as modified in europeans
-sim_estimand_p_e <- sim_ame(
-  sim_model_p,
-  var = X,
-  cl = cores,
-  subset = t0_eth_cat == "euro",
-  verbose = FALSE
-)
-
-sim_estimand_p_e <-
-  transform(sim_estimand_p_e, RD = `E[Y(low)]` - `E[Y(high)]`)
-
-# simulate effect as modified in māori
-sim_estimand_p_m <- sim_ame(
-  sim_model_p,
-  var = X,
-  cl = cores,
-  subset = t0_eth_cat == "māori",
-  verbose = FALSE
-)
-
-# wrangle
-sim_estimand_p_m <-
-  transform(sim_estimand_p_m, RD = `E[Y(low)]` - `E[Y(high)]`)
-
-
-# wrangle
-
-# wrangle
-names(sim_estimand_p_e) <-
-  paste(names(sim_estimand_p_e), "e", sep = "_")
-
-names(sim_estimand_p_m) <-
-  paste(names(sim_estimand_p_m), "m", sep = "_")
-
-
-est_p <- cbind(sim_estimand_p_e, sim_estimand_p_m)
-est_p <- transform(est_p, `RD_m - RD_e` = RD_m - RD_e)
-
-
-# summary of all three approaches are similar
-summary(est_all)
-summary(est_r)
-summary(est_p)
-
-
-
-
-### ### ### ### ### CONTINUOUS EXPOSURE   ### ### ### ### ### ### ### ###
-
-X_cont <- "t1_perfectionism_z"
-
-
-# Only use Engergy balancing for a continuous exposure
-dt_match_cont <- match_mi_general(
-  data = dt_8,
-  X = X_cont,
-  baseline_vars = baseline_vars_reflective_propensity,
-  subgroup = "t0_eth_cat",
-  estimand = "ATE",
-  #focal = "high", # for use with ATT
-  method = "energy"
-)
-
-saveRDS(dt_match_cont, here::here("data", "dt_match_cont"))
-dt_match_cont <- readRDS(here::here("data", "dt_match_cont"))
-
-
-bal.tab(dt_match_cont$euro, thresholds = c(m = .05))   #  good
-bal.tab(dt_match_cont$māori, thresholds = c(m = .05))  # ok
-
-
-# prepare data
-dt_ref_e_cont <- subset(dt_8, t0_eth_cat == "euro")
-dt_ref_e_cont$weights <- dt_match_cont$euro$weights
-
-# prepare data
-dt_ref_m_cont <- subset(dt_8, t0_eth_cat == "māori")
-dt_ref_m_cont$weights <- dt_match_cont$māori$weights
-
-
-# combine
-dt_ref_all_cont <- rbind(dt_ref_e_cont, dt_ref_m_cont)
-
-df = dt_ref_all_cont
-
-
-# Let's calculate the ATE for the entire group, ignoring the subclasses.
-# let's make the contrasts between low and high perfectionism.
-
-mod_ref_meaning_cont   <- gcomp_sim(
-  df = dt_ref_all_cont,
-  # note change
-  Y = "t2_meaning_z",
-  X = X_cont,
-  baseline_vars = baseline_vars_full,
-  treat_1 = "high",
-  treat_0 = "low",
-  estimand = "ATE",
-  scale = "RD",
-  type = "RD",
-  nsims = 1000,
-  cores = 8,
-  family = gaussian,
-  weights = TRUE,
-  continuous_X = TRUE,
-  splines = FALSE,
-  new_name = "t2_meaning_z (composite)"
-)
-
-
-mod_ref_meaning_cont
-
-formula_str_cont <-
-  paste(
-    Y,
-    "~",
-    S,
-    "*",
-    "(",
-    X_cont ,
-    "*",
-    "(",
-    paste(baseline_vars_reflective_propensity, collapse = "+"),
-    ")",
-    ")"
-  )
-
-
-formula_str_cont
-
-
-# fit model
-fit_all_r_cont <- glm(as.formula(formula_str_cont),
-                      #  weights = weights,  # remove weights
-                      family = family,
-                      data = dt_ref_all_cont)
-
-# simulate coefficients
-sim_model_r_cont <- sim(fit_all_r_cont, n = nsims, vcov = "HC3")
-
-
-# simulate effect as modified in europeans
-sim_estimand_r_e_cont <- sim_ame(
-  sim_model_r_cont,
-  var = X_cont,
-  cl = cores,
-  subset = t0_eth_cat == "euro",
-  verbose = FALSE
-)
-
-summary(sim_estimand_r_e_cont)
-
-
-
-# simulate effect as modified in māori
-sim_estimand_r_m_cont <- sim_ame(
-  sim_model_r_cont,
-  var = X_cont,
-  cl = cores,
-  subset = t0_eth_cat == "māori",
-  verbose = FALSE
-)
-sim_estimand_r_m_cont <- transform(sim_estimand_r_m_cont)
-summary(sim_estimand_r_m_cont)
-
-
-
-names(sim_estimand_r_e_cont) <-
-  paste(names(sim_estimand_r_e_cont), "e", sep = "_")
-
-names(sim_estimand_r_m_cont) <-
-  paste(names(sim_estimand_r_m_cont), "m", sep = "_")
-
-summary(sim_estimand_r_e_cont)
-
-summary(sim_estimand_r_m_cont)
-summary(est_r_cont)
-sim_estimand_r_e_cont
-names(sim_estimand_r_e_cont) <- "estimate_e"
-names(sim_estimand_r_m_cont) <- "estimate_m"
-est_r_cont <-
-  cbind(sim_estimand_r_e_cont, sim_estimand_r_m_cont)
-est_r_cont <-
-  transform(est_r_cont, `estimate_m - estimate_e` = estimate_m - estimate_e)
-
-# no difference
-summary(est_r_cont)
-
-
-
-# What do we make of this?
-# the estimand is different here. We are considering people who are moving from average perfectionsim to +1 standard deviation higher.
-
-# i.e. from
-mean(dt_ref_all_cont$t1_perfectionism) #[1] 3.020397
-
-# to
-
-sd(dt_ref_all_cont$t1_perfectionism) + mean(dt_ref_all_cont$t1_perfectionism) #4.426781
-
-# so this is in the range of low to medium in our coarsen variable.  Note that in this range of the data, the causal effects are similar for maori and nz europeans.
-
-
-
-#################### THE FOLLOWING IS JUST FOR INTEREST. IT IS A MULTI-LEVEL MODEL, WHICH WOULD BE STANDARD IN LONGITUDINAL PSYCHOLOGY.  HOWEVER IT IS UNCLEAR WHAT WE LEARN FROM IT #################### #################### ###############
-
-#####. multi-level model
-##### This is how we would generally model "change over time"
-
-
-dt_ml <- nzavs_synth |>
-  mutate(time = as.numeric(wave) - 1) |>
-  group_by(id, wave) |>
-  dplyr::mutate(meaning = mean(c(meaning_purpose,
-                                 meaning_sense),
-                               na.rm = TRUE)) |>
-  ungroup() |>
-  # transform numeric variables into z scores (improves estimation)
-  dplyr::mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z")) %>%
-  # select only factors and numeric values that are z-scores
-  select(id,
-         where(is.factor),
-         perfectionism, # for comparison
-         time,
-         ends_with("_z")) |>
-  data.frame()
-
-baseline_vars_ml = c(
-  "eth_cat",
-  "edu_z",
-  "male",
-  "employed_z",
-  "gen_cohort",
-  "nz_dep2018_z",
-  "nzsei13_z",
-  "partner_z",
-  "parent_z",
-  "pol_orient_z",
-  "rural_gch2018",
-  "agreeableness_z",
-  "conscientiousness_z",
-  "extraversion_z",
-  "honesty_humility_z",
-  "openness_z",
-  "neuroticism_z",
-  "modesty_z",
-  "religion_identification_level_z"
-)
-
-Y_ml = "meaning_z"
-X_ml = "perfectionism_z"
-
-formula_str_ml <-
-  paste(
-    Y_ml,
-    "~",
-    "time",
-    "*",
-    "(",
-    X_ml ,
-    "*",
-    "(",
-    paste(baseline_vars_ml, collapse = "+"),
-    ")",
-    "+",
-    "(1|id)",
-    ")"
-  )
-
-formula_str_ml
-
-library(lme4)
-as.formula(formula_str_ml)
-
-model_ml <- lmer(as.formula(formula_str_ml), data = dt_ml)
-
-
-tab_ml <-
-  parameters::model_parameters(model_ml, effects = "fixed")
-tab_ml
-plot(tab_ml)
-
-
-library(ggeffects)
-
-
-graph_ml <-
-  plot(ggeffects::ggpredict(model_ml, terms = c("time", "perfectionism_z", "eth_cat")))
-
-
-# note we see regression to the mean.  this is common. but we do not have causal effects.
-graph_ml
-
-
-######################################## ################### ########################################
-######################################## STUDENT PROBLEM SET ########################################
-######################################## ################### ########################################
-
-
-# Your task: model the (conditional) ATE of hours_exercise on meaning of life, as these effects are modified by euro or māori ethnicity.
-# Find a sensible cut points for hours_exercise and model the causal effect of moving from low exercise to active on life meaning
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-######################################## ################### ########################################
-########################################       SOLUTION     ########################################
-######################################## ################### ########################################
-
-
-
-# find meaningful cut points
-quantile(round(nzavs_synth$hours_exercise, 1))
-
-#.0-2 = low,
-# 2-7 = some
-# => 7 = active
-
-
-# prepare data
-dt_prep <- nzavs_synth |>
-  mutate(hours_exercise = round(hours_exercise)) |> # we create a three-level exposure to enable clear causal contrasts.
-  mutate(
-    hours_exercise_coarsen = cut(
-      hours_exercise,
-      breaks = c(0, 2, 7, 200),
-      include.lowest = TRUE,
-      include.highest = TRUE,
-      na.rm = TRUE,
-      right = FALSE
-    ),
-    hours_exercise_coarsen = factor(
-      hours_exercise_coarsen,
-      levels = c("[0,2)", "[2,7)", "[7,200]"),
-      labels = c("low", "medium", "high"),
-      ordered = TRUE
-    )
-  )
-
-
-
-
-# we only inspect change between the baseline condition and the exposure year
-dt_exposure_check <- dt_prep |>
-  filter(wave == "2018" | wave == "2019") |>
-  select(id, wave, hours_exercise, hours_exercise_coarsen, eth_cat) |> # the categorical variable needs to be numeric for us to use msm package to investigate change
-  mutate(hours_exercise_coarsen_n = as.numeric(hours_exercise_coarsen))
-
-
-# next we check for change in the exposure
-msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_check) |>
-  kbl() |>
-  kable_paper(full_width = F)
-
-
-
-# lets break this down by ethnicity
-dt_exposure_check_e <-
-  dt_exposure_check |> filter(eth_cat == "euro")
-dt_exposure_check_m <-
-  dt_exposure_check |> filter(eth_cat == "māori")
-
-# euro coarsen
-msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_check_e) |>
-  kbl() |>
-  kable_paper(full_width = F)
-
-# maori coarsen
-msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure_check_m) |>
-  kbl() |>
-  kable_paper(full_width = F)
-
-
-# data wrangling
-
-# step 1: choose baseline variables.  here we select standard demographic variablees plus personality variables.
-
-baseline_vars = c(
-  "edu",
-  "male",
-  "eth_cat",
-  "employed",
-  "gen_cohort",
-  "nz_dep2018",
-  "nzsei13",
-  "partner",
-  "parent",
-  "pol_orient",
-  "rural_gch2018",
-  "agreeableness",
-  "conscientiousness",
-  "extraversion",
-  "honesty_humility",
-  "openness",
-  "neuroticism",
-  "modesty",
-  "religion_identification_level"
-)
-
-
-## Step 2, select the exposure variable.  This is the "cause"
-
-exposure_var = c("hours_exercise_coarsen")
-
-
-## step 3. select the outcome variable.  These are the outcomes.
-outcome_vars = c("hlth_fatigue")
-
-
-# the function "create_wide_data" should be in your environment.
-
-#If not, make sure to run the first line of code in this script once more.  You may ignore the warnings. or uncomment and run the code below
-# source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
-
-prep_execercise <-
-  create_wide_data(
-    dat_long = dt_prep,
-    #nzavs_synth,
-    baseline_vars = baseline_vars,
-    exposure_var = exposure_var,
-    outcome_vars = outcome_vars
-  )
-
-prep_execercise
-
-
-# I have created a function that will allow you to take a data frame and
-# create a table
-baseline_table(prep_execercise, output_format = "markdown")
-
-colnames(prep_execercise)
-### ### ### ### ### ### SUBGROUP DATA ANALYSIS: DATA WRANGLING  ### ### ### ###
-
-dt_x <- prep_execercise |>
-  mutate(id = factor(1:nrow(prep_execercise))) |>
-  mutate(
-    t0_eth_cat = as.factor(t0_eth_cat),
-    t0_rural_gch2018 = as.factor(t0_rural_gch2018),
-    t0_gen_cohort = as.factor(t0_gen_cohort)
-  ) |>
-  dplyr::filter(t0_eth_cat == "euro" |
-                  t0_eth_cat == "māori") |> # Too few asian and pacific
-  mutate(t0_urban = factor(
-    ifelse(
-      t0_rural_gch2018 == "medium_urban_accessibility" |
-        t0_rural_gch2018 == "high_urban_accessibility",
-      "urban",
-      "rural"
-    )
-  )) |>
-  # group_by(id) |>
-  # dplyr::mutate(t2_meaning = mean(c(t2_meaning_purpose,
-  #                                   t2_meaning_sense),
-  #                                 na.rm = TRUE)) |>
-  # ungroup() |>
-  # transform numeric variables into z scores (improves estimation)
-  dplyr::mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z")) %>%
-  dplyr::select(-t0_rural_gch2018) |>
-  # select only factors and numeric values that are z-scores
-  select(id, # category is too sparse
-         where(is.factor), # for comparison
-         ends_with("_z")) |>
-  # tidy data frame so that the columns are ordered by time (useful for more complex models)
-  relocate(id, .before = starts_with("t1_"))   |>
-  relocate(starts_with("t0_"), .before = starts_with("t1_"))  |>
-  relocate(starts_with("t2_"), .after = starts_with("t1_")) |>
-  droplevels()
-
-
-
-
-
-# view object
-skimr::skim(dt_x)
-
-
-# in a non-snythetic dataset we would inspect for missingness
-# you should report missingness in real data, and describe how you will handle missing data.  we're talking about this in my lab today after class. All are invited.
-
-naniar::vis_miss(dt_x)
-
-# save your dataframe for future use
-
-# make dataframe
-dt_x = as.data.frame(dt_x)
-
-# save data
-saveRDS(dt_x, here::here("data", "dt_x"))
-
-
-# read -- you may start here if you need to repeat the analysis
-dt_x <- readRDS(here::here("data", "dt_x"))
-
-
-## Check the ethnicity levels
-
-# find names
-levels_list <- unique(dt_x[["t0_eth_cat"]])
-
-# we have in this dataset we have 2 levels of ethnicity.
-levels_list
-
-
-
-####### PROPENSITY SCORES AND WEIGHTING #####
-
-
-# Next we generate propensity scores.  Instead of modelling the outcome (t2_y) we will model the exposure (t1_x) as predicted by baseline indicators (t0_c) that we assume may be associated with the outcome and the exposure.
-
-# first step, obtain the baseline variables. note that we must remove "t0_eth_cat" because we are performing separate weighting for each stratum within this variable. here's the code:
-
-
-baseline_vars_reflective_propensity_x = dt_x |>
-  dplyr::select(starts_with("t0"), -t0_eth_cat) |> colnames()
-
-baseline_vars_reflective_propensity_x
-
-# define our exposure
-X <- "t1_hours_exercise_coarsen"
-
-# define subclasses
-S <- "t0_eth_cat"
-
-# next we use our trick for creating a formula string, which will reduce our work
-formula_str_prop_x <-
-  paste(X,
-        "~",
-        paste(baseline_vars_reflective_propensity_x, collapse = "+"))
-
-formula_str_prop_x
-
-# I have created a function called "match_mi_general" that will perform the matching for us.
-# For the purposes of our work, we will examine the "ATE" or average treatment effect.
-# Additionally, this week we will only use the coarsened treatment variable
-
-
-baseline_vars_reflective_propensity_x
-# to forshadow, "energy" works best for us.
-
-dt_match_x <- match_mi_general(
-  data = dt_x,
-  X = X,
-  baseline_vars = baseline_vars_reflective_propensity_x,
-  subgroup = "t0_eth_cat",
-  estimand = "ATE",
-  #focal = "high", # for use with ATT
-  method = "energy"
-)
-
-saveRDS(dt_match_x, here::here("data", "dt_match_x"))
-
-
-# next we inspect balance. "Max.Diff.Adj" should ideally be less than .05
-
-bal.tab(dt_match_x$euro, thresholds = c(m = .05))   #  good
-bal.tab(dt_match_x$māori, thresholds = c(m = .05))  # good
-
-
-# match
-dt_match_ebal_x <- match_mi_general(
-  data = dt_x,
-  X = X,
-  baseline_vars = baseline_vars_reflective_propensity_x,
-  subgroup = "t0_eth_cat",
-  estimand = "ATE",
-  method = "ebal"
-)
-
-bal.tab(dt_match_ebal_x$euro, thresholds = c(m = .05))   #  good
-bal.tab(dt_match_ebal_x$māori, thresholds = c(m = .05))  # good
-
-
-# not good
-dt_match_ps_x <- match_mi_general(
-  data = dt_x,
-  X = X,
-  baseline_vars = baseline_vars_reflective_propensity_x,
-  subgroup = "t0_eth_cat",
-  estimand = "ATE",
-  method = "ps"
-)
-
-bal.tab(dt_match_ps_x$euro, thresholds = c(m = .05)) # not good
-bal.tab(dt_match_ps_x$māori, thresholds = c(m = .05)) # not good
-
-
-
-# compare first energy
-sum_e_x <- summary(dt_match_x$euro)
-sum_m_x <- summary(dt_match_x$māori)
-
-plot(sum_e_x)
-plot(sum_m_x)
-
-
-love.plot(dt_match_x$euro,
-          binary = "std",
-          thresholds = c(m = .1))
-love.plot(dt_match_x$māori,
-          binary = "std",
-          thresholds = c(m = .1))
-
-
-sum_e_x <- summary(dt_match_x$euro)
-sum_m_x <- summary(dt_match_x$māori)
-
-plot(sum_e_x)
-plot(sum_m_x)
-
-
-
-# next look at ebal -- which looks a little better
-
-sum_e_bal_x <- summary(dt_match_ebal_x$euro)
-sum_m_bal_x <- summary(dt_match_ebal_x$māori)
-plot(sum_e_bal_x)
-plot(sum_m_bal_x)
-
-
-love.plot(dt_match_ebal_x$euro,
-          binary = "std",
-          thresholds = c(m = .1))
-love.plot(dt_match_ebal_x$māori,
-          binary = "std",
-          thresholds = c(m = .1))
-
-
-
-# prepare data
-dt_ref_e_x <- subset(dt_x, t0_eth_cat == "euro")
-dt_ref_e_x$weights <- dt_match_ebal_x$euro$weights
-
-# prepare data
-dt_ref_m_x <- subset(dt_x, t0_eth_cat == "māori")
-dt_ref_m_x$weights <- dt_match_ebal_x$māori$weights
-
-# combine
-dt_xx  <- rbind(dt_ref_e_x, dt_ref_m_x)
-
-
-### subgroup analysis
-df = dt_xx
-df$weights
-
-
-Y = "t2_hlth_fatigue_z"
-X = "t1_hours_exercise_coarsen"
-baseline_vars = baseline_vars_reflective_propensity_x
-treat_0 = "low"
-treat_1 = "high"
+# This table provides estimated levels of anxiety, in standard deviation units, for different levels of activity for two groups: Māori (indicated by "_m") and NZ Europeans (indicated by "_e").
+#
+# The expectations are named as `E[Y(<level of activity>)]_group`, where the level of activity can be `inactive`, `active`, or `very_active`.
+#
+# Here is a breakdown of the table:
+#
+#   1. For the Māori group (`_m`):
+#
+#   - `E[Y(inactive)]_m`: When inactive, the expected level of anxiety is 0.209 standard deviations, with a 95% confidence interval from 0.092 to 0.324.
+# - `E[Y(active)]_m`: When active, the expected level of anxiety decreases to 0.121 standard deviations, with a 95% confidence interval from 0.048 to 0.201.
+# - `E[Y(very_active)]_m`: When very active, the expected level of anxiety further decreases to 0.087 standard deviations, with a 95% confidence interval from -0.023 to 0.192.
+# - `RD_m`: The risk difference (RD) between inactive and very active Māori individuals is 0.122 standard deviations, with a 95% confidence interval from -0.051 to 0.276. This indicates a decrease in anxiety when individuals move from an inactive to a very active lifestyle.
+#
+# 2. For the NZ European group (`_e`):
+#
+#   - `E[Y(inactive)]_e`: When inactive, the expected level of anxiety is 0.039 standard deviations, with a 95% confidence interval from -0.004 to 0.079.
+# - `E[Y(active)]_e`: When active, the expected level of anxiety slightly decreases to -0.001 standard deviations, with a 95% confidence interval from -0.023 to 0.021.
+# - `E[Y(very_active)]_e`: When very active, the expected level of anxiety further decreases to -0.068 standard deviations, with a 95% confidence interval from -0.107 to -0.031.
+# - `RD_e`: The risk difference (RD) between inactive and very active NZ European individuals is 0.107 standard deviations, with a 95% confidence interval from 0.049 to 0.166. Similar to the Māori group, this indicates a decrease in anxiety when individuals move from an inactive to a very active lifestyle.
+#
+# The last row, `RD_m - RD_e`, represents the difference in risk differences between Māori and NZ Europeans. It's 0.015 standard deviations with a 95% confidence interval from -0.163 to 0.185. This is not statistically significant (the confidence interval contains 0), suggesting that the difference in anxiety reduction from being inactive to very active is not significantly different between the two groups.
+#
+# As with the previous interpretation, these findings should be treated as estimates with some degree of uncertainty, as reflected in the confidence intervals. They suggest a trend, but are subject to statistical variability. It's also important to note that these estimates assume a causal relationship between physical activity and anxiety, and that other factors are held constant, which may not be the case in reality. Other factors might also be influencing these observed relationships.
+
+
+# depression analysis -----------------------------------------------------
+
+
+### SUBGROUP analysis
+df <-  dt_ref_all
+Y <-  "t2_kessler_latent_depression_z"
+X <- "t1_hours_exercise_coarsen" # already defined above
+baseline_vars = baseline_vars_reflective_propensity
+treat_0 = "inactive"
+treat_1 = "very_active"
 estimand = "ATE"
 scale = "RD"
 nsims = 1000
@@ -1737,7 +913,7 @@ formula_str <-
     X ,
     "*",
     "(",
-    paste(baseline_vars_reflective_propensity_x, collapse = "+"),
+    paste(baseline_vars_reflective_propensity, collapse = "+"),
     ")",
     ")"
   )
@@ -1746,66 +922,99 @@ formula_str
 
 
 # fit model
-fit_all_all_x  <-
-  glm(# t2_hlth_fatigue_z ~ t0_eth_cat *  t1_hours_exercise_coarsen,
-    formula_str,
-    weights = weights,
-    # weights = if (!is.null(weight_var)) weight_var else NULL,
-    family = family,
-    data = dt_xx)
+fit_all_all  <- glm(
+  as.formula(formula_str),
+  weights = weights,
+  # weights = if (!is.null(weight_var)) weight_var else NULL,
+  family = family,
+  data = df
+)
 
-# this tells us little
-summary(fit_all_all_x)
 
-# check that all parameters have been estimated.
-coefs <- coef(fit_all_all_x)
-table(is.na(coefs))#
+coefs <- coef(fit_all_all)
+table(is.na(coefs))#     t0_eth_catmāori:t1_perfectionism_coarsen.Q:t0_gen_cohort.C
 
+# #FALSE  TRUE
+# 344     4
+
+insight::get_varcov(fit_all_all)
 
 # simulate coefficients
-sim_model_all_x <- sim(fit_all_all_x, n = nsims, vcov = "HC3")
+conflicts_prefer(clarify::sim)
+sim_model_all <- sim(fit_all_all, n = nsims, vcov = "HC1")
 
 
 # simulate effect as modified in europeans
-sim_estimand_all_e <- sim_ame(
-  sim_model_all_x,
+sim_estimand_all_e_d <- sim_ame(
+  sim_model_all,
   var = X,
   cl = cores,
   subset = t0_eth_cat == "euro",
   verbose = FALSE
 )
 
-# wrangle
-sim_estimand_all_e <-
-  transform(sim_estimand_all_e, RD = `E[Y(low)]` - `E[Y(high)]`)
-sim_estimand_all_e
+
+# note contrast of interest
+sim_estimand_all_e_d <-
+  transform(sim_estimand_all_e_d, RD = `E[Y(inactive)]` - `E[Y(very_active)]`)
+sim_estimand_all_e_d
 
 
 # simulate effect as modified in māori
-sim_estimand_all_m <- sim_ame(
-  sim_model_all_x,
+sim_estimand_all_m_d <- sim_ame(
+  sim_model_all,
   var = X,
   cl = cores,
   subset = t0_eth_cat == "māori",
   verbose = FALSE
 )
 
-# wrangle
-sim_estimand_all_m <-
-  transform(sim_estimand_all_m, RD = `E[Y(low)]` - `E[Y(high)]`)
-
-# wrangle
-
-names(sim_estimand_all_e) <-
-  paste(names(sim_estimand_all_e), "e", sep = "_")
-
-names(sim_estimand_all_m) <-
-  paste(names(sim_estimand_all_m), "m", sep = "_")
-
-
-est_all <- cbind(sim_estimand_all_m, sim_estimand_all_e)
-est_all <- transform(est_all, `RD_m - RD_e` = RD_m - RD_e)
+# combine
+sim_estimand_all_m_d <-
+  transform(sim_estimand_all_m_d, RD = `E[Y(inactive)]` - `E[Y(very_active)]`)
 
 
 # summary
-summary(est_all)
+summary(sim_estimand_all_e_d)
+summary(sim_estimand_all_m_d)
+
+# rearrange
+names(sim_estimand_all_e_d) <-
+  paste(names(sim_estimand_all_e_d), "e", sep = "_")
+
+names(sim_estimand_all_m_d) <-
+  paste(names(sim_estimand_all_m_d), "m", sep = "_")
+
+
+est_all_d <- cbind(sim_estimand_all_m_d, sim_estimand_all_e_d)
+est_all_d <- transform(est_all_d, `RD_m - RD_e` = RD_m - RD_e)
+
+
+# view summary
+summary(est_all_d)
+
+
+# This table provides estimated levels of depression, in standard deviation units, for different levels of activity for two groups: Māori (indicated by "_m") and NZ Europeans (indicated by "_e").
+#
+# The expectations are named as `E[Y(<level of activity>)]_group`, where the level of activity can be `inactive`, `active`, or `very_active`.
+#
+# Here is a breakdown of the results.
+#
+#   1. For the Māori group (`_m`):
+#
+#   - `E[Y(inactive)]_m`: When inactive, the expected level of depression is 0.23 standard deviations, with a 95% confidence interval from 0.116 to 0.356.
+# - `E[Y(active)]_m`: When active, the expected level of depression decreases to 0.193 standard deviations, with a 95% confidence interval from 0.108 to 0.282.
+# - `E[Y(very_active)]_m`: When very active, the expected level of depression further decreases to 0.133 standard deviations, with a 95% confidence interval from 0.009 to 0.262.
+# - `RD_m`: The risk difference (RD) between inactive and very active Māori individuals is 0.097 standard deviations, with a 95% confidence interval from -0.068 to 0.274. This indicates a decrease in depression when individuals move from an inactive to a very active lifestyle.
+#
+# 2. For the NZ European group (`_e`):
+#
+#   - `E[Y(inactive)]_e`: When inactive, the expected level of depression is 0.034 standard deviations, with a 95% confidence interval from -0.012 to 0.078.
+# - `E[Y(active)]_e`: When active, the expected level of depression slightly decreases to -0.006 standard deviations, with a 95% confidence interval from -0.03 to 0.016.
+# - `E[Y(very_active)]_e`: When very active, the expected level of depression further decreases to -0.046 standard deviations, with a 95% confidence interval from -0.086 to -0.007.
+# - `RD_e`: The risk difference (RD) between inactive and very active NZ European individuals is 0.081 standard deviations, with a 95% confidence interval from 0.02 to 0.138. Similar to the Māori group, this indicates a decrease in depression when individuals move from an inactive to a very active lifestyle.
+#
+# The last row, `RD_m - RD_e`, represents the difference in risk differences between Māori and NZ Europeans. It's 0.017 standard deviations with a 95% confidence interval from -0.152 to 0.204. This is not statistically significant (the confidence interval contains 0), suggesting that the difference in depression reduction from being inactive to very active is not significantly different between the two groups.
+#
+# These are estimates and subject to statistical uncertainty. While they suggest a trend, the wide confidence intervals indicate that these estimates come with a degree of uncertainty.
+
