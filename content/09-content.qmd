@@ -28,7 +28,7 @@ source("/Users/joseph/GIT/templates/functions/libs2.R")
 
 ## Link to workbook for this week:
 
-[link to script for this week](https://github.com/go-bayes/psych-434-2023/blob/main/scripts/workbook-9.R)
+[link to template for option 2 assignment 3](https://github.com/go-bayes/psych-434-2023/blob/main/scripts/example_analysis.R)
 
 ## Overview
 
