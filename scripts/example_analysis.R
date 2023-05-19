@@ -142,7 +142,7 @@ hist(subset(dt_start, hours_exercise <= 20)$hours_exercise)
 table(dt_start$kessler_6_coarsen)
 table(dt_start$hours_exercise_coarsen)
 
-# histograms
+# trick
 hist( as.numeric(dt_start$kessler_6_coarsen) )
 hist( as.numeric(dt_start$hours_exercise_coarsen))
 
