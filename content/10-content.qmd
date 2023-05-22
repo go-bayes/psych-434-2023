@@ -1162,18 +1162,18 @@ dt_match_ps <- readRDS(here::here("data", "dt_match_ps"))
 # Peter C. Austin, Elizabeth A. Stuart
 # https://onlinelibrary.wiley.com/doi/10.1002/sim.6607
 
-bal.tab(dt_match_energy$euro)   #  good
+#bal.tab(dt_match_energy$euro)   #  good
 bal.tab(dt_match_ebal$euro)   #  best
-bal.tab(dt_match_ps$euro)   #  not as good
+#bal.tab(dt_match_ps$euro)   #  not as good
 ```
 
 
 Results for Maori
 
 ```{r}
-bal.tab(dt_match_energy$māori)   #  good
+#bal.tab(dt_match_energy$māori)   #  good
 bal.tab(dt_match_ebal$māori)   #  best
-bal.tab(dt_match_ps$māori)   #  not good
+#bal.tab(dt_match_ps$māori)   #  not good
 
 ```
 
@@ -1274,7 +1274,7 @@ dt_ref_all <- rbind(dt_ref_e, dt_ref_m) # combine the data into one dataframe.
 
 ```
 
-## Statistical Model 
+## Anxiety Analysis and Results
 
 
 Let's consider a pseudo experiment where someone moves from inactive to active. 
@@ -1413,9 +1413,8 @@ test_tab <- tab_ate_subgroup_rd(table_estimates_anxiety, delta = 1, sd = 1)
 test_tab |> kbl(format = "markdown")
 ```
 
-##  Differences by subgroups
 
-
+Anxiety results
 
 ```{r}
 df_anxiety_all_plot <- df_anxiety_all |> 
@@ -1433,7 +1432,7 @@ df_anxiety_all_plot|>
   kbl(format = "html")
 ```
 
-## Depression 
+## Depression Analysis and Results
 
 ```{r}
 #| eval: false
@@ -1564,6 +1563,7 @@ Summary
 ```{r}
 # view summary
 df_dep |> 
+  mutate_if(is.numeric, round, 3) |> 
   kbl(format = "html")
 # This table provides estimated levels of depression, in standard deviation units, for different levels of activity for two groups: Māori (indicated by "_m") and NZ Europeans (indicated by "_e").
 #
@@ -1597,10 +1597,10 @@ df_dep |>
 df_dep_plot_data <- df_dep |> 
  rename( lower_ci = `X2.5..`,
          upper_ci = `X97.5..`,
-         estimate = Estimate) 
+         estimate = Estimate) |> 
+  mutate_if(is.numeric, round, 3) 
 
 
-df_dep
 
 plot_sub_forest <- function(df) {
   require(ggplot2)
