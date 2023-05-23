@@ -266,7 +266,7 @@ dt_start <- nzavs_synth %>%
                  "active",
                  "very_active"),
       # Define thresholds for categories
-      levels = c("(-1,2]", "(2,8]", "(8,200]"),
+      levels = c("(-1,3]", "(3,8]", "(8,200]"),
       ordered = TRUE
     )
   ) |>
@@ -305,20 +305,12 @@ table(dt_start$hours_exercise_coarsen)
 max(dt_start$hours_exercise)
 min(dt_start$hours_exercise)
 # checks
-table(is.na(dt_start$kessler_6_coarsen))
-table(is.na(dt_start$hours_exercise_coarsen))
+
 
 # justification for transforming exercise" has a very long tail
 hist(dt_start$hours_exercise, breaks = 1000)
 # consider only those cases below < or = to 20
 hist(subset(dt_start, hours_exercise <= 20)$hours_exercise)
-
-
-# inspect kessler 6
-table(dt_start$kessler_6_coarsen)
-table(dt_start$hours_exercise_coarsen)
-
-hist(as.numeric(dt_start$kessler_6_coarsen))
 hist(as.numeric(dt_start$hours_exercise_coarsen))
 
 ```
@@ -964,9 +956,9 @@ Results, first for Europeans
 ```{r}
 #| label: results_ps_analysis
 #| 
-dt_match_energy <- readRDS(here::here("data", "dt_match_energy"))
+#dt_match_energy <- readRDS(here::here("data", "dt_match_energy"))
 dt_match_ebal <- readRDS(here::here("data", "dt_match_ebal"))
-dt_match_ps <- readRDS(here::here("data", "dt_match_ps"))
+#dt_match_ps <- readRDS(here::here("data", "dt_match_ps"))
 
 # next we inspect balance. "Max.Diff.Adj" should ideally be less than .05, but less than .1 is ok. This is the standardised mean difference. The variance ratio should be less than 2. 
 # note that if the variables are unlikely to influence the outcome we can be less strict. 

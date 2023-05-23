@@ -672,7 +672,7 @@ Next some worked examples.
 \draw [-latex, draw=black] (U1) to (L);
 \draw [-latex, draw =black] (U2) to (L);
 \draw [-latex, draw=black, bend left] (U1) to (Y);
-\draw [-latex, draw =black, bend right] (U2) to (Y);
+\draw [-latex, draw =black, bend right] (U2) to (A);
 \draw [-latex,  draw=red, red, dashed] (A) to (Y);
 
 
@@ -739,6 +739,7 @@ $$Y^{am}\coprod M^{a*}|L$$
 \draw [-latex, draw=blue] (L2) to (M);
 \draw [-latex, draw=blue] (L2) to (Y);
 \draw [-latex, draw= gray, dashed] (M) to (Y);
+
 
 
 
