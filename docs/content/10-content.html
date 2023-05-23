@@ -2777,7 +2777,7 @@ Weighted     220.54 321.09       76.39</code></pre>
 <span id="cb55-61"><a href="#cb55-61" aria-hidden="true" tabindex="-1"></a><span class="co">#rm(sim_estimand_all_e)</span></span>
 <span id="cb55-62"><a href="#cb55-62" aria-hidden="true" tabindex="-1"></a><span class="co"># note contrast of interest</span></span>
 <span id="cb55-63"><a href="#cb55-63" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_e <span class="ot">&lt;-</span></span>
-<span id="cb55-64"><a href="#cb55-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_e, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span>)</span>
+<span id="cb55-64"><a href="#cb55-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_e, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span>)</span>
 <span id="cb55-65"><a href="#cb55-65" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-66"><a href="#cb55-66" aria-hidden="true" tabindex="-1"></a><span class="co">#rm(sim_estimand_all_m)</span></span>
 <span id="cb55-67"><a href="#cb55-67" aria-hidden="true" tabindex="-1"></a></span>
@@ -2794,7 +2794,7 @@ Weighted     220.54 321.09       76.39</code></pre>
 <span id="cb55-78"><a href="#cb55-78" aria-hidden="true" tabindex="-1"></a><span class="co">#m(sim_estimand_all_m)</span></span>
 <span id="cb55-79"><a href="#cb55-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-80"><a href="#cb55-80" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_m <span class="ot">&lt;-</span></span>
-<span id="cb55-81"><a href="#cb55-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_m, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span>)</span>
+<span id="cb55-81"><a href="#cb55-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_m, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span>)</span>
 <span id="cb55-82"><a href="#cb55-82" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-83"><a href="#cb55-83" aria-hidden="true" tabindex="-1"></a><span class="co"># rearrange</span></span>
 <span id="cb55-84"><a href="#cb55-84" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(sim_estimand_all_e) <span class="ot">&lt;-</span></span>
@@ -2840,7 +2840,8 @@ Supply arguments directly to `.fns` through an anonymous function instead.
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># note that I made a function to calculate the Evalue, load this with "experimental functions"</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>test_tab <span class="ot">&lt;-</span> <span class="fu">tab_ate_subgroup_rd</span>(table_estimates_anxiety, <span class="at">delta =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Confidence interval crosses the true value, so its E-value is 1.</code></pre>
+<pre><code>Confidence interval crosses the true value, so its E-value is 1.
+Confidence interval crosses the true value, so its E-value is 1.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>test_tab <span class="sc">|&gt;</span> <span class="fu">kbl</span>(<span class="at">format =</span> <span class="st">"markdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -2858,19 +2859,19 @@ Supply arguments directly to `.fns` through an anonymous function instead.
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">RD_m</td>
-<td style="text-align: right;">-0.027</td>
-<td style="text-align: right;">-0.177</td>
-<td style="text-align: right;">0.129</td>
-<td style="text-align: right;">1.185</td>
-<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">-0.113</td>
+<td style="text-align: right;">0.179</td>
+<td style="text-align: right;">1.189</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">RD_e</td>
-<td style="text-align: right;">0.077</td>
-<td style="text-align: right;">0.020</td>
-<td style="text-align: right;">0.129</td>
-<td style="text-align: right;">1.352</td>
-<td style="text-align: right;">1.166</td>
+<td style="text-align: right;">-0.039</td>
+<td style="text-align: right;">-0.103</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">1.230</td>
+<td style="text-align: right;">1</td>
 </tr>
 </tbody>
 </table>
@@ -2888,15 +2889,15 @@ Supply arguments directly to `.fns` through an anonymous function instead.
 <span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>df_anxiety_all_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                    estimate lower_ci upper_ci
-E[Y(inactive)]_m       0.108    0.014    0.210
-E[Y(active)]_m         0.138    0.063    0.213
-E[Y(very_active)]_m    0.134    0.010    0.258
-RD_m                  -0.027   -0.177    0.129
-E[Y(inactive)]_e       0.034    0.002    0.065
-E[Y(active)]_e        -0.021   -0.046    0.003
-E[Y(very_active)]_e   -0.043   -0.085    0.003
-RD_e                   0.077    0.020    0.129
-RD_m - RD_e           -0.104   -0.269    0.071</code></pre>
+E[Y(inactive)]_m       0.151    0.061    0.247
+E[Y(active)]_m         0.188    0.096    0.272
+E[Y(very_active)]_m    0.179    0.075    0.299
+RD_m                   0.028   -0.113    0.179
+E[Y(inactive)]_e       0.004   -0.029    0.037
+E[Y(active)]_e        -0.017   -0.043    0.007
+E[Y(very_active)]_e   -0.036   -0.086    0.010
+RD_e                  -0.039   -0.103    0.019
+RD_m - RD_e            0.068   -0.088    0.229</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_sub_forest</span>(df_anxiety_all_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -2917,57 +2918,57 @@ RD_m - RD_e           -0.104   -0.269    0.071</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">E[Y(inactive)]_m</td>
-<td style="text-align: right;">0.108</td>
-<td style="text-align: right;">0.014</td>
-<td style="text-align: right;">0.210</td>
+<td style="text-align: right;">0.151</td>
+<td style="text-align: right;">0.061</td>
+<td style="text-align: right;">0.247</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">E[Y(active)]_m</td>
-<td style="text-align: right;">0.138</td>
-<td style="text-align: right;">0.063</td>
-<td style="text-align: right;">0.213</td>
+<td style="text-align: right;">0.188</td>
+<td style="text-align: right;">0.096</td>
+<td style="text-align: right;">0.272</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">E[Y(very_active)]_m</td>
-<td style="text-align: right;">0.134</td>
-<td style="text-align: right;">0.010</td>
-<td style="text-align: right;">0.258</td>
+<td style="text-align: right;">0.179</td>
+<td style="text-align: right;">0.075</td>
+<td style="text-align: right;">0.299</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">RD_m</td>
-<td style="text-align: right;">-0.027</td>
-<td style="text-align: right;">-0.177</td>
-<td style="text-align: right;">0.129</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">-0.113</td>
+<td style="text-align: right;">0.179</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">E[Y(inactive)]_e</td>
-<td style="text-align: right;">0.034</td>
-<td style="text-align: right;">0.002</td>
-<td style="text-align: right;">0.065</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">-0.029</td>
+<td style="text-align: right;">0.037</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">E[Y(active)]_e</td>
-<td style="text-align: right;">-0.021</td>
-<td style="text-align: right;">-0.046</td>
-<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">-0.017</td>
+<td style="text-align: right;">-0.043</td>
+<td style="text-align: right;">0.007</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">E[Y(very_active)]_e</td>
-<td style="text-align: right;">-0.043</td>
-<td style="text-align: right;">-0.085</td>
-<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">-0.036</td>
+<td style="text-align: right;">-0.086</td>
+<td style="text-align: right;">0.010</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">RD_e</td>
-<td style="text-align: right;">0.077</td>
-<td style="text-align: right;">0.020</td>
-<td style="text-align: right;">0.129</td>
+<td style="text-align: right;">-0.039</td>
+<td style="text-align: right;">-0.103</td>
+<td style="text-align: right;">0.019</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">RD_m - RD_e</td>
-<td style="text-align: right;">-0.104</td>
-<td style="text-align: right;">-0.269</td>
-<td style="text-align: right;">0.071</td>
+<td style="text-align: right;">0.068</td>
+<td style="text-align: right;">-0.088</td>
+<td style="text-align: right;">0.229</td>
 </tr>
 </tbody>
 </table>
@@ -3052,7 +3053,7 @@ RD_m - RD_e           -0.104   -0.269    0.071</code></pre>
 <span id="cb65-62"><a href="#cb65-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb65-63"><a href="#cb65-63" aria-hidden="true" tabindex="-1"></a><span class="co"># note contrast of interest</span></span>
 <span id="cb65-64"><a href="#cb65-64" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_e_d <span class="ot">&lt;-</span></span>
-<span id="cb65-65"><a href="#cb65-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_e_d, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span>)</span>
+<span id="cb65-65"><a href="#cb65-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_e_d, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span>)</span>
 <span id="cb65-66"><a href="#cb65-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb65-67"><a href="#cb65-67" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb65-68"><a href="#cb65-68" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate effect as modified in māori</span></span>
@@ -3066,7 +3067,7 @@ RD_m - RD_e           -0.104   -0.269    0.071</code></pre>
 <span id="cb65-76"><a href="#cb65-76" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb65-77"><a href="#cb65-77" aria-hidden="true" tabindex="-1"></a><span class="co"># combine</span></span>
 <span id="cb65-78"><a href="#cb65-78" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_m_d <span class="ot">&lt;-</span></span>
-<span id="cb65-79"><a href="#cb65-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_m_d, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span>)</span>
+<span id="cb65-79"><a href="#cb65-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_m_d, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span>)</span>
 <span id="cb65-80"><a href="#cb65-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb65-81"><a href="#cb65-81" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb65-82"><a href="#cb65-82" aria-hidden="true" tabindex="-1"></a><span class="co"># summary</span></span>
@@ -3123,17 +3124,17 @@ Confidence interval crosses the true value, so its E-value is 1.</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">RD_m</td>
-<td style="text-align: right;">-0.028</td>
-<td style="text-align: right;">-0.175</td>
-<td style="text-align: right;">0.127</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">-0.130</td>
+<td style="text-align: right;">0.165</td>
 <td style="text-align: right;">1.189</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">RD_e</td>
-<td style="text-align: right;">0.039</td>
-<td style="text-align: right;">-0.023</td>
-<td style="text-align: right;">0.100</td>
+<td style="text-align: right;">-0.039</td>
+<td style="text-align: right;">-0.097</td>
+<td style="text-align: right;">0.014</td>
 <td style="text-align: right;">1.230</td>
 <td style="text-align: right;">1</td>
 </tr>
@@ -3160,56 +3161,56 @@ Confidence interval crosses the true value, so its E-value is 1.</code></pre>
 <tr class="odd">
 <td style="text-align: left;">E[Y(inactive)]_m</td>
 <td style="text-align: right;">0.151</td>
-<td style="text-align: right;">0.058</td>
-<td style="text-align: right;">0.254</td>
+<td style="text-align: right;">0.062</td>
+<td style="text-align: right;">0.246</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">E[Y(active)]_m</td>
 <td style="text-align: right;">0.188</td>
-<td style="text-align: right;">0.095</td>
+<td style="text-align: right;">0.094</td>
 <td style="text-align: right;">0.278</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">E[Y(very_active)]_m</td>
 <td style="text-align: right;">0.179</td>
 <td style="text-align: right;">0.069</td>
-<td style="text-align: right;">0.294</td>
+<td style="text-align: right;">0.290</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">RD_m</td>
-<td style="text-align: right;">-0.028</td>
-<td style="text-align: right;">-0.175</td>
-<td style="text-align: right;">0.127</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">-0.130</td>
+<td style="text-align: right;">0.165</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">E[Y(inactive)]_e</td>
 <td style="text-align: right;">0.004</td>
 <td style="text-align: right;">-0.030</td>
-<td style="text-align: right;">0.036</td>
+<td style="text-align: right;">0.038</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">E[Y(active)]_e</td>
 <td style="text-align: right;">-0.017</td>
-<td style="text-align: right;">-0.040</td>
-<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">-0.041</td>
+<td style="text-align: right;">0.008</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">E[Y(very_active)]_e</td>
 <td style="text-align: right;">-0.036</td>
-<td style="text-align: right;">-0.084</td>
-<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">-0.083</td>
+<td style="text-align: right;">0.006</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">RD_e</td>
-<td style="text-align: right;">0.039</td>
-<td style="text-align: right;">-0.023</td>
-<td style="text-align: right;">0.100</td>
+<td style="text-align: right;">-0.039</td>
+<td style="text-align: right;">-0.097</td>
+<td style="text-align: right;">0.014</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">RD_m - RD_e</td>
-<td style="text-align: right;">-0.068</td>
-<td style="text-align: right;">-0.220</td>
-<td style="text-align: right;">0.094</td>
+<td style="text-align: right;">0.068</td>
+<td style="text-align: right;">-0.099</td>
+<td style="text-align: right;">0.226</td>
 </tr>
 </tbody>
 </table>
@@ -5748,7 +5749,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb91-1217"><a href="#cb91-1217" aria-hidden="true" tabindex="-1"></a><span class="co">#rm(sim_estimand_all_e)</span></span>
 <span id="cb91-1218"><a href="#cb91-1218" aria-hidden="true" tabindex="-1"></a><span class="co"># note contrast of interest</span></span>
 <span id="cb91-1219"><a href="#cb91-1219" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_e <span class="ot">&lt;-</span></span>
-<span id="cb91-1220"><a href="#cb91-1220" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_e, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span>)</span>
+<span id="cb91-1220"><a href="#cb91-1220" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_e, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span>)</span>
 <span id="cb91-1221"><a href="#cb91-1221" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-1222"><a href="#cb91-1222" aria-hidden="true" tabindex="-1"></a><span class="co">#rm(sim_estimand_all_m)</span></span>
 <span id="cb91-1223"><a href="#cb91-1223" aria-hidden="true" tabindex="-1"></a></span>
@@ -5765,7 +5766,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb91-1234"><a href="#cb91-1234" aria-hidden="true" tabindex="-1"></a><span class="co">#m(sim_estimand_all_m)</span></span>
 <span id="cb91-1235"><a href="#cb91-1235" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-1236"><a href="#cb91-1236" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_m <span class="ot">&lt;-</span></span>
-<span id="cb91-1237"><a href="#cb91-1237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_m, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span>)</span>
+<span id="cb91-1237"><a href="#cb91-1237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_m, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span>)</span>
 <span id="cb91-1238"><a href="#cb91-1238" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-1239"><a href="#cb91-1239" aria-hidden="true" tabindex="-1"></a><span class="co"># rearrange</span></span>
 <span id="cb91-1240"><a href="#cb91-1240" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(sim_estimand_all_e) <span class="ot">&lt;-</span></span>
@@ -5901,7 +5902,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb91-1376"><a href="#cb91-1376" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-1377"><a href="#cb91-1377" aria-hidden="true" tabindex="-1"></a><span class="co"># note contrast of interest</span></span>
 <span id="cb91-1378"><a href="#cb91-1378" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_e_d <span class="ot">&lt;-</span></span>
-<span id="cb91-1379"><a href="#cb91-1379" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_e_d, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span>)</span>
+<span id="cb91-1379"><a href="#cb91-1379" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_e_d, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span>)</span>
 <span id="cb91-1380"><a href="#cb91-1380" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-1381"><a href="#cb91-1381" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-1382"><a href="#cb91-1382" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate effect as modified in māori</span></span>
@@ -5915,7 +5916,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb91-1390"><a href="#cb91-1390" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-1391"><a href="#cb91-1391" aria-hidden="true" tabindex="-1"></a><span class="co"># combine</span></span>
 <span id="cb91-1392"><a href="#cb91-1392" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_m_d <span class="ot">&lt;-</span></span>
-<span id="cb91-1393"><a href="#cb91-1393" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_m_d, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span>)</span>
+<span id="cb91-1393"><a href="#cb91-1393" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(sim_estimand_all_m_d, <span class="at">RD =</span> <span class="st">`</span><span class="at">E[Y(very_active)]</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">E[Y(inactive)]</span><span class="st">`</span>)</span>
 <span id="cb91-1394"><a href="#cb91-1394" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-1395"><a href="#cb91-1395" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-1396"><a href="#cb91-1396" aria-hidden="true" tabindex="-1"></a><span class="co"># summary</span></span>

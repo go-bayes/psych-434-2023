@@ -1158,7 +1158,7 @@ sim_estimand_all_e <- sim_ame(
 #rm(sim_estimand_all_e)
 # note contrast of interest
 sim_estimand_all_e <-
-  transform(sim_estimand_all_e, RD = `E[Y(inactive)]` - `E[Y(very_active)]`)
+  transform(sim_estimand_all_e, RD = `E[Y(very_active)]` - `E[Y(inactive)]`)
 
 #rm(sim_estimand_all_m)
 
@@ -1175,7 +1175,7 @@ sim_estimand_all_m <- sim_ame(
 #m(sim_estimand_all_m)
 
 sim_estimand_all_m <-
-  transform(sim_estimand_all_m, RD = `E[Y(inactive)]` - `E[Y(very_active)]`)
+  transform(sim_estimand_all_m, RD = `E[Y(very_active)]` - `E[Y(inactive)]`)
 
 # rearrange
 names(sim_estimand_all_e) <-
@@ -1311,7 +1311,7 @@ sim_estimand_all_e_d <- sim_ame(
 
 # note contrast of interest
 sim_estimand_all_e_d <-
-  transform(sim_estimand_all_e_d, RD = `E[Y(inactive)]` - `E[Y(very_active)]`)
+  transform(sim_estimand_all_e_d, RD = `E[Y(very_active)]` - `E[Y(inactive)]`)
 
 
 # simulate effect as modified in māori
@@ -1325,7 +1325,7 @@ sim_estimand_all_m_d <- sim_ame(
 
 # combine
 sim_estimand_all_m_d <-
-  transform(sim_estimand_all_m_d, RD = `E[Y(inactive)]` - `E[Y(very_active)]`)
+  transform(sim_estimand_all_m_d, RD = `E[Y(very_active)]` - `E[Y(inactive)]`)
 
 
 # summary
