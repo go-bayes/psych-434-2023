@@ -1432,7 +1432,7 @@ plot_sub_forest(df_dep_plot_data)
 - No reliable group differences.
 
 
-# Exercises
+## Exercises
 
 
 1.  Generate a Kessler 6 binary score (Not Depressed vs. Moderately or Severely Depressed) 
@@ -1446,8 +1446,7 @@ and also:
 3.  Take Home: estimate whether exercise causally affects nervousness, using the single item of the kessler 6 score. Briefly write up your results.
 
 
-
-# Appendix: MG-CFA
+## Appendix: MG-CFA
 
 
 ### CFA for Kessler 6
