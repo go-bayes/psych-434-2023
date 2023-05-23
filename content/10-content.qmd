@@ -1,6 +1,7 @@
 ---
 title: "Causal Inference: reconsidering cross-cultural experiments"
 date: "2023-MAY-23"
+bibliography: references.bib
 format: 
   html:
     html-math-method: katex
@@ -14,15 +15,13 @@ format:
       caption: none
 ---
 
-
-## Overview 
+## Overview
 
 Today, we dive deep into data analysis for causal inference ast it applies to observational cultural psychology. By the end, you will:
 
-- Better understand how to integrate measurement theory with causal inference 
-- Enhance your proficiency in causal analysis using doubly robust methods
-- Gain insights into the application of sensitivity analysis using E-Values
-
+-   Better understand how to integrate measurement theory with causal inference
+-   Enhance your proficiency in causal analysis using doubly robust methods
+-   Gain insights into the application of sensitivity analysis using E-Values
 
 ## Set up your workspace Preparing for the Journey
 
@@ -154,9 +153,7 @@ if (!require(datawizard)) {
 
 ```
 
-
 ### Import the data
-
 
 ```{r}
 #| label: import data
@@ -166,9 +163,7 @@ nzavs_synth <-
   arrow::read_parquet(here::here("data", "nzavs_dat_synth_t10_t12"))
 ```
 
-
-
-Next, we will inspect column names. 
+Next, we will inspect column names.
 
 Make sure to familiarise your self with the variable names [here](https://github.com/go-bayes/psych-434-2023/blob/main/data/readme.qmd)
 
@@ -187,45 +182,41 @@ colnames(nzavs_synth)
 # https://github.com/go-bayes/psych-434-2023/blob/main/data/readme.qmd
 ```
 
-
-## Revisit the checklist 
+## Revisit the checklist
 
 As we delve deeper, it's essential to remember our checklist:
 
-1. Clearly state your question.
-2. Explain its relevance.
-3. Ensure your question is causal.
-4. Develop a subgroup analysis question if applicable.
+1.  Clearly state your question.
+2.  Explain its relevance.
+3.  Ensure your question is causal.
+4.  Develop a subgroup analysis question if applicable.
 
 Our discussion today revolves around two main questions:
 
-1. Does exercise influence anxiety/depression?
-2. Do these effects differ among NZ Europeans and Māori?
+1.  Does exercise influence anxiety/depression?
+2.  Do these effects differ among NZ Europeans and Māori?
 
 While these questions offer a starting point, they lack specificity. We need to clarify:
 
-- The amount, regularity, and duration of exercise
-- The measures of depression to be used
-- The expected timeline for observing the effects
+-   The amount, regularity, and duration of exercise
+-   The measures of depression to be used
+-   The expected timeline for observing the effects
 
 Remember, we can clarify these by emulating a hypothetical experiment, a concept we call the **Target Trial**.
 
-Our initial responses will be guided by the NZAVS measure of exercise, focusing on the hours of activity per week, the 1-year effect on Kessler-6 depression after initiating a change in exercise, and a particular emphasis on effect-modification by NZ European and Māori ethnic identification. 
+Our initial responses will be guided by the NZAVS measure of exercise, focusing on the hours of activity per week, the 1-year effect on Kessler-6 depression after initiating a change in exercise, and a particular emphasis on effect-modification by NZ European and Māori ethnic identification.
 
 This analysis has practical motivation, as the effects of exercise on mental health and possible differences between cultural groups remain largely uncharted territory.
 
 Our initial responses will be guided by the NZAVS measure of exercise, focusing on the hours of activity per week, the 1-year effect on Kessler-6 depression after initiating a change in exercise, and a particular emphasis on effect-modification by NZ European and Māori ethnic identification. This analysis has practical motivation, as the effects of exercise on mental health and possible differences between cultural groups remain largely uncharted territory.
 
-
 ### Sculpting the Data: A Hands-On Approach
 
 As we venture further, we'll perform a series of transformations to shape our data according to our needs. Our process will involve:
 
-1. Constructing a Kessler 6 average score
-2. Building a Kessler 6 sum score
-3. Generating a Kessler 6 binary score (Not Depressed vs. Moderately or Severely Depressed)
-4. Crafting a log Exercise score
-5. Coarsening the Exercise score
+1.  Constructing a Kessler 6 average score
+2.  Building a Kessler 6 sum score
+3.  Coarsening the Exercise score
 
 Consider the ambiguity in the NZAVS exercise question: "During the past week, list 'Hours spent exercising/physical activity'." Different people interpret physical activity differently; John may consider any wakeful time as physical activity, while Jane counts only aerobic exercise. Such variation underlines the importance of the consistency assumption in causal inference. But we'll delve deeper into that later.
 
@@ -265,22 +256,6 @@ dt_start <- nzavs_synth %>%
     )
   ),
   digits = 0)) |>  ungroup() |>
-  # Create a categorical variable 'kessler_6_coarsen' based on the sum of Kessler scale items
-  mutate(
-    kessler_6_coarsen = cut(
-      kessler_6_sum,
-      breaks = c(0, 5, 24),
-      labels = c("not_depressed",
-                 "mildly_to_severely_depressed"),
-      include.lowest = TRUE,
-      include.highest = TRUE,
-      na.rm = TRUE,
-      right = FALSE
-    )
-  ) |>
-  # Transform 'hours_exercise' by applying the log function to compress its scale
-  mutate(hours_exercise_log = log(hours_exercise + 1)) |> # Add 1 to avoid undefined log(0). Hours spent exercising/physical activity
-  
   # Coarsen 'hours_exercise' into categories
   mutate(
     hours_exercise_coarsen = cut(
@@ -310,19 +285,15 @@ dt_start <- nzavs_synth %>%
 
 ```
 
-Why do we coarsen the exposure?  Recall the consistency assumption of causal inference:
-
+Why do we coarsen the exposure? Recall the consistency assumption of causal inference:
 
 **Consistency:** Can I interpret what it means to intervene on the exposure? I should be able to.
 
-
 **What is th hypothetical experiment here for change in exercise?**
 
-
-Through data wrangling, we can answer our research questions more effectively by manipulating variables into more meaningful and digestible forms.  We imagine an experiment in which people were within one band of the coarsened exercise band and we  
+Through data wrangling, we can answer our research questions more effectively by manipulating variables into more meaningful and digestible forms. We imagine an experiment in which people were within one band of the coarsened exercise band and we
 
 These data checks will ensure the accuracy and reliability of our transformations, setting the foundation for solid data analysis.
-
 
 ```{r}
 #| eval: false
@@ -352,328 +323,10 @@ hist(as.numeric(dt_start$hours_exercise_coarsen))
 
 ```
 
-### CFA for Kessler 6
-
-
-We have learned how to do confirmatory factor analysis. Let's put this knowledge to use but clarifying the underlying factor structure of Kessler-6
-
-The code below will:
-
-* Load required packages. 
-* Select the Kessler 6 items
-* Check whether there is sufficient correlation among the variables to support factor analysis. 
-
-```{r}
-#| label: cfa_factor_structure
-
-# select the columns we need. 
-dt_only_k6 <- dt_start |> select(kessler_depressed, kessler_effort,kessler_hopeless,
-                                 kessler_worthless, kessler_nervous,
-                                 kessler_restless)
-
-
-# check factor structure
-performance::check_factorstructure(dt_only_k6)
-
-```
-
-
-The code below will allow us to explore the factor structure, on the assumption of n = 3 factors. 
-
-```{r}
-#| label: efa_made_easy
-# exploratory factor analysis
-# explore a factor structure made of 3 latent variables
-efa <- psych::fa(dt_only_k6, nfactors = 3) %>%
-  model_parameters(sort = TRUE, threshold = "max")
-
-efa
-```
-
-This output describes an exploratory factor analysis (EFA) with 3 factors conducted on the Kessler 6 (K6) scale data. The K6 scale is used to measure psychological distress. 
-
-The analysis identifies three latent factors, labeled MR1, MR2, and MR3, which collectively account for 66.05% of the variance in the K6 data. The factors MR1, MR2, and MR3 explain 35.14%, 17.17%, and 13.73% of the variance respectively.
-
-Factor loadings, indicating the strength and direction of the relationship between the K6 items and the latent factors, are as follows:
-
-1. Factor MR1 is strongly associated with 'kessler_depressed', 'kessler_worthless', and 'kessler_hopeless' with loadings of 0.85, 0.79, and 0.75 respectively.
-2. Factor MR2 is exclusively linked with 'kessler_nervous' with a loading of 1.00.
-3. Factor MR3 relates to 'kessler_restless' and 'kessler_effort' with loadings of 0.69 and 0.48 respectively.
-
-The 'Uniqueness' values show the proportion of each variable's variance that isn't shared with the other variables.
-
-The 'Complexity' values give a measure of how each item loads on more than one factor. All the items are either loading exclusively on one factor (complexity=1.00) or slightly more than one factor. 'kessler_effort' with complexity of 1.66 shows it's the item most shared between the factors.
-
-The analysis suggests these K6 items measure may measure three somewhat distinct, yet related, factors of psychological distress. 
-
-However, the meaning of these factors would need to be interpreted in the context of the variables and the theoretical framework of the study.
-
-
-Notably, there are many many theoretical frameworks for in measurement theory. Here is a brief description of the different conclusions one might make, depending on one's preferred theory. 
-
-```{r}
-#| label: plot_factors
-#| code-fold: true
-
-n <- n_factors(dt_only_k6)
-
-# plot
-plot(n) + theme_classic()
-```
-
-### Confirmatory factor analysis (ignoring groups)
-
-
-```{r}
-#| label: cfa
-# first partition the data 
-part_data <- datawizard::data_partition(dt_only_k6, traing_proportion = .07, seed = 123)
-
-
-# set up training data
-training <- part_data$p_0.7
-test <- part_data$test
-
-
-# one factor model
-structure_k6_one <- psych::fa(training, nfactors = 1) |>
-  efa_to_cfa()
-
-# two factor model model
-structure_k6_two <- psych::fa(training, nfactors = 2) |>
-  efa_to_cfa()
-
-# three factor model
-structure_k6_three <- psych::fa(training, nfactors = 3) %>%
-  efa_to_cfa()
-
-# inspect models
-structure_k6_one
-structure_k6_two
-structure_k6_three
-```
-
-
-Next we perform the confirmatory factor analysis.
-
-
-```{r}
-#| label: fit-models
-# fit and compare models
-
-# one latent model
-one_latent <-
-  suppressWarnings(lavaan::cfa(structure_k6_one, data = test))
-
-# two latents model
-two_latents <-
-  suppressWarnings(lavaan::cfa(structure_k6_two, data = test))
-
-# three latents model
-three_latents <-
-  suppressWarnings(lavaan::cfa(structure_k6_three, data = test))
-
-
-# compare models
-compare <-
-  performance::compare_performance(one_latent, two_latents, three_latents, verbose = FALSE)
-
-# view as html table
-as.data.frame(compare) |>
-  kbl(format = "markdown")
-```
-
-This table provides the results of three different Confirmatory Factor Analysis (CFA) models: one that specifies a single latent factor, one that specifies two latent factors, and one that specifies three latent factors. The results include a number of goodness-of-fit statistics, which can be used to assess how well each model fits the data.
-
-#### One_latent CFA: 
-
-This model assumes that there is only one underlying latent factor contributing to all variables. This model has a chi-square statistic of 1359.7 with 14 degrees of freedom, which is highly significant (p<0.001), indicating a poor fit of the model to the data. Other goodness-of-fit indices like GFI, AGFI, NFI, NNFI, and CFI are all high (above 0.9), generally indicating good fit, but these indices can be misleading in the presence of large sample sizes. RMSEA is above 0.1 which indicates a poor fit. The SRMR is less than 0.08 which suggests a good fit, but given the high Chi-square and RMSEA values, we can't solely rely on this index. The Akaike information criterion (AIC), Bayesian information criterion (BIC) and adjusted BIC are used for comparing models, with lower values indicating better fit.
-
-#### Two_latents CFA
-
-This model assumes that there are two underlying latent factors. The chi-square statistic is lower than the one-factor model (317.97 with 13 df), suggesting a better fit. The p-value is still less than 0.05, indicating a statistically significant chi-square, which typically suggests a poor fit. However, all other fit indices (GFI, AGFI, NFI, NNFI, and CFI) are above 0.9 and the RMSEA is 0.051, which generally indicate good fit. The SRMR is also less than 0.08 which suggests a good fit. This model has the lowest AIC and BIC values among the three models, indicating the best fit according to these criteria.
-
-#### Three_latents CFA
-
-This model assumes three underlying latent factors. The chi-square statistic is 747.87 with 12 df, higher than the two-factor model, suggesting a worse fit to the data. Other fit indices such as GFI, AGFI, NFI, NNFI, and CFI are below 0.97 and the RMSEA is 0.083, which generally indicate acceptable but not excellent fit. The SRMR is less than 0.08 which suggests a good fit. The AIC and BIC values are higher than the two-factor model but lower than the one-factor model, indicating a fit that is better than the one-factor model but worse than the two-factor model.
-
-Based on these results, the two-latents model seems to provide the best fit to the data among the three models, according to most of the fit indices and the AIC and BIC. Note, all models have significant chi-square statistics, which suggests some degree of misfit. It's also important to consider the substantive interpretation of the factors, to make sure the model makes sense theoretically. 
-
-
-
-
-### Multi-group Confirmatory Factor Analysis
-
-
-This script runs multi-group confirmatory factor analysis (MG-CFA)
-
-
-```{r}
-#| label: group_by_cfa
-
-# select needed columns plus 'ethnicity'
-# filter dataset for only 'euro' and 'maori' ethnic categories
-dt_eth_k6_eth <- dt_start |> 
-  filter(eth_cat == "euro" | eth_cat == "maori") |> 
-  select(kessler_depressed, kessler_effort,kessler_hopeless,
-         kessler_worthless, kessler_nervous,
-         kessler_restless, eth_cat)
-
-# partition the dataset into training and test subsets
-# stratify by ethnic category to ensure balanced representation
-part_data_eth <- datawizard::data_partition(dt_eth_k6_eth, traing_proportion = .07, seed = 123, group = "eth_cat")
-
-training_eth <- part_data_eth$p_0.7
-test_eth <- part_data_eth$test
-
-# run confirmatory factor analysis (CFA) models for configural invariance across ethnic groups
-# models specify one, two, and three latent variables
-one_latent_eth_configural <- suppressWarnings(lavaan::cfa(structure_k6_one, group = "eth_cat", data = test_eth))
-two_latents_eth_configural <- suppressWarnings(lavaan::cfa(structure_k6_two, group = "eth_cat", data = test_eth))
-three_latents_eth_configural <- suppressWarnings(lavaan::cfa(structure_k6_three, group = "eth_cat", data = test_eth))
-
-# compare model performances for configural invariance
-compare_eth_configural <- performance::compare_performance(one_latent_eth_configural, two_latents_eth_configural, three_latents_eth_configural, verbose = FALSE)
-
-# run CFA models for metric invariance, holding factor loadings equal across groups
-# models specify one, two, and three latent variables
-one_latent_eth_metric <- suppressWarnings(lavaan::cfa(structure_k6_one, group = "eth_cat", group.equal = "loadings", data = test_eth))
-two_latents_eth_metric  <- suppressWarnings(lavaan::cfa(structure_k6_two, group = "eth_cat", group.equal = "loadings", data = test_eth))
-three_latents_eth_metric  <- suppressWarnings(lavaan::cfa(structure_k6_three, group = "eth_cat",group.equal = "loadings", data = test_eth))
-
-# compare model performances for metric invariance
-compare_eth_metric  <- performance::compare_performance(one_latent_eth_metric, two_latents_eth_metric, three_latents_eth_metric, verbose = FALSE)
-
-# run CFA models for scalar invariance, holding factor loadings and intercepts equal across groups
-# models specify one, two, and three latent variables
-one_latent_eth_scalar <- suppressWarnings(lavaan::cfa(structure_k6_one, group = "eth_cat", group.equal = c("loadings","intercepts"), data = test_eth))
-two_latents_eth_scalar  <- suppressWarnings(lavaan::cfa(structure_k6_two, group = "eth_cat", group.equal =  c("loadings","intercepts"), data = test_eth))
-three_latents_eth_scalar  <- suppressWarnings(lavaan::cfa(structure_k6_three, group = "eth_cat",group.equal =  c("loadings","intercepts"), data = test_eth))
-
-# compare model performances for scalar invariance
-compare_eth_scalar  <- performance::compare_performance(one_latent_eth_scalar, two_latents_eth_scalar, three_latents_eth_scalar, verbose = FALSE)
-
-
-```
-
-Recall, in the context of measurement and factor analysis, the concepts of *configural*, *metric*, and *scalar invariance* relate to the comparability of a measurement instrument, such as a survey or test, across different groups. 
-
-We saw in part 1 of this course that these invariance concepts are frequently tested in the context of cross-cultural, multi-group, or longitudinal studies.
-
-Let's first define these concepts, and then apply them to the context of the Kessler 6 (K6) Distress Scale used among Maori and New Zealand Europeans.
-
-1. **Configural invariance** refers to the most basic level of measurement invariance, and it is established when the same pattern of factor loadings and structure is observed across groups. This means that the underlying constructs (factors) are defined the same way for different groups. This doesn't mean the strength of relationship between items and factors (loadings) or the item means (intercepts) are the same, just that the items relate to the same factors in all groups. 
-
-In the context of the K6 Distress Scale, configural invariance would suggest that the same six items are measuring the construct of psychological distress in the same way for both Māori and New Zealand Europeans, even though the strength of the relationship between the items and the construct (distress), or the average scores, might differ.
-
-2. **Metric invariance** (also known as "weak invariance") refers to the assumption that factor loadings are equivalent across groups, meaning that the relationship or association between the measured items and their underlying factor is the same in all groups. This is important when comparing the strength of relationships with other variables across groups. 
-
-If metric invariance holds for the K6 Distress Scale, this would mean that a unit change in the latent distress factor would correspond to the same change in each item score (e.g., feeling nervous, hopeless, restless, etc.) for both Māori and New Zealand Europeans. 
-
-3. **Scalar invariance** (also known as "strong invariance") involves equivalence of both factor loadings and intercepts (item means) across groups. This means that not only are the relationships between the items and the factors the same across groups (as with metric invariance), but also the zero-points or origins of the scales are the same. Scalar invariance is necessary when one wants to compare latent mean scores across groups.
-
-In the context of the K6 Distress Scale, if scalar invariance holds, it would mean that a specific score on the scale would correspond to the same level of the underlying distress factor for both Māori and New Zealand Europeans. It would mean that the groups do not differ systematically in how they interpret and respond to the items. If this holds, one can make meaningful comparisons of distress level between Maori and New Zealand Europeans based on the scale scores.
-
-Note: each of these levels of invariance is a progressively stricter test of the equivalence of the measurement instrument across groups. Demonstrating scalar invariance, for example, also demonstrates configural and metric invariance. On the other hand, failure to demonstrate metric invariance means that scalar invariance also does not hold. These tests are therefore usually conducted in sequence. The results of these tests should be considered when comparing group means or examining the relationship between a scale and other variables across groups.
-
-
-### Configural invariance
-
-```{r}
-as.data.frame(compare_eth_configural)|>
-  kbl(format = "markdown")
-```
-
-The table represents the comparison of three multi-group confirmatory factor analysis (CFA) models conducted to test for configural invariance across different ethnic categories (eth_cat). Configural invariance refers to whether the pattern of factor loadings is the same across groups. It's the most basic form of measurement invariance.
-
-Looking at the results, we can draw the following conclusions:
-
-1. **Chi2 (Chi-square)**: A lower value suggests a better model fit. In this case, the two_latents_eth_configural model exhibits the lowest Chi2 value, suggesting it has the best fit according to this metric.
-
-2. **GFI (Goodness of Fit Index) and AGFI (Adjusted Goodness of Fit Index)**: These values range from 0 to 1, with values closer to 1 suggesting a better fit. The two_latents_eth_configural model has the highest GFI and AGFI values, indicating it is the best fit according to these indices.
-
-3. **NFI (Normed Fit Index), NNFI (Non-Normed Fit Index, also called TLI), CFI (Comparative Fit Index)**: These range from 0 to 1, with values closer to 1 suggesting a better fit. The one_latent_eth_configural model has the highest values, suggesting it is the best fit according to these metrics.
-
-4. **RMSEA (Root Mean Square Error of Approximation)**: Lower values are better, with values below 0.05 considered good and up to 0.08 considered acceptable. In this table, the two_latents_eth_configural model has an RMSEA of 0.05, which falls within the acceptable range.
-
-5. **RMR (Root Mean Square Residual) and SRMR (Standardized Root Mean Square Residual)**: Lower values are better, typically less than 0.08 is considered a good fit. All models exhibit acceptable RMR and SRMR values, with the two_latents_eth_configural model having the lowest.
-
-6. **RFI (Relative Fit Index), PNFI (Parsimonious Normed Fit Index), IFI (Incremental Fit Index), RNI (Relative Noncentrality Index)**: These range from 0 to 1, with values closer to 1 suggesting a better fit. The one_latent_eth_configural model has the highest values, suggesting the best fit according to these measures.
-
-7. **AIC (Akaike Information Criterion) and BIC (Bayesian Information Criterion)**: Lower values indicate a better fit when comparing models. The two_latents_eth_configural model has the lowest AIC and BIC, suggesting it is the best fit according to these criteria.
-
-8. **p_Chi2 and p_RMSEA**: These are the significance levels for the Chi-square test and the RMSEA, respectively. Non-significant values (p > 0.05) suggest a good fit. Only the RMSEA for the two_latents_eth_configural model is non-significant, suggesting a good fit.
-
-Overall, the two_latents_eth_configural model appears to provide the best fit across multiple indices, suggesting configural invariance (i.e., the same general factor structure) across ethnic categories with a two-factor solution. As with the previous assessment, theoretical soundness and other substantive considerations should also be taken into account when deciding on the final model.
-
-### Metric Equivalence
-
-```{r}
-as.data.frame(compare_eth_metric)|>
-  kbl(format = "markdown")
-```
-
-This table presents the results of a multi-group confirmatory factor analysis (CFA) conducted to test metric equivalence (also known as measurement invariance) across different ethnic categories (eth_cat). The models (one_latent_eth_metric, two_latents_eth_metric, three_latents_eth_metric) were run with a constraint of equal factor loadings across groups, which is a requirement for metric invariance.
-
-Here's the interpretation of the fit indices:
-
-1. **Chi2 (Chi-square)**: Lower values indicate better model fit. The two_latents_eth_metric model has the lowest Chi2 value, suggesting the best fit according to this measure.
-
-2. **GFI (Goodness of Fit Index), AGFI (Adjusted Goodness of Fit Index)**: These range from 0 to 1, with values closer to 1 indicating a better fit. The two_latents_eth_metric model has the highest GFI and AGFI values, suggesting the best fit according to these indices.
-
-3. **NFI (Normed Fit Index), NNFI (Non-Normed Fit Index, or TLI), CFI (Comparative Fit Index)**: These range from 0 to 1, with values closer to 1 indicating a better fit. For these indices, the one_latent_eth_metric model has the highest values, suggesting the best fit according to these measures.
-
-4. **RMSEA (Root Mean Square Error of Approximation)**: Lower values are better, with values below 0.05 generally considered good, and values up to 0.08 considered acceptable. Only the two_latents_eth_metric model has an RMSEA within the acceptable range (0.051).
-
-5. **RMR (Root Mean Square Residual) and SRMR (Standardized Root Mean Square Residual)**: Lower values are better, typically less than 0.08 is considered a good fit. All models have acceptable RMR and SRMR values, with the two_latents_eth_metric model having the lowest, indicating the best fit.
-
-6. **RFI (Relative Fit Index), PNFI (Parsimonious Normed Fit Index), IFI (Incremental Fit Index), RNI (Relative Noncentrality Index)**: These range from 0 to 1, with values closer to 1 indicating better fit. The one_latent_eth_metric model has the highest values, suggesting the best fit according to these indices.
-
-7. **AIC (Akaike Information Criterion) and BIC (Bayesian Information Criterion)**: Lower values indicate a better fit when comparing models. The two_latents_eth_metric model has the lowest AIC and BIC, indicating the best fit according to these criteria.
-
-8. **p_Chi2 and p_RMSEA**: These are the significance levels for the Chi-square test and the RMSEA, respectively. Non-significant values (p > 0.05) suggest a good fit. Only the RMSEA for the two_latents_eth_metric model is non-significant, suggesting a good fit.
-
-In summary, the two_latents_eth_metric model appears to provide the best fit overall, indicating that a two-factor solution might be appropriate and that the metric equivalence (equal factor loadings) assumption is supported across ethnic categories. However, one must also take into consideration the theoretical soundness of the model and other substantive considerations when deciding on the final model.
-
-
-### Scalar Equivalence
-
-
-```{r}
-# view as html table
-as.data.frame(compare_eth_scalar)|>
-  kbl(format = "markdown")
-```
-
-The table presents the results of a multi-group confirmatory factor analysis (CFA) conducted to test scalar equivalence (also known as measurement invariance) across different ethnic categories (eth_cat). The models (one_latent_eth_scalar, two_latents_eth_scalar, three_latents_eth_scalar) were run with constraints on both factor loadings and intercepts to be equal across groups, a requirement for scalar invariance. 
-
-Here's the interpretation of the fit indices:
-
-1. **Chi2 (Chi-square)**: Lower values indicate better model fit. The two_latents_eth_scalar model has the lowest Chi2 value, suggesting the best fit according to this measure.
-
-2. **GFI (Goodness of Fit Index), AGFI (Adjusted Goodness of Fit Index)**: These range from 0 to 1, with values closer to 1 indicating a better fit. The two_latents_eth_scalar model has the highest GFI and AGFI values, suggesting the best fit according to these indices.
-
-3. **NFI (Normed Fit Index), NNFI (Non-Normed Fit Index, or TLI), CFI (Comparative Fit Index)**: These range from 0 to 1, with values closer to 1 indicating a better fit. The one_latent_eth_scalar model has the highest values, suggesting the best fit according to these measures.
-
-4. **RMSEA (Root Mean Square Error of Approximation)**: Lower values are better, with values below 0.05 generally considered good, and values up to 0.08 considered acceptable. Only the two_latents_eth_scalar model has an RMSEA within the acceptable range (0.05).
-
-5. **RMR (Root Mean Square Residual) and SRMR (Standardized Root Mean Square Residual)**: Lower values are better, typically less than 0.08 is considered a good fit. All models have acceptable RMR and SRMR values, with the two_latents_eth_scalar model having the lowest, indicating the best fit.
-
-6. **RFI (Relative Fit Index), PNFI (Parsimonious Normed Fit Index), IFI (Incremental Fit Index), RNI (Relative Noncentrality Index)**: These range from 0 to 1, with values closer to 1 indicating better fit. The one_latent_eth_scalar model has the highest values, suggesting the best fit according to these indices.
-
-7. **AIC (Akaike Information Criterion) and BIC (Bayesian Information Criterion)**: Lower values indicate a better fit when comparing models. The two_latents_eth_scalar model has the lowest AIC and BIC, indicating the best fit according to these criteria.
-
-8. **p_Chi2 and p_RMSEA**: These are the significance levels for the Chi-square test and the RMSEA, respectively. Non-significant values (p > 0.05) suggest a good fit. Only the RMSEA for the two_latents_eth_scalar model is non-significant, suggesting a good fit.
-
-In summary, the two_latents_eth_scalar model appears to provide the best fit overall, indicating that a two-factor solution might be appropriate and that the scalar equivalence (equal factor loadings and intercepts) assumption is supported across ethnic categories. However, one must also consider the theoretical soundness of the model and other substantive considerations when deciding on the final model.
-
-
-Overall it seems that we have good evidence for the two-factor model of Kessler-6. 
-
-Let's next get the data into shape for analysis. Here we create a variable for the two factors:
-
 
 ### Create variables for the latent factors
+
+Let's next get the data into shape for analysis. Here we create a variable for the two factors (see Appendix)
 
 ```{r}
 #| label: extract_two_factors
@@ -690,29 +343,81 @@ dt_start2 <- dt_start |>
 
 ```
 
-
-Inspect the data 
+Inspect the data: anxiety
 
 ```{r}
 #| label: histogram_kessler_anxiety
-hist(dt_start2$kessler_latent_anxiety)
-```
+hist(dt_start2$kessler_latent_anxiety, by = dt_start2$eth_cat)
 
+create_histograms_anxiety <- function(df) {
+  # require patchwork
+  library(patchwork)
+  
+  # separate the data by eth_cat
+  df1 <- df %>% filter(eth_cat == "euro") # replace "level_1" with actual level
+  df2 <- df %>% filter(eth_cat == "māori") # replace "level_2" with actual level
+  
+  # create the histograms
+  p1 <- ggplot(df1, aes(x=kessler_latent_anxiety)) +
+    geom_histogram(binwidth = 1, fill = "dodgerblue", color = "black") +
+    ggtitle("Kessler Latent Anxiety: NZ Euro") +
+    xlab("kessler_latent_anxiety") +
+    ylab("Count")
+  
+  p2 <- ggplot(df2, aes(x=kessler_latent_anxiety)) +
+    geom_histogram(binwidth = 1, fill = "brown", color = "black") +
+    ggtitle("Kessler Latent Anxiety: Māori") +
+    xlab("kessler_latent_anxiety") +
+    ylab("Count")
+  
+  # plot the histograms
+ p1 + p2 + plot_annotation(tag_levels = "a", title = "comparison of anxiety histograms")
+}
+
+create_histograms_anxiety(dt_start2)
+
+
+```
 
 ```{r}
 #| label: histogram_kessler_depression
-hist(dt_start2$kessler_latent_depression)
+create_histograms_depression <- function(df) {
+  # require patchwork
+  library(patchwork)
+  
+  # separate the data by eth_cat
+  df11 <- df %>% filter(eth_cat == "euro") # replace "level_1" with actual level
+  df22 <- df %>% filter(eth_cat == "māori") # replace "level_2" with actual level
+  
+  # create the histograms
+  p11 <- ggplot(df11, aes(x=kessler_latent_depression)) +
+    geom_histogram(binwidth = 1, fill = "dodgerblue", color = "black") +
+    ggtitle("Kessler Latent Depression: NZ Euro") +
+    xlab("kessler_latent_depression") +
+    ylab("Count") + theme_classic()
+  
+  p22 <- ggplot(df22, aes(x=kessler_latent_depression)) +
+    geom_histogram(binwidth = 1, fill = "brown", color = "black") +
+    ggtitle("Kessler Latent Depression: Māori") +
+    xlab("kessler_latent_depression") +
+    ylab("Count") + theme_classic()
+  
+  # plot the histograms
+ p11 + p22 + plot_annotation(tag_levels = "a", title = "comparison of depression histograms")
+}
+
+create_histograms_depression(dt_start2)
 ```
 
+What do you make of these histograms?
 
-## Investigate assumption of positivity: 
+## Investigate assumption of positivity:
 
-Recall the positive assuption:
+Recall the positive assumption:
 
 **Positivity:** Can we intervene on the exposure at all levels of the covariates? We should be able to.
 
-Not this is just a description of the the summary scores. We do not assess change within indivuals 
-
+Not this is just a description of the the summary scores. We do not assess change within indivuals
 
 ```{r}
 #| label: prepare_exposure_data
@@ -735,9 +440,7 @@ dt_exposure |>
   tabyl(hours_exercise_coarsen_n, eth_cat,  wave )
 ```
 
-
 I've written a function called `transition_table` that will help us assess change in the exposure at the individual level.
-
 
 ```{r}
 #| label: transition_table
@@ -753,7 +456,7 @@ state_names <- c("Inactive", "Somewhat Active", "Active", "Extremely Active")
 transition_table(out, state_names)
 ```
 
-Next consider Māori only 
+Next consider Māori only
 
 ```{r}
 #| label: maori_only_transition
@@ -774,7 +477,6 @@ cat(t_tab_m$explanation)
 print(t_tab_m$table)
 
 ```
-
 
 ```{r}
 #| label: euro_only_transition
@@ -798,16 +500,11 @@ print(t_tab_e$table)
 
 ```
 
-
 Overall we find evidence for change in the exposure variable. This suggest that we are ready to proceed with the next step of causal estimation.
-
 
 ### Create wide data frame for analysis
 
-
-Recall, I wrote a function for you that will put the data into temporal order such that measurement of the exposure and outcome appear at baseline, along with a rich set of baseline confounders, the exposure appears in the following wave, and the outcome appears in the wave following the exposure. 
-
-
+Recall, I wrote a function for you that will put the data into temporal order such that measurement of the exposure and outcome appear at baseline, along with a rich set of baseline confounders, the exposure appears in the following wave, and the outcome appears in the wave following the exposure.
 
 ```{tikz}
 #| label: fig-dag-6
@@ -838,11 +535,149 @@ Recall, I wrote a function for you that will put the data into temporal order su
 \end{tikzpicture}
 ```
 
+The graph encodes our assumptions about the world. It is a qualitative instrument to help us understand how to move from our assumptions to decisions about our analysis, in the first instance, the decision about whether to proceed with an analysis.
+
+It is perhaps useful here to stop and consider what does this graph implies.
+
+Question: 1. Does the graph imply unmeasured confounding?
+
+Question 2. If there is unmeasured confounding, should we proceed?
+
+### E-value
+
+> The minimum strength of association on the risk ratio scale that an unmeasured confounder would need to have with both the exposure and the outcome, conditional on the measured covariates, to fully explain away a specific exposure-outcome association
+
+See: [@vanderweele2020]
+
+For example, suppose that the lower bound of the the E-value was 1.3 with the lower bound of the confidence interval = 1.12, we might then write:
+
+> With an observed risk ratio of RR=1.3, an unmeasured confounder that was associated with both the outcome and the exposure by a risk ratio of 1.3-fold each (or 30%), above and beyond the measured confounders, could explain away the estimate, but weaker joint confounder associations could not; to move the confidence interval to include the null, an unmeasured confounder that was associated with the outcome and the exposure by a risk ratio of 1.12-fold (or 12%) each could do so, but weaker joint confounder associations could not.
+
+
+
+The equations are as follows (for risk ratios)
+
+$$
+E-value_{RR} = RR + \sqrt{RR \times (RR - 1)}
+$$
+$$
+E-value_{LCL} = LCL + \sqrt{LCL \times (LCL - 1)}
+$$
+
+
+
+Here is an R function that will calculate E-values
+
+```{r}
+calculate_e_value <- function(rr, lcl) {
+  e_value_rr = rr + sqrt(rr*(rr - 1))
+  e_value_lcl = lcl + sqrt(lcl*(lcl - 1))
+  
+  list(e_value_rr = e_value_rr, e_value_lcl = e_value_lcl)
+}
+
+# e.g. smoking causes cancer
+
+# finding 	RR = 10.73 (95% CI: 8.02, 14.36)
+
+calculate_e_value(10.73, 8.02)
+
+```
+
+We write: 
+
+> With an observed risk ratio of RR=10.7, an unmeasured confounder that was associated with both the outcome and the exposure by a risk ratio of 20.9-fold each, above and beyond the measured confounders, could explain away the estimate, but weaker joint confounder associations could not; to move the confidence interval to include the null, an unmeasured confounder that was associated with the outcome and the exposure by a risk ratio of 15.5-fold each could do so, but weaker joint confounder associations could not.
+
+
+
+Note that in this class, most of the outcomes will be (standardised) continuous outcomes.  Here's a function and LaTeX code to describe the approximation. 
+
+This function takes a linear regression coefficient estimate (`est`), its standard error (`se`), the standard deviation of the outcome (`sd`), a contrast of interest in the exposure (`delta`, which defaults to 1), and a "true" standardized mean difference (true, which defaults to 0). It calculates the odds ratio using the formula from Chinn (2000) and VanderWeele (2017), and then uses this to calculate the E-value. 
+
+```{r}
+
+#| label: evalue_ols
+
+compute_evalue_ols <- function(est, se, delta = 1, true = 0) {
+  # Rescale estimate and SE to reflect a contrast of size delta
+  est <- est / delta
+  se <- se / delta
+
+  # Compute transformed odds ratio and confidence intervals
+  odds_ratio <- exp(0.91 * est)
+  lo <- exp(0.91 * est - 1.78 * se)
+  hi <- exp(0.91 * est + 1.78 * se)
+
+  # Compute E-Values based on the RR values
+  evalue_point_estimate <- odds_ratio * sqrt(odds_ratio + 1)
+  evalue_lower_ci <- lo * sqrt(lo + 1)
+
+  # Return the E-values
+  return(list(EValue_PointEstimate = evalue_point_estimate,
+              EValue_LowerCI = evalue_lower_ci))
+}
+
+
+
+
+# exampl:
+# suppose we have an estimate of 0.5, a standard error of 0.1, and a standard deviation of 1.
+# This would correspond to a half a standard deviation increase in the outcome per unit increase in the exposure.
+results <- compute_evalue_ols(est = 0.5, se = 0.1, delta = 1)
+print(results)
+```
+We write: 
+
+> With an observed risk ratio of RR=2.92, an unmeasured confounder that was associated with both the outcome and the exposure by a risk ratio of 2.92-fold each, above and beyond the measured confounders, could explain away the estimate, but weaker joint confounder associations could not; to move the confidence interval to include the null, an unmeasured confounder that was associated with the outcome and the exposure by a risk ratio of 2.23-fold each could do so, but weaker joint confounder associations could not.
+
+
+Note the E-values package will do the computational work for us (note we get slightly different estimates)
+
+
+Note: 
+
+First, the fucntion converts the estimate to an odds ratio:
+
+1. **Odds Ratio Conversion**:
+
+    \(OddsRatio = e^{\frac{Estimate}{SD} \cdot \sqrt{\frac{3}{\pi}}}\)
+
+Then, it calculates the confidence intervals for the odds ratio:
+
+2. **Confidence Intervals**:
+
+    \(LowerConfidenceInterval = e^{log(OddsRatio) - 1.78 \cdot SE}\)
+
+    \(UpperConfidenceInterval = e^{log(OddsRatio) + 1.78 \cdot SE}\)
+
+Finally, it calculates the E-value for the point estimate and the lower confidence interval:
+
+3. **E-Values Calculation**:
+
+    \(EValue_{PointEstimate} = OddsRatio + \sqrt{OddsRatio^2 - 1}\)
+
+    \(EValue_{LowerCI} = LowerConfidenceInterval + \sqrt{LowerConfidenceInterval^2 - 1}\)
+
+
+[[JB: NEED TO CHECK]]
+
+
+Generally, best to use the EValue function.
+
+
+```{r}
+#| label: evalue-package
+library(EValue)
+
+EValue::evalues.OLS(est = 0.5, se = 0.1, sd = 1, delta = 1, true = 0)
+```
+
 
 
 
 
 ```{r}
+#| table: wide_data
 ############## ############## ############## ############## ############## ############## ############## ########
 ####  ####  ####  CREATE DATA FRAME FOR ANALYSIS ####  ####  ################## ############## ######## #########
 ############## ############## ############## ############## ############## ############## ############# #########
@@ -904,10 +739,7 @@ dt_prepare <-
 
 ```
 
-
-
-## Descriptive table 
-
+## Descriptive table
 
 ```{r}
 #| label: simple_table
@@ -919,9 +751,6 @@ baseline_table(dt_prepare, output_format = "markdown")
 
 # but it is not very nice. Next up, is a better table
 ```
-
-
-
 
 ```{r}
 #| label: table_better
@@ -961,30 +790,27 @@ table1::table1(as.formula(formula_string_table_baseline),
 
 ```
 
+We need to do some more data wrangling, alas! Data wrangling is the majority of data analysis. The good news is that R makes wrangling relatively straightforward.
 
-We need to do some more data wrangling, alas!  Data wrangling is the majority of data analysis.  The good news is that R makes wrangling relatively straightforward. 
+1.  `mutate(id = factor(1:nrow(dt_prepare)))`: This creates a new column called `id` that has unique identification factors for each row in the dataset. It ranges from 1 to the number of rows in the dataset.
 
+2.  The next `mutate` operation is used to convert the `t0_eth_cat`, `t0_urban`, and `t0_gen_cohort` variables to factor type, if they are not already.
 
-1. `mutate(id = factor(1:nrow(dt_prepare)))`: This creates a new column called `id` that has unique identification factors for each row in the dataset. It ranges from 1 to the number of rows in the dataset. 
+3.  The `filter` command is used to subset the dataset to only include rows where the `t0_eth_cat` is either "euro" or "māori". The original dataset includes data with four different ethnic categories. This command filters out any row not related to these two groups.
 
-2. The next `mutate` operation is used to convert the `t0_eth_cat`, `t0_urban`, and `t0_gen_cohort` variables to factor type, if they are not already. 
+4.  `ungroup()` ensures that there's no grouping in the dataframe.
 
-3. The `filter` command is used to subset the dataset to only include rows where the `t0_eth_cat` is either "euro" or "māori". The original dataset includes data with four different ethnic categories. This command filters out any row not related to these two groups.
+5.  The `mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z"))` step standardizes all numeric columns in the dataset by subtracting the mean and dividing by the standard deviation (a z-score transformation). The resulting columns are renamed to include "\_z" at the end of their original names.
 
-4. `ungroup()` ensures that there's no grouping in the dataframe.
+6.  The `select` function is used to keep only specific columns: the `id` column, any columns that are factors, and any columns that end in "\_z".
 
-5. The `mutate(across(where(is.numeric), ~ scale(.x), .names = "{col}_z"))` step standardizes all numeric columns in the dataset by subtracting the mean and dividing by the standard deviation (a z-score transformation). The resulting columns are renamed to include "_z" at the end of their original names.
+7.  The `relocate` functions re-order columns. The first `relocate` places the `id` column at the beginning. The next three `relocate` functions order the rest of the columns based on their names: those starting with "t0\_" are placed before "t1\_" columns, and those starting with "t2\_" are placed after "t1\_" columns.
 
-6. The `select` function is used to keep only specific columns: the `id` column, any columns that are factors, and any columns that end in "_z". 
+8.  `droplevels()` removes unused factor levels in the dataframe.
 
-7. The `relocate` functions re-order columns. The first `relocate` places the `id` column at the beginning. The next three `relocate` functions order the rest of the columns based on their names: those starting with "t0_" are placed before "t1_" columns, and those starting with "t2_" are placed after "t1_" columns.
+9.  Finally, `skimr::skim(dt)` will print out a summary of the data in the `dt` object using the skimr package. This provides a useful overview of the data, including data types and summary statistics.
 
-8. `droplevels()` removes unused factor levels in the dataframe.
-
-9. Finally, `skimr::skim(dt)` will print out a summary of the data in the `dt` object using the skimr package. This provides a useful overview of the data, including data types and summary statistics.
-
-This function seems to be part of a data preparation pipeline in a longitudinal or panel analysis, where observations are ordered over time (indicated by t0_, t1_, t2_, etc.).
-
+This function seems to be part of a data preparation pipeline in a longitudinal or panel analysis, where observations are ordered over time (indicated by t0\_, t1\_, t2\_, etc.).
 
 ```{r}
 ### ### ### ### ### ### SUBGROUP DATA ANALYSIS: DATA WRANGLING  ### ### ### ###
@@ -1044,13 +870,11 @@ saveRDS(dt, here::here("data", "dt"))
 
 ```
 
-
 ## Propensity scores
 
+Next we generate propensity scores. Instead of modelling the outcome (t2_y) we will model the exposure (t1_x) as predicted by baseline indicators (t0_c) that we assume may be associated with the outcome and the exposure.
 
-Next we generate propensity scores.  Instead of modelling the outcome (t2_y) we will model the exposure (t1_x) as predicted by baseline indicators (t0_c) that we assume may be associated with the outcome and the exposure.
-
-The first  step is to obtain the baseline variables. note that we must remove "t0_eth_cat" because we are performing separate weighting for each stratum within this variable. 
+The first step is to obtain the baseline variables. note that we must remove "t0_eth_cat" because we are performing separate weighting for each stratum within this variable.
 
 ```{r}
 #| label: propensity_score prepare
@@ -1083,14 +907,11 @@ formula_str_prop
 
 ```
 
+For propensity score analysis, we will try several different approaches. We will want to select the method that produces the best balance.
 
+I typically use `ps` (classical propensity scores), `ebal` and `energy`. The latter two in my experience yeild good balance. Also `energy` will work with *continuous* exposures.
 
-For propensity score analysis, we will try several different approaches.  We will want to select the method that produces the best balance. 
-
-I typically use `ps` (classical propensity scores), `ebal` and `energy`.  The latter two in my experience yeild good balance. Also `energy` will work with *continuous* exposures. 
-
-For more information, see [https://ngreifer.github.io/WeightIt/](https://ngreifer.github.io/WeightIt/)
-
+For more information, see <https://ngreifer.github.io/WeightIt/>
 
 ```{r}
 #| label: propensity_scores
@@ -1138,10 +959,7 @@ dt_match_energy <- match_mi_general(
 saveRDS(dt_match_energy, here::here("data", "dt_match_energy"))
 ```
 
-
-
-Results, first for Europeans 
-
+Results, first for Europeans
 
 ```{r}
 #| label: results_ps_analysis
@@ -1165,24 +983,25 @@ dt_match_ps <- readRDS(here::here("data", "dt_match_ps"))
 #bal.tab(dt_match_energy$euro)   #  good
 bal.tab(dt_match_ebal$euro)   #  best
 #bal.tab(dt_match_ps$euro)   #  not as good
-```
 
+# here we show only the best tab, but you should put all information into an appendix
+```
 
 Results for Maori
 
 ```{r}
+#| label: balance_tab_maori
+
+# who only Ebal
 #bal.tab(dt_match_energy$māori)   #  good
 bal.tab(dt_match_ebal$māori)   #  best
 #bal.tab(dt_match_ps$māori)   #  not good
 
 ```
 
-
-
-
-
 ```{r}
 #| label: love_plots
+
 # code for summar
 sum_e <- summary(dt_match_ebal$euro)
 sum_m <- summary(dt_match_ebal$māori)
@@ -1194,27 +1013,29 @@ sum_e
 sum_m
 ```
 
-
 ```{r}
+#| label: love_plot_euro
+#| column: page-right
 love_plot_e <- love.plot(dt_match_ebal$euro,
           binary = "std",
-          thresholds = c(m = .1))+ labs(title = "NZ Euro PS: ebalance")
+          thresholds = c(m = .1))+ labs(title = "NZ Euro Weighting: method e-balance")
+
+# plot
+love_plot_e 
+```
+
+```{r}
+#| label: love_plot_maori
+#| column: page-right
 
 love_plot_m <- love.plot(dt_match_ebal$māori,
           binary = "std",
-          thresholds = c(m = .1)) + labs(title = "Māori PS: ebalance")
-
-
-library(patchwork)
-
-
-love_plot_e / love_plot_m
-
+          thresholds = c(m = .1)) + labs(title = "Māori Weighting: method e-balance")
+# plot
+love_plot_m
 ```
 
-
-### Summary NZ Euro Propensity scores.
-
+### Example Summary NZ Euro Propensity scores.
 
 *We estimated propensity score analysis using entropy balancing, energy balancing and traditional propensity scores. Of these approaches, entropy balancing provided the best balance. The results indicate an excellent balance across all variables, with Max.Diff.Adj values significantly below the target threshold of 0.05 across a range of binary and continuous baseline confounders, including gender, generation cohort, urban_location, exercise hours (coarsened, baseline), education, employment status, depression, anxiety, and various personality traits. The Max.Diff.Adj values for all variables were well below the target threshold of 0.05, with most variables achieving a Max.Diff.Adj of 0.0001 or lower. This indicates a high level of balance across all treatment pairs.*
 
@@ -1224,13 +1045,11 @@ love_plot_e / love_plot_m
 
 *We also identified the units with the five most extreme weights by group. These units exhibited higher weights compared to the rest of the units in their respective groups, but they did not significantly affect the overall balance of weights.*
 
-*We plotted these results using love plots, visually confirming both the balance in the propensity score model using entropy balanced weights, and the imbalance in the model that does not adjust for baseline confounders.* 
+*We plotted these results using love plots, visually confirming both the balance in the propensity score model using entropy balanced weights, and the imbalance in the model that does not adjust for baseline confounders.*
 
 *Overall, these findings support the use of entropy balancing in propensity score analysis to ensure a balanced distribution of covariates across treatment groups, conditional on the measured covariates included in the model.*
 
-
-### Summary Maori Propensity scores.
-
+### Example Summary Maori Propensity scores.
 
 Results:
 
@@ -1244,16 +1063,12 @@ Results:
 
 *In conclusion, the results of the Māori subgroup analysis are consistent with the overall analysis. The entropy balancing method achieved a high level of balance across all treatment pairs, with Max.Diff.Adj values significantly below the target threshold. These findings support the use of entropy balancing in propensity score analysis to ensure a balanced distribution of covariates across treatment groups, even in subgroup analyses.*
 
-
-
 ### More data wrangling
 
-
-Note that we need to attach the `weights` from the propensity score model back to the data. 
+Note that we need to attach the `weights` from the propensity score model back to the data.
 
 However, because our weighting analysis estimates a model for the *exposure*, we only need to do this analysis once, no matter how many outcomes we investigate. So there's a little good news.
 
- 
 ```{r}
 #| label: yet_more_wrangling
 #| 
@@ -1276,16 +1091,13 @@ dt_ref_all <- rbind(dt_ref_e, dt_ref_m) # combine the data into one dataframe.
 
 ## Anxiety Analysis and Results
 
+Let's consider a pseudo experiment where someone moves from inactive to active.
 
-Let's consider a pseudo experiment where someone moves from inactive to active. 
+We will use doubly robust analysis. This means that we estimate a model using both propensity score weights (obtained using the ebalance algortithm) and regression stratification.
 
+I wrote a function that will caluclate "E-values." An E-value is defined as the
 
-We will use doubly robust analysis.  This means that we estimate a model using both propensity score weights (obtained using the ebalance algortithm) and regression stratification. 
-
-I wrote a function that will caluclate "E-values."  An E-value is defined as the 
-
->  E-values represent the minimum strength or magnitude of association that an unmeasured confounder would need to have with both treatment and outcome in order to explain the observed effect estimates conditional on measured covariates.
-
+> E-values represent the minimum strength or magnitude of association that an unmeasured confounder would need to have with both treatment and outcome in order to explain the observed effect estimates conditional on measured covariates.
 
 ```{r}
 #| label: model_anxiety
@@ -1414,8 +1226,6 @@ test_tab |> kbl(format = "markdown")
 ```
 
 
-Anxiety results
-
 ```{r}
 df_anxiety_all_plot <- df_anxiety_all |> 
  # filter(row.names(df_anxiety_all) %in% c("RD_m - RD_e")) |> 
@@ -1431,6 +1241,15 @@ plot_sub_forest(df_anxiety_all_plot)
 df_anxiety_all_plot|> 
   kbl(format = "html")
 ```
+
+
+## Interpretation
+
+- Increase in activity among NZ Europeans would be expected to lower anxiety. 
+- Increase in activity among Māori is not reliable.  
+- No reliable differences in these effects between the groups.
+
+
 
 ## Depression Analysis and Results
 
@@ -1534,8 +1353,6 @@ est_all_d <- transform(est_all_d, `RD_m - RD_e` = RD_m - RD_e)
 saveRDS(est_all_d, here::here("data", "est_all_d"))
 ```
 
-
-
 ```{r}
 est_all_d <- readRDS( here::here("data", "est_all_d"))
 
@@ -1558,7 +1375,7 @@ table_depression |> kbl(format = "markdown")
 ```
 
 
-Summary
+
 
 ```{r}
 # view summary
@@ -1566,30 +1383,7 @@ df_dep |>
   mutate_if(is.numeric, round, 3) |> 
   kbl(format = "html")
 # This table provides estimated levels of depression, in standard deviation units, for different levels of activity for two groups: Māori (indicated by "_m") and NZ Europeans (indicated by "_e").
-#
-# The expectations are named as `E[Y(<level of activity>)]_group`, where the level of activity can be `inactive`, `active`, or `very_active`.
-#
-# Here is a breakdown of the results.
-#
-#   1. For the Māori group (`_m`):
-#
-#   - `E[Y(inactive)]_m`: When inactive, the expected level of depression is 0.23 standard deviations, with a 95% confidence interval from 0.116 to 0.356.
-# - `E[Y(active)]_m`: When active, the expected level of depression decreases to 0.193 standard deviations, with a 95% confidence interval from 0.108 to 0.282.
-# - `E[Y(very_active)]_m`: When very active, the expected level of depression further decreases to 0.133 standard deviations, with a 95% confidence interval from 0.009 to 0.262.
-# - `RD_m`: The risk difference (RD) between inactive and very active Māori individuals is 0.097 standard deviations, with a 95% confidence interval from -0.068 to 0.274. This indicates a decrease in depression when individuals move from an inactive to a very active lifestyle.
-#
-# 2. For the NZ European group (`_e`):
-#
-#   - `E[Y(inactive)]_e`: When inactive, the expected level of depression is 0.034 standard deviations, with a 95% confidence interval from -0.012 to 0.078.
-# - `E[Y(active)]_e`: When active, the expected level of depression slightly decreases to -0.006 standard deviations, with a 95% confidence interval from -0.03 to 0.016.
-# - `E[Y(very_active)]_e`: When very active, the expected level of depression further decreases to -0.046 standard deviations, with a 95% confidence interval from -0.086 to -0.007.
-# - `RD_e`: The risk difference (RD) between inactive and very active NZ European individuals is 0.081 standard deviations, with a 95% confidence interval from 0.02 to 0.138. Similar to the Māori group, this indicates a decrease in depression when individuals move from an inactive to a very active lifestyle.
-#
-# The last row, `RD_m - RD_e`, represents the difference in risk differences between Māori and NZ Europeans. It's 0.017 standard deviations with a 95% confidence interval from -0.152 to 0.204. This is not statistically significant (the confidence interval contains 0), suggesting that the difference in depression reduction from being inactive to very active is not significantly different between the two groups.
-#
-# These are estimates and subject to statistical uncertainty. While they suggest a trend, the wide confidence intervals indicate that these estimates come with a degree of uncertainty.
 ```
-
 
 ```{r}
 #| label: my_graph 
@@ -1631,6 +1425,421 @@ plot_sub_forest(df_dep_plot_data)
 ```
 
 
+## Interpretation
+
+- Increase in activity among NZ Europeans would be expected to lower depression, but the effect is not reliable. 
+- Increase in activity among Māori does not reliably affect depression..
+- No reliable group differences.
+
+
+# Exercises
+
+
+1.  Generate a Kessler 6 binary score (Not Depressed vs. Moderately or Severely Depressed) 
+
+and also:
+
+
+2.  Create a variable for the log of exercise hour
+
+
+3.  Take Home: estimate whether exercise causally affects nervousness, using the single item of the kessler 6 score. Briefly write up your results.
+
+
+
+## Appendix: MG-CFA
+
+
+### CFA for Kessler 6
+
+We have learned how to do confirmatory factor analysis. Let's put this knowledge to use but clarifying the underlying factor structure of Kessler-6
+
+The code below will:
+
+-   Load required packages.
+-   Select the Kessler 6 items
+-   Check whether there is sufficient correlation among the variables to support factor analysis.
+
+```{r}
+#| label: cfa_factor_structure
+
+# select the columns we need. 
+dt_only_k6 <- dt_start |> select(kessler_depressed, kessler_effort,kessler_hopeless,
+                                 kessler_worthless, kessler_nervous,
+                                 kessler_restless)
+
+
+# check factor structure
+performance::check_factorstructure(dt_only_k6)
+
+```
+
+The code below will allow us to explore the factor structure, on the assumption of n = 3 factors.
+
+```{r}
+#| label: efa_made_easy
+# exploratory factor analysis
+# explore a factor structure made of 3 latent variables
+efa <- psych::fa(dt_only_k6, nfactors = 3) %>%
+  model_parameters(sort = TRUE, threshold = "max")
+
+efa
+```
+
+This output describes an exploratory factor analysis (EFA) with 3 factors conducted on the Kessler 6 (K6) scale data. The K6 scale is used to measure psychological distress.
+
+The analysis identifies three latent factors, labeled MR1, MR2, and MR3, which collectively account for 66.05% of the variance in the K6 data. The factors MR1, MR2, and MR3 explain 35.14%, 17.17%, and 13.73% of the variance respectively.
+
+Factor loadings, indicating the strength and direction of the relationship between the K6 items and the latent factors, are as follows:
+
+1.  Factor MR1 is strongly associated with 'kessler_depressed', 'kessler_worthless', and 'kessler_hopeless' with loadings of 0.85, 0.79, and 0.75 respectively.
+2.  Factor MR2 is exclusively linked with 'kessler_nervous' with a loading of 1.00.
+3.  Factor MR3 relates to 'kessler_restless' and 'kessler_effort' with loadings of 0.69 and 0.48 respectively.
+
+The 'Uniqueness' values show the proportion of each variable's variance that isn't shared with the other variables.
+
+The 'Complexity' values give a measure of how each item loads on more than one factor. All the items are either loading exclusively on one factor (complexity=1.00) or slightly more than one factor. 'kessler_effort' with complexity of 1.66 shows it's the item most shared between the factors.
+
+The analysis suggests these K6 items measure may measure three somewhat distinct, yet related, factors of psychological distress.
+
+However, the meaning of these factors would need to be interpreted in the context of the variables and the theoretical framework of the study.
+
+Notably, there are many many theoretical frameworks for in measurement theory. Here is a brief description of the different conclusions one might make, depending on one's preferred theory.
+
+```{r}
+#| label: plot_factors
+#| code-fold: true
+#| column: page-right
+
+
+n <- n_factors(dt_only_k6)
+
+# plot
+plot(n) + theme_classic()
+```
+
+### Confirmatory factor analysis (ignoring groups)
+
+```{r}
+#| label: cfa
+# first partition the data 
+part_data <- datawizard::data_partition(dt_only_k6, traing_proportion = .07, seed = 123)
+
+
+# set up training data
+training <- part_data$p_0.7
+test <- part_data$test
+
+
+# one factor model
+structure_k6_one <- psych::fa(training, nfactors = 1) |>
+  efa_to_cfa()
+
+# two factor model model
+structure_k6_two <- psych::fa(training, nfactors = 2) |>
+  efa_to_cfa()
+
+# three factor model
+structure_k6_three <- psych::fa(training, nfactors = 3) %>%
+  efa_to_cfa()
+
+# inspect models
+structure_k6_one
+structure_k6_two
+structure_k6_three
+```
+
+Next we perform the confirmatory factor analysis.
+
+```{r}
+#| label: fit-models
+# fit and compare models
+
+# one latent model
+one_latent <-
+  suppressWarnings(lavaan::cfa(structure_k6_one, data = test))
+
+# two latents model
+two_latents <-
+  suppressWarnings(lavaan::cfa(structure_k6_two, data = test))
+
+# three latents model
+three_latents <-
+  suppressWarnings(lavaan::cfa(structure_k6_three, data = test))
+
+
+# compare models
+compare <-
+  performance::compare_performance(one_latent, two_latents, three_latents, verbose = FALSE)
+
+# view as html table
+as.data.frame(compare) |>
+  kbl(format = "markdown")
+```
+
+This table provides the results of three different Confirmatory Factor Analysis (CFA) models: one that specifies a single latent factor, one that specifies two latent factors, and one that specifies three latent factors. The results include a number of goodness-of-fit statistics, which can be used to assess how well each model fits the data.
+
+#### One_latent CFA:
+
+This model assumes that there is only one underlying latent factor contributing to all variables. This model has a chi-square statistic of 1359.7 with 14 degrees of freedom, which is highly significant (p\<0.001), indicating a poor fit of the model to the data. Other goodness-of-fit indices like GFI, AGFI, NFI, NNFI, and CFI are all high (above 0.9), generally indicating good fit, but these indices can be misleading in the presence of large sample sizes. RMSEA is above 0.1 which indicates a poor fit. The SRMR is less than 0.08 which suggests a good fit, but given the high Chi-square and RMSEA values, we can't solely rely on this index. The Akaike information criterion (AIC), Bayesian information criterion (BIC) and adjusted BIC are used for comparing models, with lower values indicating better fit.
+
+#### Two_latents CFA
+
+This model assumes that there are two underlying latent factors. The chi-square statistic is lower than the one-factor model (317.97 with 13 df), suggesting a better fit. The p-value is still less than 0.05, indicating a statistically significant chi-square, which typically suggests a poor fit. However, all other fit indices (GFI, AGFI, NFI, NNFI, and CFI) are above 0.9 and the RMSEA is 0.051, which generally indicate good fit. The SRMR is also less than 0.08 which suggests a good fit. This model has the lowest AIC and BIC values among the three models, indicating the best fit according to these criteria.
+
+#### Three_latents CFA
+
+This model assumes three underlying latent factors. The chi-square statistic is 747.87 with 12 df, higher than the two-factor model, suggesting a worse fit to the data. Other fit indices such as GFI, AGFI, NFI, NNFI, and CFI are below 0.97 and the RMSEA is 0.083, which generally indicate acceptable but not excellent fit. The SRMR is less than 0.08 which suggests a good fit. The AIC and BIC values are higher than the two-factor model but lower than the one-factor model, indicating a fit that is better than the one-factor model but worse than the two-factor model.
+
+Based on these results, the two-latents model seems to provide the best fit to the data among the three models, according to most of the fit indices and the AIC and BIC. Note, all models have significant chi-square statistics, which suggests some degree of misfit. It's also important to consider the substantive interpretation of the factors, to make sure the model makes sense theoretically.
+
+### Multi-group Confirmatory Factor Analysis
+
+This script runs multi-group confirmatory factor analysis (MG-CFA)
+
+```{r}
+#| label: group_by_cfa
+
+# select needed columns plus 'ethnicity'
+# filter dataset for only 'euro' and 'maori' ethnic categories
+dt_eth_k6_eth <- dt_start |> 
+  filter(eth_cat == "euro" | eth_cat == "maori") |> 
+  select(kessler_depressed, kessler_effort,kessler_hopeless,
+         kessler_worthless, kessler_nervous,
+         kessler_restless, eth_cat)
+
+# partition the dataset into training and test subsets
+# stratify by ethnic category to ensure balanced representation
+part_data_eth <- datawizard::data_partition(dt_eth_k6_eth, traing_proportion = .07, seed = 123, group = "eth_cat")
+
+training_eth <- part_data_eth$p_0.7
+test_eth <- part_data_eth$test
+
+# run confirmatory factor analysis (CFA) models for configural invariance across ethnic groups
+# models specify one, two, and three latent variables
+one_latent_eth_configural <- suppressWarnings(lavaan::cfa(structure_k6_one, group = "eth_cat", data = test_eth))
+two_latents_eth_configural <- suppressWarnings(lavaan::cfa(structure_k6_two, group = "eth_cat", data = test_eth))
+three_latents_eth_configural <- suppressWarnings(lavaan::cfa(structure_k6_three, group = "eth_cat", data = test_eth))
+
+# compare model performances for configural invariance
+compare_eth_configural <- performance::compare_performance(one_latent_eth_configural, two_latents_eth_configural, three_latents_eth_configural, verbose = FALSE)
+
+# run CFA models for metric invariance, holding factor loadings equal across groups
+# models specify one, two, and three latent variables
+one_latent_eth_metric <- suppressWarnings(lavaan::cfa(structure_k6_one, group = "eth_cat", group.equal = "loadings", data = test_eth))
+two_latents_eth_metric  <- suppressWarnings(lavaan::cfa(structure_k6_two, group = "eth_cat", group.equal = "loadings", data = test_eth))
+three_latents_eth_metric  <- suppressWarnings(lavaan::cfa(structure_k6_three, group = "eth_cat",group.equal = "loadings", data = test_eth))
+
+# compare model performances for metric invariance
+compare_eth_metric  <- performance::compare_performance(one_latent_eth_metric, two_latents_eth_metric, three_latents_eth_metric, verbose = FALSE)
+
+# run CFA models for scalar invariance, holding factor loadings and intercepts equal across groups
+# models specify one, two, and three latent variables
+one_latent_eth_scalar <- suppressWarnings(lavaan::cfa(structure_k6_one, group = "eth_cat", group.equal = c("loadings","intercepts"), data = test_eth))
+two_latents_eth_scalar  <- suppressWarnings(lavaan::cfa(structure_k6_two, group = "eth_cat", group.equal =  c("loadings","intercepts"), data = test_eth))
+three_latents_eth_scalar  <- suppressWarnings(lavaan::cfa(structure_k6_three, group = "eth_cat",group.equal =  c("loadings","intercepts"), data = test_eth))
+
+# compare model performances for scalar invariance
+compare_eth_scalar  <- performance::compare_performance(one_latent_eth_scalar, two_latents_eth_scalar, three_latents_eth_scalar, verbose = FALSE)
+
+
+```
+
+Recall, in the context of measurement and factor analysis, the concepts of *configural*, *metric*, and *scalar invariance* relate to the comparability of a measurement instrument, such as a survey or test, across different groups.
+
+We saw in part 1 of this course that these invariance concepts are frequently tested in the context of cross-cultural, multi-group, or longitudinal studies.
+
+Let's first define these concepts, and then apply them to the context of the Kessler 6 (K6) Distress Scale used among Maori and New Zealand Europeans.
+
+1.  **Configural invariance** refers to the most basic level of measurement invariance, and it is established when the same pattern of factor loadings and structure is observed across groups. This means that the underlying or "latent" constructs (factors) are defined the same way for different groups. This doesn't mean the strength of relationship between items and factors (loadings) or the item means (intercepts) are the same, just that the items relate to the same factors in all groups.
+
+In the context of the K6 Distress Scale, configural invariance would suggest that the same six items are measuring the construct of psychological distress in the same way for both Māori and New Zealand Europeans, even though the strength of the relationship between the items and the construct (distress), or the average scores, might differ.
+
+2.  **Metric invariance** (also known as "weak invariance") refers to the assumption that factor loadings are equivalent across groups, meaning that the relationship or association between the measured items and their underlying factor is the same in all groups. This is important when comparing the strength of relationships with other variables across groups.
+
+If metric invariance holds for the K6 Distress Scale, this would mean that a unit change in the latent distress factor would correspond to the same change in each item score (e.g., feeling nervous, hopeless, restless, etc.) for both Māori and New Zealand Europeans.
+
+3.  **Scalar invariance** (also known as "strong invariance") involves equivalence of both factor loadings and intercepts (item means) across groups. This means that not only are the relationships between the items and the factors the same across groups (as with metric invariance), but also the zero-points or origins of the scales are the same. Scalar invariance is necessary when one wants to compare latent mean scores across groups.
+
+In the context of the K6 Distress Scale, if scalar invariance holds, it would mean that a specific score on the scale would correspond to the same level of the underlying distress factor for both Māori and New Zealand Europeans. It would mean that the groups do not differ systematically in how they interpret and respond to the items. If this holds, one can make meaningful comparisons of distress level between Maori and New Zealand Europeans based on the scale scores.
+
+Note: each of these levels of invariance is a progressively stricter test of the equivalence of the measurement instrument across groups. Demonstrating scalar invariance, for example, also demonstrates configural and metric invariance. On the other hand, failure to demonstrate metric invariance means that scalar invariance also does not hold. These tests are therefore usually conducted in sequence. The results of these tests should be considered when comparing group means or examining the relationship between a scale and other variables across groups.
+
+### Configural invariance
+
+```{r}
+as.data.frame(compare_eth_configural)|>
+  kbl(format = "markdown")
+```
+
+The table represents the comparison of three multi-group confirmatory factor analysis (CFA) models conducted to test for configural invariance across different ethnic categories (eth_cat). Configural invariance refers to whether the pattern of factor loadings is the same across groups. It's the most basic form of measurement invariance.
+
+Looking at the results, we can draw the following conclusions:
+
+1.  **Chi2 (Chi-square)**: A lower value suggests a better model fit. In this case, the two_latents_eth_configural model exhibits the lowest Chi2 value, suggesting it has the best fit according to this metric.
+
+2.  **GFI (Goodness of Fit Index) and AGFI (Adjusted Goodness of Fit Index)**: These values range from 0 to 1, with values closer to 1 suggesting a better fit. The two_latents_eth_configural model has the highest GFI and AGFI values, indicating it is the best fit according to these indices.
+
+3.  **NFI (Normed Fit Index), NNFI (Non-Normed Fit Index, also called TLI), CFI (Comparative Fit Index)**: These range from 0 to 1, with values closer to 1 suggesting a better fit. The one_latent_eth_configural model has the highest values, suggesting it is the best fit according to these metrics.
+
+4.  **RMSEA (Root Mean Square Error of Approximation)**: Lower values are better, with values below 0.05 considered good and up to 0.08 considered acceptable. In this table, the two_latents_eth_configural model has an RMSEA of 0.05, which falls within the acceptable range.
+
+5.  **RMR (Root Mean Square Residual) and SRMR (Standardized Root Mean Square Residual)**: Lower values are better, typically less than 0.08 is considered a good fit. All models exhibit acceptable RMR and SRMR values, with the two_latents_eth_configural model having the lowest.
+
+6.  **RFI (Relative Fit Index), PNFI (Parsimonious Normed Fit Index), IFI (Incremental Fit Index), RNI (Relative Noncentrality Index)**: These range from 0 to 1, with values closer to 1 suggesting a better fit. The one_latent_eth_configural model has the highest values, suggesting the best fit according to these measures.
+
+7.  **AIC (Akaike Information Criterion) and BIC (Bayesian Information Criterion)**: Lower values indicate a better fit when comparing models. The two_latents_eth_configural model has the lowest AIC and BIC, suggesting it is the best fit according to these criteria.
+
+8.  **p_Chi2 and p_RMSEA**: These are the significance levels for the Chi-square test and the RMSEA, respectively. Non-significant values (p \> 0.05) suggest a good fit. Only the RMSEA for the two_latents_eth_configural model is non-significant, suggesting a good fit.
+
+Overall, the two_latents_eth_configural model appears to provide the best fit across multiple indices, suggesting configural invariance (i.e., the same general factor structure) across ethnic categories with a two-factor solution. As with the previous assessment, theoretical soundness and other substantive considerations should also be taken into account when deciding on the final model. We will return to these issues next week.
+
+### Metric Equivalence
+
+```{r}
+as.data.frame(compare_eth_metric)|>
+  kbl(format = "markdown")
+```
+
+This table presents the results of a multi-group confirmatory factor analysis (CFA) conducted to test metric equivalence (also known as measurement invariance) across different ethnic categories (eth_cat). The models (one_latent_eth_metric, two_latents_eth_metric, three_latents_eth_metric) were run with a constraint of equal factor loadings across groups, which is a requirement for metric invariance.
+
+Here's the interpretation of the fit indices:
+
+1.  **Chi2 (Chi-square)**: Lower values indicate better model fit. The two_latents_eth_metric model has the lowest Chi2 value, suggesting the best fit according to this measure.
+
+2.  **GFI (Goodness of Fit Index), AGFI (Adjusted Goodness of Fit Index)**: These range from 0 to 1, with values closer to 1 indicating a better fit. The two_latents_eth_metric model has the highest GFI and AGFI values, suggesting the best fit according to these indices.
+
+3.  **NFI (Normed Fit Index), NNFI (Non-Normed Fit Index, or TLI), CFI (Comparative Fit Index)**: These range from 0 to 1, with values closer to 1 indicating a better fit. For these indices, the one_latent_eth_metric model has the highest values, suggesting the best fit according to these measures.
+
+4.  **RMSEA (Root Mean Square Error of Approximation)**: Lower values are better, with values below 0.05 generally considered good, and values up to 0.08 considered acceptable. Only the two_latents_eth_metric model has an RMSEA within the acceptable range (0.051).
+
+5.  **RMR (Root Mean Square Residual) and SRMR (Standardized Root Mean Square Residual)**: Lower values are better, typically less than 0.08 is considered a good fit. All models have acceptable RMR and SRMR values, with the two_latents_eth_metric model having the lowest, indicating the best fit.
+
+6.  **RFI (Relative Fit Index), PNFI (Parsimonious Normed Fit Index), IFI (Incremental Fit Index), RNI (Relative Noncentrality Index)**: These range from 0 to 1, with values closer to 1 indicating better fit. The one_latent_eth_metric model has the highest values, suggesting the best fit according to these indices.
+
+7.  **AIC (Akaike Information Criterion) and BIC (Bayesian Information Criterion)**: Lower values indicate a better fit when comparing models. The two_latents_eth_metric model has the lowest AIC and BIC, indicating the best fit according to these criteria.
+
+8.  **p_Chi2 and p_RMSEA**: These are the significance levels for the Chi-square test and the RMSEA, respectively. Statistically non-significant values at the traditional threshold (p \> 0.05) suggest a good fit. Only the RMSEA for the two_latents_eth_metric model is statistically non-significant, suggesting a good fit.
+
+In summary, the two_latents_eth_metric model appears to provide the best fit overall, indicating that a two-factor solution might be appropriate and that the metric equivalence (equal factor loadings) assumption is supported across ethnic categories. However, one must also take into consideration the theoretical soundness of the model and other substantive considerations when deciding on the final model.
+
+### Scalar Equivalence
+
+```{r}
+# view as html table
+as.data.frame(compare_eth_scalar)|>
+  kbl(format = "markdown")
+```
+
+The table presents the results of a multi-group confirmatory factor analysis (CFA) conducted to test scalar equivalence (also known as measurement invariance) across different ethnic categories (eth_cat). The models (one_latent_eth_scalar, two_latents_eth_scalar, three_latents_eth_scalar) were run with constraints on both factor loadings and intercepts to be equal across groups, a requirement for scalar invariance.
+
+Here's the interpretation of the fit indices:
+
+1.  **Chi2 (Chi-square)**: Lower values indicate better model fit. The two_latents_eth_scalar model has the lowest Chi2 value, suggesting the best fit according to this measure.
+
+2.  **GFI (Goodness of Fit Index), AGFI (Adjusted Goodness of Fit Index)**: These range from 0 to 1, with values closer to 1 indicating a better fit. The two_latents_eth_scalar model has the highest GFI and AGFI values, suggesting the best fit according to these indices.
+
+3.  **NFI (Normed Fit Index), NNFI (Non-Normed Fit Index, or TLI), CFI (Comparative Fit Index)**: These range from 0 to 1, with values closer to 1 indicating a better fit. The one_latent_eth_scalar model has the highest values, suggesting the best fit according to these measures.
+
+4.  **RMSEA (Root Mean Square Error of Approximation)**: Lower values are better, with values below 0.05 generally considered good, and values up to 0.08 considered acceptable. Only the two_latents_eth_scalar model has an RMSEA within the acceptable range (0.05).
+
+5.  **RMR (Root Mean Square Residual) and SRMR (Standardized Root Mean Square Residual)**: Lower values are better, typically less than 0.08 is considered a good fit. All models have acceptable RMR and SRMR values, with the two_latents_eth_scalar model having the lowest, indicating the best fit.
+
+6.  **RFI (Relative Fit Index), PNFI (Parsimonious Normed Fit Index), IFI (Incremental Fit Index), RNI (Relative Noncentrality Index)**: These range from 0 to 1, with values closer to 1 indicating better fit. The one_latent_eth_scalar model has the highest values, suggesting the best fit according to these indices.
+
+7.  **AIC (Akaike Information Criterion) and BIC (Bayesian Information Criterion)**: Lower values indicate a better fit when comparing models. The two_latents_eth_scalar model has the lowest AIC and BIC, indicating the best fit according to these criteria.
+
+8.  **p_Chi2 and p_RMSEA**: These are the significance levels for the Chi-square test and the RMSEA, respectively. Non-significant values (p \> 0.05) suggest a good fit. Only the RMSEA for the two_latents_eth_scalar model is non-significant, suggesting a good fit.
+
+In summary, the two_latents_eth_scalar model appears to provide the best fit overall, indicating that a two-factor solution might be appropriate and that the scalar equivalence (equal factor loadings and intercepts) assumption is supported across ethnic categories. However, we must also consider the theoretical soundness of the model and other substantive considerations when deciding on the final model (a matter to which we will return next week.)
+
+Overall it seems that we have good evidence for the two-factor model of Kessler-6.
+
+
+
+
+
+
+## Solutions
+
+
+1.  Generate a Kessler 6 binary score (Not Depressed vs. Moderately or Severely Depressed) 
+
+and also:
+
+2.  Create a variable for the log of exercise hour
+
+```{r}
+#| label: exercise_1_2
+# functions 
+#source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
+
+
+# experimental functions (more functions)
+#source(
+ # "https://raw.githubusercontent.com/go-bayes/templates/main/functions/experimental_funs.R"
+#)
+
+
+
+nzavs_synth <-
+  arrow::read_parquet(here::here("data", "nzavs_dat_synth_t10_t12"))
+
+
+dt_new <- nzavs_synth %>%
+  arrange(id, wave) %>%
+  rowwise() %>%
+  mutate(kessler_6  = mean(sum(
+    # Specify the Kessler scale items
+    c(
+      kessler_depressed,
+      # During the last 30 days, how often did you feel so depressed that nothing could cheer you up?
+      kessler_hopeless,
+      # During the last 30 days, how often did you feel hopeless?
+      kessler_nervous,
+      # During the last 30 days, how often did you feel nervous?
+      kessler_effort,
+      # During the last 30 days, how often did you feel that everything was an effort?
+      kessler_restless,
+      # During the last 30 days, how often did you feel restless or fidgety ?
+      kessler_worthless  # During the last 30 days, how often did you feel worthless?
+    )
+  ))) |>
+  mutate(kessler_6_sum = round(sum(
+    c (
+      kessler_depressed,
+      kessler_hopeless,
+      kessler_nervous,
+      kessler_effort,
+      kessler_restless,
+      kessler_worthless
+    )
+  ),
+  digits = 0)) |>  ungroup() |>
+  # Create a categorical variable 'kessler_6_coarsen' based on the sum of Kessler scale items
+  mutate(
+    kessler_6_coarsen = cut(
+      kessler_6_sum,
+      breaks = c(0, 5, 24),
+      labels = c("not_depressed",
+                 "mildly_to_severely_depressed"),
+      include.lowest = TRUE,
+      include.highest = TRUE,
+      na.rm = TRUE,
+      right = FALSE
+    )
+  ) |>
+  # Transform 'hours_exercise' by applying the log function to compress its scale
+  mutate(hours_exercise_log = log(hours_exercise + 1)) # Add 1 to avoid undefined log(0). Hours spent exercising/physical activity
+
+```
+
+
+
+3.  Take Home: estimate whether exercise causally affects nervousness, using the single item of the kessler 6 score. Briefly write up your results.
+
+
+*To be reviewed next week.* 
 
 
 
