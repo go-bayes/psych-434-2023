@@ -1447,7 +1447,7 @@ and also:
 
 
 
-## Appendix: MG-CFA
+# Appendix: MG-CFA
 
 
 ### CFA for Kessler 6
