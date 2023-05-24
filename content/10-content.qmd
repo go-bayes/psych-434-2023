@@ -339,7 +339,7 @@ Inspect the data: anxiety
 
 ```{r}
 #| label: histogram_kessler_anxiety
-hist(dt_start2$kessler_latent_anxiety, by = dt_start2$eth_cat)
+#hist(dt_start2$kessler_latent_anxiety, by = dt_start2$eth_cat)
 
 create_histograms_anxiety <- function(df) {
   # require patchwork

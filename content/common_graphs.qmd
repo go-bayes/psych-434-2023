@@ -384,7 +384,7 @@ Next some worked examples.
 
 
 \begin{tikzpicture}[{every node/.append style}=draw]
-\node [rectangle, draw=white] (L) at (0, 0) {t0/Doctor Visit};
+\node [rectangle, draw=white] (L) at (0, 0) {t0/Heart Attack};
 \node [ellipse, draw=white] (A) at (4, 0) {t1/Doctor Visit};
 \node [rectangle, draw=white] (Y) at (8, 0) {t2/Heart Attack};
 \draw [-latex, draw=red, dashed] (A) to (Y);
@@ -794,4 +794,58 @@ $$Y^{am}\coprod M^{a*}|L$$
 ```
 
 
+
+## Multiple Versions of Treatment
+
+```{tikz}
+#| label: fig-dag-multiple-version-treatment
+#| fig-cap: "Multiple Versions of Treatment"
+#| out-width: 100%
+#| echo: false
+
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=black] (L0) at (0, 0) {t0/L};
+\node [rectangle, draw=white] (K1) at (2, 0) {t1/K};
+\node [rectangle, draw=black] (A1) at (4, -1) {t1/A};
+\node [rectangle, draw=white] (Y2) at (6, 0) {t2/Y};
+
+\draw [-latex, draw=black] (L0) to (K1);
+\draw [-latex, bend left, draw=black] (L0) to (Y2);
+\draw [-latex, draw=black] (K1) to (A1);
+\draw [-latex, draw=red, dashed] (K1) to (Y2);
+
+\end{tikzpicture}
+```
+
+
+
+
+
+
+
+
+
+## Structural interpretation of a latent factor
+
+
+
+
 ## TO DO STILL: Measurement Error
+
+
+
+
+
+
+

@@ -1,0 +1,465 @@
+---
+title: "TEST GRAPHS"
+execute:
+  warning: false
+code_folding: true
+echo: true
+draft: false
+author:
+  - name: Joseph Bulbulia
+orcid: 0000-0002-5861-2056
+affiliation: Victoria University of Wellington, New Zealand
+email: joseph.bulbulia@vuw.ac.nz
+corresponding: yes
+date-format: short
+sanitize: true
+keep-tex: false
+editor_options: 
+  chunk_output_type: inline
+---
+
+
+
+```{r}
+#| include: false
+#| echo: false
+#read libraries
+
+library("tinytex")
+library(extrafont)
+loadfonts(device = "all")
+
+# read libraries
+source("/Users/joseph/GIT/templates/functions/libs2.R")
+
+# read functions
+#source("/Users/joseph/GIT/templates/functions/funs.R")
+```
+
+
+## Measurement Graphs
+
+
+### Reflective measurement model
+
+::: {#fig-latent layout-ncol=1}
+```{tikz}
+#| label: fig-dag-latent-1
+#| fig-cap: "Reflective model: assume univariate latent variable η giving rise to indicators X1...X3"
+#| out-width: 80%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (eta) at (0, 0) {$\eta$};
+\node [rectangle, draw=white] (X1) at (6, 1) {X1};
+\node [rectangle, draw=white] (X2) at (6, 0) {$\vdots$};
+\node [rectangle, draw=white] (Xn) at (6, -1) {X$_n$};
+
+\draw [-latex, draw=black] (eta) to (X1);
+\draw [-latex, draw=black] (eta) to (X2);
+\draw [-latex, draw=black] (eta) to (Xn);
+
+\end{tikzpicture}
+```
+
+
+
+```{tikz}
+#| label: fig-dag-latent-2
+#| fig-cap: "Reflective Model: causal assumptions"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [rectangle, draw=white] (L) at (0, 0) {L};
+\node [rectangle, draw=white] (eta) at (2, 0) {$\eta$};
+\node [rectangle, draw=white] (X1) at (4, 1) {X1};
+\node [rectangle, draw=white] (X2) at (4, 0) {$\vdots$};
+\node [rectangle, draw=white] (Xn) at (4, -1) {X$_n$};
+\node [rectangle, draw=white] (Y) at (8, 0) {Y};
+
+\draw [-latex, bend right=80, draw=black] (L) to (Y);
+\draw [-latex, bend left=80, draw=red] (eta) to (Y);
+\draw [-latex, draw=black] (eta) to (X1);
+\draw [-latex, draw=black] (eta) to (X2);
+\draw [-latex, draw=black] (eta) to (Xn);
+
+\end{tikzpicture}
+```
+
+Reflective model & causal assumptions
+
+:::
+
+
+
+
+
+::: {#fig-latent layout-ncol=1}
+```{tikz}
+#| label: fig-dag-latent-formative
+#| fig-cap: "Formative model:: assume univariate latent variable from which the indicators X1...X3 give rise."
+#| out-width: 80%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (X1) at (0, 1) {X1};
+\node [rectangle, draw=white] (X2) at (0, 0) {$\vdots$};
+\node [rectangle, draw=white] (Xn) at (0, -1) {X$_n$};
+\node [rectangle, draw=white] (eta) at (6, 0) {$\eta$};
+
+
+\draw [-latex, draw=black] (X1) to (eta);
+\draw [-latex, draw=black] (X2) to (eta);
+\draw [-latex, draw=black] (Xn) to (eta);
+
+\end{tikzpicture}
+```
+
+
+## Formative measurement model
+
+
+```{tikz}
+#| label: fig-dag-formative-assumptions
+#| fig-cap: "Formative model: causal assumptions"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+
+\node [draw=white] (L) at (0, 2) {L};
+\node [rectangle, draw=white] (X1) at (0, 1) {X1};
+\node [rectangle, draw=white] (X2) at (0, 0) {$\vdots$};
+\node [rectangle, draw=white] (Xn) at (0, -1) {X$_n$};
+\node [rectangle, draw=white] (eta) at (4, 0) {$\eta$};
+\node [rectangle, draw=white] (Y) at (8, 0) {Y};
+
+
+
+\draw [-latex, draw=black] (X1) to (eta);
+\draw [-latex, draw=black] (X2) to (eta);
+\draw [-latex, draw=black] (Xn) to (eta);
+\draw [-latex, bend left=0, draw=black] (L) to (Y);
+\draw [-latex, draw=black] (L) to (eta);
+\draw [-latex, draw=red] (eta) to (Y);
+
+
+\end{tikzpicture}
+```
+
+Formative model & causal assumptions
+
+:::
+
+
+
+
+### VanderWeele's worry for the basic reflective model
+
+
+
+::: {#fig-latent layout-ncol=1}
+
+```{tikz}
+#| label: fig-dag-formative-assumptions-compatible
+#| fig-cap: "Formative model is compatible with indicators causing outcome"
+#| out-width: 100%
+#| echo: false
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [rectangle, draw=white] (L) at (0, 0) {L};
+\node [rectangle, draw=white] (eta) at (2, 0) {$\eta$};
+\node [rectangle, draw=white] (X1) at (4, 1) {X1};
+\node [rectangle, draw=white] (X2) at (4, 0) {$\vdots$};
+\node [rectangle, draw=white] (Xn) at (4, -1) {X$_n$};
+\node [rectangle, draw=white] (Y) at (6, 0) {Y};
+
+\draw [-latex, bend right=80, draw=black] (L) to (Y);
+\draw [-latex, bend left=60, draw=black] (L) to (X1);
+\draw [-latex, bend left=40, draw=black] (L) to (X2);
+\draw [-latex, bend right=60, draw=black] (L) to (Xn);
+
+\draw [-latex, draw=black] (eta) to (X1);
+\draw [-latex, draw=black] (eta) to (X2);
+\draw [-latex, draw=black] (eta) to (Xn);
+
+\draw [-latex, draw=red] (X1) to (Y);
+\draw [-latex, draw=red] (X2) to (Y);
+\draw [-latex, draw=red] (Xn) to (Y);
+
+
+\end{tikzpicture}
+```
+
+
+```{tikz}
+#| label: fig-dag-reflectiveassumptions-compatible
+#| fig-cap: "Reflective model is compatible with indicators causing the outcome"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+
+\node [draw=white] (L) at (0, 0) {L};
+\node [rectangle, draw=white] (X1) at (2, 1) {X1};
+\node [rectangle, draw=white] (X2) at (2, 0) {$\vdots$};
+\node [rectangle, draw=white] (Xn) at (2, -1) {X$_n$};
+\node [rectangle, draw=white] (eta) at (4, 0) {$\eta$};
+\node [rectangle, draw=white] (Y) at (6, 0) {Y};
+
+
+
+\draw [-latex, draw=black] (X1) to (eta);
+\draw [-latex, draw=black] (X2) to (eta);
+\draw [-latex, draw=black] (Xn) to (eta);
+\draw [-latex, bend left=80, draw=black] (L) to (Y);
+\draw [-latex, bend left=60, draw=red] (X1) to (Y);
+\draw [-latex, bend left=40, draw=red] (X2) to (Y);
+\draw [-latex, bend right =60,  draw=red] (Xn) to (Y);
+
+
+
+\end{tikzpicture}
+```
+
+
+Formative and Reflective Models are compatible with indicators having causal effects 
+
+:::
+
+
+## More complex models (is this a causal graph?)
+
+VanderWeele writes this: 
+
+```{tikz}
+#| label: fig-dag-multivariate-reality
+#| fig-cap: "Multivariate reality gives rise to the indicators, from which we draw our measure.r"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+
+\node [draw=white] (eta1) at (0, 1) {$\eta_1$};
+\node [rectangle, draw=white] (eta2) at (0, 0) {$\vdots$};
+\node [rectangle, draw=white] (etan) at (0, -1) {$\eta_n$};
+\node [rectangle, draw=white] (X1) at (2, 1) {X$_1$};
+\node [rectangle, draw=white] (X2) at (2, 0) {$\vdots$};
+\node [rectangle, draw=white] (Xn) at (2, -1 ) {X$_n$};
+\node [rectangle, draw=white] (A) at (4, 0 ) {A};
+\node [rectangle, draw=white] (Y) at (6, 0 ) {Y};
+
+
+
+\draw [-latex, draw=black] (eta1) to (X1);
+\draw [-latex, draw=black] (eta2) to (X2);
+\draw [-latex, draw=black] (etan) to (Xn);
+
+\draw [-latex, draw=black] (X1) to (A);
+\draw [-latex, draw=black] (X2) to (A);
+\draw [-latex, draw=black] (Xn) to (A);
+\draw [-latex, bend left=80, draw=red] (eta1) to (Y);
+\draw [-latex, bend right=80, draw=red] (etan) to (Y);
+
+
+
+\end{tikzpicture}
+```
+
+
+Rather, I would prefer to say A$ = f(X_1, \dots X_n)$, and to make the point we write: 
+
+
+```{tikz}
+#| label: fig-dag-multivariate-reality-bulbulia
+#| fig-cap: "Multivariate reality gives rise to the indicators, from which we draw our measure.r"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+
+\node [draw=white] (eta1) at (0, 1) {$\eta_1$};
+\node [rectangle, draw=white] (eta2) at (0, 0) {$\vdots$};
+\node [rectangle, draw=white] (etan) at (0, -1) {$\eta_n$};
+\node [rectangle, draw=white] (X1) at (2, 1) {X$_1$};
+\node [rectangle, draw=white] (X2) at (2, 0) {$\vdots$};
+\node [rectangle, draw=white] (Xn) at (2, -1 ) {X$_n$};
+\node [rectangle, draw=white] (Y) at (6, 0 ) {Y};
+
+
+
+\draw [-latex, draw=black] (eta1) to (X1);
+\draw [-latex, draw=black] (eta2) to (X2);
+\draw [-latex, draw=black] (etan) to (Xn);
+
+
+\draw [-latex, bend left=80, draw=red] (eta1) to (Y);
+
+
+
+\end{tikzpicture}
+```
+
+
+
+
+
+
+
+## VanderWeele's model of reality (is this a causal diagramme?)
+
+
+```{tikz}
+#| label: fig-dag-multivariate-reality-complete
+#| fig-cap: "Multivariate reality gives rise to the latent variables,..."
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+
+\node [rectangle, draw=white] (R) at (0, 0 ) {$\mathcal{R}$};
+\node [rectangle, draw=white] (c) at (2, -1 ) {concepts};
+\node [rectangle, draw=white] (cs) at (4, -2 ) {constructs};
+\node [rectangle, draw=white] (eta) at (4, 0 ) {$\eta$};
+\node [rectangle, draw=white] (X) at (6, 0 ) {(X$_1 \dots$X$_n$)};
+\node [rectangle, draw=white] (A) at (8, 0 ) {A};
+\node [rectangle, draw=white] (Y) at (10, 0 ) {Y};
+
+
+
+\draw [-latex, draw=black, dashed] (R) to (c);
+\draw [-latex, draw=black, dashed] (c) to (cs);
+\draw [-latex, draw=black] (R) to (eta);
+\draw [-latex, draw=black] (eta) to (X);
+\draw [-latex, draw=black] (X) to (A);
+
+
+
+\draw [-latex, bend left=80, draw=red] (eta) to (Y);
+
+
+
+\end{tikzpicture}
+```
+
+
+However this is not a causal graph. Can we do better? 
+
+## Perhaps this is better
+
+
+
+```{tikz}
+#| label: fig-dag-multivariate-reality-complete-bulbulia
+#| fig-cap: "Multivariate reality gives rise to the latent variables,if reality continues to strongly effect η at t0 ...tn, there is an open backdoor path to Y through our concepts and constructs."
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+
+\node [rectangle, draw=white, align=left] (R) at (0, 0 ) {$\mathcal{R}$\\
+  concepts$^{~}$\\constructs$^{~}$};
+\node [rectangle, draw=white] (eta0) at (3, 0 ) {$\eta^{t0}$};
+\node [rectangle, draw=black] (X0) at (6, 0 ) {$(X_1 \dots X_n)^{t0}$};
+\node [rectangle, draw=white] (eta1) at (10, 0 ) {$\eta^{t1}$};
+\node [rectangle, draw=black] (X1) at (12, 0 ) {$(X_1 \dots X_n)^{t1}$};
+\node [rectangle, draw=white] (Y) at (14, 0 ) {Y$^{t2}$};
+
+
+
+
+\draw [-latex, draw=red, bend left=80] (R) to (Y);
+\draw [-latex, draw=black] (R) to (eta0);
+\draw [-latex, draw=black, bend left, red] (R) to (eta1);
+\draw [-latex, draw=black] (eta0) to (X0);
+\draw [-latex, draw=black, bend right=40] (eta0) to (X1);
+\draw [-latex, draw=black] (eta1) to (X1);
+\draw [-latex, draw=red,dotted, bend left=40] (eta1) to (Y);
+
+
+
+
+
+
+\end{tikzpicture}
+```
+
+
+
+
+

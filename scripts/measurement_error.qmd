@@ -1,0 +1,465 @@
+---
+title: "Measurement Error"
+execute:
+  warning: false
+code_folding: true
+echo: true
+draft: false
+author:
+  - name: Joseph Bulbulia
+orcid: 0000-0002-5861-2056
+affiliation: Victoria University of Wellington, New Zealand
+email: joseph.bulbulia@vuw.ac.nz
+corresponding: yes
+date-format: short
+sanitize: true
+keep-tex: false
+editor_options: 
+  chunk_output_type: inline
+---
+
+
+
+```{r}
+#| include: false
+#| echo: false
+#read libraries
+
+library("tinytex")
+library(extrafont)
+loadfonts(device = "all")
+
+# read libraries
+source("/Users/joseph/GIT/templates/functions/libs2.R")
+
+# read functions
+#source("/Users/joseph/GIT/templates/functions/funs.R")
+```
+
+
+## Measurement Graphs
+
+
+### Undirected uncorrellated measurement error under the null
+
+Sure, I'd be happy to elaborate more on these concepts:
+
+1. **Non-Differential Measurement Error:** This type of error is unrelated to the levels of the exposure or outcome. Simply put, the inaccuracies in measuring the exposure or outcome don't depend on the actual levels of these variables. It's "non-differential" because the errors do not "differ" based on the level of exposure or outcome. This means that they are just as likely to overestimate as they are to underestimate the true values.
+
+2. **Uncorrelated Measurement Error:** Uncorrelated (or non-dependent) measurement error refers to a situation where the measurement errors of the exposure and the outcome are not related to each other. That is, a mistake in measuring the exposure doesn't predict a mistake in measuring the outcome, and vice versa. 
+
+When these two types of error are present at the same time, the effect of the exposure on the outcome can be underestimated, which is known as "attenuation bias". This happens because the 'noise' (the measurement errors) dilutes the 'signal' (the true relationship between exposure and outcome). 
+
+However, if the null hypothesis is true (i.e., there's no real relationship between the exposure and outcome), this won't introduce bias. This is because, with non-differential and uncorrelated errors, mistakes are equally likely to be in any direction. Since the true effect is zero under the null, the average estimated effect from many repeated studies would also be zero, despite the presence of these measurement errors.
+
+Still, while there won't be bias under the null, measurement error can increase the variability of your estimates (making them less precise) and reduce the statistical power of your study (making it harder to detect a true effect if one exists).  We next turn to this case.
+
+
+```{tikz}
+#| label: fig-dag-uu-null
+#| fig-cap: "Uncorrelated differential  measurement error does not bias estimates under the null."
+#| out-width: 80%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (UA) at (0, 1) {U$_A$};
+\node [rectangle, draw=white] (UY) at (0, 3) {U$_Y$};
+
+\node [rectangle, draw=black] (A1) at (2, 1) {A$^{t1}$};
+\node [rectangle, draw=black] (Y2) at (4, 1) {Y$^{t2}$};
+\node [rectangle, draw=white] (Aeta1) at (2, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (4, 0) {Y$^{t2}_\eta$};
+
+
+\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=black,bend left=30] (UY) to (Y2);
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+
+\end{tikzpicture}
+```
+
+
+
+
+
+###  Uncorrellated undirected measurement error when there is an effect
+
+```{tikz}
+#| label: fig-dag-uu-effect
+#| fig-cap: "Uncorrelated  undirected measurement error can dilute the estimates of true effects"
+#| out-width: 80%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (UA) at (0, 1) {U$_A$};
+\node [rectangle, draw=white] (UY) at (0, 3) {U$_Y$};
+
+\node [rectangle, draw=black] (A1) at (2, 1) {A$^{t1}$};
+\node [rectangle, draw=black] (Y2) at (4, 1) {Y$^{t2}$};
+\node [rectangle, draw=white] (Aeta1) at (2, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (4, 0) {Y$^{t2}_\eta$};
+
+
+\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=black, bend left=30] (UY) to (Y2);
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+\draw [-latex, draw=black, dotted] (Aeta1) to (Yeta2);
+
+
+\end{tikzpicture}
+```
+
+If there is a true effect of the exposure on the outcome, non-differential measurement error in both the exposure and the outcome can lead to an attenuation of the effect estimate. This phenomenon is often referred to as "regression dilution bias" or "attenuation bias".
+
+Let's take a moment to understand these concepts. Non-differential measurement error refers to the situation where the measurement error does not differ based on the level of exposure or the outcome. It's called "non-differential" because the degree of error doesn't "differ" based on these factors. 
+
+When it comes to independent non-differential measurement error, it means that the errors in the measurements of exposure and outcome are uncorrelated with each other, and they don't depend on the true values of exposure and outcome.
+
+Now, if there's a true effect of the exposure on the outcome, the presence of measurement error in both variables can lead to attenuation bias, because the effect size is underestimated due to the 'noise' introduced by these errors. 
+
+When you measure the exposure or outcome with error, the variability of these variables increases, thus the signal (i.e., the true relationship) gets 'diluted' in the increased 'noise'. This can lead to an underestimation of the true effect size.
+
+The more severe the measurement error, the greater the attenuation of the estimated effect. In other words, the observed relationship between the exposure and the outcome will be weaker than the true relationship, potentially leading to a failure to detect a true association.
+
+However, it's important to mention that the degree of this attenuation can depend on various factors, including the extent of the measurement error, the strength of the true relationship, and the statistical method used. Some statistical methods have been developed to correct for this type of bias, such as regression calibration, simulation extrapolation (SIMEX), and multiple imputation (citations)
+
+
+### Dependent (correlated) undirected measurement errror 
+
+
+
+```{tikz}
+#| label: fig-dag-dep-u-effect
+#| fig-cap: "Uncorrelated  undirected measurement error can dilute the estimates of true effects"
+#| out-width: 80%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+\begin{tikzpicture}[every node/.append style={draw}]
+
+\node [rectangle, draw=white] (UAY) at (0, 2) {U$_{AY}$};
+\node [rectangle, draw=white] (UA) at (2, 1) {U$_A$};
+\node [rectangle, draw=white] (UY) at (2, 3) {U$_Y$};
+
+\node [rectangle, draw=black] (A1) at (4, 1) {A$^{t1}$};
+\node [rectangle, draw=black] (Y2) at (6, 1) {Y$^{t2}$};
+\node [rectangle, draw=white] (Aeta1) at (4, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (6, 0) {Y$^{t2}_\eta$};
+
+
+\draw [-latex, draw=red] (UAY) to (UA);
+\draw [-latex, draw=red] (UAY) to (UY);
+\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=red, bend left=30] (UY) to (Y2);
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+\draw [cor, draw=red, bend left] (Aeta1) to (UA);
+
+\end{tikzpicture}
+
+```
+
+
+
+
+
+### Directed independent (uncorrelated) measurement errror 
+
+
+
+```{tikz}
+#| label: fig-dag-indep-d-effect
+#| fig-cap: "Directed  independent (uncorrelated) measurement error biases effect estimates"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+\begin{tikzpicture}[every node/.append style={draw}]
+\node [rectangle, draw=white] (UA) at (0, 1) {U$_A$};
+
+\node [rectangle, draw=black] (A1) at (2, 1) {A$^{t1}$};
+\node [rectangle, draw=white] (UY) at (4, -1) {U$_Y$};
+
+\node [rectangle, draw=black] (Y2) at (6, -1) {Y$^{t2}$};
+\node [rectangle, draw=white] (Aeta1) at (2, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (6, 0) {Y$^{t2}_\eta$};
+
+
+\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=red] (UY) to (Y2);
+\draw [-latex, draw=red] (Aeta1) to (UY);
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+\draw [cor, draw=red] (UA) to (Aeta1);
+
+\end{tikzpicture}
+```
+
+
+
+### Directed Dependent (correlated) measurement errror 
+
+
+
+```{tikz}
+#| label: fig-dag-d-d
+#| fig-cap: "Directed  independent (uncorrelated) measurement error biases effect estimates"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+\begin{tikzpicture}[every node/.append style={draw}]
+
+\node [rectangle, draw=white] (UAY) at (0, 0) {U$_{AY}$};
+
+\node [rectangle, draw=white] (UA) at (2, 1) {U$_A$};
+
+\node [rectangle, draw=black] (A1) at (4, 1) {A$^{t1}$};
+\node [rectangle, draw=white] (UY) at (6, -1) {U$_Y$};
+
+\node [rectangle, draw=black] (Y2) at (8, -1) {Y$^{t2}$};
+\node [rectangle, draw=white] (Aeta1) at (4, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (8, 0) {Y$^{t2}_\eta$};
+
+
+\draw [-latex, draw=red] (UAY) to (UA);
+\draw [-latex, draw=red] (UAY) to (UY);
+
+
+\draw [-latex, draw=black] (UA) to (A1);
+
+\draw [-latex, draw=red] (UY) to (Y2);
+\draw [-latex, draw=red] (Aeta1) to (UY);
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+\draw [cor, draw=red] (UA) to (Aeta1);
+
+\end{tikzpicture}
+```
+
+
+
+
+
+### Independent undirected measurement error including measurement error of confounders
+
+
+```{tikz}
+#| label: fig-dag-uu-effect-confounders
+#| fig-cap: "Uncorrelated  undirected measurement error can dilute the estimates of true effects"
+#| out-width: 80%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (UL) at (0, 1) {U$_L$};
+\node [rectangle, draw=white] (UA) at (0, 2) {U$_A$};
+\node [rectangle, draw=white] (UY) at (0, 3) {U$_Y$};
+
+\node [rectangle, draw=black] (L0) at (2, 1) {L$^{t0}$};
+\node [rectangle, draw=black] (A1) at (4, 1) {A$^{t1}$};
+\node [rectangle, draw=black] (Y2) at (6, 1) {Y$^{t2}$};
+\node [rectangle, draw=white] (Leta0) at (2, 0) {L$^{t0}_\eta$};
+\node [rectangle, draw=white] (Aeta1) at (4, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (6, 0) {Y$^{t2}_\eta$};
+
+
+\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=black] (UL) to (L0);
+\draw [-latex, draw=black] (L0) to (A1);
+\draw [-latex, draw=black] (L0) to (A1);
+\draw [-latex, draw=black] (Leta0) to (L0);
+\draw [-latex, draw=black] (Leta0) to (Aeta1);
+
+
+
+
+\draw [-latex, draw=black] (UY) to (Y2);
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+
+
+\end{tikzpicture}
+```
+
+
+### Dependent undirected measurement error including measurement error of confounders: problem if correlations between any pairs
+
+
+```{tikz}
+#| label: fig-dag-dep-undir-effect-confounders
+#| fig-cap: "Uncorrelated  undirected measurement error can dilute the estimates of true effects"
+#| out-width: 80%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (ULY) at (0, 3) {U$_{LY}$};
+\node [rectangle, draw=white] (ULA) at (2, 3) {U$_{LA}$};
+\node [rectangle, draw=white] (UL) at (4, 1) {U$_L$};
+\node [rectangle, draw=white] (UA) at (4, 3) {U$_A$};
+\node [rectangle, draw=white] (UY) at (4, 5) {U$_Y$};
+
+\node [rectangle, draw=black] (L0) at (6, 1) {L$^{t0}$};
+\node [rectangle, draw=black] (A1) at (8, 1) {A$^{t1}$};
+\node [rectangle, draw=black] (Y2) at (10, 1) {Y$^{t2}$};
+\node [rectangle, draw=white] (Leta0) at (6, 0) {L$^{t0}_\eta$};
+\node [rectangle, draw=white] (Aeta1) at (8, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (10, 0) {Y$^{t2}_\eta$};
+
+
+\draw [-latex, draw=red] (ULA) to (UA);
+\draw [-latex, draw=red] (ULA) to (UL);
+\draw [-latex, draw=red] (ULY) to (UY);
+\draw [-latex, draw=red] (ULY) to (UL);
+
+\draw [-latex, draw=red] (UA) to (A1);
+\draw [-latex, draw=black] (UL) to (L0);
+\draw [-latex, draw=black] (L0) to (A1);
+\draw [-latex, draw=black] (L0) to (A1);
+\draw [-latex, draw=black] (Leta0) to (L0);
+\draw [-latex, draw=black] (Leta0) to (Aeta1);
+\draw [-latex, draw=red, bend right=30] (Leta0) to (Yeta2);
+
+
+
+\draw [-latex, draw=black] (UY) to (Y2);
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+
+\draw [cor, draw=red, dashed] (UL) to (Leta0);
+
+\end{tikzpicture}
+```
+
+
+
+
+### Reconsider The Three-Wave Panel Design. 
+
+
+```{tikz}
+#| label: fig-dag-dep-undir-effect-confounders-3wave
+#| fig-cap: "Uncorrelated  undirected measurement error can dilute the estimates of true effects"
+#| out-width: 80%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (ULY) at (0, 3) {U$_{LY}_{t0}$};
+\node [rectangle, draw=white] (ULA) at (2, 3) {U$_{LA}$};
+\node [rectangle, draw=white] (UL) at (4, 1) {U$_L$};
+\node [rectangle, draw=white] (UA) at (4, 3) {U$_A$};
+\node [rectangle, draw=white] (UY) at (4, 5) {U$_Y$};
+
+\node [rectangle, draw=black] (L0) at (6, 1) {L$^{t0}$};
+\node [rectangle, draw=black] (A1) at (8, 1) {A$^{t1}$};
+\node [rectangle, draw=black] (Y2) at (10, 1) {Y$^{t2}$};
+\node [rectangle, draw=white] (Leta0) at (6, 0) {L$^{t0}_\eta$};
+\node [rectangle, draw=white] (Aeta1) at (8, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (10, 0) {Y$^{t2}_\eta$};
+
+
+\draw [-latex, draw=red] (ULA) to (UA);
+\draw [-latex, draw=red] (ULA) to (UL);
+\draw [-latex, draw=red] (ULY) to (UY);
+\draw [-latex, draw=red] (ULY) to (UL);
+
+\draw [-latex, draw=red] (UA) to (A1);
+\draw [-latex, draw=black] (UL) to (L0);
+\draw [-latex, draw=black] (L0) to (A1);
+\draw [-latex, draw=black] (L0) to (A1);
+\draw [-latex, draw=black] (Leta0) to (L0);
+\draw [-latex, draw=black] (Leta0) to (Aeta1);
+\draw [-latex, draw=red, bend right=30] (Leta0) to (Yeta2);
+
+
+
+\draw [-latex, draw=black] (UY) to (Y2);
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+
+\draw [cor, draw=red, dashed] (UL) to (Leta0);
+
+\end{tikzpicture}
+```
+
