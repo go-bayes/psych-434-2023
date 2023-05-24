@@ -295,7 +295,7 @@ However, it's important to mention that the degree of this attenuation can depen
 
 ```{tikz}
 #| label: fig-dag-uu-effect-confounders
-#| fig-cap: "Uncorrelated  undirected measurement error can dilute the estimates of true effects"
+#| fig-cap: "TBA"
 #| out-width: 80%
 #| echo: false
 \usetikzlibrary{positioning}
@@ -325,8 +325,6 @@ However, it's important to mention that the degree of this attenuation can depen
 
 \draw [-latex, draw=black] (UA) to (A1);
 \draw [-latex, draw=black] (UL) to (L0);
-\draw [-latex, draw=black] (L0) to (A1);
-\draw [-latex, draw=black] (L0) to (A1);
 \draw [-latex, draw=black] (Leta0) to (L0);
 \draw [-latex, draw=black] (Leta0) to (Aeta1);
 
@@ -342,74 +340,72 @@ However, it's important to mention that the degree of this attenuation can depen
 ```
 
 
-### Dependent undirected measurement error including measurement error of confounders: problem if correlations between any pairs
+### Dependent undirected measurement error including measurement error of confounders: Reconsider The Three-Wave Panel Design. 
 
 
-```{tikz}
-#| label: fig-dag-dep-undir-effect-confounders
-#| fig-cap: "Uncorrelated  undirected measurement error can dilute the estimates of true effects"
-#| out-width: 80%
-#| echo: false
-\usetikzlibrary{positioning}
-\usetikzlibrary{shapes.geometric}
-\usetikzlibrary{arrows}
-\usetikzlibrary{decorations}
-\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
-\tikzset{>=latex}
+<!-- ```{tikz} -->
+<!-- #| label: fig-dag-dep-undir-effect-confounders -->
+<!-- #| fig-cap: "Uncorrelated  undirected measurement error can dilute the estimates of true effects" -->
+<!-- #| out-width: 80% -->
+<!-- #| echo: false -->
+<!-- \usetikzlibrary{positioning} -->
+<!-- \usetikzlibrary{shapes.geometric} -->
+<!-- \usetikzlibrary{arrows} -->
+<!-- \usetikzlibrary{decorations} -->
+<!-- \tikzstyle{Arrow} = [->, thin, preaction = {decorate}] -->
+<!-- \tikzset{>=latex} -->
 
-% Define a simple decoration
-\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
-
-
-\begin{tikzpicture}[{every node/.append style}=draw]
-
-\node [rectangle, draw=white] (ULY) at (0, 3) {U$_{LY}$};
-\node [rectangle, draw=white] (ULA) at (2, 3) {U$_{LA}$};
-\node [rectangle, draw=white] (UL) at (4, 1) {U$_L$};
-\node [rectangle, draw=white] (UA) at (4, 3) {U$_A$};
-\node [rectangle, draw=white] (UY) at (4, 5) {U$_Y$};
-
-\node [rectangle, draw=black] (L0) at (6, 1) {L$^{t0}$};
-\node [rectangle, draw=black] (A1) at (8, 1) {A$^{t1}$};
-\node [rectangle, draw=black] (Y2) at (10, 1) {Y$^{t2}$};
-\node [rectangle, draw=white] (Leta0) at (6, 0) {L$^{t0}_\eta$};
-\node [rectangle, draw=white] (Aeta1) at (8, 0) {A$^{t1}_\eta$};
-\node [rectangle, draw=white] (Yeta2) at (10, 0) {Y$^{t2}_\eta$};
+<!-- % Define a simple decoration -->
+<!-- \tikzstyle{cor} = [-, dotted, preaction = {decorate}] -->
 
 
-\draw [-latex, draw=red] (ULA) to (UA);
-\draw [-latex, draw=red] (ULA) to (UL);
-\draw [-latex, draw=red] (ULY) to (UY);
-\draw [-latex, draw=red] (ULY) to (UL);
+<!-- \begin{tikzpicture}[{every node/.append style}=draw] -->
 
-\draw [-latex, draw=red] (UA) to (A1);
-\draw [-latex, draw=black] (UL) to (L0);
-\draw [-latex, draw=black] (L0) to (A1);
-\draw [-latex, draw=black] (L0) to (A1);
-\draw [-latex, draw=black] (Leta0) to (L0);
-\draw [-latex, draw=black] (Leta0) to (Aeta1);
-\draw [-latex, draw=red, bend right=30] (Leta0) to (Yeta2);
+<!-- \node [rectangle, draw=white] (ULY) at (0, 3) {U$_{LY}$}; -->
+<!-- \node [rectangle, draw=white] (ULA) at (2, 3) {U$_{LA}$}; -->
+<!-- \node [rectangle, draw=white] (UL) at (4, 1) {U$_L$}; -->
+<!-- \node [rectangle, draw=white] (UA) at (4, 3) {U$_A$}; -->
+<!-- \node [rectangle, draw=white] (UY) at (4, 5) {U$_Y$}; -->
+
+<!-- \node [rectangle, draw=black] (L0) at (6, 1) {L$^{t0}$}; -->
+<!-- \node [rectangle, draw=black] (A1) at (8, 1) {A$^{t1}$}; -->
+<!-- \node [rectangle, draw=black] (Y2) at (10, 1) {Y$^{t2}$}; -->
+<!-- \node [rectangle, draw=white] (Leta0) at (6, 0) {L$^{t0}_\eta$}; -->
+<!-- \node [rectangle, draw=white] (Aeta1) at (8, 0) {A$^{t1}_\eta$}; -->
+<!-- \node [rectangle, draw=white] (Yeta2) at (10, 0) {Y$^{t2}_\eta$}; -->
 
 
+<!-- \draw [-latex, draw=red] (ULA) to (UA); -->
+<!-- \draw [-latex, draw=red] (ULA) to (UL); -->
+<!-- \draw [-latex, draw=red] (ULY) to (UY); -->
+<!-- \draw [-latex, draw=red] (ULY) to (UL); -->
 
-\draw [-latex, draw=black] (UY) to (Y2);
-\draw [-latex, draw=black] (Aeta1) to (A1);
-\draw [-latex, draw=black] (Yeta2) to (Y2);
-
-\draw [cor, draw=red, dashed] (UL) to (Leta0);
-
-\end{tikzpicture}
-```
+<!-- \draw [-latex, draw=black] (UA) to (A1); -->
+<!-- \draw [-latex, draw=black] (UL) to (L0); -->
+<!-- \draw [-latex, draw=black] (Leta0) to (L0); -->
+<!-- \draw [-latex, draw=red] (Leta0) to (Aeta1); -->
+<!-- \draw [-latex, draw=red, bend right=30] (Leta0) to (Yeta2); -->
 
 
 
+<!-- \draw [-latex, draw=black] (UY) to (Y2); -->
+<!-- \draw [-latex, draw=black] (Aeta1) to (A1); -->
+<!-- \draw [-latex, draw=black] (Yeta2) to (Y2); -->
 
-### Reconsider The Three-Wave Panel Design. 
+<!-- \draw [cor, draw=red, dashed] (UL) to (Leta0); -->
+<!-- \draw [cor, draw=red, dashed, bend right = 90] (UA) to (Aeta1); -->
+<!-- \draw [cor, draw=red, dashed, bend left = 90] (UY) to (Yeta2); -->
+
+
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+
+
 
 
 ```{tikz}
 #| label: fig-dag-dep-undir-effect-confounders-3wave
-#| fig-cap: "Uncorrelated  undirected measurement error can dilute the estimates of true effects"
+#| fig-cap: "TBA"
 #| out-width: 80%
 #| echo: false
 \usetikzlibrary{positioning}
@@ -425,16 +421,16 @@ However, it's important to mention that the degree of this attenuation can depen
 
 \begin{tikzpicture}[{every node/.append style}=draw]
 
-\node [rectangle, draw=white] (ULY) at (0, 3) {U$_{LY}_{t0}$};
-\node [rectangle, draw=white] (ULA) at (2, 3) {U$_{LA}$};
-\node [rectangle, draw=white] (UL) at (4, 1) {U$_L$};
-\node [rectangle, draw=white] (UA) at (4, 3) {U$_A$};
-\node [rectangle, draw=white] (UY) at (4, 5) {U$_Y$};
+\node [rectangle, draw=white] (ULY) at (0, 5) {U$_{LY}$};
+\node [rectangle, draw=white] (ULA) at (0, 4) {U$_{LA}$};
+\node [rectangle, draw=white] (UL) at (6, 3) {U$_{t0/LAY}$};
+\node [rectangle, draw=white] (UA) at (8, 4) {U$_{t1/A}$};
+\node [rectangle, draw=white] (UY) at (10, 5) {U$_{t2/Y}$};
 
-\node [rectangle, draw=black] (L0) at (6, 1) {L$^{t0}$};
+\node [rectangle, draw=black] (L0) at (6, 1) {LAY$^{t0}$};
 \node [rectangle, draw=black] (A1) at (8, 1) {A$^{t1}$};
 \node [rectangle, draw=black] (Y2) at (10, 1) {Y$^{t2}$};
-\node [rectangle, draw=white] (Leta0) at (6, 0) {L$^{t0}_\eta$};
+\node [rectangle, draw=white] (Leta0) at (6, 0) {LAY$^{t0}_\eta$};
 \node [rectangle, draw=white] (Aeta1) at (8, 0) {A$^{t1}_\eta$};
 \node [rectangle, draw=white] (Yeta2) at (10, 0) {Y$^{t2}_\eta$};
 
@@ -444,12 +440,10 @@ However, it's important to mention that the degree of this attenuation can depen
 \draw [-latex, draw=red] (ULY) to (UY);
 \draw [-latex, draw=red] (ULY) to (UL);
 
-\draw [-latex, draw=red] (UA) to (A1);
+\draw [-latex, draw=black] (UA) to (A1);
 \draw [-latex, draw=black] (UL) to (L0);
-\draw [-latex, draw=black] (L0) to (A1);
-\draw [-latex, draw=black] (L0) to (A1);
 \draw [-latex, draw=black] (Leta0) to (L0);
-\draw [-latex, draw=black] (Leta0) to (Aeta1);
+\draw [-latex, draw=red] (Leta0) to (Aeta1);
 \draw [-latex, draw=red, bend right=30] (Leta0) to (Yeta2);
 
 
@@ -458,7 +452,64 @@ However, it's important to mention that the degree of this attenuation can depen
 \draw [-latex, draw=black] (Aeta1) to (A1);
 \draw [-latex, draw=black] (Yeta2) to (Y2);
 
-\draw [cor, draw=red, dashed] (UL) to (Leta0);
+\draw [cor, draw=red, dashed,bend right=60] (UL) to (Leta0);
+\draw [cor, draw=red, dashed, bend right = 60] (UA) to (Aeta1);
+\draw [cor, draw=red, dashed, bend left = 90] (UY) to (Yeta2);
+
+
+\end{tikzpicture}
+```
+
+
+### More Simply
+
+
+```{tikz}
+#| label: fig-dag-dep-undir-effect-confounders-3wave-try2
+#| fig-cap: "TBA"
+#| out-width: 80%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (ULAY) at (0, 4) {U$_{t0/LAY}$};
+\node [rectangle, draw=white] (UA) at (4, 3) {U$_{t1/A}$};
+\node [rectangle, draw=white] (UY) at (8, 4) {U$_{t2/Y}$};
+
+\node [rectangle, draw=black] (L0) at (0, 1) {LAY$^{t0}$};
+\node [rectangle, draw=black] (A1) at (4, 1) {A$^{t1}$};
+\node [rectangle, draw=black] (Y2) at (8, 1) {Y$^{t2}$};
+\node [rectangle, draw=white] (Leta0) at (0, 0) {L$^{t0}_\eta$};
+\node [rectangle, draw=white] (Aeta1) at (4, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (8, 0) {Y$^{t2}_\eta$};
+
+
+\draw [-latex, draw=red] (ULAY) to (UA);
+\draw [-latex, draw=red] (ULAY) to (UY);
+
+\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=black] (UY) to (Y2);
+\draw [-latex, draw=black] (ULAY) to (L0);
+\draw [-latex, draw=black] (Leta0) to (L0);
+\draw [-latex, draw=red] (Leta0) to (Aeta1);
+\draw [-latex, draw=red, bend right=30] (Leta0) to (Yeta2);
+
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+
+\draw [cor, draw=red, dashed,bend right=80] (ULAY) to (Leta0);
+\draw [cor, draw=red, dashed, bend right = 80] (UA) to (Aeta1);
+\draw [cor, draw=red, dashed, bend left = 80] (UY) to (Yeta2);
 
 \end{tikzpicture}
 ```

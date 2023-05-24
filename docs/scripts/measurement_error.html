@@ -190,8 +190,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#directed-independent-uncorrelated-measurement-errror" id="toc-directed-independent-uncorrelated-measurement-errror" class="nav-link" data-scroll-target="#directed-independent-uncorrelated-measurement-errror">Directed independent (uncorrelated) measurement errror</a></li>
   <li><a href="#directed-dependent-correlated-measurement-errror" id="toc-directed-dependent-correlated-measurement-errror" class="nav-link" data-scroll-target="#directed-dependent-correlated-measurement-errror">Directed Dependent (correlated) measurement errror</a></li>
   <li><a href="#independent-undirected-measurement-error-including-measurement-error-of-confounders" id="toc-independent-undirected-measurement-error-including-measurement-error-of-confounders" class="nav-link" data-scroll-target="#independent-undirected-measurement-error-including-measurement-error-of-confounders">Independent undirected measurement error including measurement error of confounders</a></li>
-  <li><a href="#dependent-undirected-measurement-error-including-measurement-error-of-confounders-problem-if-correlations-between-any-pairs" id="toc-dependent-undirected-measurement-error-including-measurement-error-of-confounders-problem-if-correlations-between-any-pairs" class="nav-link" data-scroll-target="#dependent-undirected-measurement-error-including-measurement-error-of-confounders-problem-if-correlations-between-any-pairs">Dependent undirected measurement error including measurement error of confounders: problem if correlations between any pairs</a></li>
-  <li><a href="#reconsider-the-three-wave-panel-design." id="toc-reconsider-the-three-wave-panel-design." class="nav-link" data-scroll-target="#reconsider-the-three-wave-panel-design.">Reconsider The Three-Wave Panel Design.</a></li>
+  <li><a href="#dependent-undirected-measurement-error-including-measurement-error-of-confounders-reconsider-the-three-wave-panel-design." id="toc-dependent-undirected-measurement-error-including-measurement-error-of-confounders-reconsider-the-three-wave-panel-design." class="nav-link" data-scroll-target="#dependent-undirected-measurement-error-including-measurement-error-of-confounders-reconsider-the-three-wave-panel-design.">Dependent undirected measurement error including measurement error of confounders: Reconsider The Three-Wave Panel Design.</a></li>
+  <li><a href="#more-simply" id="toc-more-simply" class="nav-link" data-scroll-target="#more-simply">More Simply</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -291,33 +291,75 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-uu-effect-confounders" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="measurement_error_files/figure-html/fig-dag-uu-effect-confounders-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6: Uncorrelated undirected measurement error can dilute the estimates of true effects</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6: TBA</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="dependent-undirected-measurement-error-including-measurement-error-of-confounders-problem-if-correlations-between-any-pairs" class="level3">
-<h3 class="anchored" data-anchor-id="dependent-undirected-measurement-error-including-measurement-error-of-confounders-problem-if-correlations-between-any-pairs">Dependent undirected measurement error including measurement error of confounders: problem if correlations between any pairs</h3>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-dag-dep-undir-effect-confounders" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="measurement_error_files/figure-html/fig-dag-dep-undir-effect-confounders-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;7: Uncorrelated undirected measurement error can dilute the estimates of true effects</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="reconsider-the-three-wave-panel-design." class="level3">
-<h3 class="anchored" data-anchor-id="reconsider-the-three-wave-panel-design.">Reconsider The Three-Wave Panel Design.</h3>
+<section id="dependent-undirected-measurement-error-including-measurement-error-of-confounders-reconsider-the-three-wave-panel-design." class="level3">
+<h3 class="anchored" data-anchor-id="dependent-undirected-measurement-error-including-measurement-error-of-confounders-reconsider-the-three-wave-panel-design.">Dependent undirected measurement error including measurement error of confounders: Reconsider The Three-Wave Panel Design.</h3>
+<!-- ```{tikz} -->
+<!-- #| label: fig-dag-dep-undir-effect-confounders -->
+<!-- #| fig-cap: "Uncorrelated  undirected measurement error can dilute the estimates of true effects" -->
+<!-- #| out-width: 80% -->
+<!-- #| echo: false -->
+<!-- \usetikzlibrary{positioning} -->
+<!-- \usetikzlibrary{shapes.geometric} -->
+<!-- \usetikzlibrary{arrows} -->
+<!-- \usetikzlibrary{decorations} -->
+<!-- \tikzstyle{Arrow} = [->, thin, preaction = {decorate}] -->
+<!-- \tikzset{>=latex} -->
+<!-- % Define a simple decoration -->
+<!-- \tikzstyle{cor} = [-, dotted, preaction = {decorate}] -->
+<!-- \begin{tikzpicture}[{every node/.append style}=draw] -->
+<!-- \node [rectangle, draw=white] (ULY) at (0, 3) {U$_{LY}$}; -->
+<!-- \node [rectangle, draw=white] (ULA) at (2, 3) {U$_{LA}$}; -->
+<!-- \node [rectangle, draw=white] (UL) at (4, 1) {U$_L$}; -->
+<!-- \node [rectangle, draw=white] (UA) at (4, 3) {U$_A$}; -->
+<!-- \node [rectangle, draw=white] (UY) at (4, 5) {U$_Y$}; -->
+<!-- \node [rectangle, draw=black] (L0) at (6, 1) {L$^{t0}$}; -->
+<!-- \node [rectangle, draw=black] (A1) at (8, 1) {A$^{t1}$}; -->
+<!-- \node [rectangle, draw=black] (Y2) at (10, 1) {Y$^{t2}$}; -->
+<!-- \node [rectangle, draw=white] (Leta0) at (6, 0) {L$^{t0}_\eta$}; -->
+<!-- \node [rectangle, draw=white] (Aeta1) at (8, 0) {A$^{t1}_\eta$}; -->
+<!-- \node [rectangle, draw=white] (Yeta2) at (10, 0) {Y$^{t2}_\eta$}; -->
+<!-- \draw [-latex, draw=red] (ULA) to (UA); -->
+<!-- \draw [-latex, draw=red] (ULA) to (UL); -->
+<!-- \draw [-latex, draw=red] (ULY) to (UY); -->
+<!-- \draw [-latex, draw=red] (ULY) to (UL); -->
+<!-- \draw [-latex, draw=black] (UA) to (A1); -->
+<!-- \draw [-latex, draw=black] (UL) to (L0); -->
+<!-- \draw [-latex, draw=black] (Leta0) to (L0); -->
+<!-- \draw [-latex, draw=red] (Leta0) to (Aeta1); -->
+<!-- \draw [-latex, draw=red, bend right=30] (Leta0) to (Yeta2); -->
+<!-- \draw [-latex, draw=black] (UY) to (Y2); -->
+<!-- \draw [-latex, draw=black] (Aeta1) to (A1); -->
+<!-- \draw [-latex, draw=black] (Yeta2) to (Y2); -->
+<!-- \draw [cor, draw=red, dashed] (UL) to (Leta0); -->
+<!-- \draw [cor, draw=red, dashed, bend right = 90] (UA) to (Aeta1); -->
+<!-- \draw [cor, draw=red, dashed, bend left = 90] (UY) to (Yeta2); -->
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-dep-undir-effect-confounders-3wave" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="measurement_error_files/figure-html/fig-dag-dep-undir-effect-confounders-3wave-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;8: Uncorrelated undirected measurement error can dilute the estimates of true effects</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;7: TBA</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="more-simply" class="level3">
+<h3 class="anchored" data-anchor-id="more-simply">More Simply</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-dep-undir-effect-confounders-3wave-try2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="measurement_error_files/figure-html/fig-dag-dep-undir-effect-confounders-3wave-try2-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: TBA</figcaption>
 </figure>
 </div>
 </div>
