@@ -59,6 +59,8 @@ The problem of confounding by common cause arises when there is an unmeasured or
 \usetikzlibrary{decorations}
 \tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
 \tikzset{>=latex}
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
 
 
 \begin{tikzpicture}[{every node/.append style}=draw]
@@ -90,6 +92,8 @@ Confounding by common cause can be addressed by adjusting for it. If $L$ is meas
 \tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
 \tikzset{>=latex}
 
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
 
 \begin{tikzpicture}[{every node/.append style}=draw]
 \node [rectangle, draw=black] (L) at (0, 0) {t0/L};
@@ -120,6 +124,8 @@ Conditioning on a common effect refers to a situation where there is a variable,
 \tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
 \tikzset{>=latex}
 
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
 
 \begin{tikzpicture}[{every node/.append style}=draw]
 \node [rectangle, draw=white] (A) at (0, 0) {t0/A};
@@ -153,6 +159,8 @@ To address the problem of conditioning on a common effect, it is crucial to ensu
 \usetikzlibrary{decorations}
 \tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
 \tikzset{>=latex}
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
 
 
 \begin{tikzpicture}[{every node/.append style}=draw]
@@ -188,6 +196,8 @@ Conditioning on a mediator refers to a situation where $L$ lies on the causal pa
 \tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
 \tikzset{>=latex}
 
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
 
 \begin{tikzpicture}[{every node/.append style}=draw]
 \node [ellipse, draw=white] (A) at (0, 0) {t0/A};
@@ -533,9 +543,11 @@ Next some worked examples.
 <!-- ``` -->
 
 
-### Selection bias
+### Selection bias: there are several types
 
 
+
+#### Unmeasured confounder affects selection and the outcome 
 
 
 ```{tikz}
@@ -550,13 +562,15 @@ Next some worked examples.
 \usetikzlibrary{decorations}
 \tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
 \tikzset{>=latex}
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
 
 \begin{tikzpicture}[{every node/.append style}=draw]
 
 \node [rectangle, draw=white] (U) at (0, 0) {U};
 \node [rectangle, draw=black, align=left] (L) at (2, 0) {t0/L \\t0/A \\t0/Y};
 \node [rectangle, draw=white] (A) at (4, 0) {t1/A};
-\node [ellipse, draw=white] (US) at (4, -1) {U};
+\node [ellipse, draw=white] (US) at (4, -2) {U};
 \node [rectangle, draw=black](S) at (6, 0) {S};
 \node [ellipse, draw=white] (Y) at (8, 0) {t2/Y};
 
@@ -570,10 +584,208 @@ Next some worked examples.
 \draw [-latex, draw=black] (US) to (Y);
 \draw [-latex, bend left = 40, draw=red, dashed] (A) to (Y);
 
+\draw [cor, draw=red, bend right=20, dashed] (A) to (US);
+
 
 \end{tikzpicture}
 
 
+```
+
+
+
+
+#### Unmeasured confounder affects a measured confounder of selection and the outcome, and there are unmeasured confourders that affect the measured confounder
+
+
+```{tikz}
+#| label: fig-dag-8-2
+#| fig-cap: "Causal graph: three-wave panel design with selection bias: example 2"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (U) at (0, 0) {U};
+\node [rectangle, draw=black, align=left] (L) at (2, 0) {t0/L \\t0/A \\t0/Y};
+\node [rectangle, draw=white] (A) at (4, 0) {t1/A};
+\node [ellipse, draw=white] (US) at (4, -2) {U};
+\node [rectangle, draw=white](L2) at (6, 0) {t2/L};
+\node [rectangle, draw=black](S) at (8, 0) {S};
+\node [ellipse, draw=white] (Y) at (10, 0) {t2/Y};
+
+\draw [-latex, draw=black] (U) to (L);
+\draw [-latex, draw=black] (L) to (A);
+\draw [-latex, bend left=50, draw=black] (L) to (Y);
+\draw [-latex, bend right=50, draw=black, dotted] (U) to (Y);
+\draw [-latex, bend left=50, draw=black, dotted] (U) to (A);
+\draw [-latex, draw=black] (A) to (L2);
+\draw [-latex, draw=black] (L2) to (S);
+\draw [-latex, draw=black] (US) to (L2);
+\draw [-latex, draw=black, bend right=40] (US) to (Y);
+\draw [-latex, bend left = 40, draw=red, dashed] (A) to (Y);
+
+\draw [cor, draw=red, bend right=20, dashed] (A) to (US);
+
+
+\end{tikzpicture}
+
+
+```
+
+
+
+
+#### Unmeasured confounder affects slection into the study and also attrition
+
+
+```{tikz}
+#| label: fig-dag-8-4
+#| fig-cap: "Causal graph: three-wave panel design with selection bias: selection into the study (D) affects attrition"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (D) at (0, 0) {D};
+\node [rectangle, draw=white] (A) at (2, 0) {t1/A};
+\node [ellipse, draw=white] (US) at (0, -2) {U};
+\node [rectangle, draw=black](S) at (4, 0) {S};
+\node [ellipse, draw=white] (Y) at (6, 0) {t2/Y};
+
+\draw [-latex, bend left=80, draw=black] (D) to (Y);
+\draw [-latex, draw = black] (D) to (A);
+\draw [-latex, draw=black, bend left=60] (D) to (S);
+\draw [-latex, draw=black] (US) to (S);
+\draw [-latex, draw=black] (US) to (Y);
+\draw [-latex, bend left=40, draw=red, dashed] (A) to (Y);
+
+\draw [cor, draw=red, bend right=10, dashed] (D) to (US);
+
+
+\end{tikzpicture}
+
+```
+
+
+
+
+#### Outcome and exposure affect attrition
+
+
+```{tikz}
+#| label: fig-dag-8-5
+#| fig-cap: "Causal graph:outcome and exposure affect attrition (Y measured with directed measurement error)"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+
+\node [rectangle, draw=white] (A) at (0, 0) {t1/A};
+\node [ellipse, draw=white] (Y) at (3, 0) {t2/Y};
+\node [rectangle, draw=black] (S) at (6, 0) {S};
+
+\draw [-latex, bend left=80, draw=black] (A) to (S);
+\draw [-latex, draw=black] (Y) to (S);
+\draw [-latex, draw=red, dashed] (A) to (Y);
+
+
+
+\end{tikzpicture}
+
+```
+
+
+#### Outcome and exposure affect attrition: we may approach this problem as one of directed measurement error.
+
+
+```{tikz}
+#| label: fig-directed-measurement-error
+#| fig-cap: "TBA"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+%\node [rectangle, draw=white] (ULAY) at (0, 4) {U$_{t0/LAY}$};
+\node [rectangle, draw=white] (UA) at (4, 3) {U$_{t1/A}$};
+\node [rectangle, draw=white] (UY) at (8, 3) {U$_{t2/Y}$};
+
+%\node [rectangle, draw=black] (L0) at (0, 1) {LAY$^{t0}$};
+\node [rectangle, draw=black] (A1) at (4, 1) {A$^{t1}$};
+\node [rectangle, draw=black] (Y2) at (8, 1) {Y$^{t2}$};
+%\node [rectangle, draw=white] (Leta0) at (0, 0) {L$^{t0}_\eta$};
+\node [rectangle, draw=white] (Aeta1) at (4, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (8, 0) {Y$^{t2}_\eta$};
+
+
+%\draw [-latex, draw=red] (ULAY) to (UA);
+%\draw [-latex, draw=red] (ULAY) to (UY);
+
+\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=red] (UY) to (Y2);
+%\draw [-latex, draw=black] (ULAY) to (L0);
+%\draw [-latex, draw=black] (Leta0) to (L0);
+%\draw [-latex, draw=black] (Leta0) to (Aeta1);
+%\draw [-latex, draw=red, bend right=30] (Leta0) to (Yeta2);
+
+\draw [-latex, draw=red] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+
+\draw [-latex, draw=red] (Aeta1) to (UY);
+%\draw [-latex, draw=red] (Leta0) to (UA);
+
+
+
+%\draw [cor, draw=red, dashed,bend right=80] (ULAY) to (Leta0);
+%\draw [cor, draw=red, dashed, bend right = 80] (UA) to (Aeta1);
+%\draw [cor, draw=red, dashed, bend left = 80] (UY) to (Yeta2);
+
+\end{tikzpicture}
 ```
 
 
@@ -816,14 +1028,14 @@ $$Y^{am}\coprod M^{a*}|L$$
 \begin{tikzpicture}[{every node/.append style}=draw]
 
 \node [rectangle, draw=black] (L0) at (0, 0) {t0/L};
-\node [rectangle, draw=white] (K1) at (2, 0) {t1/K};
-\node [rectangle, draw=black] (A1) at (4, -1) {t1/A};
+\node [rectangle, draw=white] (K1) at (4, 0) {t1/K};
+\node [rectangle, draw=black] (A1) at (4, 2) {t1/A};
 \node [rectangle, draw=white] (Y2) at (6, 0) {t2/Y};
 
 \draw [-latex, draw=black] (L0) to (K1);
-\draw [-latex, bend left, draw=black] (L0) to (Y2);
+\draw [-latex, bend right, draw=black] (L0) to (Y2);
 \draw [-latex, draw=black] (K1) to (A1);
-\draw [-latex, draw=red, dashed] (K1) to (Y2);
+\draw [-latex, draw=white, dashed] (K1) to (Y2);
 
 \end{tikzpicture}
 ```
@@ -831,17 +1043,65 @@ $$Y^{am}\coprod M^{a*}|L$$
 
 
 
+## Does the Multiple Versions of Treatments Approach Save Us? 
+
+
+Measurement error remeains a problem if errors are either directed or dependent (correlated) or both. (See: measurement link.)
+
+```{tikz}
+#| label: fig-dag-dep-udir-effect-confounders-3wave
+#| fig-cap: "Measurement error opens a pathway to confounding if either there are correlated errors, or a directed effect of the exposure on the errors of measured outcome."
+#| out-width: 100%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (ULAY) at (0, 4) {U$_{t0/L}$};
+\node [rectangle, draw=white] (UA) at (4, 3) {U$_{t1/A}$};
+\node [rectangle, draw=white] (UY) at (8, 4) {U$_{t2/Y}$};
+
+\node [rectangle, draw=black] (L0) at (0, 1) {L$^{t0}$};
+\node [rectangle, draw=black] (A1) at (4, 1) {A$^{t1}$};
+\node [rectangle, draw=black] (Y2) at (8, 1) {Y$^{t2}$};
+\node [rectangle, draw=white] (Leta0) at (0, 0) {t1/L$_\eta$};
+\node [rectangle, draw=white] (Aeta1) at (4, 0) {t1/A$_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (8, 0) {t2/Y$_\eta$};
+
+
+\draw [-latex, draw=red] (ULAY) to (UA);
+\draw [-latex, draw=red] (ULAY) to (UY);
+
+\draw [-latex, draw=red] (UA) to (A1);
+\draw [-latex, draw=red] (UY) to (Y2);
+\draw [-latex, draw=red] (ULAY) to (L0);
+\draw [-latex, draw=black] (Leta0) to (L0);
+\draw [-latex, draw=red] (Leta0) to (Aeta1);
+\draw [-latex, draw=red, bend right=30] (Leta0) to (Yeta2);
+
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+
+\draw [-latex, draw=red] (Aeta1) to (UY);
+%\draw [-latex, draw=black] (Leta0) to (UA);
 
 
 
+\draw [cor, draw=red, dashed,bend right=80] (ULAY) to (Leta0);
+\draw [cor, draw=red, dashed, bend right = 80] (UA) to (Aeta1);
+%\draw [cor, draw=red, dashed, bend left = 80] (UY) to (Yeta2);
 
-
-## Structural interpretation of a latent factor
-
-
-
-
-## TO DO STILL: Measurement Error
+\end{tikzpicture}
+```
 
 
 

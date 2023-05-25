@@ -1831,7 +1831,7 @@
     "href": "content/common_graphs.html#common-cause-of-exposure-and-outcome.",
     "title": "Temporal Causal Diagrams: Unveiling Causal Order and Indexing Nodes by Time",
     "section": "Common cause of exposure and outcome.",
-    "text": "Common cause of exposure and outcome.\n\n\n\n\n\nFigure 9: Common cause of exposure and outcome: example\n\n\n\n\n\nSolution: Adjust for Confounder\n\n\n\n\n\nFigure 10: Solution to this problem.\n\n\n\n\n\n\nBias: exposure at baseline is a common cause of the exposure at t1 and outcome at t2\n\n\n\n\n\nFigure 11: Causal graph reveals bias from pre-exosure indicator\n\n\n\n\n\n\nSolution: adjust for confounder at baseline\n\n\n\n\n\nFigure 12: Solution to this problem\n\n\n\n\n\n\nA more thorough confounding control\n\n\n\n\n\nFigure 13: Causal graph:more general panel design\n\n\n\n\n\n\nGeneric 3-wave panel design (VanderWeeele 2020)\n\n\n\n\n\nFigure 14: Causal graph: three-wave panel design\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSelection bias\n\n\n\n\n\nFigure 15: Causal graph: three-wave panel design with selection bias"
+    "text": "Common cause of exposure and outcome.\n\n\n\n\n\nFigure 9: Common cause of exposure and outcome: example\n\n\n\n\n\nSolution: Adjust for Confounder\n\n\n\n\n\nFigure 10: Solution to this problem.\n\n\n\n\n\n\nBias: exposure at baseline is a common cause of the exposure at t1 and outcome at t2\n\n\n\n\n\nFigure 11: Causal graph reveals bias from pre-exosure indicator\n\n\n\n\n\n\nSolution: adjust for confounder at baseline\n\n\n\n\n\nFigure 12: Solution to this problem\n\n\n\n\n\n\nA more thorough confounding control\n\n\n\n\n\nFigure 13: Causal graph:more general panel design\n\n\n\n\n\n\nGeneric 3-wave panel design (VanderWeeele 2020)\n\n\n\n\n\nFigure 14: Causal graph: three-wave panel design\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSelection bias: there are several types\n\nUnmeasured confounder affects selection and the outcome\n\n\n\n\n\nFigure 15: Causal graph: three-wave panel design with selection bias\n\n\n\n\n\n\nUnmeasured confounder affects a measured confounder of selection and the outcome, and there are unmeasured confourders that affect the measured confounder\n\n\n\n\n\nFigure 16: Causal graph: three-wave panel design with selection bias: example 2\n\n\n\n\n\n\nUnmeasured confounder affects slection into the study and also attrition\n\n\n\n\n\nFigure 17: Causal graph: three-wave panel design with selection bias: selection into the study (D) affects attrition\n\n\n\n\n\n\nOutcome and exposure affect attrition\n\n\n\n\n\nFigure 18: Causal graph:outcome and exposure affect attrition (Y measured with directed measurement error)\n\n\n\n\n\n\nOutcome and exposure affect attrition: we may approach this problem as one of directed measurement error.\n\n\n\n\n\nFigure 19: TBA"
   },
   {
     "objectID": "content/common_graphs.html#more-general-3-wave-panel-design",
@@ -1999,7 +1999,7 @@
     "href": "content/common_graphs.html#common-cause-of-exposure-and-outcome.-1",
     "title": "Temporal Causal Diagrams: Unveiling Causal Order and Indexing Nodes by Time",
     "section": "Common cause of exposure and outcome.",
-    "text": "Common cause of exposure and outcome.\n\n\n\n\n\nFigure 16: A simple graph for effect-modification.\n\n\n\n\n\nAnother graph for interaction\n\n\n\n\n\nFigure 17: A simple graph for effect-modification.\n\n\n\n\n\n\nM-Bias\n\n\n\n\n\nFigure 18: M-bias: confounding control by including previous measures of the outcome\n\n\n\n\n\n\nWhat if mediation is of interest?\nConsider the assumptions required for mediation analysis:\n\nNo unmeasured exposure-outcome confounders given L\n\nY^{am}\\coprod A|L 2. No unmeasured meadiator-outcome confounders given L\nY^{am}\\coprod M|L\n\nNo unmeasured exposure-mediator confounders given L\n\nM^{a}\\coprod A|L\n\nNo mediator-outcome confounder affected by the exposure (no red arrow)\n\nY^{am}\\coprod M^{a*}|L\n\n\n\n\n\nFigure 19: Assumptions for mediation analysis\n\n\n\n\n\n\nConfounder-Treatment Feedback\n\n\n\n\n\nFigure 20: Confounder Treatement Feedback"
+    "text": "Common cause of exposure and outcome.\n\n\n\n\n\nFigure 20: A simple graph for effect-modification.\n\n\n\n\n\nAnother graph for interaction\n\n\n\n\n\nFigure 21: A simple graph for effect-modification.\n\n\n\n\n\n\nM-Bias\n\n\n\n\n\nFigure 22: M-bias: confounding control by including previous measures of the outcome\n\n\n\n\n\n\nWhat if mediation is of interest?\nConsider the assumptions required for mediation analysis:\n\nNo unmeasured exposure-outcome confounders given L\n\nY^{am}\\coprod A|L 2. No unmeasured meadiator-outcome confounders given L\nY^{am}\\coprod M|L\n\nNo unmeasured exposure-mediator confounders given L\n\nM^{a}\\coprod A|L\n\nNo mediator-outcome confounder affected by the exposure (no red arrow)\n\nY^{am}\\coprod M^{a*}|L\n\n\n\n\n\nFigure 23: Assumptions for mediation analysis\n\n\n\n\n\n\nConfounder-Treatment Feedback\n\n\n\n\n\nFigure 24: Confounder Treatement Feedback"
   },
   {
     "objectID": "content/common_graphs.html#to-do-still-measurement-error",
@@ -2216,7 +2216,7 @@
     "href": "content/common_graphs.html#multiple-versions-of-treatment",
     "title": "Temporal Causal Diagrams: Unveiling Causal Order and Indexing Nodes by Time",
     "section": "Multiple Versions of Treatment",
-    "text": "Multiple Versions of Treatment\n\n\n\n\n\nFigure 21: Multiple Versions of Treatment"
+    "text": "Multiple Versions of Treatment\n\n\n\n\n\nFigure 25: Multiple Versions of Treatment"
   },
   {
     "objectID": "content/common_graphs.html#structural-interpretation-of-a-latent-factor",
@@ -2371,5 +2371,12 @@
     "title": "Measurement Error",
     "section": "Dependent (Correlated) measurement errror",
     "text": "Dependent (Correlated) measurement errror\n\n\n\n\n\nFigure 3: Uncorrelated undirected measurement error can dilute the estimates of true effects"
+  },
+  {
+    "objectID": "content/common_graphs.html#does-the-multiple-versions-of-treatments-approach-save-us",
+    "href": "content/common_graphs.html#does-the-multiple-versions-of-treatments-approach-save-us",
+    "title": "Temporal Causal Diagrams: Unveiling Causal Order and Indexing Nodes by Time",
+    "section": "Does the Multiple Versions of Treatments Approach Save Us?",
+    "text": "Does the Multiple Versions of Treatments Approach Save Us?\nMeasurement error remeains a problem if errors are either directed or dependent (correlated) or both. (See: measurement link.)\n\n\n\n\n\nFigure 26: Measurement error opens a pathway to confounding if either there are correlated errors, or a directed effect of the exposure on the errors of measured outcome."
   }
 ]

@@ -214,14 +214,14 @@ However, it's important to mention that the degree of this attenuation can depen
 \tikzstyle{cor} = [-, dotted, preaction = {decorate}]
 
 \begin{tikzpicture}[every node/.append style={draw}]
-\node [rectangle, draw=white] (UA) at (0, 1) {U$_A$};
+\node [rectangle, draw=white] (UA) at (0, 0) {U$_A$};
 
-\node [rectangle, draw=black] (A1) at (2, 1) {A$^{t1}$};
-\node [rectangle, draw=white] (UY) at (4, -1) {U$_Y$};
+\node [rectangle, draw=black] (A1) at (2, 0) {A$^{t1}$};
+\node [rectangle, draw=white] (UY) at (4, 0) {U$_Y$};
 
-\node [rectangle, draw=black] (Y2) at (6, -1) {Y$^{t2}$};
-\node [rectangle, draw=white] (Aeta1) at (2, 0) {A$^{t1}_\eta$};
-\node [rectangle, draw=white] (Yeta2) at (6, 0) {Y$^{t2}_\eta$};
+\node [rectangle, draw=black] (Y2) at (6, 0) {Y$^{t2}$};
+\node [rectangle, draw=white] (Aeta1) at (2, -1) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (6, -1) {Y$^{t2}_\eta$};
 
 
 \draw [-latex, draw=black] (UA) to (A1);
@@ -229,7 +229,6 @@ However, it's important to mention that the degree of this attenuation can depen
 \draw [-latex, draw=red] (Aeta1) to (UY);
 \draw [-latex, draw=black] (Aeta1) to (A1);
 \draw [-latex, draw=black] (Yeta2) to (Y2);
-\draw [cor, draw=red] (UA) to (Aeta1);
 
 \end{tikzpicture}
 ```
@@ -246,6 +245,7 @@ However, it's important to mention that the degree of this attenuation can depen
 #| out-width: 100%
 #| echo: false
 
+
 \usetikzlibrary{positioning}
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{arrows}
@@ -258,30 +258,26 @@ However, it's important to mention that the degree of this attenuation can depen
 \tikzstyle{cor} = [-, dotted, preaction = {decorate}]
 
 \begin{tikzpicture}[every node/.append style={draw}]
-
 \node [rectangle, draw=white] (UAY) at (0, 0) {U$_{AY}$};
+\node [rectangle, draw=white] (UA) at (2, 0) {U$_A$};
 
-\node [rectangle, draw=white] (UA) at (2, 1) {U$_A$};
+\node [rectangle, draw=black] (A1) at (4, 0) {A$^{t1}$};
+\node [rectangle, draw=white] (UY) at (6, 0) {U$_Y$};
 
-\node [rectangle, draw=black] (A1) at (4, 1) {A$^{t1}$};
-\node [rectangle, draw=white] (UY) at (6, -1) {U$_Y$};
-
-\node [rectangle, draw=black] (Y2) at (8, -1) {Y$^{t2}$};
-\node [rectangle, draw=white] (Aeta1) at (4, 0) {A$^{t1}_\eta$};
-\node [rectangle, draw=white] (Yeta2) at (8, 0) {Y$^{t2}_\eta$};
+\node [rectangle, draw=black] (Y2) at (8, 0) {Y$^{t2}$};
+\node [rectangle, draw=white] (Aeta1) at (4, -1) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (8, -1) {Y$^{t2}_\eta$};
 
 
 \draw [-latex, draw=red] (UAY) to (UA);
-\draw [-latex, draw=red] (UAY) to (UY);
-
-
+\draw [-latex, draw=red, bend left] (UAY) to (UY);
 \draw [-latex, draw=black] (UA) to (A1);
-
 \draw [-latex, draw=red] (UY) to (Y2);
 \draw [-latex, draw=red] (Aeta1) to (UY);
 \draw [-latex, draw=black] (Aeta1) to (A1);
 \draw [-latex, draw=black] (Yeta2) to (Y2);
-\draw [cor, draw=red] (UA) to (Aeta1);
+\draw [cor, draw=red, dashed] (Aeta1) to (UA);
+
 
 \end{tikzpicture}
 ```
@@ -440,7 +436,7 @@ However, it's important to mention that the degree of this attenuation can depen
 \draw [-latex, draw=red] (ULY) to (UY);
 \draw [-latex, draw=red] (ULY) to (UL);
 
-\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=red] (UA) to (A1);
 \draw [-latex, draw=black] (UL) to (L0);
 \draw [-latex, draw=black] (Leta0) to (L0);
 \draw [-latex, draw=red] (Leta0) to (Aeta1);
@@ -448,7 +444,7 @@ However, it's important to mention that the degree of this attenuation can depen
 
 
 
-\draw [-latex, draw=black] (UY) to (Y2);
+\draw [-latex, draw=red] (UY) to (Y2);
 \draw [-latex, draw=black] (Aeta1) to (A1);
 \draw [-latex, draw=black] (Yeta2) to (Y2);
 
@@ -497,8 +493,8 @@ However, it's important to mention that the degree of this attenuation can depen
 \draw [-latex, draw=red] (ULAY) to (UA);
 \draw [-latex, draw=red] (ULAY) to (UY);
 
-\draw [-latex, draw=black] (UA) to (A1);
-\draw [-latex, draw=black] (UY) to (Y2);
+\draw [-latex, draw=red] (UA) to (A1);
+\draw [-latex, draw=red] (UY) to (Y2);
 \draw [-latex, draw=black] (ULAY) to (L0);
 \draw [-latex, draw=black] (Leta0) to (L0);
 \draw [-latex, draw=red] (Leta0) to (Aeta1);
@@ -506,6 +502,8 @@ However, it's important to mention that the degree of this attenuation can depen
 
 \draw [-latex, draw=black] (Aeta1) to (A1);
 \draw [-latex, draw=black] (Yeta2) to (Y2);
+
+
 
 \draw [cor, draw=red, dashed,bend right=80] (ULAY) to (Leta0);
 \draw [cor, draw=red, dashed, bend right = 80] (UA) to (Aeta1);
@@ -553,8 +551,8 @@ However, it's important to mention that the degree of this attenuation can depen
 \draw [-latex, draw=red] (ULAY) to (UA);
 \draw [-latex, draw=red] (ULAY) to (UY);
 
-\draw [-latex, draw=black] (UA) to (A1);
-\draw [-latex, draw=black] (UY) to (Y2);
+\draw [-latex, draw=red] (UA) to (A1);
+\draw [-latex, draw=red] (UY) to (Y2);
 \draw [-latex, draw=black] (ULAY) to (L0);
 \draw [-latex, draw=black] (Leta0) to (L0);
 \draw [-latex, draw=red] (Leta0) to (Aeta1);
@@ -564,6 +562,7 @@ However, it's important to mention that the degree of this attenuation can depen
 \draw [-latex, draw=black] (Yeta2) to (Y2);
 
 \draw [-latex, draw=red] (Aeta1) to (UY);
+\draw [-latex, draw=red] (Leta0) to (UA);
 
 
 

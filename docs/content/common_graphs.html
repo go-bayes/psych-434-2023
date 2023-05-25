@@ -219,7 +219,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#solution-adjust-for-confounder-at-baseline" id="toc-solution-adjust-for-confounder-at-baseline" class="nav-link" data-scroll-target="#solution-adjust-for-confounder-at-baseline">Solution: adjust for confounder at baseline</a></li>
   <li><a href="#a-more-thorough-confounding-control" id="toc-a-more-thorough-confounding-control" class="nav-link" data-scroll-target="#a-more-thorough-confounding-control">A more thorough confounding control</a></li>
   <li><a href="#generic-3-wave-panel-design-vanderweeele-2020" id="toc-generic-3-wave-panel-design-vanderweeele-2020" class="nav-link" data-scroll-target="#generic-3-wave-panel-design-vanderweeele-2020">Generic 3-wave panel design (VanderWeeele 2020)</a></li>
-  <li><a href="#selection-bias" id="toc-selection-bias" class="nav-link" data-scroll-target="#selection-bias">Selection bias</a></li>
+  <li><a href="#selection-bias-there-are-several-types" id="toc-selection-bias-there-are-several-types" class="nav-link" data-scroll-target="#selection-bias-there-are-several-types">Selection bias: there are several types</a></li>
   </ul></li>
   <li><a href="#important-causal-diagrammes" id="toc-important-causal-diagrammes" class="nav-link" data-scroll-target="#important-causal-diagrammes">Important Causal Diagrammes</a></li>
   <li><a href="#how-do-we-draw-interactions" id="toc-how-do-we-draw-interactions" class="nav-link" data-scroll-target="#how-do-we-draw-interactions">How do we draw interactions?</a></li>
@@ -231,8 +231,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#confounder-treatment-feedback" id="toc-confounder-treatment-feedback" class="nav-link" data-scroll-target="#confounder-treatment-feedback">Confounder-Treatment Feedback</a></li>
   </ul></li>
   <li><a href="#multiple-versions-of-treatment" id="toc-multiple-versions-of-treatment" class="nav-link" data-scroll-target="#multiple-versions-of-treatment">Multiple Versions of Treatment</a></li>
-  <li><a href="#structural-interpretation-of-a-latent-factor" id="toc-structural-interpretation-of-a-latent-factor" class="nav-link" data-scroll-target="#structural-interpretation-of-a-latent-factor">Structural interpretation of a latent factor</a></li>
-  <li><a href="#to-do-still-measurement-error" id="toc-to-do-still-measurement-error" class="nav-link" data-scroll-target="#to-do-still-measurement-error">TO DO STILL: Measurement Error</a></li>
+  <li><a href="#does-the-multiple-versions-of-treatments-approach-save-us" id="toc-does-the-multiple-versions-of-treatments-approach-save-us" class="nav-link" data-scroll-target="#does-the-multiple-versions-of-treatments-approach-save-us">Does the Multiple Versions of Treatments Approach Save Us?</a></li>
   </ul>
 </nav>
     </div>
@@ -472,8 +471,10 @@ ul.task-list li input[type="checkbox"] {
 <!-- \end{tikzpicture} -->
 <!-- ``` -->
 </section>
-<section id="selection-bias" class="level3">
-<h3 class="anchored" data-anchor-id="selection-bias">Selection bias</h3>
+<section id="selection-bias-there-are-several-types" class="level3">
+<h3 class="anchored" data-anchor-id="selection-bias-there-are-several-types">Selection bias: there are several types</h3>
+<section id="unmeasured-confounder-affects-selection-and-the-outcome" class="level4">
+<h4 class="anchored" data-anchor-id="unmeasured-confounder-affects-selection-and-the-outcome">Unmeasured confounder affects selection and the outcome</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-8" class="quarto-figure quarto-figure-center anchored">
@@ -484,6 +485,59 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+</section>
+<section id="unmeasured-confounder-affects-a-measured-confounder-of-selection-and-the-outcome-and-there-are-unmeasured-confourders-that-affect-the-measured-confounder" class="level4">
+<h4 class="anchored" data-anchor-id="unmeasured-confounder-affects-a-measured-confounder-of-selection-and-the-outcome-and-there-are-unmeasured-confourders-that-affect-the-measured-confounder">Unmeasured confounder affects a measured confounder of selection and the outcome, and there are unmeasured confourders that affect the measured confounder</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-8-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="common_graphs_files/figure-html/fig-dag-8-2-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;16: Causal graph: three-wave panel design with selection bias: example 2</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="unmeasured-confounder-affects-slection-into-the-study-and-also-attrition" class="level4">
+<h4 class="anchored" data-anchor-id="unmeasured-confounder-affects-slection-into-the-study-and-also-attrition">Unmeasured confounder affects slection into the study and also attrition</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-8-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="common_graphs_files/figure-html/fig-dag-8-4-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;17: Causal graph: three-wave panel design with selection bias: selection into the study (D) affects attrition</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="outcome-and-exposure-affect-attrition" class="level4">
+<h4 class="anchored" data-anchor-id="outcome-and-exposure-affect-attrition">Outcome and exposure affect attrition</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-8-5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="common_graphs_files/figure-html/fig-dag-8-5-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;18: Causal graph:outcome and exposure affect attrition (Y measured with directed measurement error)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="outcome-and-exposure-affect-attrition-we-may-approach-this-problem-as-one-of-directed-measurement-error." class="level4">
+<h4 class="anchored" data-anchor-id="outcome-and-exposure-affect-attrition-we-may-approach-this-problem-as-one-of-directed-measurement-error.">Outcome and exposure affect attrition: we may approach this problem as one of directed measurement error.</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-directed-measurement-error" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="common_graphs_files/figure-html/fig-directed-measurement-error-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;19: TBA</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 <section id="important-causal-diagrammes" class="level2">
@@ -499,7 +553,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-effect-modfication" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-effect-modfication-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;16: A simple graph for effect-modification.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;20: A simple graph for effect-modification.</figcaption>
 </figure>
 </div>
 </div>
@@ -511,7 +565,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-effect-modfication-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-effect-modfication-2-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;17: A simple graph for effect-modification.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;21: A simple graph for effect-modification.</figcaption>
 </figure>
 </div>
 </div>
@@ -524,7 +578,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-m-bias" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-m-bias-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;18: M-bias: confounding control by including previous measures of the outcome</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;22: M-bias: confounding control by including previous measures of the outcome</figcaption>
 </figure>
 </div>
 </div>
@@ -551,7 +605,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-mediation-assuptions" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-mediation-assuptions-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;19: Assumptions for mediation analysis</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;23: Assumptions for mediation analysis</figcaption>
 </figure>
 </div>
 </div>
@@ -564,7 +618,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-9" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-9-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;20: Confounder Treatement Feedback</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;24: Confounder Treatement Feedback</figcaption>
 </figure>
 </div>
 </div>
@@ -578,17 +632,25 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dag-multiple-version-treatment" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="common_graphs_files/figure-html/fig-dag-multiple-version-treatment-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;21: Multiple Versions of Treatment</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;25: Multiple Versions of Treatment</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="structural-interpretation-of-a-latent-factor" class="level2">
-<h2 class="anchored" data-anchor-id="structural-interpretation-of-a-latent-factor">Structural interpretation of a latent factor</h2>
-</section>
-<section id="to-do-still-measurement-error" class="level2">
-<h2 class="anchored" data-anchor-id="to-do-still-measurement-error">TO DO STILL: Measurement Error</h2>
+<section id="does-the-multiple-versions-of-treatments-approach-save-us" class="level2">
+<h2 class="anchored" data-anchor-id="does-the-multiple-versions-of-treatments-approach-save-us">Does the Multiple Versions of Treatments Approach Save Us?</h2>
+<p>Measurement error remeains a problem if errors are either directed or dependent (correlated) or both. (See: measurement link.)</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-dep-udir-effect-confounders-3wave" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="common_graphs_files/figure-html/fig-dag-dep-udir-effect-confounders-3wave-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;26: Measurement error opens a pathway to confounding if either there are correlated errors, or a directed effect of the exposure on the errors of measured outcome.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
