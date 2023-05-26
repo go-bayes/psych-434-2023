@@ -51,7 +51,6 @@ dt_start <- nzavs_synth %>%
   arrange(id, wave) %>%
   rowwise() %>%
   mutate(kessler_6  = mean(
-    sum(
     # Specify the Kessler scale items
     c(
       kessler_depressed,
@@ -65,7 +64,7 @@ dt_start <- nzavs_synth %>%
       kessler_restless,
       # During the last 30 days, how often did you feel restless or fidgety ?
       kessler_worthless  # During the last 30 days, how often did you feel worthless?
-    )))) |>
+    ))) |>
   mutate(kessler_6_sum = round(
     sum(c (kessler_depressed,
                    kessler_hopeless,

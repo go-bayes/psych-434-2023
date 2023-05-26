@@ -1,0 +1,30 @@
+mice_embodied_mids <- mice_embodied_c %>%
+  arrange(.imp, id) |> 
+  rowwise() |> 
+  dplyr::mutate(t2_kessler_6_depression = mean(
+    c(
+    t2_kessler_depressed,
+    t2_kessler_hopeless,
+    t2_kessler_worthless ),
+    na.rm = TRUE
+    )) |>
+  dplyr::mutate(t2_kessler_6_anxiety = mean(
+    c(t2_kessler_effort,
+      t2_kessler_nervous,
+      t2_kessler_restless ),
+    na.rm = TRUE
+  )) |> 
+  dplyr::ungroup() |> 
+  group_by(.imp, id) |> 
+  rowwise() %>%
+  dplyr::mutate(t2_kessler_6_depression_1 = mean( sum(
+    c(
+    t2_kessler_depressed,
+    t2_kessler_hopeless,
+    t2_kessler_worthless ),
+    na.rm = TRUE
+    ))) |>
+  ungroup() |>
+    dplyr::mutate(across(where(is.numeric) & !sample_weights, ~ scale(.x), .names = "{col}_z")) 
+
+   

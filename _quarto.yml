@@ -18,6 +18,8 @@ website:
       menu:
         - text: "Background: Causal Graphs"
           href: content/common_graphs.qmd
+        - text: "Background: Causal Graphs: Measurement Error"
+          href: content/measurement_error.qmd
         - text: "Preliminaries"
           href: content/index.qmd
         - text: "1: Asking questions in cross-cultural psychology"

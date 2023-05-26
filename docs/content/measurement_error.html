@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Joseph Bulbulia">
+
+<title>PSYC 434 Conducting Research Across Cultures: Trimester 1, 2023 - Measurement Error</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">PSYC 434 Conducting Research Across Cultures: Trimester 1, 2023</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-content" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Content</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-content">    
+        <li>
+    <a class="dropdown-item" href="../content/common_graphs.html" rel="" target="">
+ <span class="dropdown-text">Background: Causal Graphs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/measurement_error.html" rel="" target="">
+ <span class="dropdown-text">Background: Causal Graphs: Measurement Error</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/index.html" rel="" target="">
+ <span class="dropdown-text">Preliminaries</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/01-content.html" rel="" target="">
+ <span class="dropdown-text">1: Asking questions in cross-cultural psychology</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/02-content.html" rel="" target="">
+ <span class="dropdown-text">2: Getting started with R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/03-content.html" rel="" target="">
+ <span class="dropdown-text">3: Lost in Translation? Measurement and Language</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/04-content.html" rel="" target="">
+ <span class="dropdown-text">4: Dealing with Data (Factor Analysis)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/05-content.html" rel="" target="">
+ <span class="dropdown-text">5: Dealing with Data (Multi-Group CFA)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/06-content.html" rel="" target="">
+ <span class="dropdown-text">6: Dealing with Data (Partial Invariance)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/07-content.html" rel="" target="">
+ <span class="dropdown-text">7: Causal Inference: Causal Graphs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/08-content.html" rel="" target="">
+ <span class="dropdown-text">8: Causal Inference: Target Trial Emulation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/09-content.html" rel="" target="">
+ <span class="dropdown-text">9: Causal inference: Reconsidering measurement and selection biases</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/10-content.html" rel="" target="">
+ <span class="dropdown-text">10: Causal Inference: Cross-Cultural Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/11-content.html" rel="" target="">
+ <span class="dropdown-text">11: Ethics and Ownership</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/12-content.html" rel="" target="">
+ <span class="dropdown-text">12: Future Horizons</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Measurement Error</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Joseph Bulbulia </p>
+            </div>
+    </div>
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#measurement-graphs" id="toc-measurement-graphs" class="nav-link active" data-scroll-target="#measurement-graphs">Measurement Graphs</a>
+  <ul class="collapse">
+  <li><a href="#undirected-uncorrellated-measurement-error-under-the-null" id="toc-undirected-uncorrellated-measurement-error-under-the-null" class="nav-link" data-scroll-target="#undirected-uncorrellated-measurement-error-under-the-null">Undirected uncorrellated measurement error under the null</a></li>
+  <li><a href="#uncorrellated-undirected-measurement-error-when-there-is-an-effect" id="toc-uncorrellated-undirected-measurement-error-when-there-is-an-effect" class="nav-link" data-scroll-target="#uncorrellated-undirected-measurement-error-when-there-is-an-effect">Uncorrellated undirected measurement error when there is an effect</a></li>
+  <li><a href="#dependent-correlated-undirected-measurement-errror" id="toc-dependent-correlated-undirected-measurement-errror" class="nav-link" data-scroll-target="#dependent-correlated-undirected-measurement-errror">Dependent (correlated) undirected measurement errror</a></li>
+  <li><a href="#directed-independent-uncorrelated-measurement-errror" id="toc-directed-independent-uncorrelated-measurement-errror" class="nav-link" data-scroll-target="#directed-independent-uncorrelated-measurement-errror">Directed independent (uncorrelated) measurement errror</a></li>
+  <li><a href="#directed-dependent-correlated-measurement-errror" id="toc-directed-dependent-correlated-measurement-errror" class="nav-link" data-scroll-target="#directed-dependent-correlated-measurement-errror">Directed Dependent (correlated) measurement errror</a></li>
+  <li><a href="#independent-undirected-measurement-error-including-measurement-error-of-confounders" id="toc-independent-undirected-measurement-error-including-measurement-error-of-confounders" class="nav-link" data-scroll-target="#independent-undirected-measurement-error-including-measurement-error-of-confounders">Independent undirected measurement error including measurement error of confounders</a></li>
+  <li><a href="#dependent-undirected-measurement-error-including-measurement-error-of-confounders-reconsider-the-three-wave-panel-design." id="toc-dependent-undirected-measurement-error-including-measurement-error-of-confounders-reconsider-the-three-wave-panel-design." class="nav-link" data-scroll-target="#dependent-undirected-measurement-error-including-measurement-error-of-confounders-reconsider-the-three-wave-panel-design.">Dependent undirected measurement error including measurement error of confounders: Reconsider The Three-Wave Panel Design.</a></li>
+  <li><a href="#more-simply" id="toc-more-simply" class="nav-link" data-scroll-target="#more-simply">More Simply</a></li>
+  <li><a href="#dependent-directed-measurement-error-in-three-wave-panels" id="toc-dependent-directed-measurement-error-in-three-wave-panels" class="nav-link" data-scroll-target="#dependent-directed-measurement-error-in-three-wave-panels">Dependent Directed Measurement Error in Three-Wave Panels</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="measurement-graphs" class="level2">
+<h2 class="anchored" data-anchor-id="measurement-graphs">Measurement Graphs</h2>
+<section id="undirected-uncorrellated-measurement-error-under-the-null" class="level3">
+<h3 class="anchored" data-anchor-id="undirected-uncorrellated-measurement-error-under-the-null">Undirected uncorrellated measurement error under the null</h3>
+<p>Sure, I’d be happy to elaborate more on these concepts:</p>
+<ol type="1">
+<li><p><strong>Non-Differential Measurement Error:</strong> This type of error is unrelated to the levels of the exposure or outcome. Simply put, the inaccuracies in measuring the exposure or outcome don’t depend on the actual levels of these variables. It’s “non-differential” because the errors do not “differ” based on the level of exposure or outcome. This means that they are just as likely to overestimate as they are to underestimate the true values.</p></li>
+<li><p><strong>Uncorrelated Measurement Error:</strong> Uncorrelated (or non-dependent) measurement error refers to a situation where the measurement errors of the exposure and the outcome are not related to each other. That is, a mistake in measuring the exposure doesn’t predict a mistake in measuring the outcome, and vice versa.</p></li>
+</ol>
+<p>When these two types of error are present at the same time, the effect of the exposure on the outcome can be underestimated, which is known as “attenuation bias”. This happens because the ‘noise’ (the measurement errors) dilutes the ‘signal’ (the true relationship between exposure and outcome).</p>
+<p>However, if the null hypothesis is true (i.e., there’s no real relationship between the exposure and outcome), this won’t introduce bias. This is because, with non-differential and uncorrelated errors, mistakes are equally likely to be in any direction. Since the true effect is zero under the null, the average estimated effect from many repeated studies would also be zero, despite the presence of these measurement errors.</p>
+<p>Still, while there won’t be bias under the null, measurement error can increase the variability of your estimates (making them less precise) and reduce the statistical power of your study (making it harder to detect a true effect if one exists). We next turn to this case.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-uu-null" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="measurement_error_files/figure-html/fig-dag-uu-null-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Uncorrelated differential measurement error does not bias estimates under the null.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="uncorrellated-undirected-measurement-error-when-there-is-an-effect" class="level3">
+<h3 class="anchored" data-anchor-id="uncorrellated-undirected-measurement-error-when-there-is-an-effect">Uncorrellated undirected measurement error when there is an effect</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-uu-effect" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="measurement_error_files/figure-html/fig-dag-uu-effect-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Uncorrelated undirected measurement error can dilute the estimates of true effects</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>If there is a true effect of the exposure on the outcome, non-differential measurement error in both the exposure and the outcome can lead to an attenuation of the effect estimate. This phenomenon is often referred to as “regression dilution bias” or “attenuation bias”.</p>
+<p>Let’s take a moment to understand these concepts. Non-differential measurement error refers to the situation where the measurement error does not differ based on the level of exposure or the outcome. It’s called “non-differential” because the degree of error doesn’t “differ” based on these factors.</p>
+<p>When it comes to independent non-differential measurement error, it means that the errors in the measurements of exposure and outcome are uncorrelated with each other, and they don’t depend on the true values of exposure and outcome.</p>
+<p>Now, if there’s a true effect of the exposure on the outcome, the presence of measurement error in both variables can lead to attenuation bias, because the effect size is underestimated due to the ‘noise’ introduced by these errors.</p>
+<p>When you measure the exposure or outcome with error, the variability of these variables increases, thus the signal (i.e., the true relationship) gets ‘diluted’ in the increased ‘noise’. This can lead to an underestimation of the true effect size.</p>
+<p>The more severe the measurement error, the greater the attenuation of the estimated effect. In other words, the observed relationship between the exposure and the outcome will be weaker than the true relationship, potentially leading to a failure to detect a true association.</p>
+<p>However, it’s important to mention that the degree of this attenuation can depend on various factors, including the extent of the measurement error, the strength of the true relationship, and the statistical method used. Some statistical methods have been developed to correct for this type of bias, such as regression calibration, simulation extrapolation (SIMEX), and multiple imputation (citations)</p>
+</section>
+<section id="dependent-correlated-undirected-measurement-errror" class="level3">
+<h3 class="anchored" data-anchor-id="dependent-correlated-undirected-measurement-errror">Dependent (correlated) undirected measurement errror</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-dep-u-effect" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="measurement_error_files/figure-html/fig-dag-dep-u-effect-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Uncorrelated undirected measurement error can dilute the estimates of true effects</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="directed-independent-uncorrelated-measurement-errror" class="level3">
+<h3 class="anchored" data-anchor-id="directed-independent-uncorrelated-measurement-errror">Directed independent (uncorrelated) measurement errror</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-indep-d-effect" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="measurement_error_files/figure-html/fig-dag-indep-d-effect-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Directed independent (uncorrelated) measurement error biases effect estimates</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="directed-dependent-correlated-measurement-errror" class="level3">
+<h3 class="anchored" data-anchor-id="directed-dependent-correlated-measurement-errror">Directed Dependent (correlated) measurement errror</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-d-d" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="measurement_error_files/figure-html/fig-dag-d-d-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Directed independent (uncorrelated) measurement error biases effect estimates</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="independent-undirected-measurement-error-including-measurement-error-of-confounders" class="level3">
+<h3 class="anchored" data-anchor-id="independent-undirected-measurement-error-including-measurement-error-of-confounders">Independent undirected measurement error including measurement error of confounders</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-uu-effect-confounders" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="measurement_error_files/figure-html/fig-dag-uu-effect-confounders-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: TBA</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="dependent-undirected-measurement-error-including-measurement-error-of-confounders-reconsider-the-three-wave-panel-design." class="level3">
+<h3 class="anchored" data-anchor-id="dependent-undirected-measurement-error-including-measurement-error-of-confounders-reconsider-the-three-wave-panel-design.">Dependent undirected measurement error including measurement error of confounders: Reconsider The Three-Wave Panel Design.</h3>
+<!-- ```{tikz} -->
+<!-- #| label: fig-dag-dep-undir-effect-confounders -->
+<!-- #| fig-cap: "Uncorrelated  undirected measurement error can dilute the estimates of true effects" -->
+<!-- #| out-width: 80% -->
+<!-- #| echo: false -->
+<!-- \usetikzlibrary{positioning} -->
+<!-- \usetikzlibrary{shapes.geometric} -->
+<!-- \usetikzlibrary{arrows} -->
+<!-- \usetikzlibrary{decorations} -->
+<!-- \tikzstyle{Arrow} = [->, thin, preaction = {decorate}] -->
+<!-- \tikzset{>=latex} -->
+<!-- % Define a simple decoration -->
+<!-- \tikzstyle{cor} = [-, dotted, preaction = {decorate}] -->
+<!-- \begin{tikzpicture}[{every node/.append style}=draw] -->
+<!-- \node [rectangle, draw=white] (ULY) at (0, 3) {U$_{LY}$}; -->
+<!-- \node [rectangle, draw=white] (ULA) at (2, 3) {U$_{LA}$}; -->
+<!-- \node [rectangle, draw=white] (UL) at (4, 1) {U$_L$}; -->
+<!-- \node [rectangle, draw=white] (UA) at (4, 3) {U$_A$}; -->
+<!-- \node [rectangle, draw=white] (UY) at (4, 5) {U$_Y$}; -->
+<!-- \node [rectangle, draw=black] (L0) at (6, 1) {L$^{t0}$}; -->
+<!-- \node [rectangle, draw=black] (A1) at (8, 1) {A$^{t1}$}; -->
+<!-- \node [rectangle, draw=black] (Y2) at (10, 1) {Y$^{t2}$}; -->
+<!-- \node [rectangle, draw=white] (Leta0) at (6, 0) {L$^{t0}_\eta$}; -->
+<!-- \node [rectangle, draw=white] (Aeta1) at (8, 0) {A$^{t1}_\eta$}; -->
+<!-- \node [rectangle, draw=white] (Yeta2) at (10, 0) {Y$^{t2}_\eta$}; -->
+<!-- \draw [-latex, draw=red] (ULA) to (UA); -->
+<!-- \draw [-latex, draw=red] (ULA) to (UL); -->
+<!-- \draw [-latex, draw=red] (ULY) to (UY); -->
+<!-- \draw [-latex, draw=red] (ULY) to (UL); -->
+<!-- \draw [-latex, draw=black] (UA) to (A1); -->
+<!-- \draw [-latex, draw=black] (UL) to (L0); -->
+<!-- \draw [-latex, draw=black] (Leta0) to (L0); -->
+<!-- \draw [-latex, draw=red] (Leta0) to (Aeta1); -->
+<!-- \draw [-latex, draw=red, bend right=30] (Leta0) to (Yeta2); -->
+<!-- \draw [-latex, draw=black] (UY) to (Y2); -->
+<!-- \draw [-latex, draw=black] (Aeta1) to (A1); -->
+<!-- \draw [-latex, draw=black] (Yeta2) to (Y2); -->
+<!-- \draw [cor, draw=red, dashed] (UL) to (Leta0); -->
+<!-- \draw [cor, draw=red, dashed, bend right = 90] (UA) to (Aeta1); -->
+<!-- \draw [cor, draw=red, dashed, bend left = 90] (UY) to (Yeta2); -->
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-dep-undir-effect-confounders-3wave" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="measurement_error_files/figure-html/fig-dag-dep-undir-effect-confounders-3wave-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: TBA</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="more-simply" class="level3">
+<h3 class="anchored" data-anchor-id="more-simply">More Simply</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-dep-undir-effect-confounders-3wave-try2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="measurement_error_files/figure-html/fig-dag-dep-undir-effect-confounders-3wave-try2-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: TBA</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="dependent-directed-measurement-error-in-three-wave-panels" class="level3">
+<h3 class="anchored" data-anchor-id="dependent-directed-measurement-error-in-three-wave-panels">Dependent Directed Measurement Error in Three-Wave Panels</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-dep-udir-effect-confounders-3wave" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="measurement_error_files/figure-html/fig-dag-dep-udir-effect-confounders-3wave-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;9: TBA</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>MIT</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
