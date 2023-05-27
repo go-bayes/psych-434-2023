@@ -2382,42 +2382,42 @@
   {
     "objectID": "content/caual_measurement_graphs.html",
     "href": "content/caual_measurement_graphs.html",
-    "title": "TEST GRAPHS",
+    "title": "Measurement Graphs",
     "section": "",
     "text": "(a) Reflective model: assume univariate latent variable η giving rise to indicators X1…X3\n\n\n\n\n\n\n\n\n\n\n\n(b) Reflective Model: causal assumptions\n\n\n\n\n\nFigure 1: Reflective model & causal assumptions\n\n\n\n\n\n\n\n\n\n\n(a) Formative model:: assume univariate latent variable from which the indicators X1…X3 give rise.\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Formative model: causal assumptions\n\n\n\n\n\nFigure 2: Formative model & causal assumptions\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Formative model is compatible with indicators causing outcome\n\n\n\n\n\n\n\n\n\n\n\n(b) Reflective model is compatible with indicators causing the outcome\n\n\n\n\n\nFigure 3: Formative and Reflective Models are compatible with indicators having causal effects"
   },
   {
     "objectID": "content/caual_measurement_graphs.html#measurement-graphs",
     "href": "content/caual_measurement_graphs.html#measurement-graphs",
-    "title": "TEST GRAPHS",
+    "title": "Measurement Graphs",
     "section": "",
     "text": "(a) Reflective model: assume univariate latent variable η giving rise to indicators X1…X3\n\n\n\n\n\n\n\n\n\n\n\n(b) Reflective Model: causal assumptions\n\n\n\n\n\nFigure 1: Reflective model & causal assumptions\n\n\n\n\n\n\n\n\n\n\n(a) Formative model:: assume univariate latent variable from which the indicators X1…X3 give rise.\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Formative model: causal assumptions\n\n\n\n\n\nFigure 2: Formative model & causal assumptions\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Formative model is compatible with indicators causing outcome\n\n\n\n\n\n\n\n\n\n\n\n(b) Reflective model is compatible with indicators causing the outcome\n\n\n\n\n\nFigure 3: Formative and Reflective Models are compatible with indicators having causal effects"
   },
   {
     "objectID": "content/caual_measurement_graphs.html#formative-measurement-model",
     "href": "content/caual_measurement_graphs.html#formative-measurement-model",
-    "title": "TEST GRAPHS",
+    "title": "Measurement Graphs",
     "section": "",
     "text": "(b) Formative model: causal assumptions"
   },
   {
     "objectID": "content/caual_measurement_graphs.html#more-complex-models-is-this-a-causal-graph",
     "href": "content/caual_measurement_graphs.html#more-complex-models-is-this-a-causal-graph",
-    "title": "TEST GRAPHS",
+    "title": "Measurement Graphs",
     "section": "More complex models (is this a causal graph?)",
     "text": "More complex models (is this a causal graph?)\nVanderWeele writes this:\n\n\n\n\n\nFigure 4: Multivariate reality gives rise to the indicators, from which we draw our measure.r\n\n\n\n\nRather, I would prefer to say A$ = f(X_1, X_n)$, and to make the point we write:\n\n\n\n\n\nFigure 5: Multivariate reality gives rise to the indicators, from which we draw our measure.r"
   },
   {
     "objectID": "content/caual_measurement_graphs.html#vanderweeles-model-of-reality-is-this-a-causal-diagramme",
     "href": "content/caual_measurement_graphs.html#vanderweeles-model-of-reality-is-this-a-causal-diagramme",
-    "title": "TEST GRAPHS",
+    "title": "Measurement Graphs",
     "section": "VanderWeele’s model of reality (is this a causal diagramme?)",
     "text": "VanderWeele’s model of reality (is this a causal diagramme?)\n\n\n\n\n\nFigure 6: Multivariate reality gives rise to the latent variables,…\n\n\n\n\nHowever this is not a causal graph. Can we do better?"
   },
   {
     "objectID": "content/caual_measurement_graphs.html#perhaps-this-is-better",
     "href": "content/caual_measurement_graphs.html#perhaps-this-is-better",
-    "title": "TEST GRAPHS",
+    "title": "Measurement Graphs",
     "section": "Perhaps this is better",
     "text": "Perhaps this is better\n\n\n\n\n\nFigure 7: Multivariate reality gives rise to the latent variables,if reality continues to strongly effect η at t0 …tn, there is an open backdoor path to Y through our concepts and constructs."
   },

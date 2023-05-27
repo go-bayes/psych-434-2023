@@ -319,17 +319,14 @@ However, it's important to mention that the degree of this attenuation can depen
 \node [rectangle, draw=white] (Yeta2) at (6, 0) {Y$^{t2}_\eta$};
 
 
-\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=black,bend left =15] (UA) to (A1);
 \draw [-latex, draw=black] (UL) to (L0);
 \draw [-latex, draw=black] (Leta0) to (L0);
 \draw [-latex, draw=black] (Leta0) to (Aeta1);
 \draw [-latex, draw=black,bend right =30] (Leta0) to (Yeta2);
 
 
-
-
-
-\draw [-latex, draw=black] (UY) to (Y2);
+\draw [-latex, draw=black,bend left =20] (UY) to (Y2);
 \draw [-latex, draw=black] (Aeta1) to (A1);
 \draw [-latex, draw=black] (Yeta2) to (Y2);
 
