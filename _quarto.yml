@@ -36,13 +36,13 @@ website:
           href: content/06-content.qmd
         - text: "7: Causal Inference: Causal Graphs"
           href: content/07-content.qmd
-        - text: "8: Causal Inference: Target Trial Emulation"
+        - text: "8: Causal Inference: Causal Effects"
           href: content/08-content.qmd
-        - text: "9: Causal inference: Reconsidering measurement and selection biases "
+        - text: "9: Causal inference: Causal Estimation I "
           href: content/09-content.qmd
-        - text: "10: Causal Inference: Cross-Cultural Experiments"
+        - text: "10: Causal Inference: Causal Estimation II"
           href: content/10-content.qmd
-        - text: "11: Ethics and Ownership"
+        - text: "11: Reconsidering Measurement from a Causal Perspective"
           href: content/11-content.qmd
         - text: "12: Future Horizons"
           href: content/12-content.qmd
