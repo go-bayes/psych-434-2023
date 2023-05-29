@@ -1030,7 +1030,7 @@ $$Y^{am}\coprod M^{a*}|L$$
 \node [rectangle, draw=black] (L0) at (0, 0) {t0/L};
 \node [rectangle, draw=white] (K1) at (4, 0) {t1/K};
 \node [rectangle, draw=black] (A1) at (4, 2) {t1/A};
-\node [rectangle, draw=white] (Y2) at (6, 0) {t2/Y};
+\node [rectangle, draw=white] (Y2) at (6, 0) {t2/Y$_k$};
 
 \draw [-latex, draw=black] (L0) to (K1);
 \draw [-latex, bend right, draw=black] (L0) to (Y2);
