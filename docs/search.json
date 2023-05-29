@@ -2216,7 +2216,7 @@
     "href": "content/common_graphs.html#multiple-versions-of-treatment",
     "title": "Temporal Causal Diagrams: Unveiling Causal Order and Indexing Nodes by Time",
     "section": "Multiple Versions of Treatment",
-    "text": "Multiple Versions of Treatment\n\n\n\n\n\nFigure 25: Multiple Versions of Treatment"
+    "text": "Multiple Versions of Treatment\n\n\n\n\n\nMultiple Versions of treatment. Heae, A is regarded to bbe a coarseneed version of K"
   },
   {
     "objectID": "content/common_graphs.html#structural-interpretation-of-a-latent-factor",
@@ -2377,7 +2377,7 @@
     "href": "content/common_graphs.html#does-the-multiple-versions-of-treatments-approach-save-us",
     "title": "Temporal Causal Diagrams: Unveiling Causal Order and Indexing Nodes by Time",
     "section": "Does the Multiple Versions of Treatments Approach Save Us?",
-    "text": "Does the Multiple Versions of Treatments Approach Save Us?\nMeasurement error remeains a problem if errors are either directed or dependent (correlated) or both. (See: measurement link.)\n\n\n\n\n\nFigure 26: Measurement error opens a pathway to confounding if either there are correlated errors, or a directed effect of the exposure on the errors of measured outcome."
+    "text": "Does the Multiple Versions of Treatments Approach Save Us?\nMeasurement error remeains a problem if errors are either directed or dependent (correlated) or both. (See: measurement link.)\n\n\n\n\n\nFigure 25: Measurement error opens a pathway to confounding if either there are correlated errors, or a directed effect of the exposure on the errors of measured outcome."
   },
   {
     "objectID": "content/caual_measurement_graphs.html",

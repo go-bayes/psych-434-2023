@@ -1009,9 +1009,10 @@ $$Y^{am}\coprod M^{a*}|L$$
 
 ## Multiple Versions of Treatment
 
+
 ```{tikz}
-#| label: fig-dag-multiple-version-treatment
-#| fig-cap: "Multiple Versions of Treatment"
+#| label: fig_dag_multiple_version_treatment_dag
+#| fig-cap: "Multiple Versions of treatment. Heae, A is regarded to bbe a coarseneed version of K"
 #| out-width: 100%
 #| echo: false
 
@@ -1027,15 +1028,15 @@ $$Y^{am}\coprod M^{a*}|L$$
 
 \begin{tikzpicture}[{every node/.append style}=draw]
 
-\node [rectangle, draw=black] (L0) at (0, 0) {t0/L};
-\node [rectangle, draw=white] (K1) at (4, 0) {t1/K};
-\node [rectangle, draw=black] (A1) at (4, 2) {t1/A};
-\node [rectangle, draw=white] (Y2) at (6, 0) {t2/Y$_k$};
+\node [rectangle, draw=black] (L0) at (0, 0) {L};
+\node [rectangle, draw=white] (K1) at (2, 0) {K};
+\node [rectangle, draw=black] (A1) at (4, 0) {A};
+\node [rectangle, draw=white] (Y2) at (6, 0) {Y$_k$};
 
 \draw [-latex, draw=black] (L0) to (K1);
 \draw [-latex, bend right, draw=black] (L0) to (Y2);
 \draw [-latex, draw=black] (K1) to (A1);
-\draw [-latex, draw=white, dashed] (K1) to (Y2);
+\draw [-latex, draw=black, bend left] (K1) to (Y2);
 
 \end{tikzpicture}
 ```
@@ -1048,6 +1049,8 @@ $$Y^{am}\coprod M^{a*}|L$$
 
 Measurement error remeains a problem if errors are either directed or dependent (correlated) or both. (See: measurement link.)
 
+
+
 ```{tikz}
 #| label: fig-dag-dep-udir-effect-confounders-3wave
 #| fig-cap: "Measurement error opens a pathway to confounding if either there are correlated errors, or a directed effect of the exposure on the errors of measured outcome."
@@ -1057,13 +1060,16 @@ Measurement error remeains a problem if errors are either directed or dependent 
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{arrows}
 \usetikzlibrary{decorations}
+
+
+
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
 \tikzset{blackArrowRedTip/.style={
   decoration={markings, mark=at position 1 with {\arrow[red, thick]{latex}}},
   postaction={decorate},
   shorten >=0.4pt}}
-
-\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
-\tikzset{>=latex}
 
 % Define a simple decoration
 \tikzstyle{cor} = [-, dotted, preaction = {decorate}]
@@ -1071,32 +1077,35 @@ Measurement error remeains a problem if errors are either directed or dependent 
 
 \begin{tikzpicture}[{every node/.append style}=draw]
 
-\node [rectangle, draw=white] (ULAY) at (0, 4) {U$_{t0/L}$};
-\node [rectangle, draw=white] (UA) at (4, 3) {U$_{t1/A}$};
-\node [rectangle, draw=white] (UY) at (8, 4) {U$_{t2/Y}$};
+\node [rectangle, draw=white] (ULAY) at (0, 5) {$U_{L}$};
+\node [rectangle, draw=white] (UA) at (5, 4) {$U_{A}$};
+\node [rectangle, draw=white] (UY) at (10, 5) {$U_{Y}$};
 
-\node [rectangle, draw=black] (L0) at (0, 1) {L$^{t0}$};
-\node [rectangle, draw=black] (A1) at (4, 1) {A$^{t1}$};
-\node [rectangle, draw=black] (Y2) at (8, 1) {Y$^{t2}$};
-\node [rectangle, draw=white] (Leta0) at (0, 0) {t1/L$_\eta$};
-\node [rectangle, draw=white] (Aeta1) at (4, 0) {t1/A$_\eta$};
-\node [rectangle, draw=white] (Yeta2) at (8, 0) {t2/Y$_\eta$};
+\node [rectangle, draw=black] (L0) at (0, 2) {L$_{f(X_1\dots X_n)}^{t0}$};
+\node [rectangle, draw=black] (A1) at (5, 2) {A$_{f(X_1\dots X_n)}^{t1}$};
+\node [rectangle, draw=black] (Y2) at (10, 2) {Y$_{f(X_1\dots X_n)}^{t2}$};
+\node [rectangle, draw=white] (Leta0) at (0, 0) {$\eta_L^{t0}$};
+\node [rectangle, draw=white] (Aeta1) at (5, 0) {$\eta_A^{t1}$};
+\node [rectangle, draw=white] (Yeta2) at (10, 0) {$\eta_Y^{t2}$};
 
 
 \draw [-latex, draw=red] (ULAY) to (UA);
 \draw [-latex, draw=red] (ULAY) to (UY);
 
-\draw [-latex, draw=red] (UA) to (A1);
+\draw [-latex, draw=black] (UA) to (A1);
 \draw [-latex, draw=red] (UY) to (Y2);
-\draw [-latex, draw=red] (ULAY) to (L0);
+\draw [-latex, draw=black] (ULAY) to (L0);
 \draw [-latex, draw=black] (Leta0) to (L0);
 \draw [-latex, draw=black] (Leta0) to (Aeta1);
 \draw [-latex, draw=black, bend right=30] (Leta0) to (Yeta2);
 
-\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw = black] (Aeta1) to (A1);
 \draw [-latex, draw=black] (Yeta2) to (Y2);
 
 \draw [-latex, draw=red] (Aeta1) to (UY);
+\draw [-latex, draw=red] (Leta0) to (UA);
+
+
 
 
 
