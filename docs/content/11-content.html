@@ -216,15 +216,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#two-ways-of-thinking-about-measurement-in-psychometric-research." id="toc-two-ways-of-thinking-about-measurement-in-psychometric-research." class="nav-link" data-scroll-target="#two-ways-of-thinking-about-measurement-in-psychometric-research.">Two ways of thinking about measurement in psychometric research.</a>
   <ul class="collapse">
-  <li><a href="#multiple-versions-of-treatment" id="toc-multiple-versions-of-treatment" class="nav-link" data-scroll-target="#multiple-versions-of-treatment">Multiple Versions of Treatment</a></li>
-  <li><a href="#reflective-and-formative-measurement-models" id="toc-reflective-and-formative-measurement-models" class="nav-link" data-scroll-target="#reflective-and-formative-measurement-models">Reflective and formative measurement models</a></li>
-  <li><a href="#vanderweeles-worry-for-the-basic-reflective-model" id="toc-vanderweeles-worry-for-the-basic-reflective-model" class="nav-link" data-scroll-target="#vanderweeles-worry-for-the-basic-reflective-model">VanderWeele’s worry for the basic reflective model:</a></li>
+  <li><a href="#the-reflective-model-factor-analysis" id="toc-the-reflective-model-factor-analysis" class="nav-link" data-scroll-target="#the-reflective-model-factor-analysis">The Reflective Model (Factor Analysis)</a></li>
+  <li><a href="#the-formative-model-factor-analysis" id="toc-the-formative-model-factor-analysis" class="nav-link" data-scroll-target="#the-formative-model-factor-analysis">The Formative Model (Factor Analysis)</a></li>
   </ul></li>
-  <li><a href="#more-complex-models-is-this-a-causal-graph" id="toc-more-complex-models-is-this-a-causal-graph" class="nav-link" data-scroll-target="#more-complex-models-is-this-a-causal-graph">More complex models (is this a causal graph?)</a></li>
+  <li><a href="#structural-interpretation-of-the-formative-model-and-reflective-models-factor-analysis" id="toc-structural-interpretation-of-the-formative-model-and-reflective-models-factor-analysis" class="nav-link" data-scroll-target="#structural-interpretation-of-the-formative-model-and-reflective-models-factor-analysis">Structural Interpretation of the formative model and reflective models (Factor Analysis)</a></li>
+  <li><a href="#problems-with-the-traditional-factor-analytic-interpretation." id="toc-problems-with-the-traditional-factor-analytic-interpretation." class="nav-link" data-scroll-target="#problems-with-the-traditional-factor-analytic-interpretation.">Problems with the traditional factor analytic interpretation.</a></li>
+  <li><a href="#the-theory-of-mutliple-versions-of-treatment" id="toc-the-theory-of-mutliple-versions-of-treatment" class="nav-link" data-scroll-target="#the-theory-of-mutliple-versions-of-treatment">The theory of mutliple versions of treatment</a></li>
   <li><a href="#vanderweeles-model-of-reality-is-this-a-causal-diagramme" id="toc-vanderweeles-model-of-reality-is-this-a-causal-diagramme" class="nav-link" data-scroll-target="#vanderweeles-model-of-reality-is-this-a-causal-diagramme">VanderWeele’s model of reality (is this a causal diagramme?)</a></li>
-  <li><a href="#perhaps-this-is-better" id="toc-perhaps-this-is-better" class="nav-link" data-scroll-target="#perhaps-this-is-better">Perhaps this is better</a></li>
+  <li><a href="#perhaps-the-theory-of-dependent-and-directed-measurement-error-does-better" id="toc-perhaps-the-theory-of-dependent-and-directed-measurement-error-does-better" class="nav-link" data-scroll-target="#perhaps-the-theory-of-dependent-and-directed-measurement-error-does-better">Perhaps the theory of dependent and directed measurement error does better?</a>
+  <ul class="collapse">
+  <li><a href="#appendix-detail-vanderweeles-use-of-the-theory-of-multiple-versions-of-treatment" id="toc-appendix-detail-vanderweeles-use-of-the-theory-of-multiple-versions-of-treatment" class="nav-link" data-scroll-target="#appendix-detail-vanderweeles-use-of-the-theory-of-multiple-versions-of-treatment">Appendix: Detail: VanderWeele’s use of the theory of multiple versions of treatment</a></li>
+  <li><a href="#reflective-and-formative-measurement-models-may-be-approached-from-the-multiple-versions-of-treatment-theory." id="toc-reflective-and-formative-measurement-models-may-be-approached-from-the-multiple-versions-of-treatment-theory." class="nav-link" data-scroll-target="#reflective-and-formative-measurement-models-may-be-approached-from-the-multiple-versions-of-treatment-theory.">Reflective and formative measurement models may be approached from the Multiple Versions of Treatment Theory.</a></li>
+  </ul></li>
   <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides">Slides</a></li>
   </ul>
 </nav>
@@ -237,96 +243,54 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<section id="multiple-versions-of-treatment" class="level3">
-<h3 class="anchored" data-anchor-id="multiple-versions-of-treatment">Multiple Versions of Treatment</h3>
-<p>Recall, a causal effect is defined as the difference in the expected potential outcome when everyone is exposed (perhaps contrary to fact) to one level of a treatment, conditional on their levels of a confounder, with the expected potential outcome when everyone is exposed to a a different level of a treatement (perhaps contrary to fact), conditional on their levels of a counfounder.</p>
-<p><span class="math display"> \Delta_{ate} = \sum_c \left( \mathbb{E}[Y|A=a,c] - \mathbb{E}[Y|A=a^*,c] \right) P(c)</span></p>
-<p>In causal inference, the multiple versions of treatment theory allows us to handle situations where the treatment isn’t uniform, but instead has several variations. Each variation of the treatment, or “version”, can have a different impact on the outcome. This theory allows us to consider these varying impacts in our causal models.</p>
-<p>Under the multiple versions of treatment framework, the consistency assumption is redefined. It requires that for each version of the treatment, the outcome under that version is equal to the observed outcome when that version is received.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-dag-multiple-version-treatment" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="11-content_files/figure-html/fig-dag-multiple-version-treatment-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: Multiple Versions of Treatment</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Further, a “no confounding” assumption is required, which states that the potential outcomes for each version are independent of the version received, given the covariates.</p>
-<p>The absence of confounding for the effect of <span class="math inline">K</span> on <span class="math inline">Y</span> given <span class="math inline">C</span> is denoted when Y<span class="math inline">_k</span> is independent of <span class="math inline">K</span>, conditionally based on <span class="math inline">C</span> or <span class="math inline">Y_k \coprod A|K,C</span> (i.e.&nbsp;conditional on<span class="math inline">C</span>, <span class="math inline">A</span> gives no information about <span class="math inline">Y</span> once <span class="math inline">K</span> and <span class="math inline">C</span> are accounted for) . The consistency assumption is deemed to be valid when <span class="math inline">Y = Y_k</span> if <span class="math inline">K = k</span>.</p>
-<p>Let’s assume the researcher only possesses data on <span class="math inline">(A, Y, C)</span>. When Y<span class="math inline">_k</span> is conditionally independent of <span class="math inline">K</span> based on <span class="math inline">C</span>, there is no confounding for the effect of <span class="math inline">K</span> on <span class="math inline">Y</span> given <span class="math inline">C</span>. Then for any <span class="math inline">K = k</span> results in <span class="math inline">Y = Y_k</span>, the consistency assumption is met. Let’s suppose only information on <span class="math inline">(A, Y, C)</span> is available to the researcher.</p>
-<p><span class="math display"> \Delta_{ate} = \sum_{k,c} \mathbb{E}[Y_k|c] P(k|a,c) P(c) - \sum_{k,c} \mathbb{E}[Y_k|c] P(k|a^*,c) P(c)</span></p>
-<p>It represents a comparison in a hypothetical randomised trial. In this scenario, within covariates <span class="math inline">C</span> strata, individuals in one group receive a treatment <span class="math inline">K</span> version randomly assigned from the inherent <span class="math inline">K</span> distribution in the <span class="math inline">(A = a, C = c)</span> subpopulation. Meanwhile, individuals in the other group receive a randomly assigned <span class="math inline">K</span> version from the same distribution.</p>
-<p>This theory finds its utility in practical scenarios where treatments seldom resemble each other, like healthcare where different doctors may administer slightly distinct treatments, or in education where teaching methods differ. By incorporating these treatment variations, we gain more accurate insights into the causal effect.</p>
-<p>So VanderWeele proposes that this theory of causal inference under multiple treatments could be advantageous for handling the consistency assumption.</p>
-<p>He next proposes that this theory may be helpful for explaining measurements.</p>
 </section>
-<section id="reflective-and-formative-measurement-models" class="level3">
-<h3 class="anchored" data-anchor-id="reflective-and-formative-measurement-models">Reflective and formative measurement models</h3>
-<p>Recall, the reflective measurement model assumes that an underlying latent continuous variable <span class="math inline">\eta</span> causes measured indicatorsL<span class="math inline">X_1\dots X_n</span> such that:</p>
+<section id="two-ways-of-thinking-about-measurement-in-psychometric-research." class="level2">
+<h2 class="anchored" data-anchor-id="two-ways-of-thinking-about-measurement-in-psychometric-research.">Two ways of thinking about measurement in psychometric research.</h2>
+<section id="the-reflective-model-factor-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="the-reflective-model-factor-analysis">The Reflective Model (Factor Analysis)</h3>
 <p><span class="math display">X_i = \lambda_i \eta + \varepsilon_i</span></p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag-latent-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="11-content_files/figure-html/fig-dag-latent-1-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: Reflective model: assume univariate latent variable η giving rise to indicators X1…X3. Figure from VanderWeele: doi: 10.1097/EDE.0000000000001434</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;1: Reflective model: assume univariate latent variable η giving rise to indicators X1…X3. Figure adapted from VanderWeele: doi: 10.1097/EDE.0000000000001434</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Recall the theory of multiple versions of treatments. This concept accounts for varying impacts of different treatment versions on the outcome. The consistency assumption is revisited.When a specific version of treatment is received, the observed outcome matches the outcome under <em>that</em> version. In addition, the theory requires “no confounding” given measured covariates for each version are of the treatment.</p>
-<p>Vanderweele applies the following substitution:</p>
-<p><span class="math display">\Delta_{ate} = \sum_{\eta,c} \mathbb{E}[Y_\eta|c] P(\eta|A=a+1,c) P(c) - \sum_{\eta,c} \mathbb{E}[Y_\eta|c] P(\eta|A=a,c) P(c)</span> VanderWeele substitutes <span class="math inline">K</span> with <span class="math inline">\eta</span> from the previous section, and compare measurement level <span class="math inline">A = a + 1</span> with <span class="math inline">A = a</span>. Now, if the influence of <span class="math inline">\eta</span> on <span class="math inline">Y</span> is not confounded given <span class="math inline">C</span></p>
-<p>Thus despite varying reliabilities <span class="math inline">\eta_i</span>, which might be overlooked, <span class="math inline">\Delta_{ate}</span> retains its interpretability as a comparison in a hypothetical randomised trial.</p>
-<p>Here, within the strata of covariates <span class="math inline">C</span>, individuals in one group are randomised to a value of <span class="math inline">\eta</span>, derived from the actual <span class="math inline">\eta</span> distribution in the subpopulation with <span class="math inline">(A = a + 1, C = c)</span>. In the other group, individuals are randomized to a <span class="math inline">\eta</span> value from the distribution in the subpopulation with <span class="math inline">(A = a, C = c)</span>.</p>
-<p>In essence, this connection between measurement and the multiple versions of treatment framework provides a powerful tool for causal inference varying reliabilities of measurement.</p>
-<p>However, as with the theory of multiple treatments, we might not known how to interpret our results.</p>
-<p>Note that the same considerations apply to the “formative model of measurement” where it is assumed that the latent <span class="math inline">\eta</span> is causally efficacious such that:</p>
-<p><span class="math inline">\eta = \sum_i\lambda_i X_i + \varepsilon</span></p>
-<p>However, as with the theory of multiple treatments and the reflective model, we might not known how to interpret our results for the formative model .</p>
-<!-- ### Reflective model  -->
-<!-- ```{tikz} -->
-<!-- #| label: fig-dag-latent-2 -->
-<!-- #| fig-cap: "Reflective Model: causal assumptions" -->
-<!-- #| out-width: 100% -->
-<!-- #| echo: false -->
-<!-- \usetikzlibrary{positioning} -->
-<!-- \usetikzlibrary{shapes.geometric} -->
-<!-- \usetikzlibrary{arrows} -->
-<!-- \usetikzlibrary{decorations} -->
-<!-- \tikzstyle{Arrow} = [->, thin, preaction = {decorate}] -->
-<!-- \tikzset{>=latex} -->
-<!-- \begin{tikzpicture}[{every node/.append style}=draw] -->
-<!-- \node [rectangle, draw=white] (L) at (0, 0) {L}; -->
-<!-- \node [rectangle, draw=white] (eta) at (2, 0) {$\eta$}; -->
-<!-- \node [rectangle, draw=white] (X1) at (4, 1) {X1}; -->
-<!-- \node [rectangle, draw=white] (X2) at (4, 0) {$\vdots$}; -->
-<!-- \node [rectangle, draw=white] (Xn) at (4, -1) {X$_n$}; -->
-<!-- \node [rectangle, draw=white] (A) at (6, 0) {A}; -->
-<!-- \node [rectangle, draw=white] (Y) at (8, 0) {Y}; -->
-<!-- \draw [-latex, bend right=80, draw=black] (L) to (Y); -->
-<!-- \draw [-latex, bend left=80, draw=red] (eta) to (Y); -->
-<!-- \draw [-latex, draw=black] (eta) to (X1); -->
-<!-- \draw [-latex, draw=black] (eta) to (X2); -->
-<!-- \draw [-latex, draw=black] (eta) to (Xn); -->
-<!-- \draw [-latex, draw=black] (X1) to (A); -->
-<!-- \draw [-latex, draw=black] (X2) to (A); -->
-<!-- \draw [-latex, draw=black] (Xn) to (A); -->
-<!-- \end{tikzpicture} -->
-<!-- ``` -->
-<!-- Reflective model & causal assumptions -->
-<!-- ::: -->
+</section>
+<section id="the-formative-model-factor-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="the-formative-model-factor-analysis">The Formative Model (Factor Analysis)</h3>
+<p><span class="math display">\eta = \sum_i\lambda_i X_i + \varepsilon</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-latent-formative_0" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="11-content_files/figure-html/fig-dag-latent-formative_0-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Formative model:: assume univariate latent variable from which the indicators X1…X3 give rise. Figure adapted from VanderWeele: doi: 10.1097/EDE.0000000000001434</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="structural-interpretation-of-the-formative-model-and-reflective-models-factor-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="structural-interpretation-of-the-formative-model-and-reflective-models-factor-analysis">Structural Interpretation of the formative model and reflective models (Factor Analysis)</h2>
+<blockquote class="blockquote">
+<p>However, this analysis of reflective and formative models assumed that the latent η was causally efficacious. This may not be the case.</p>
+</blockquote>
+<p>Statistically, the formative model implies <span class="math inline">X_i = \lambda_i \eta + \varepsilon_i</span>. However, in the tradition of factor analysis, people have interpreted the formative model to imply a single univariate latent reality as implied by <a href="#fig-structural-assumptions-reflective-model">Figure&nbsp;4 (a)</a>. Such an interpretation has makes strong causal assumptions.</p>
+<p>Similarly, statistically, the formative model implies <span class="math inline">\eta = \sum_i\lambda_i X_i + \varepsilon</span>. However, in the tradition of factor analysis, people have interpreted the formative model to imply a single underlying univariate latent reality as in <a href="#fig-dag-reflective-assumptions_note">Figure&nbsp;4 (b)</a>. This too makes strong causal assumptions. <strong>Cross sectional data cannot decide between these assumptions.</strong></p>
 <div id="fig-latent" class="quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 <div class="cell-output-display">
-<div id="fig-dag-latent-formative" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-structural-assumptions-reflective-model" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="11-content_files/figure-html/fig-dag-latent-formative-1.png" class="img-fluid figure-img" style="width:80.0%" data-ref-parent="fig-latent"></p>
-<figcaption class="figure-caption">(a) Formative model:: assume univariate latent variable from which the indicators X1…X3 give rise.</figcaption>
+<p><img src="11-content_files/figure-html/fig-structural-assumptions-reflective-model-1.png" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-latent"></p>
+<figcaption class="figure-caption">(a) Reflective Model: causal assumptions. Figure adapted from VanderWeele: doi: 10.1097/EDE.0000000000001434</figcaption>
 </figure>
 </div>
 </div>
@@ -335,25 +299,29 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 <div class="cell-output-display">
-<div id="fig-dag-formative-assumptions" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-dag-reflective-assumptions_note" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="11-content_files/figure-html/fig-dag-formative-assumptions-1.png" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-latent"></p>
-<figcaption class="figure-caption">(b) Formative model: causal assumptions</figcaption>
+<p><img src="11-content_files/figure-html/fig-dag-reflective-assumptions_note-1.png" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-latent"></p>
+<figcaption class="figure-caption">(b) Formative model: causal assumptions. Figure adapted from VanderWeele: doi: 10.1097/EDE.0000000000001434</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3: Formative model &amp; causal assumptions</figcaption><p></p>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p>The formative model implies <span class="math inline">X_i = \lambda_i \eta + \varepsilon_i</span>, which factor analysts take to imply <a href="#fig-structural-assumptions-reflective-model">Figure&nbsp;4 (a)</a>.</p>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: The formative model implies <span class="math inline">\eta = \sum_i\lambda_i X_i + \varepsilon</span>, which factor analysts take to imply <a href="#fig-dag-reflective-assumptions_note">Figure&nbsp;4 (b)</a>.</figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="vanderweeles-worry-for-the-basic-reflective-model" class="level3">
-<h3 class="anchored" data-anchor-id="vanderweeles-worry-for-the-basic-reflective-model">VanderWeele’s worry for the basic reflective model:</h3>
-<blockquote class="blockquote">
-<p>However, this analysis of reflective and formative models assumed that the latent η was causally efficacious. This may not be the case.</p>
-</blockquote>
-<p>These models are also compatible with the data:</p>
+<section id="problems-with-the-traditional-factor-analytic-interpretation." class="level2">
+<h2 class="anchored" data-anchor-id="problems-with-the-traditional-factor-analytic-interpretation.">Problems with the traditional factor analytic interpretation.</h2>
+<p>Although the statistical model <span class="math inline">X_i = \lambda_i \eta + \varepsilon_i</span> is compatible with <a href="#fig-structural-assumptions-reflective-model">Figure&nbsp;4 (a)</a>, it is also compatible with <a href="#fig-dag-formative-assumptions-compatible">Figure&nbsp;4 (a)</a>. Cross-sectional data cannot discriminate between these structural interpretations</p>
+<p>Likewise, although the the statistical model <span class="math inline">\eta = \sum_i\lambda_i X_i + \varepsilon</span> is compatible with <a href="#fig-dag-reflective-assumptions_note">Figure&nbsp;4 (b)</a>, it is also compatible with <a href="#fig-dag-reflectiveassumptions-compatible_again">Figure&nbsp;4 (b)</a>. Again, cross-sectional data cannot discriminate between these structural interpretations.</p>
+<p>Indeed there are many realities with which the data are compatible!</p>
 <div id="fig-latent" class="quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -371,40 +339,61 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 <div class="cell-output-display">
-<div id="fig-dag-reflectiveassumptions-compatible" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-dag-reflectiveassumptions-compatible_again" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="11-content_files/figure-html/fig-dag-reflectiveassumptions-compatible-1.png" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-latent"></p>
+<p><img src="11-content_files/figure-html/fig-dag-reflectiveassumptions-compatible_again-1.png" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-latent"></p>
 <figcaption class="figure-caption">(b) Reflective model is compatible with indicators causing the outcome</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;4: Formative and Reflective Models are compatible with indicators having causal effects</figcaption><p></p>
-</figure>
-</div>
-</section>
-</section>
-<section id="more-complex-models-is-this-a-causal-graph" class="level2">
-<h2 class="anchored" data-anchor-id="more-complex-models-is-this-a-causal-graph">More complex models (is this a causal graph?)</h2>
-<p>VanderWeele writes this:</p>
-<div class="cell">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 <div class="cell-output-display">
-<div id="fig-dag-multivariate-reality" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-dag-multivariate-reality_again" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="11-content_files/figure-html/fig-dag-multivariate-reality-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5: Multivariate reality gives rise to the indicators, from which we draw our measure.r</figcaption>
+<p><img src="11-content_files/figure-html/fig-dag-multivariate-reality_again-1.png" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-latent"></p>
+<figcaption class="figure-caption">(c) Multivariate reality gives rise to the indicators, from which we draw our measures</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Rather, I would prefer to say A$ = f(X_1, X_n)$, and to make the point we write:</p>
-<div class="cell">
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 <div class="cell-output-display">
 <div id="fig-dag-multivariate-reality-bulbulia" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="11-content_files/figure-html/fig-dag-multivariate-reality-bulbulia-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6: Multivariate reality gives rise to the indicators, from which we draw our measure.r</figcaption>
+<p><img src="11-content_files/figure-html/fig-dag-multivariate-reality-bulbulia-1.png" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-latent"></p>
+<figcaption class="figure-caption">(d) Although we take our constructs, A, to be functions of indicators, X, such that, perhaps only one or several of the indicators are efficacious.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: The statistical models that underpin formative and reflective conceptions of factor analysis are compatible with indicators having causal effects, and with a multivariate reality giving rise to multiple indicators.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="the-theory-of-mutliple-versions-of-treatment" class="level2">
+<h2 class="anchored" data-anchor-id="the-theory-of-mutliple-versions-of-treatment">The theory of mutliple versions of treatment</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-multiple-version-treatment" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="11-content_files/figure-html/fig-dag-multiple-version-treatment-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Multiple Versions of treatment</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dag-multiple-version-treatment-applied-measurement" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="11-content_files/figure-html/fig-dag-multiple-version-treatment-applied-measurement-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: Multiple Versions of treatment applied to measurement</figcaption>
 </figure>
 </div>
 </div>
@@ -424,18 +413,73 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>However this is not a causal graph. Can we do better?</p>
 </section>
-<section id="perhaps-this-is-better" class="level2">
-<h2 class="anchored" data-anchor-id="perhaps-this-is-better">Perhaps this is better</h2>
+<section id="perhaps-the-theory-of-dependent-and-directed-measurement-error-does-better" class="level2">
+<h2 class="anchored" data-anchor-id="perhaps-the-theory-of-dependent-and-directed-measurement-error-does-better">Perhaps the theory of dependent and directed measurement error does better?</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-dag-multivariate-reality-complete-bulbulia" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-dag-dep-udir-effect-confounders-3wave" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="11-content_files/figure-html/fig-dag-multivariate-reality-complete-bulbulia-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;8: Multivariate reality gives rise to the latent variables,if reality continues to strongly effect η at t0 …tn, there is an open backdoor path to Y through our concepts and constructs.</figcaption>
+<p><img src="11-content_files/figure-html/fig-dag-dep-udir-effect-confounders-3wave-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Measurement error opens a pathway to confounding if either there are correlated errors, or a directed effect of the exposure on the errors of measured outcome.</figcaption>
 </figure>
 </div>
 </div>
 </div>
+<!-- ```{tikz} -->
+<!-- #| label: fig-dag-multivariate-reality-complete-bulbulia -->
+<!-- #| fig-cap: "Multivariate reality gives rise to the latent variables,if reality continues to strongly effect η at t0 ...tn, there is an open backdoor path to Y through our concepts and constructs." -->
+<!-- #| out-width: 100% -->
+<!-- #| echo: false -->
+<!-- \usetikzlibrary{positioning} -->
+<!-- \usetikzlibrary{shapes.geometric} -->
+<!-- \usetikzlibrary{arrows} -->
+<!-- \usetikzlibrary{decorations} -->
+<!-- \tikzstyle{Arrow} = [->, thin, preaction = {decorate}] -->
+<!-- \tikzset{>=latex} -->
+<!-- \begin{tikzpicture}[{every node/.append style}=draw] -->
+<!-- \node [rectangle, draw=white, align=left] (R) at (0, 0 ) {$\mathcal{R}$\\ -->
+<!--   concepts$^{~}$\\constructs$^{~}$}; -->
+<!-- \node [rectangle, draw=white] (eta0) at (3, 0 ) {$\eta^{t0}$}; -->
+<!-- \node [rectangle, draw=black] (X0) at (6, 0 ) {$(X_1 \dots X_n)^{t0}$}; -->
+<!-- \node [rectangle, draw=white] (eta1) at (10, 0 ) {$\eta^{t1}$}; -->
+<!-- \node [rectangle, draw=black] (X1) at (12, 0 ) {$(X_1 \dots X_n)^{t1}$}; -->
+<!-- \node [rectangle, draw=white] (Y) at (14, 0 ) {Y$^{t2}$}; -->
+<!-- \draw [-latex, draw=red, bend left=80] (R) to (Y); -->
+<!-- \draw [-latex, draw=black] (R) to (eta0); -->
+<!-- \draw [-latex, draw=black, bend left, red] (R) to (eta1); -->
+<!-- \draw [-latex, draw=black] (eta0) to (X0); -->
+<!-- \draw [-latex, draw=black, bend right=40] (eta0) to (X1); -->
+<!-- \draw [-latex, draw=black] (eta1) to (X1); -->
+<!-- \draw [-latex, draw=red,dotted, bend left=40] (eta1) to (Y); -->
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+<section id="appendix-detail-vanderweeles-use-of-the-theory-of-multiple-versions-of-treatment" class="level3">
+<h3 class="anchored" data-anchor-id="appendix-detail-vanderweeles-use-of-the-theory-of-multiple-versions-of-treatment">Appendix: Detail: VanderWeele’s use of the theory of multiple versions of treatment</h3>
+<p>Recall, a causal effect is defined as the difference in the expected potential outcome when everyone is exposed (perhaps contrary to fact) to one level of a treatment, conditional on their levels of a confounder, with the expected potential outcome when everyone is exposed to a a different level of a treatement (perhaps contrary to fact), conditional on their levels of a counfounder.</p>
+<p><span class="math display"> \Delta_{ate} = \sum_c \left( \mathbb{E}[Y|A=a,c] - \mathbb{E}[Y|A=a^*,c] \right) P(c)</span></p>
+<p>In causal inference, the multiple versions of treatment theory allows us to handle situations where the treatment isn’t uniform, but instead has several variations. Each variation of the treatment, or “version”, can have a different impact on the outcome. This theory allows us to consider these varying impacts in our causal models.</p>
+<p>Under the multiple versions of treatment framework, the consistency assumption is redefined. It requires that for each version of the treatment, the outcome under that version is equal to the observed outcome when that version is received.</p>
+<p>Further, a “no confounding” assumption is required, which states that the potential outcomes for each version are independent of the version received, given the covariates.</p>
+<p>The absence of confounding for the effect of <span class="math inline">K</span> on <span class="math inline">Y</span> given <span class="math inline">C</span> is denoted when Y<span class="math inline">_k</span> is independent of <span class="math inline">K</span>, conditionally based on <span class="math inline">C</span> or <span class="math inline">Y_k \coprod A|K,C</span> (i.e.&nbsp;conditional on<span class="math inline">C</span>, <span class="math inline">A</span> gives no information about <span class="math inline">Y</span> once <span class="math inline">K</span> and <span class="math inline">C</span> are accounted for) . The consistency assumption is deemed to be valid when <span class="math inline">Y = Y_k</span> if <span class="math inline">K = k</span>.</p>
+<p>Let’s assume the researcher only possesses data on <span class="math inline">(A, Y, C)</span>. When Y<span class="math inline">_k</span> is conditionally independent of <span class="math inline">K</span> based on <span class="math inline">C</span>, there is no confounding for the effect of <span class="math inline">K</span> on <span class="math inline">Y</span> given <span class="math inline">C</span>. Then for any <span class="math inline">K = k</span> results in <span class="math inline">Y = Y_k</span>, the consistency assumption is met. Let’s suppose only information on <span class="math inline">(A, Y, C)</span> is available to the researcher.</p>
+<p><span class="math display"> \Delta_{ate} = \sum_{k,c} \mathbb{E}[Y_k|c] P(k|a,c) P(c) - \sum_{k,c} \mathbb{E}[Y_k|c] P(k|a^*,c) P(c)</span></p>
+<p>It represents a comparison in a hypothetical randomised trial. In this scenario, within covariates <span class="math inline">C</span> strata, individuals in one group receive a treatment <span class="math inline">K</span> version randomly assigned from the inherent <span class="math inline">K</span> distribution in the <span class="math inline">(A = a, C = c)</span> subpopulation. Meanwhile, individuals in the other group receive a randomly assigned <span class="math inline">K</span> version from the same distribution.</p>
+<p>This theory finds its utility in practical scenarios where treatments seldom resemble each other, like healthcare where different doctors may administer slightly distinct treatments, or in education where teaching methods differ. By incorporating these treatment variations, we gain more accurate insights into the causal effect.</p>
+<p>So VanderWeele proposes that this theory of causal inference under multiple treatments could be advantageous for handling the consistency assumption.</p>
+<p>He next proposes that this theory may be helpful for explaining measurements.</p>
+</section>
+<section id="reflective-and-formative-measurement-models-may-be-approached-from-the-multiple-versions-of-treatment-theory." class="level3">
+<h3 class="anchored" data-anchor-id="reflective-and-formative-measurement-models-may-be-approached-from-the-multiple-versions-of-treatment-theory.">Reflective and formative measurement models may be approached from the Multiple Versions of Treatment Theory.</h3>
+<p>Recall the theory of multiple versions of treatments. This concept accounts for varying impacts of different treatment versions on the outcome. The consistency assumption is revisited.When a specific version of treatment is received, the observed outcome matches the outcome under <em>that</em> version. In addition, the theory requires “no confounding” given measured covariates for each version are of the treatment.</p>
+<p>Vanderweele applies the following substitution:</p>
+<p><span class="math display">\Delta_{ate} = \sum_{\eta,c} \mathbb{E}[Y_\eta|c] P(\eta|A=a+1,c) P(c) - \sum_{\eta,c} \mathbb{E}[Y_\eta|c] P(\eta|A=a,c) P(c)</span> VanderWeele substitutes <span class="math inline">K</span> with <span class="math inline">\eta</span> from the previous section, and compare measurement level <span class="math inline">A = a + 1</span> with <span class="math inline">A = a</span>. Now, if the influence of <span class="math inline">\eta</span> on <span class="math inline">Y</span> is not confounded given <span class="math inline">C</span></p>
+<p>Thus despite varying reliabilities <span class="math inline">\eta_i</span>, which might be overlooked, <span class="math inline">\Delta_{ate}</span> retains its interpretability as a comparison in a hypothetical randomised trial.</p>
+<p>Here, within the strata of covariates <span class="math inline">C</span>, individuals in one group are randomised to a value of <span class="math inline">\eta</span>, derived from the actual <span class="math inline">\eta</span> distribution in the subpopulation with <span class="math inline">(A = a + 1, C = c)</span>. In the other group, individuals are randomized to a <span class="math inline">\eta</span> value from the distribution in the subpopulation with <span class="math inline">(A = a, C = c)</span>.</p>
+<p>In essence, this connection between measurement and the multiple versions of treatment framework provides a powerful tool for causal inference varying reliabilities of measurement.</p>
+<p>However, as with the theory of multiple treatments, we might not known how to interpret our results.</p>
+<p>Note that the same considerations apply to the “formative model of measurement” where it is assumed that the latent <span class="math inline">\eta</span> is causally efficacious such that:</p>
+<p>However, as with the theory of multiple treatments and the reflective model, we might not known how to interpret our results for the formative model</p>
+</section>
 </section>
 <section id="slides" class="level2">
 <h2 class="anchored" data-anchor-id="slides">Slides</h2>

@@ -25,91 +25,18 @@ source("/Users/joseph/GIT/templates/functions/libs2.R")
 ```
 
 
+## Two ways of thinking about measurement in psychometric research. 
 
-### Multiple Versions of Treatment
-
-
-
-
-
-Recall, a causal effect is defined as the difference in the expected potential outcome when everyone is exposed (perhaps contrary to fact) to one level of a treatment, conditional on their levels of a confounder,  with the expected potential outcome when everyone is exposed to a a different level of a treatement  (perhaps contrary to fact), conditional on their levels of a counfounder.  
-
-$$ \Delta_{ate} = \sum_c \left( \mathbb{E}[Y|A=a,c] - \mathbb{E}[Y|A=a^*,c] \right) P(c)$$
-
-
-
-In causal inference, the multiple versions of treatment theory allows us to handle situations where the treatment isn't uniform, but instead has several variations. Each variation of the treatment, or "version", can have a different impact on the outcome. This theory allows us to consider these varying impacts in our causal models.
-
-Under the multiple versions of treatment framework, the consistency assumption is redefined. It requires that for each version of the treatment, the outcome under that version is equal to the observed outcome when that version is received. 
-
-
-```{tikz}
-#| label: fig-dag-multiple-version-treatment
-#| fig-cap: "Multiple Versions of Treatment"
-#| out-width: 100%
-#| echo: false
-
-
-\usetikzlibrary{positioning}
-\usetikzlibrary{shapes.geometric}
-\usetikzlibrary{arrows}
-\usetikzlibrary{decorations}
-\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
-\tikzset{>=latex}
-
-
-
-\begin{tikzpicture}[{every node/.append style}=draw]
-
-\node [rectangle, draw=black] (L0) at (0, 0) {t0/L};
-\node [rectangle, draw=white] (K1) at (4, 0) {t1/K};
-\node [rectangle, draw=black] (A1) at (4, 2) {t1/A};
-\node [rectangle, draw=white] (Y2) at (6, 0) {t2/Y$_k$};
-
-\draw [-latex, draw=black] (L0) to (K1);
-\draw [-latex, bend right, draw=black] (L0) to (Y2);
-\draw [-latex, draw=black] (K1) to (A1);
-\draw [-latex, draw=white, dashed] (K1) to (Y2);
-
-\end{tikzpicture}
-```
-
-
-Further, a "no confounding" assumption is required, which states that the potential outcomes for each version are independent of the version received, given the covariates.
-
-
-The absence of confounding for the effect of $K$ on $Y$ given $C$ is denoted when Y$_k$ is independent of $K$, conditionally based on $C$ or $Y_k \coprod A|K,C$ (i.e. conditional on$C$, $A$ gives no information about $Y$ once $K$ and $C$ are accounted for) . The consistency assumption is deemed to be valid when $Y = Y_k$ if $K = k$. 
-
-Let's assume the researcher only possesses data on $(A, Y, C)$. When Y$_k$ is conditionally independent of $K$ based on $C$, there is no confounding for the effect of $K$ on $Y$ given $C$. Then for any  $K = k$ results in $Y = Y_k$, the consistency assumption is met. Let's suppose only information on $(A, Y, C)$  is available to the researcher.
-
-
-
-$$ \Delta_{ate} = \sum_{k,c} \mathbb{E}[Y_k|c] P(k|a,c) P(c) - \sum_{k,c} \mathbb{E}[Y_k|c] P(k|a^*,c) P(c)$$
-
-
-It represents a comparison in a hypothetical randomised trial. In this scenario, within covariates $C$ strata, individuals in one group receive a treatment $K$ version randomly assigned from the inherent $K$ distribution in the $(A = a, C = c)$ subpopulation. Meanwhile, individuals in the other group receive a randomly assigned $K$ version from the same distribution.
-
-This theory finds its utility in practical scenarios where treatments seldom resemble each other, like healthcare where different doctors may administer slightly distinct treatments, or in education where teaching methods differ. By incorporating these treatment variations, we gain more accurate insights into the causal effect.
-
-So VanderWeele proposes that this theory of causal inference under multiple treatments could be advantageous for handling the consistency assumption. 
-
-
-He next proposes that this theory may be helpful for explaining measurements. 
-
-
-
-### Reflective and formative measurement models
-
-
-Recall, the reflective measurement model assumes that an underlying latent continuous variable $\eta$ causes measured indicatorsL$X_1\dots X_n$ such that:
+### The Reflective Model (Factor Analysis)
 
 $$X_i = \lambda_i \eta + \varepsilon_i$$
 
 
 
+
 ```{tikz}
 #| label: fig-dag-latent-1
-#| fig-cap: "Reflective model: assume univariate latent variable η giving rise to indicators X1...X3. Figure from VanderWeele: doi: 10.1097/EDE.0000000000001434"
+#| fig-cap: "Reflective model: assume univariate latent variable η giving rise to indicators X1...X3. Figure adapted from VanderWeele: doi: 10.1097/EDE.0000000000001434"
 #| out-width: 80%
 #| echo: false
 \usetikzlibrary{positioning}
@@ -136,80 +63,16 @@ $$X_i = \lambda_i \eta + \varepsilon_i$$
 ```
 
 
+### The Formative Model (Factor Analysis)
+
+$$\eta = \sum_i\lambda_i X_i + \varepsilon$$
 
 
-Recall the theory of multiple versions of treatments. This concept accounts for varying impacts of different treatment versions on the outcome. The consistency assumption is revisited.When a specific version of treatment is received, the observed outcome matches the outcome under *that* version. In addition, the theory requires "no confounding" given measured covariates for each version are of the treatment.
 
 
-Vanderweele applies the following substitution: 
-
-
-$$\Delta_{ate} = \sum_{\eta,c} \mathbb{E}[Y_\eta|c] P(\eta|A=a+1,c) P(c) - \sum_{\eta,c} \mathbb{E}[Y_\eta|c] P(\eta|A=a,c) P(c)$$
-VanderWeele substitutes $K$ with $\eta$ from the previous section, and compare measurement level $A = a + 1$ with $A = a$. Now, if the influence of $\eta$ on $Y$ is not confounded given $C$
-
-Thus despite varying reliabilities $\eta_i$, which might be overlooked, $\Delta_{ate}$ retains its interpretability as a comparison in a hypothetical randomised trial. 
-
-Here, within the strata of covariates $C$, individuals in one group are randomised to a value of $\eta$, derived from the actual $\eta$ distribution in the subpopulation with $(A = a + 1, C = c)$. In the other group, individuals are randomized to a $\eta$ value from the distribution in the subpopulation with $(A = a, C = c)$.
-
-In essence, this connection between measurement and the multiple versions of treatment framework provides a powerful tool for causal inference varying reliabilities of measurement.
-
-However, as with the theory of multiple treatments, we might not known how to interpret our results.  
-
-
-Note that the same considerations apply to the "formative model of measurement" where it is assumed that the latent $\eta$ is causally efficacious such that: 
-
-$\eta = \sum_i\lambda_i X_i + \varepsilon$ 
-
-However, as with the theory of multiple treatments and the reflective model, we might not known how to interpret our results for the formative model .  
-
-
-<!-- ### Reflective model  -->
-
-<!-- ```{tikz} -->
-<!-- #| label: fig-dag-latent-2 -->
-<!-- #| fig-cap: "Reflective Model: causal assumptions" -->
-<!-- #| out-width: 100% -->
-<!-- #| echo: false -->
-
-<!-- \usetikzlibrary{positioning} -->
-<!-- \usetikzlibrary{shapes.geometric} -->
-<!-- \usetikzlibrary{arrows} -->
-<!-- \usetikzlibrary{decorations} -->
-<!-- \tikzstyle{Arrow} = [->, thin, preaction = {decorate}] -->
-<!-- \tikzset{>=latex} -->
-
-<!-- \begin{tikzpicture}[{every node/.append style}=draw] -->
-<!-- \node [rectangle, draw=white] (L) at (0, 0) {L}; -->
-<!-- \node [rectangle, draw=white] (eta) at (2, 0) {$\eta$}; -->
-<!-- \node [rectangle, draw=white] (X1) at (4, 1) {X1}; -->
-<!-- \node [rectangle, draw=white] (X2) at (4, 0) {$\vdots$}; -->
-<!-- \node [rectangle, draw=white] (Xn) at (4, -1) {X$_n$}; -->
-<!-- \node [rectangle, draw=white] (A) at (6, 0) {A}; -->
-
-<!-- \node [rectangle, draw=white] (Y) at (8, 0) {Y}; -->
-
-<!-- \draw [-latex, bend right=80, draw=black] (L) to (Y); -->
-<!-- \draw [-latex, bend left=80, draw=red] (eta) to (Y); -->
-<!-- \draw [-latex, draw=black] (eta) to (X1); -->
-<!-- \draw [-latex, draw=black] (eta) to (X2); -->
-<!-- \draw [-latex, draw=black] (eta) to (Xn); -->
-
-<!-- \draw [-latex, draw=black] (X1) to (A); -->
-<!-- \draw [-latex, draw=black] (X2) to (A); -->
-<!-- \draw [-latex, draw=black] (Xn) to (A); -->
-
-<!-- \end{tikzpicture} -->
-<!-- ``` -->
-
-<!-- Reflective model & causal assumptions -->
-
-<!-- ::: -->
-
-
-::: {#fig-latent layout-ncol=1}
 ```{tikz}
-#| label: fig-dag-latent-formative
-#| fig-cap: "Formative model:: assume univariate latent variable from which the indicators X1...X3 give rise."
+#| label: fig-dag-latent-formative_0
+#| fig-cap: "Formative model:: assume univariate latent variable from which the indicators X1...X3 give rise. Figure adapted from VanderWeele: doi: 10.1097/EDE.0000000000001434"
 #| out-width: 80%
 #| echo: false
 \usetikzlibrary{positioning}
@@ -237,10 +100,59 @@ However, as with the theory of multiple treatments and the reflective model, we 
 ```
 
 
+## Structural Interpretation of the formative model and reflective models (Factor Analysis)
+
+> However, this analysis of reflective and formative models assumed that the latent η was causally efficacious. This may not be the case.
+
+Statistically, the formative model implies $X_i = \lambda_i \eta + \varepsilon_i$. However, in the tradition of factor analysis, people have interpreted the formative model to imply a single univariate latent reality as implied by @fig-structural-assumptions-reflective-model. Such an interpretation has makes strong causal assumptions. 
+
+Similarly, statistically, the formative model implies $\eta = \sum_i\lambda_i X_i + \varepsilon$. However, in the tradition of factor analysis, people have interpreted the formative model to imply a single underlying univariate latent reality as in  @fig-dag-reflective-assumptions_note. This too makes strong causal assumptions. **Cross sectional data cannot decide between these assumptions.**
+
+
+::: {#fig-latent layout-ncol=1}
+
 
 ```{tikz}
-#| label: fig-dag-formative-assumptions
-#| fig-cap: "Formative model: causal assumptions"
+#| label: fig-structural-assumptions-reflective-model
+#| fig-cap: "Reflective Model: causal assumptions. Figure adapted from VanderWeele: doi: 10.1097/EDE.0000000000001434"
+#| out-width: 100%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [rectangle, draw=black] (L) at (0, 0) {L};
+\node [rectangle, draw=white] (eta) at (2, 0) {$\eta$};
+\node [rectangle, draw=white] (X1) at (4, 1) {X1};
+\node [rectangle, draw=white] (X2) at (4, 0) {$\vdots$};
+\node [rectangle, draw=white] (Xn) at (4, -1) {X$_n$};
+\node [rectangle, draw=white] (A) at (6, 0) {A};
+
+\node [rectangle, draw=white] (Y) at (8, 0) {Y};
+
+\draw [-latex, bend right=80, draw=black] (L) to (Y);
+\draw [-latex, draw=black] (L) to (eta);
+\draw [-latex, bend left=90, draw=red] (eta) to (Y);
+\draw [-latex, draw=black] (eta) to (X1);
+\draw [-latex, draw=black] (eta) to (X2);
+\draw [-latex, draw=black] (eta) to (Xn);
+
+\draw [-latex, draw=black] (X1) to (A);
+\draw [-latex, draw=black] (X2) to (A);
+\draw [-latex, draw=black] (Xn) to (A);
+
+\end{tikzpicture}
+```
+
+
+```{tikz}
+#| label: fig-dag-reflective-assumptions_note
+#| fig-cap: "Formative model: causal assumptions. Figure adapted from VanderWeele: doi: 10.1097/EDE.0000000000001434"
 #| out-width: 100%
 #| echo: false
 
@@ -254,39 +166,43 @@ However, as with the theory of multiple treatments and the reflective model, we 
 \begin{tikzpicture}[{every node/.append style}=draw]
 
 
-\node [draw=black] (L) at (0, 2) {L};
-\node [rectangle, draw=black] (X1) at (0, 1) {X1};
-\node [rectangle, draw=white] (X2) at (0, 0) {$\vdots$};
-\node [rectangle, draw=black] (Xn) at (0, -1) {X$_n$};
-\node [rectangle, draw=white] (eta) at (4, 0) {$\eta$};
-\node [rectangle, draw=white] (Y) at (8, 0) {Y};
+\node [draw=black] (L) at (0, 0) {L};
+\node [rectangle, draw=black] (X1) at (3, 1) {X1};
+\node [rectangle, draw=white] (X2) at (3, 0) {$\vdots$};
+\node [rectangle, draw=black] (Xn) at (3, -1) {X$_n$};
+\node [rectangle, draw=white] (eta) at (6, 0) {$\eta$};
+\node [rectangle, draw=white] (Y) at (9, 0) {Y};
 
 
 
 \draw [-latex, draw=black] (X1) to (eta);
 \draw [-latex, draw=black] (X2) to (eta);
 \draw [-latex, draw=black] (Xn) to (eta);
-\draw [-latex, bend left=0, draw=black] (L) to (Y);
-\draw [-latex, draw=black] (L) to (eta);
+\draw [-latex, bend right=80, draw=black] (L) to (Y);
+\draw [-latex, draw=black, bend left = 80] (L) to (eta);
 \draw [-latex, draw=red] (eta) to (Y);
 
 
 \end{tikzpicture}
 ```
 
-Formative model & causal assumptions
+The formative model implies $X_i = \lambda_i \eta + \varepsilon_i$, which factor analysts take to imply @fig-structural-assumptions-reflective-model. 
+
+The formative model implies $\eta = \sum_i\lambda_i X_i + \varepsilon$, which factor analysts take to imply @fig-dag-reflective-assumptions_note. 
 
 :::
 
 
+## Problems with the traditional factor analytic interpretation.
 
 
-### VanderWeele's worry for the basic reflective model: 
+Although the statistical model $X_i = \lambda_i \eta + \varepsilon_i$ is compatible with @fig-structural-assumptions-reflective-model, it is also compatible with @fig-dag-formative-assumptions-compatible.  Cross-sectional data cannot discriminate between these structural interpretations
 
-> However, this analysis of reflective and formative models assumed that the latent η was causally efficacious. This may not be the case.
+Likewise, although the the statistical model $\eta = \sum_i\lambda_i X_i + \varepsilon$ is compatible with @fig-dag-reflective-assumptions_note, it is also compatible with @fig-dag-reflectiveassumptions-compatible_again. Again, cross-sectional data cannot discriminate between these structural interpretations. 
 
 
-These models are also compatible with the data:
+Indeed there are many realities with which the data are compatible!
+
 
 
 ::: {#fig-latent layout-ncol=1}
@@ -299,17 +215,17 @@ These models are also compatible with the data:
 
 
 \begin{tikzpicture}[{every node/.append style}=draw]
-\node [rectangle, draw=white] (L) at (0, 0) {L};
+%\node [rectangle, draw=white] (L) at (0, 0) {L};
 \node [rectangle, draw=white] (eta) at (2, 0) {$\eta$};
 \node [rectangle, draw=white] (X1) at (4, 1) {X1};
 \node [rectangle, draw=white] (X2) at (4, 0) {$\vdots$};
 \node [rectangle, draw=white] (Xn) at (4, -1) {X$_n$};
 \node [rectangle, draw=white] (Y) at (6, 0) {Y};
 
-\draw [-latex, bend right=80, draw=black] (L) to (Y);
-\draw [-latex, bend left=60, draw=black] (L) to (X1);
-\draw [-latex, bend left=40, draw=black] (L) to (X2);
-\draw [-latex, bend right=60, draw=black] (L) to (Xn);
+%\draw [-latex, bend right=80, draw=black] (L) to (Y);
+%\draw [-latex, bend left=60, draw=black] (L) to (X1);
+%\draw [-latex, bend left=40, draw=black] (L) to (X2);
+%\draw [-latex, bend right=60, draw=black] (L) to (Xn);
 
 \draw [-latex, draw=black] (eta) to (X1);
 \draw [-latex, draw=black] (eta) to (X2);
@@ -324,8 +240,9 @@ These models are also compatible with the data:
 ```
 
 
+
 ```{tikz}
-#| label: fig-dag-reflectiveassumptions-compatible
+#| label: fig-dag-reflectiveassumptions-compatible_again
 #| fig-cap: "Reflective model is compatible with indicators causing the outcome"
 #| out-width: 100%
 #| echo: false
@@ -340,7 +257,7 @@ These models are also compatible with the data:
 \begin{tikzpicture}[{every node/.append style}=draw]
 
 
-\node [draw=white] (L) at (0, 0) {L};
+%\node [draw=white] (L) at (0, 0) {L};
 \node [rectangle, draw=white] (X1) at (2, 1) {X1};
 \node [rectangle, draw=white] (X2) at (2, 0) {$\vdots$};
 \node [rectangle, draw=white] (Xn) at (2, -1) {X$_n$};
@@ -352,7 +269,7 @@ These models are also compatible with the data:
 \draw [-latex, draw=black] (X1) to (eta);
 \draw [-latex, draw=black] (X2) to (eta);
 \draw [-latex, draw=black] (Xn) to (eta);
-\draw [-latex, bend left=80, draw=black] (L) to (Y);
+%\draw [-latex, bend left=80, draw=black] (L) to (Y);
 \draw [-latex, bend left=60, draw=red] (X1) to (Y);
 \draw [-latex, bend left=40, draw=red] (X2) to (Y);
 \draw [-latex, bend right =60,  draw=red] (Xn) to (Y);
@@ -363,18 +280,9 @@ These models are also compatible with the data:
 ```
 
 
-Formative and Reflective Models are compatible with indicators having causal effects 
-
-:::
-
-
-## More complex models (is this a causal graph?)
-
-VanderWeele writes this: 
-
 ```{tikz}
-#| label: fig-dag-multivariate-reality
-#| fig-cap: "Multivariate reality gives rise to the indicators, from which we draw our measure.r"
+#| label: fig-dag-multivariate-reality_again
+#| fig-cap: "Multivariate reality gives rise to the indicators, from which we draw our measures"
 #| out-width: 100%
 #| echo: false
 
@@ -414,13 +322,9 @@ VanderWeele writes this:
 \end{tikzpicture}
 ```
 
-
-Rather, I would prefer to say A$ = f(X_1, \dots X_n)$, and to make the point we write: 
-
-
 ```{tikz}
 #| label: fig-dag-multivariate-reality-bulbulia
-#| fig-cap: "Multivariate reality gives rise to the indicators, from which we draw our measure.r"
+#| fig-cap: "Although we take our constructs, A, to be functions of indicators, X, such that, perhaps only one or several of the indicators are efficacious."
 #| out-width: 100%
 #| echo: false
 
@@ -458,8 +362,83 @@ Rather, I would prefer to say A$ = f(X_1, \dots X_n)$, and to make the point we 
 
 
 
+The statistical models that underpin formative and reflective conceptions of factor analysis are compatible with indicators having causal effects, and with a multivariate reality giving rise to multiple indicators.
+
+:::
 
 
+
+
+## The theory of mutliple versions of treatment
+
+
+
+
+```{tikz}
+#| label: fig-dag-multiple-version-treatment
+#| fig-cap: "Multiple Versions of treatment"
+#| out-width: 100%
+#| echo: false
+
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=black] (L0) at (0, 0) {L};
+\node [rectangle, draw=white] (K1) at (2, 0) {K};
+\node [rectangle, draw=black] (A1) at (4, 0) {A};
+\node [rectangle, draw=white] (Y2) at (6, 0) {Y$_k$};
+
+\draw [-latex, draw=black] (L0) to (K1);
+\draw [-latex, bend right, draw=black] (L0) to (Y2);
+\draw [-latex, draw=black] (K1) to (A1);
+\draw [-latex, draw=black, bend left] (K1) to (Y2);
+
+\end{tikzpicture}
+```
+
+
+
+```{tikz}
+#| label: fig-dag-multiple-version-treatment-applied-measurement
+#| fig-cap: "Multiple Versions of treatment applied to measurement"
+#| out-width: 100%
+#| echo: false
+
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=black] (L0) at (0, 0) {L};
+\node [rectangle, draw=white] (K1) at (2, 0) {$\eta$=K};
+\node [rectangle, draw=white] (X1) at (5, 0) {$(X_1, X_2, \dots X_n)$};
+\node [rectangle, draw=black] (A1) at (8, 0) {A};
+\node [rectangle, draw=white] (Y2) at (10, 0) {Y$_k$};
+
+\draw [-latex, draw=black] (L0) to (K1);
+\draw [-latex, bend right, draw=black] (L0) to (Y2);
+\draw [-latex, draw=black] (K1) to (X1);
+\draw [-latex, draw=black] (X1) to (A1);
+\draw [-latex, draw=black, bend left] (K1) to (Y2);
+
+\end{tikzpicture}
+```
 
 
 ## VanderWeele's model of reality (is this a causal diagramme?)
@@ -509,53 +488,189 @@ Rather, I would prefer to say A$ = f(X_1, \dots X_n)$, and to make the point we 
 
 However this is not a causal graph. Can we do better? 
 
-## Perhaps this is better
-
-
+## Perhaps the theory of dependent and directed measurement error does better?
 
 ```{tikz}
-#| label: fig-dag-multivariate-reality-complete-bulbulia
-#| fig-cap: "Multivariate reality gives rise to the latent variables,if reality continues to strongly effect η at t0 ...tn, there is an open backdoor path to Y through our concepts and constructs."
+#| label: fig-dag-dep-udir-effect-confounders-3wave
+#| fig-cap: "Measurement error opens a pathway to confounding if either there are correlated errors, or a directed effect of the exposure on the errors of measured outcome."
 #| out-width: 100%
 #| echo: false
-
 \usetikzlibrary{positioning}
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{arrows}
 \usetikzlibrary{decorations}
+
+
+
 \tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
 \tikzset{>=latex}
 
+\tikzset{blackArrowRedTip/.style={
+  decoration={markings, mark=at position 1 with {\arrow[red, thick]{latex}}},
+  postaction={decorate},
+  shorten >=0.4pt}}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+
 \begin{tikzpicture}[{every node/.append style}=draw]
 
+\node [rectangle, draw=white] (ULAY) at (0, 5) {$U_{t0/L}$};
+\node [rectangle, draw=white] (UA) at (5, 4) {$U_{t1/A}$};
+\node [rectangle, draw=white] (UY) at (10, 5) {$U_{t2/Y}$};
 
-\node [rectangle, draw=white, align=left] (R) at (0, 0 ) {$\mathcal{R}$\\
-  concepts$^{~}$\\constructs$^{~}$};
-\node [rectangle, draw=white] (eta0) at (3, 0 ) {$\eta^{t0}$};
-\node [rectangle, draw=black] (X0) at (6, 0 ) {$(X_1 \dots X_n)^{t0}$};
-\node [rectangle, draw=white] (eta1) at (10, 0 ) {$\eta^{t1}$};
-\node [rectangle, draw=black] (X1) at (12, 0 ) {$(X_1 \dots X_n)^{t1}$};
-\node [rectangle, draw=white] (Y) at (14, 0 ) {Y$^{t2}$};
-
-
-
-
-\draw [-latex, draw=red, bend left=80] (R) to (Y);
-\draw [-latex, draw=black] (R) to (eta0);
-\draw [-latex, draw=black, bend left, red] (R) to (eta1);
-\draw [-latex, draw=black] (eta0) to (X0);
-\draw [-latex, draw=black, bend right=40] (eta0) to (X1);
-\draw [-latex, draw=black] (eta1) to (X1);
-\draw [-latex, draw=red,dotted, bend left=40] (eta1) to (Y);
+\node [rectangle, draw=black] (L0) at (0, 2) {t0/L$_{f(X_1\dots X_n)}$};
+\node [rectangle, draw=black] (A1) at (5, 2) {t1/A$_{f(X_1\dots X_n)}$};
+\node [rectangle, draw=black] (Y2) at (10, 2) {t2/Y$_{f(X_1\dots X_n)}$};
+\node [rectangle, draw=white] (Leta0) at (0, 0) {t1/$\eta_L$};
+\node [rectangle, draw=white] (Aeta1) at (5, 0) {t1/$\eta_A$};
+\node [rectangle, draw=white] (Yeta2) at (10, 0) {t2/$\eta_Y$};
 
 
+\draw [-latex, draw=red] (ULAY) to (UA);
+\draw [-latex, draw=red] (ULAY) to (UY);
+
+\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=red] (UY) to (Y2);
+\draw [-latex, draw=black] (ULAY) to (L0);
+\draw [-latex, draw=black] (Leta0) to (L0);
+\draw [-latex, draw=black] (Leta0) to (Aeta1);
+\draw [-latex, draw=black, bend right=30] (Leta0) to (Yeta2);
+
+\draw [-latex, draw = black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+
+\draw [-latex, draw=red] (Aeta1) to (UY);
+\draw [-latex, draw=red] (Leta0) to (UA);
 
 
 
+
+
+%\draw [-latex, draw=black] (Leta0) to (UA);
+
+
+
+\draw [cor, draw=red, dashed,bend right=80] (ULAY) to (Leta0);
+\draw [cor, draw=red, dashed, bend right = 80] (UA) to (Aeta1);
+%\draw [cor, draw=red, dashed, bend left = 80] (UY) to (Yeta2);
 
 \end{tikzpicture}
 ```
 
+
+
+<!-- ```{tikz} -->
+<!-- #| label: fig-dag-multivariate-reality-complete-bulbulia -->
+<!-- #| fig-cap: "Multivariate reality gives rise to the latent variables,if reality continues to strongly effect η at t0 ...tn, there is an open backdoor path to Y through our concepts and constructs." -->
+<!-- #| out-width: 100% -->
+<!-- #| echo: false -->
+
+<!-- \usetikzlibrary{positioning} -->
+<!-- \usetikzlibrary{shapes.geometric} -->
+<!-- \usetikzlibrary{arrows} -->
+<!-- \usetikzlibrary{decorations} -->
+<!-- \tikzstyle{Arrow} = [->, thin, preaction = {decorate}] -->
+<!-- \tikzset{>=latex} -->
+
+<!-- \begin{tikzpicture}[{every node/.append style}=draw] -->
+
+
+<!-- \node [rectangle, draw=white, align=left] (R) at (0, 0 ) {$\mathcal{R}$\\ -->
+<!--   concepts$^{~}$\\constructs$^{~}$}; -->
+<!-- \node [rectangle, draw=white] (eta0) at (3, 0 ) {$\eta^{t0}$}; -->
+<!-- \node [rectangle, draw=black] (X0) at (6, 0 ) {$(X_1 \dots X_n)^{t0}$}; -->
+<!-- \node [rectangle, draw=white] (eta1) at (10, 0 ) {$\eta^{t1}$}; -->
+<!-- \node [rectangle, draw=black] (X1) at (12, 0 ) {$(X_1 \dots X_n)^{t1}$}; -->
+<!-- \node [rectangle, draw=white] (Y) at (14, 0 ) {Y$^{t2}$}; -->
+
+
+
+
+<!-- \draw [-latex, draw=red, bend left=80] (R) to (Y); -->
+<!-- \draw [-latex, draw=black] (R) to (eta0); -->
+<!-- \draw [-latex, draw=black, bend left, red] (R) to (eta1); -->
+<!-- \draw [-latex, draw=black] (eta0) to (X0); -->
+<!-- \draw [-latex, draw=black, bend right=40] (eta0) to (X1); -->
+<!-- \draw [-latex, draw=black] (eta1) to (X1); -->
+<!-- \draw [-latex, draw=red,dotted, bend left=40] (eta1) to (Y); -->
+
+
+
+
+
+
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+
+
+
+
+
+
+
+### Appendix: Detail: VanderWeele's use of the theory of multiple versions of treatment
+
+
+Recall, a causal effect is defined as the difference in the expected potential outcome when everyone is exposed (perhaps contrary to fact) to one level of a treatment, conditional on their levels of a confounder,  with the expected potential outcome when everyone is exposed to a a different level of a treatement  (perhaps contrary to fact), conditional on their levels of a counfounder.  
+
+$$ \Delta_{ate} = \sum_c \left( \mathbb{E}[Y|A=a,c] - \mathbb{E}[Y|A=a^*,c] \right) P(c)$$
+
+
+
+In causal inference, the multiple versions of treatment theory allows us to handle situations where the treatment isn't uniform, but instead has several variations. Each variation of the treatment, or "version", can have a different impact on the outcome. This theory allows us to consider these varying impacts in our causal models.
+
+Under the multiple versions of treatment framework, the consistency assumption is redefined. It requires that for each version of the treatment, the outcome under that version is equal to the observed outcome when that version is received. 
+
+
+Further, a "no confounding" assumption is required, which states that the potential outcomes for each version are independent of the version received, given the covariates.
+
+
+The absence of confounding for the effect of $K$ on $Y$ given $C$ is denoted when Y$_k$ is independent of $K$, conditionally based on $C$ or $Y_k \coprod A|K,C$ (i.e. conditional on$C$, $A$ gives no information about $Y$ once $K$ and $C$ are accounted for) . The consistency assumption is deemed to be valid when $Y = Y_k$ if $K = k$. 
+
+Let's assume the researcher only possesses data on $(A, Y, C)$. When Y$_k$ is conditionally independent of $K$ based on $C$, there is no confounding for the effect of $K$ on $Y$ given $C$. Then for any  $K = k$ results in $Y = Y_k$, the consistency assumption is met. Let's suppose only information on $(A, Y, C)$  is available to the researcher.
+
+
+
+$$ \Delta_{ate} = \sum_{k,c} \mathbb{E}[Y_k|c] P(k|a,c) P(c) - \sum_{k,c} \mathbb{E}[Y_k|c] P(k|a^*,c) P(c)$$
+
+
+It represents a comparison in a hypothetical randomised trial. In this scenario, within covariates $C$ strata, individuals in one group receive a treatment $K$ version randomly assigned from the inherent $K$ distribution in the $(A = a, C = c)$ subpopulation. Meanwhile, individuals in the other group receive a randomly assigned $K$ version from the same distribution.
+
+This theory finds its utility in practical scenarios where treatments seldom resemble each other, like healthcare where different doctors may administer slightly distinct treatments, or in education where teaching methods differ. By incorporating these treatment variations, we gain more accurate insights into the causal effect.
+
+So VanderWeele proposes that this theory of causal inference under multiple treatments could be advantageous for handling the consistency assumption. 
+
+
+He next proposes that this theory may be helpful for explaining measurements. 
+
+
+
+### Reflective and formative measurement models may be approached from the Multiple Versions of Treatment Theory.
+
+
+Recall the theory of multiple versions of treatments. This concept accounts for varying impacts of different treatment versions on the outcome. The consistency assumption is revisited.When a specific version of treatment is received, the observed outcome matches the outcome under *that* version. In addition, the theory requires "no confounding" given measured covariates for each version are of the treatment.
+
+
+Vanderweele applies the following substitution: 
+
+
+$$\Delta_{ate} = \sum_{\eta,c} \mathbb{E}[Y_\eta|c] P(\eta|A=a+1,c) P(c) - \sum_{\eta,c} \mathbb{E}[Y_\eta|c] P(\eta|A=a,c) P(c)$$
+VanderWeele substitutes $K$ with $\eta$ from the previous section, and compare measurement level $A = a + 1$ with $A = a$. Now, if the influence of $\eta$ on $Y$ is not confounded given $C$
+
+Thus despite varying reliabilities $\eta_i$, which might be overlooked, $\Delta_{ate}$ retains its interpretability as a comparison in a hypothetical randomised trial. 
+
+Here, within the strata of covariates $C$, individuals in one group are randomised to a value of $\eta$, derived from the actual $\eta$ distribution in the subpopulation with $(A = a + 1, C = c)$. In the other group, individuals are randomized to a $\eta$ value from the distribution in the subpopulation with $(A = a, C = c)$.
+
+In essence, this connection between measurement and the multiple versions of treatment framework provides a powerful tool for causal inference varying reliabilities of measurement.
+
+However, as with the theory of multiple treatments, we might not known how to interpret our results.  
+
+
+Note that the same considerations apply to the "formative model of measurement" where it is assumed that the latent $\eta$ is causally efficacious such that: 
+
+However, as with the theory of multiple treatments and the reflective model, we might not known how to interpret our results for the formative model
 
 
 

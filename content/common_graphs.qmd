@@ -1057,6 +1057,11 @@ Measurement error remeains a problem if errors are either directed or dependent 
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{arrows}
 \usetikzlibrary{decorations}
+\tikzset{blackArrowRedTip/.style={
+  decoration={markings, mark=at position 1 with {\arrow[red, thick]{latex}}},
+  postaction={decorate},
+  shorten >=0.4pt}}
+
 \tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
 \tikzset{>=latex}
 
@@ -1085,13 +1090,16 @@ Measurement error remeains a problem if errors are either directed or dependent 
 \draw [-latex, draw=red] (UY) to (Y2);
 \draw [-latex, draw=red] (ULAY) to (L0);
 \draw [-latex, draw=black] (Leta0) to (L0);
-\draw [-latex, draw=red] (Leta0) to (Aeta1);
-\draw [-latex, draw=red, bend right=30] (Leta0) to (Yeta2);
+\draw [-latex, draw=black] (Leta0) to (Aeta1);
+\draw [-latex, draw=black, bend right=30] (Leta0) to (Yeta2);
 
 \draw [-latex, draw=black] (Aeta1) to (A1);
 \draw [-latex, draw=black] (Yeta2) to (Y2);
 
 \draw [-latex, draw=red] (Aeta1) to (UY);
+
+
+
 %\draw [-latex, draw=black] (Leta0) to (UA);
 
 
