@@ -27,6 +27,8 @@ Today, we dive deep into data analysis for causal inference ast it applies to ob
 
 To kick things off, we will set up our environment. We'll source essential functions, load necessary libraries, and import synthetic data for our exploration.
 
+
+
 ```{r}
 #| label: load_libraries
 #| output: false 
@@ -34,7 +36,7 @@ To kick things off, we will set up our environment. We'll source essential funct
 
 # Before running this source code, make sure to update to the current version of R, and to update all existing packages.
 
-# functions 
+# functions
 source("https://raw.githubusercontent.com/go-bayes/templates/main/functions/funs.R")
 
 
@@ -46,7 +48,7 @@ source(
 
 #  If you haven't already, you should have created a folder called "data", in your Rstudio project. If not, download this file, add it to your the folder called "data" in your Rstudio project. # "https://www.dropbox.com/s/vwqijg4ha17hbs1/nzavs_dat_synth_t10_t12?dl=0"
 
-# A function we will use for our tables. 
+# A function we will use for our tables.
 tab_ate_subgroup_rd <- function(x,
                                 new_name,
                                 delta = 1,
@@ -97,7 +99,7 @@ tab_ate_subgroup_rd <- function(x,
     if (is.na(row_evalue[2, "upper"])) {
       row_evalue[2, "upper"] <- 1
     }
-    data.frame(round(as.data.frame(row_evalue)[2,], 3)) # exclude the NA column
+    data.frame(round(as.data.frame(row_evalue)[2, ], 3)) # exclude the NA column
   })
   
   evalues_df <- do.call(rbind, evalues_list)
@@ -156,11 +158,11 @@ if (!require(datawizard)) {
 ### Import the data
 
 ```{r}
-#| label: import data
-
+#| label: import_data
 # This will read the synthetic data into Rstudio.  Note that the arrow package allows us to have lower memory demands in the storage and retrieval of data.
-nzavs_synth <-
-  arrow::read_parquet(here::here("data", "nzavs_dat_synth_t10_t12"))
+
+nzavs_synth <- arrow::read_parquet(here::here("data", "nzavs_dat_synth_t10_t12"))
+
 ```
 
 Next, we will inspect column names.
