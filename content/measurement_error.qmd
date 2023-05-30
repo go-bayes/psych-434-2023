@@ -57,7 +57,7 @@ Still, while there won't be bias under the null, measurement error can increase 
 
 ```{tikz}
 #| label: fig-dag-uu-null
-#| fig-cap: "Uncorrelated differential  measurement error does not bias estimates under the null."
+#| fig-cap: "Uncorrelated non-differential  measurement error does not bias estimates under the null."
 #| out-width: 80%
 #| echo: false
 \usetikzlibrary{positioning}

@@ -231,7 +231,7 @@ While the statistical model $X_i = \lambda_i \eta + \varepsilon_i$ aligns with @
 
 Similarly, the statistical model $\eta = \sum_i\lambda_i X_i + \varepsilon$ agrees with @fig-dag-reflective-assumptions_note but also agrees with @fig-dag-reflectiveassumptions-compatible_again. Here too, cross-sectional data prove insufficient to distinguish between these two potential structural interpretations.
 
-And there are other structural possibilities that cohere with these equations. The takeaway is that the data we collect can align with numerous possible realities, as show in @fig-dag-multivariate-reality_again and @fig-dag-multivariate-reality-bulbulia.
+And there are other structural possibilities that cohere with these equations. The takeaway is that the data we collect can align with numerous possible realities, as show in @fig_dag_multivariate_reality_again and @fig-dag-multivariate-reality-bulbulia.
 
 
 ::: {#fig-latent layout-ncol=1}
@@ -580,6 +580,85 @@ However, this is not a causal graph. Can we do better? The arrows to not clearly
 The New Zealand Attitudes and Values Study (NZAVS) is  national probability survey collects a wide range of information, including data on distress, exercise habits, and cultural backgrounds.
 
 
+
+
+
+```{tikz}
+#| label: fig-dag-uu-null
+#| fig-cap: "Uncorrelated non-differential  measurement error does not bias estimates under the null."
+#| out-width: 100%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (UL) at (0, 1) {U$_L$};
+\node [rectangle, draw=white] (UA) at (6, 2) {U$_A$};
+\node [rectangle, draw=white] (UY) at (9, 3) {U$_Y$};
+
+\node [rectangle, draw=black] (L0) at (3, 1) {L$_{f(X_1\dots X_n)}^{t0}$};
+\node [rectangle, draw=black] (A1) at (7, 1) {A$_{f(X_1\dots X_n)}^{t1}$};
+\node [rectangle, draw=black] (Y2) at (11, 1) {Y$_{f(X_1\dots X_n)}^{t2}$};
+
+\node [rectangle, draw=white] (Leta0) at (3, 0) {L$^{t0}_\eta$};
+\node [rectangle, draw=white] (Aeta1) at (7, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (11, 0) {Y$^{t2}_\eta$};
+
+
+\draw [-latex, draw=black] (UL) to (L0);
+\draw [-latex, draw=black,bend left=20] (UA) to (A1);
+\draw [-latex, draw=black,bend left=30] (UY) to (Y2);
+\draw [-latex, draw=black] (Leta0) to (L0);
+\draw [-latex, draw=black] (Leta0) to (Aeta1);
+\draw [-latex, draw=black, bend right=30] (Leta0) to (Yeta2);
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+
+
+\draw [cor, draw=red, dashed,bend right=80] (UL) to (Leta0);
+\draw [cor, draw=red, dashed, bend right = 80] (UA) to (Aeta1);
+\draw [cor, draw=red, dashed, bend right = 80] (UY) to (Yeta2);
+
+
+
+\end{tikzpicture}
+```
+
+
+Consider a study investigating the impact of a person's true state of regular exercise, on their true distress state, using @fig-dag-uu-null as our initial guide. 
+
+True exercise is represented by $\eta_A$ in @fig-dag-dep-udir-effect-confounders-3wave.  True distress is represented as $\eta_Y$ in @fig-dag-dep-udir-effect-confounders-3wave. Assume there is a potential confounder, which is the person's true workload, represented as $\eta_L$.  
+
+We symbolically denote the measurement of these latent states with with $L_{f(X_1\dots X_n)}$, $A_{f(X_1\dots X_n)}$, and  $A_{f(X_1\dots X_n)}$. We assume that functions of our measured indicators (say responses to survey items), consitute our measurements of the underlying true states.  We assume that the true states of these variables affect their corresponding measured states. That is, we assume unmeasured sources of error that affect the measurements: $U_{L} \rightarrow$ $L_{f(X_1\dots X_n)}$, $U_{A} \rightarrow$ $A_{f(X_1\dots X_n)}$, and $U_{Y} \rightarrow$ $Y_{f(X_1\dots X_n)}$. Put another way, we assume that our measured states area reflections, "seeing as through a mirror, in darkness," of an underlying true reality (Corinthians 13:12). 
+
+We furthermore assume that each of these variables we seek to identify is potentially subject to measurement error, which we denote in the graph as $U_{L}$ for workload, $U_{A}$ for regular exercise, and $U_{Y}$ for psychological distress. These terms denote the unknown, and perhaps unknowable darkness and angles in the mirror through which true reality is reflected. 
+
+We allow that the true underlying reality represented by the $\eta_{var}$ may be multivariate. Similarly, we allow the true underlying reality represented by the $\U_{var}$ terms may also be multivariate. In relation to VanderWeele's @fig-dag-multivariate-reality-complete, these unmeasured states correspond to features of a complex multivariate reality that $\mathcal{R}$ that may include both our natural language concepts and scientific language, or constructs.
+
+Note that the measured states, once conditioned upon, create collider bias, which opens a path between the unmeasured sources of error and the true underlying state that gives rise to the measured state. This is depicted by a the arrows $U_{var}$ and from $\eta_{var}$ into each $var_{f(X1, X2,\dots X_n)}$
+
+Notice: **where true unmeasured (multivariate) psycho-physical states are related to true unmeasured (multivariate) sources of error in the measurement of those states, the very act of measurement opens pathways to confounding.** 
+
+If for each measured construct $var_{f(X1, X2,\dots X_n)}$, the sources of error  $U_{var}$ and the unmeasured consituents of reality that give rise to our measures $\eta_{var}$ are uncorrelated with other variables $U\prime_{var}$ and from $\eta\prime_{var}$ and $var\prime_{f(X1, X2,\dots X_n)}$, our estimates may be downwardly biased toward the null. 
+However, d-separation is preserved. There is no new pathway that link the exposure to the outcome.  This scenario is presented in @ fig-dag-uu-null. 
+
+
+However, suppose we have reason to think that the errors are correlated such that a person experiencing high workload ($U_{L}$) might inaccurately report their exercise frequency and affective states, leading to an assumed correlation in errors: $U_{L} \rightarrow U_{A}$, and $U_{L} \rightarrow U_{Y}$ as presented in @fig-dag-dep-udir-effect-confounders-3wave.
+
+In this new scenario, suppose we have reason to think that the true state of exercise impacts the measurement error in distress, and the true state of workload impacts the measurement error in exercise. This is represented in  @fig-dag-dep-udir-effect-confounders-3wave by the red arrows from $\eta_A \rightarrow U_{Y}$ and from $\eta_L \rightarrow U_{A}$. The connections from $U_{L}$ to $\eta_L$ and from $U_{A}$ to $\eta_A$ indicate the relationships between the unmeasured sources of error and the true states of stress and exercise, respectively. 
+
+
+
+
 ```{tikz}
 #| label: fig-dag-dep-udir-effect-confounders-3wave
 #| fig-cap: "Measurement error opens a pathway to confounding if either there are correlated errors, or a directed effect of the exposure on the errors of measured outcome."
@@ -644,54 +723,19 @@ The New Zealand Attitudes and Values Study (NZAVS) is  national probability surv
 
 \draw [cor, draw=red, dashed,bend right=80] (ULAY) to (Leta0);
 \draw [cor, draw=red, dashed, bend right = 80] (UA) to (Aeta1);
-%\draw [cor, draw=red, dashed, bend left = 80] (UY) to (Yeta2);
+\draw [cor, draw=red, dashed, bend left = 80] (UY) to (Yeta2);
 
 \end{tikzpicture}
 ```
 
 
-Consider a study investigating the impact of a person's true state of regular exercise, represented as $\eta_A$ in the diagram @fig-dag-dep-udir-effect-confounders-3wave, on their true distress state, represented as $\eta_Y$. There is a potential confounder in this study, which is the person's true state of daily distress, represented as $\eta_L$.
+The scenario is as follows: 
 
-Each of these variables is potentially subject to measurement error, which we denote in the graph as $U_{L}$ for daily stress, $U_{A}$ for regular exercise, and $U_{Y}$ for mood state. The true states of these variables are assumed to affect their corresponding measured states, represented in the diagram as $L_{f(X_1\dots X_n)}$, $A_{f(X_1\dots X_n)}$, and $Y_{f(X_1\dots X_n)}$.
-
-Suppose we have reason to think that that these measurement errors, or unmeasured sources of error, affect the measured states: $U_{L} \rightarrow$ $L_{f(X_1\dots X_n)}$, $U_{A} \rightarrow$ $A_{f(X_1\dots X_n)}$, and $U_{Y} \rightarrow$ $Y_{f(X_1\dots X_n)}$.
-
-Furthermore, suppose we have reason to think that the errors are correlated such that a person experiencing high psychological distress ($U_{L}$) might inaccurately report their exercise frequency and affective states, leading to an assumed correlation in errors: $U_{L} \rightarrow U_{A}$, and $U_{L} \rightarrow U_{Y}$.
-
-Finally, as indicated in the causal diagramme  @fig-dag-dep-udir-effect-confounders-3wave, suppose we have reason to think that the true state of exercise impacts the measurement error in mood, and the true state of stress impacts the measurement error in exercise. This is represented in  @fig-dag-dep-udir-effect-confounders-3wave by the red arrows from $\eta_A \rightarrow U_{Y}$ and from $\eta_L \rightarrow U_{A}$. The connections from $U_{L}$ to $\eta_L$ and from $U_{A}$ to $\eta_A$ indicate the relationships between the unmeasured sources of error and the true states of stress and exercise, respectively.
-
-How might such dynamics play out? 
-
-Let's consider $U_{L}$, the unmeasured source of error in daily distress. This could arise from variations in individual perceptions of stress, as stress is a subjective experience and the way it's reported can depend on factors like cultural backgrounds, recent personal experiences, or even how a person interprets the survey question. For example, an event one participant deems stressful, another might consider trivial. These factors are not measured in the NZAVS but could affect participants' reported distress.
-
-$U_{A}$, the unmeasured source of error in regular exercise habits, could be the effect of social desirability bias. Participants might overestimate or underestimate their exercise frequency based on what they perceive as socially acceptable or desirable. It could also be influenced by memory recall biases, as the survey asks about past behaviours that might not be accurately remembered.
-
-$U_{Y}$, the unmeasured source of error in distress states, could be affected by the participant's immediate circumstances. For instance, a participant might be experiencing a particularly good or bad day when they complete the survey, which could affect how they report their general mood state. Additionally, language and cultural differences in describing and interpreting mood states could also introduce measurement error.
-
-Next consider the effects of true states on measurement errors
-
-The directed effect of the true state of exercise, $\eta_A$, on the measurement error in distress, $U_{Y}$, could be understood in the context of the potential mood-enhancing effects of exercise. If a participant has been exercising regularly (true state of exercise), they might be in a better mood when filling out the survey, which could lead to an overestimation of their general mood state due to this temporary mood boost.
-
-Likewise, the directed effect of the true state of stress, $\eta_L$, on the measurement error in exercise, $U_{A}$, might arise if high distress lead a participant to underestimate their exercise frequency. High distress might hinder recall of past exercise behaviours or lead to a more negative interpretation of one's behaviours, thus introducing measurement error in reported exercise habits.
-
-The diagram, therefore, captures the multiple pathways by which measurement error and confounding can arise in a setting of survey research, demonstrating the complex relationships between true states, measured variables, and their associated errors.
-
-
-### How to think about complex causal dynamics
-
-Now VanderWeele's thoughts highlight the complexity and challenges of effectively capturing psychological constructs. Let's extend the previous example by incorporating these two theories of measurement. 
-
-Consider the concept of stress ($\eta_Y$) in the NZAVS. This not a simple univariate variable; instead, it represents a complex psychological construct. In a formative sense, we might consider various indicators such as the Kessler-6 scale (discussed last week) to form a measure of stress. Each of these indicators contributes to measuring the construct of stress. However, they are not necessarily caused by single univariate "Kessler-6" entity out there in the world. More likely it is a rather a complex, multi-dimensional underlying reality that combines an individual's life circumstances and mental and physical health that gives rise to these indicators. Culture, too might play a systematic role. 
-
-Yet, as VanderWeele argues, the formative model doesn't fully capture the relationship between measures and the underlying reality. The distress measured in the NZAVS is not just a function of these indicators; it also reflects an underlying complex reality that affects and is affected by these indicators. Put differently, the concept of stress is not simply a combination of these indicators, but rather, it's a complex construct emerging from a multitude of physiological, psychological, and environmental factors.
-
-Let's develop this example with Tyler's ideas in mind:
-
-1. $\eta_L \rightarrow L$: The true state of stress influences the measured distress. However, this measurement is also subject to the unmeasured error source, $U_{L}$.
+1. $\eta_L \rightarrow L$: The true state of workload influences the measured workload. However, this measurement is also subject to the unmeasured error source, $U_{L}$.
 
 2. $\eta_A \rightarrow A$: Similarly, the true state of exercise influences the measured exercise frequency, but it is subject to $U_{A}$, the unmeasured error source in the exercise measurement.
 
-3. $\eta_Y \rightarrow Y$: The true state of mood affects the measured distress, which is also influenced by $U_{Y}$, the unmeasured error source in mood measurement.
+3. $\eta_Y \rightarrow Y$: The true state of distress affects the measured distress, which is also influenced by $U_{Y}$, the unmeasured error source in distress measurement.
 
 4. $U_{L} \rightarrow L$, $U_{A} \rightarrow A$, and $U_{Y} \rightarrow Y$: Each unmeasured source of error influences the corresponding measurement, causing discrepancies between the true states and the measured states.
 
@@ -699,13 +743,32 @@ Let's develop this example with Tyler's ideas in mind:
 
 6. $\eta_A \rightarrow U_{Y}$ and $\eta_L \rightarrow U_{A}$: The true state of exercise affects the unmeasured source of error in the distress measurement, and the true state of stress affects the unmeasured source of error in the exercise measurement. This could happen if high stress or high exercise frequency make respondents more prone to certain biases or errors in other measures.
 
-In all of these processes, as we have imagined them, the measurements of stress, exercise, and distress states reflect a more complex underlying reality, and they are also subject to multiple unmeasured sources of error. Understanding this complexity and the dynamics is critical. 
+In all of these processes, as we have imagined them, the measurements of workload, exercise, and distress states reflect a more complex underlying reality, and they are also subject to multiple unmeasured sources of error, opening pathways for bias from the true measurement of A to the measurement of Y. 
+
+
+How might such dynamics operate? 
+
+Let's consider $U_{L}$, the unmeasured source of error in daily workload This could arise from variations in individual perceptions of workload is a subjective experience and the way it's reported can depend on factors like cultural backgrounds, recent personal experiences, or even how a person interprets the survey question. For example, an event one participant deems to be an aspect of workload, another might consider trivial. These factors are not measured in the NZAVS but could affect participants' reported workload
+
+$U_{A}$, the unmeasured source of error in regular exercise habits, could be the effect of social desirability bias. Participants might overestimate or underestimate their exercise frequency based on what they perceive as socially acceptable or desirable. It could also be influenced by memory recall biases, as the survey asks about past behaviours that might not be accurately remembered.
+
+$U_{Y}$, the unmeasured source of error in psychological distress states, could be affected by the participant's immediate circumstances. For instance, a participant might be experiencing a particularly good or bad day when they complete the survey, which could affect how they report their general mood state. Additionally, language and cultural differences in describing and interpreting mood states could also introduce measurement error.
+
+
+The directed effect of the true state of exercise, $\eta_A$, on the measurement error in distress, $U_{Y}$, could be understood in the context of the potential mood-enhancing effects of exercise. If a participant has been exercising regularly (true state of exercise), they might be more inclined to fill out the survey, which could lead to an overestimation of their general distress state if there there is people greater distress are less inclined to remain in the panel study. Put differently, excercise might affect panel attrition, which is this graph we denote as an unmeasured source of error. (See the causal graphs page for other pathways fo selection bias.)
+
+Likewise, the directed effect of the true state of workload, $\eta_L$, on the measurement error in exercise, $U_{A}$, might arise if people who work more tend to overestimate or underestimate their exercise frequency. High distress might hinder recall of past exercise behaviours or lead to a more negative interpretation of one's behaviours, thus introducing measurement error in reported exercise habits.
+
+Likewise, consider the measurement of distress ($\eta_Y$) in the NZAVS. This not a simple univariate variable; instead, it represents a complex psychological construct. In a formative sense, we might consider various indicators such as the Kessler-6 scale (discussed last week) to form a measure of stress. Each of these indicators contributes to measuring the construct of stress. However, they are not necessarily caused by single univariate "Kessler-6" entity out there in the world. More likely it is a rather a complex, multi-dimensional underlying reality that combines an individual's life circumstances and mental and physical health that gives rise to these indicators. Culture, too might play a systematic role. Yet, as VanderWeele argues, the formative model doesn't fully capture the relationship between measures and the underlying reality. The distress measured in the NZAVS is not just a function of these indicators; it also reflects an underlying complex reality that affects and is affected by these indicators. Put differently, the concept of stress is not simply a combination of these indicators, but rather, it's a complex construct emerging from a multitude of physiological, psychological, and environmental factors.
+
+In short, the causal diagram captures the multiple pathways by which measurement error and confounding can arise in a setting of survey research, demonstrating the complex relationships between true states, measured variables, and their associated errors.
+
 
 ###  Control for baseline measures helps: the promise and perils
 
 We have adopted the three-wave panel design for counding control in which we adjust for baseline measurements of the exposure and outcome. We can now, in light of potentially directed and correlated measurement errors, better understand the strengths and limitations of the three wave approach.
 
-1. **Baseline Measures and Cultural Differences:** The NZAVS contains data from diverse cultural backgrounds. Therefore, controlling for baseline measures of exercise and mood would also help account for cultural differences that might influence these variables at the outset. For instance, certain cultural groups might have different baseline physical activity or baseline mood states due to various socio-cultural factors.
+1. **Baseline Measures and Cultural Differences:** The NZAVS contains data from diverse cultural backgrounds. Therefore, controlling for baseline measures of exercise and distress would also help account for cultural differences that might influence these variables at the outset. For instance, certain cultural groups might have different baseline physical activity or baseline distress states due to various socio-cultural factors.
 
 2. **Residual Confounding and Exercise:** Let's consider the construct $\eta_{A}$, representing the true state of exercise behaviour. If we control for baseline exercise, we're adjusting for the initial state of this behaviour. However, there could still be cultural factors that impact how exercise changes over time. For instance, a cultural event or festival that significantly increases physical activity for a certain period might occur. This change might be independent of the baseline state of exercise, thus leading to residual confounding.
 
