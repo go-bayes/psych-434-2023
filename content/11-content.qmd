@@ -1,20 +1,18 @@
 ---
 title: "Measurement from a Causal Perspective"
 date: "2023-MAY-30"
+bibliography: references.bib
 ---
-  
-  
+
 ## Overview
 
-By the end of this lecture you will: 
+By the end of this lecture you will:
 
-1. Understand the causal assumptions implied by the factor analytic interpretation of the formative and reflective models. 
+1.  Understand the causal assumptions implied by the factor analytic interpretation of the formative and reflective models.
 
-2. Be able to distinguish between statistical and structural interpretations of these models. 
+2.  Be able to distinguish between statistical and structural interpretations of these models.
 
-3. Understand why Vanderweele thinks consistent causal estimation is possible using the theory of multiple versions of treatments for constructs with multiple indicators  
-
-
+3.  Understand why Vanderweele thinks consistent causal estimation is possible using the theory of multiple versions of treatments for constructs with multiple indicators
 
 ```{r}
 #| include: false
@@ -32,23 +30,21 @@ source("/Users/joseph/GIT/templates/functions/libs2.R")
 #source("/Users/joseph/GIT/templates/functions/funs.R")
 ```
 
+## Two ways of thinking about measurement in psychometric research.
 
-## Two ways of thinking about measurement in psychometric research. 
-
-Reflective and formative models represent two distinct conceptualizations of how latent variables and their indicators are related in psychometric research.
+In psychometric research, formative and reflective models describe the relationship between latent variables and their respective indicators. VanderWeele discusses this in the assigned reading for this week [@vanderweele2022].
 
 ### Reflective Model (Factor Analysis)
 
 In a reflective measurement model, also known as an effect indicator model, the latent variable is understood to cause the observed variables. In this model, changes in the latent variable cause changes in the observed variables. Each indicator (observed variable) is a 'reflection' of the latent variable. In other words, they are effects or manifestations of the latent variable. These relations are presented in @fig-dag-latent-1.
 
-Mathematically, the reflective model is expressed:
+The reflective model may be expressed:
 
-   $$X_i = \lambda_i \eta + \varepsilon_i$$
+$$X_i = \lambda_i \eta + \varepsilon_i$$
 
 Here, $X_i$ is an observed variable (indicator), $\lambda_i$ is the factor loading for $X_i$, $\eta$ is the latent variable, and $\varepsilon_i$ is the error term associated with $X_i$. It is assumed that all the indicators are interchangeable and have a common cause, which is the latent variable $\eta$.
 
-One of the critical assumptions of a reflective model is that the indicators are correlated because they are all caused by the same latent variable. This means that if the latent variable were to change, we would expect a corresponding change in the indicators.
-
+In the conventional approach of factor analysis, the assumption is that a common latent variable is responsible for the correlation seen among the indicators. Thus, any fluctuation in the latent variable should immediately lead to similar changes in the indicators.These assumptions are presented in @fig-dag-latent-1.
 
 ```{tikz}
 #| label: fig-dag-latent-1
@@ -78,19 +74,17 @@ One of the critical assumptions of a reflective model is that the indicators are
 \end{tikzpicture}
 ```
 
-
 ### The Formative Model (Factor Analysis)
 
-Contrary to the reflective model, in a formative measurement model, also known as a causal indicator model, the observed variables (indicators) are seen as causing or determining the latent variable. The latent variable is formed or caused by the indicators. These relations are presented in @fig-dag-latent-formative_0.
+In a formative measurement model, the observed variables are seen as causing or determining the latent variable. Here again, there is a single latent variable. However this latent variable is taken to be an effect of the underlying indicators. These relations are presented in @fig-dag-latent-formative_0.
 
-Mathematically the foramative model is expressed:
+The formative model may be expressed:
 
-   $$\eta = \sum_i\lambda_i X_i + \varepsilon$$
+$$\eta = \sum_i\lambda_i X_i + \varepsilon$$
 
 In this equation, $\eta$ is the latent variable, $\lambda_i$ is the weight for $X_i$ (the observed variable), and $\varepsilon$ is the error term. The latent variable $\eta$ is a composite of the observed variables $X_i$.
 
-In a formative model, the indicators may not be correlated, and they are not interchangeable, as they all contribute uniquely to the latent variable. This means that a change in one indicator does not necessarily imply a change in the other indicators.
-
+In the context of a formative model, correlation or interchangeability between indicators is not required. Each indicator contributes distinctively to the latent variable. As such, a modification in one indicator doesn't automatically imply a corresponding change in the other indicators.
 
 ```{tikz}
 #| label: fig-dag-latent-formative_0
@@ -121,29 +115,21 @@ In a formative model, the indicators may not be correlated, and they are not int
 \end{tikzpicture}
 ```
 
-
 ## Structural Interpretation of the formative model and reflective models (Factor Analysis)
 
 > However, this analysis of reflective and formative models assumed that the latent η was causally efficacious. This may not be the case (VanderWeele 2022)
 
-VanderWeele distinguishes between statistical and structural models.
+VanderWeele distinguishes between statistical and structural interpretations of the equations preesented above.
 
-1. **Statistical Model:** A statistical model refers to the mathematical relationships, such as the equations mentioned above, which describe how observed variables (indicators) relate to latent variables. It is generally expressed in terms of equations that involve parameters (such as factor loadings in the factor analysis context) and random variables. In the context of factor analysis, statistical models are employed to describe the pattern of covariation among the observed variables in terms of a smaller number of unobserved, latent variables.  $A = f(X1, X2 \dots X_n)$ is a statistical model 
+1.  **Statistical Model:** a mathematical construct that shows how observable variables, also known as indicators, are related to latent or unseen variables. These are presented in the equations above
 
-2. **Structural Model:** A structural model refers to the causal assumptions or hypotheses about the relationships among variables in a statistical model. It reflects the theoretical structure of the construct under investigation. Structural models represent theories about causal relationships and are often depicted graphically in diagrams. They provide a way of visually interpreting the implications of the statistical model and allow for a deeper understanding of the causal structures that could potentially give rise to the observed data. @fig-dag-latent-formative_0  and @fig-dag-latent-1 are structural models. 
+2.  **Structural Model:** A structural model refers to the causal assumptions or hypotheses about the relationships among variables in a statistical model. The assumptions of the factor analytic tradition are presented in @fig-dag-latent-formative_0 and @fig-dag-latent-1 are structural models.
 
-In the context of factor analysis, the reflective and formative models have been taken each to represent the distinct models.
+We have seen that the **reflective model** statistically implies that the observed variables (indicators) are reflections or manifestations of the latent variable, expressed as $X_i = \lambda_i \eta + \varepsilon_i$. However, the factor analytic tradition makes the additional structural assumption that a univariate latent variable is causally efficacious and influences the observed variables, as in: @fig-structural-assumptions-reflective-model.
 
-- We have seen that the **reflective model** statistically implies that the observed variables (indicators) are reflections or manifestations of the latent variable, expressed as $X_i = \lambda_i \eta + \varepsilon_i$. However, the factor analytic tradition makes the additional assumption that the latent variable is causally efficacious and influences the observed variables. However, as we shall see, these causal assumptions may not always hold true.
+We have also seen that the **formative model** statistically implies that the latent variable is formed or influenced by the observed variables, expressed as $\eta = \sum_i\lambda_i X_i + \varepsilon$. However, the factor analytic tradition makes the additional assumption that the observed variables give rise to a univariate latent variable, as in @fig-dag-reflective-assumptions_note.
 
-- We have seen that the **formative model** statistically implies that the latent variable is formed or influenced by the observed variables, expressed as $\eta = \sum_i\lambda_i X_i + \varepsilon$. However, the factor analytic tradition makes the additional assumption that the observed variables give rise to the latent variable. As with the reflective model, the causal assumptions inherent in the formative model may not always hold true.
-
-**While cross-sectional data can provide insights into the relationships between variables, they can't conclusively determine the causal direction of these relationships.** 
-
-
-::: {#fig-latent layout-ncol=1}
-
-
+::: {#fig-latent layout-ncol="1"}
 ```{tikz}
 #| label: fig-structural-assumptions-reflective-model
 #| fig-cap: "Reflective Model: causal assumptions. Figure adapted from VanderWeele: doi: 10.1097/EDE.0000000000001434"
@@ -181,7 +167,6 @@ In the context of factor analysis, the reflective and formative models have been
 \end{tikzpicture}
 ```
 
-
 ```{tikz}
 #| label: fig-dag-reflective-assumptions_note
 #| fig-cap: "Formative model: causal assumptions. Figure adapted from VanderWeele: doi: 10.1097/EDE.0000000000001434"
@@ -218,24 +203,20 @@ In the context of factor analysis, the reflective and formative models have been
 \end{tikzpicture}
 ```
 
-The reflective model implies $X_i = \lambda_i \eta + \varepsilon_i$, which factor analysts take to imply @fig-structural-assumptions-reflective-model. 
+The reflective model implies $X_i = \lambda_i \eta + \varepsilon_i$, which factor analysts take to imply @fig-structural-assumptions-reflective-model.
 
-The formative model implies $\eta = \sum_i\lambda_i X_i + \varepsilon$, which factor analysts take to imply @fig-dag-reflective-assumptions_note. 
-
+The formative model implies $\eta = \sum_i\lambda_i X_i + \varepsilon$, which factor analysts take to imply @fig-dag-reflective-assumptions_note.
 :::
 
+## Problems with the structural interpretations of the reflective and formative factor models.
 
-## Interpretation Issues with Traditional Factor Analysis
+While the statistical model $X_i = \lambda_i \eta + \varepsilon_i$ aligns with @fig-structural-assumptions-reflective-model, it also alings with @fig-dag-formative-assumptions-compatible. Cross-sectional data, unfortunately, do not provide enough information to discern between these different structural interpretations.
 
-While the statistical model $X_i = \lambda_i \eta + \varepsilon_i$ aligns with @fig-structural-assumptions-reflective-model, it is equally in agreement with @fig-dag-formative-assumptions-compatible. Cross-sectional data, unfortunately, do not provide enough information to discern between these structural interpretations.
+Similarly, the statistical model $\eta = \sum_i\lambda_i X_i + \varepsilon$ agrees with @fig-dag-reflective-assumptions_note but it also agrees with\@fig-dag-reflectiveassumptions-compatible_again. Here too, cross-sectional data cannot decide between these two potential structural interpretations.
 
-Similarly, the statistical model $\eta = \sum_i\lambda_i X_i + \varepsilon$ agrees with @fig-dag-reflective-assumptions_note but also agrees with @fig-dag-reflectiveassumptions-compatible_again. Here too, cross-sectional data prove insufficient to distinguish between these two potential structural interpretations.
+There are other, compatible structural interprestations as well. The formative and reflective conceptions of factor analysis are compatible with indicators having causal effects as shown in @fig_dag_multivariate_reality_again. They are also compatible with a multivariate reality giving rise to multiple indicators as shown in @fig-dag-multivariate-reality-bulbulia.
 
-And there are other structural possibilities that cohere with these equations. The takeaway is that the data we collect can align with numerous possible realities, as show in @fig_dag_multivariate_reality_again and @fig-dag-multivariate-reality-bulbulia.
-
-
-::: {#fig-latent layout-ncol=1}
-
+::: {layout-ncol="1"}
 ```{tikz}
 #| label: fig-dag-formative-assumptions-compatible
 #| fig-cap: "Formative model is compatible with indicators causing outcome.Figure adapted from VanderWeele: doi: 10.1097/EDE.0000000000001434"
@@ -267,8 +248,6 @@ And there are other structural possibilities that cohere with these equations. T
 
 \end{tikzpicture}
 ```
-
-
 
 ```{tikz}
 #| label: fig-dag-reflectiveassumptions-compatible_again
@@ -307,7 +286,6 @@ And there are other structural possibilities that cohere with these equations. T
 
 \end{tikzpicture}
 ```
-
 
 ```{tikz}
 #| label: fig_dag_multivariate_reality_again
@@ -389,17 +367,18 @@ And there are other structural possibilities that cohere with these equations. T
 \end{tikzpicture}
 ```
 
+VanderWeele's key observation is this:
 
+**While cross-sectional data can provide insights into the relationships between variables, they cannot conclusively determine the causal direction of these relationships.**
 
-The statistical models that underpin formative and reflective conceptions of factor analysis are compatible with indicators having causal effects, and with a multivariate reality giving rise to multiple indicators.
+This results is worrying. The structural assumptions of factor analysis underpin nearly all psychological research. If the cross-sectional data used to derive factor structures cannot decide whether the structural interpretations of factor models are accurate, where does that leave us?
 
+More worrying still, VanderWeele discusses several longitudinal tests for structural interpretations of univariate latent variables that do not pass.
+
+Where does that leave us? In psychology we have heard about a replication crisis. We might describe the reliance on factor models as an aspect of a much larger, and more worrying "causal crisis" [@bulbulia2022]
 :::
 
-
-
-
-## The theory of mutliple versions of treatment
-
+## Review of the theory of multiple versions of treatment
 
 ```{tikz}
 #| label: fig_dag_multiple_version_treatment_dag
@@ -432,61 +411,35 @@ The statistical models that underpin formative and reflective conceptions of fac
 \end{tikzpicture}
 ```
 
+Perhaps not all is lost. VanderWeele looks to the theory of multiple versions of treatment for solace.
 
-Recall, a causal effect is defined as the difference in the expected potential outcome when everyone is exposed (perhaps contrary to fact) to one level of a treatment, conditional on their levels of a confounder,  with the expected potential outcome when everyone is exposed to a a different level of a treatement  (perhaps contrary to fact), conditional on their levels of a counfounder.  
-
+Recall, a causal effect is defined as the difference in the expected potential outcome when everyone is exposed (perhaps contrary to fact) to one level of a treatment, conditional on their levels of a confounder, with the expected potential outcome when everyone is exposed to a a different level of a treatement (perhaps contrary to fact), conditional on their levels of a counfounder.
 
 $$ \delta = \sum_l \left( \mathbb{E}[Y|A=a,l] - \mathbb{E}[Y|A=a^*,l] \right) P(l)$$
 
+where $\delta$ is the causal estimand on the difference scale $(\mathbb{E}[Y^0 - Y^0])$.
 
-
-where $\delta$ is the causal estimand on the difference scale $(\mathbb{E}[Y^0 - Y^0])$. In causal inference, the multiple versions of treatment theory allows us to handle situations where the treatment isn't uniform, but instead has several variations. Each variation of the treatment, or "version", can have a different impact on the outcome. This theory allows us to consider these varying impacts in our causal models.
-
-Under the multiple versions of treatment framework, the consistency assumption is redefined. It requires that for each version of the treatment, the outcome under that version is equal to the observed outcome when that version is received. 
-
-Further, a "no confounding" assumption is required, which states that the potential outcomes for each version are independent of the version received, given the covariates.
-
-
-The absence of confounding for the effect of $K$ on $Y$ given $L$ is denoted when Y$_k$ is independent of $K$, conditionally based on $C$ or $Y_k \coprod A|K,L$ (i.e. conditional on$L$, $A$ gives no information about $Y$ once $K$ and $L$ are accounted for) . The consistency assumption is deemed to be valid when $Y = Y_k$ if $K = k$. See @fig_dag_multiple_version_treatment_dag.
-
-Let's assume the researcher only possesses data on $(A, Y, L)$. When Y$_k$ is conditionally independent of $K$ based on $L$, there is no confounding for the effect of $K$ on $Y$ given $L$. Then for any  $K = k$ results in $Y = Y_k$, the consistency assumption is met. Let's suppose only information on $(A, Y, L)$  is available to the researcher.
-
-
+In causal inference, the multiple versions of treatment theory allows us to handle situations where the treatment isn't uniform, but instead has several variations. Each variation of the treatment, or "version", can have a different impact on the outcome. Consistency is not violated because it is redefined: for each version of the treatment, the outcome under that version is equal to the observed outcome when that version is received. Put differently we may think of the indicator $A$ as corresponding to many version of the true treament $K$. Where conditional independence holds such that there is a absence of confounding for the effect of $K$ on $Y$ given $L$, we have: $Y_k \coprod A|K,L$. This states conditional on $L$, $A$ gives no information about $Y$ once $K$ and $L$ are accounted for. When $Y = Y_k$ if $K = k$ and Y$_k$ is independent of $K$, condition on $L$, then $A$ may be thought of as a coarsened indicator of $K$, as shown in @fig_dag_multiple_version_treatment_dag. We may estimate consistent causal effects where:
 
 $$ \delta = \sum_{k,l} \mathbb{E}[Y_k|l] P(k|a,l) P(l) - \sum_{k,l} \mathbb{E}[Y_k|l] P(k|a^*,l) P(l)$$
 
+The scenario represents a hypothetical randomised trial where within strata of covariates $L$, individuals in one group receive a treatment $K$ version randomly assigned from the distribution of $K$ distribution $(A = 1, L = l)$ sub-population. Meanwhile, individuals in the other group receive a randomly assigned $K$ version from $(A = 0, L = l)$
 
-It represents a comparison in a hypothetical randomised trial. In this scenario, within covariates $L$ strata, individuals in one group receive a treatment $K$ version randomly assigned from the inherent $K$ distribution in the $(A = a, L = l)$ sub-population. Meanwhile, individuals in the other group receive a randomly assigned $K$ version from the same distribution.
+This theory finds its utility in practical scenarios where treatments seldom resemble each other -- we discussed the example of obesity last week (see: [@vanderweele2013]).
 
-This theory finds its utility in practical scenarios where treatments seldom resemble each other, like healthcare where different doctors may administer slightly distinct treatments, or in education where teaching methods differ. By incorporating these treatment variations, we gain more accurate insights into the causal effect.
+### Reflective and formative measurement models may be approached as multiple versions of treatment
 
-So VanderWeele proposes that this theory of causal inference under multiple treatments could be advantageous for handling the consistency assumption. 
-
-
-He next proposes that this theory may be helpful for explaining measurements. 
-
-
-### Reflective and formative measurement models may be approached from the Multiple Versions of Treatment Theory.
-
-
-Recall the theory of multiple versions of treatments. This concept accounts for varying impacts of different treatment versions on the outcome. The consistency assumption is revisited.When a specific version of treatment is received, the observed outcome matches the outcome under *that* version. In addition, the theory requires "no confounding" given measured covariates for each version are of the treatment.
-
-
-Vanderweele applies the following substitution: 
-
+Vanderweele applies the following substitution:
 
 $$\delta = \sum_{\eta,l} \mathbb{E}[Y_\eta|l] P(\eta|A=a+1,l) P(l) - \sum_{\eta,l} \mathbb{E}[Y_\eta|l] P(\eta|A=a,l) P(l)$$
-VanderWeele substitutes $K$ with $\eta$ from the previous section, and compare the measurement response $A = a + 1$ with $A = a$. Now, if the influence of $\eta$ on $Y$ is not confounded given $L$
 
-Thus despite varying reliabilities $\eta_i$, which might be overlooked, $\delta$ retains its interpretability as a comparison in a hypothetical randomised trial. 
+Specifically, we substitue $K$ with $\eta$ from the previous section, and compare the measurement response $A = a + 1$ with $A = a$. We discover that if the influence of $\eta$ on $Y$ is not confounded given $L$, then the multiple versions of reality consistent with the reflective and formative statistical models of reality will not lead to biased estimation. $\delta$ retains its interpretability as a comparison in a hypothetical randomised trial in which the distribution of coarsened measures of $\eta_A$ are balanced within levels of the treatment, conditional on $\eta_L$. 
 
-Here, within the strata of covariates $L$, individuals in one group are randomised to a value of $\eta$, derived from the actual $\eta$ distribution in the subpopulation with $(A = a + 1, L = l)$. In the other group, individuals are randomized to a $\eta$ value from the distribution in the subpopulation with $(A = a, L = l)$.
+This connection between measurement and the multiple versions of treatment framework provides a hope for consistent causal inference varying reliabilities of measurement.
 
-This connection between measurement and the multiple versions of treatment framework provides a powerful tool for causal inference varying reliabilities of measurement.
+However, as with the theory of multiple treatments, we might not known how to interpret our results because we don't know the true relationships between our measured indicators and underlying reality.
 
-However, as with the theory of multiple treatments, we might not known how to interpret our results.  Similar considerations and warnings apply to the "formative model of measurement."
-
-
+How can we do better? 
 
 ```{tikz}
 #| label: fig-dag-multiple-version-treatment-applied-measurement
@@ -521,14 +474,13 @@ However, as with the theory of multiple treatments, we might not known how to in
 \end{tikzpicture}
 ```
 
-
 ## VanderWeele's model of reality
+
+VanderWeele's article concludes as follows: 
 
 > A preliminary outline of a more adequate approach to the construction and use of psychosocial measures might thus be summarized by the following propositions, that I have argued for in this article: (1) Traditional univariate reflective and formative models do not adequately capture the relations between the underlying causally relevant phenomena and our indicators and measures. (2) The causally relevant constituents of reality related to our constructs are almost always multidimensional, giving rise both to our indicators from which we construct measures, and also to our language and concepts, from which we can more precisely define constructs. (3) In measure construction, we ought to always specify a definition of the underlying construct, from which items are derived, and by which analytic relations of the items to the definition are made clear. (4) The presumption of a structural univariate reflective model impairs measure construction, evaluation, and use. (5) If a structural interpretation of a univariate reflective factor model is being proposed this should be formally tested, not presumed; factor analysis is not sufficient for assessing the relevant evidence. (6) Even when the causally relevant constituents of reality are multidimensional, and a univariate measure is used, we can still interpret associations with outcomes using theory for multiple versions of treatment, though the interpretation is obscured when we do not have a clear sense of what the causally relevant constituents are. (7) When data permit, examining associations item-by-item, or with conceptually related item sets, may give insight into the various facets of the construct.
 
->A new integrated theory of measurement for psychosocial constructs is needed in light of these points – one that better respects the relations between our constructs, items, indicators, measures, and the underlying causally relevant phenomena.  (VanderWeele 2022)
-
-
+> A new integrated theory of measurement for psychosocial constructs is needed in light of these points -- one that better respects the relations between our constructs, items, indicators, measures, and the underlying causally relevant phenomena. (VanderWeele 2022)
 
 ```{tikz}
 #| label: fig-dag-multivariate-reality-complete
@@ -572,16 +524,16 @@ However, as with the theory of multiple treatments, we might not known how to in
 ```
 
 
-However, this is not a causal graph. Can we do better? The arrows to not clearly represent causal relations.
 
-## I suggest that the theory of dependent and directed measurement error might be usefully employed to develop a pragmatic responses to construct measurement
+This seems to me sensible. However, @fig-dag-multivariate-reality-complete this is not a causal graph. The arrows to not clearly represent causal relations. It leaves me unclear about what to practically do. 
 
-
-The New Zealand Attitudes and Values Study (NZAVS) is  national probability survey collects a wide range of information, including data on distress, exercise habits, and cultural backgrounds.
+Let's return to the three wave many-outcomes model described in previous weeks.  How should we revise this model in light of measurement theory? 
 
 
 
+## How theory of dependent and directed measurement error might be usefully employed to develop a pragmatic responses to construct measurement
 
+By now you are all familiar with The New Zealand Attitudes and Values Study (NZAVS),which is a national probability survey collects a wide range of information, including data on distress, exercise habits, and cultural backgrounds.
 
 ```{tikz}
 #| label: fig-dag-uu-null
@@ -624,40 +576,35 @@ The New Zealand Attitudes and Values Study (NZAVS) is  national probability surv
 \draw [-latex, draw=black] (Yeta2) to (Y2);
 
 
-\draw [cor, draw=red, dashed,bend right=80] (UL) to (Leta0);
-\draw [cor, draw=red, dashed, bend right = 80] (UA) to (Aeta1);
-\draw [cor, draw=red, dashed, bend right = 80] (UY) to (Yeta2);
+\draw [cor, draw=black, dashed,bend right=80] (UL) to (Leta0);
+\draw [cor, draw=black, dashed, bend right = 80] (UA) to (Aeta1);
+\draw [cor, draw=black, dashed, bend right = 80] (UY) to (Yeta2);
 
 
 
 \end{tikzpicture}
 ```
 
+Consider a study that seeks to use this dataset to investigate the effect of regular exercise on psychological distress. In contrast to previous graphs, let us allow for latent reality to affect our measurements, as well as the discrepencies between our measurements and true underlying reality. We shall use @fig-dag-uu-null as our initial guide. 
 
-Consider a study investigating the impact of a person's true state of regular exercise, on their true distress state, using @fig-dag-uu-null as our initial guide. 
+We represent the true exercise by $\eta_A$. We represent true psychological distress by $\eta_Y$. Let $\eta_L$ denote a persons true workload, and assume that this state of work affects both levels of excercise and psychological distress.
 
-True exercise is represented by $\eta_A$ in @fig-dag-dep-udir-effect-confounders-3wave.  True distress is represented as $\eta_Y$ in @fig-dag-dep-udir-effect-confounders-3wave. Assume there is a potential confounder, which is the person's true workload, represented as $\eta_L$.  
+To bring the model into contact with measurement theory, Let us describe measurements of these latent true underlying realities as functions of multiple indicators: $L_{f(X_1\dots X_n)}$, $A_{f(X_1\dots X_n)}$, and $A_{f(X_1\dots X_n)}$. These constructs are measured realisations of the underlying true states. We assume that the true states of these variables affect their corresponding measured states, and so draw arrows from $\eta_L\rightarrow{L_{f(X_1\dots X_n)}}$, $\eta_A\rightarrow{A_{f(X_1\dots X_n)}}$, 
+$\eta_Y\rightarrow{Y_{f(X_1\dots X_n)}}$.
 
-We symbolically denote the measurement of these latent states with with $L_{f(X_1\dots X_n)}$, $A_{f(X_1\dots X_n)}$, and  $A_{f(X_1\dots X_n)}$. We assume that functions of our measured indicators (say responses to survey items), consitute our measurements of the underlying true states.  We assume that the true states of these variables affect their corresponding measured states. That is, we assume unmeasured sources of error that affect the measurements: $U_{L} \rightarrow$ $L_{f(X_1\dots X_n)}$, $U_{A} \rightarrow$ $A_{f(X_1\dots X_n)}$, and $U_{Y} \rightarrow$ $Y_{f(X_1\dots X_n)}$. Put another way, we assume that our measured states area reflections, "seeing as through a mirror, in darkness," of an underlying true reality (Corinthians 13:12). 
+We also assume unmeasured sources of error that affect the measurements: $U_{L} \rightarrow$ $L_{f(X_1\dots X_n)}$, $U_{A} \rightarrow$ $A_{f(X_1\dots X_n)}$, and $U_{Y} \rightarrow$ $Y_{f(X_1\dots X_n)}$. That is, we allow that our measured indicators may "see as through a mirror, in darkness," the underlying true reality they hope to capture (Corinthians 13:12).
+We use $U_{L}$, $U_{A}$ and $U_{Y}$ to denote the unmeasured sources of error in the measured indicators. These are the unknown, and perhaps unknowable, darkness and mirror.
 
-We furthermore assume that each of these variables we seek to identify is potentially subject to measurement error, which we denote in the graph as $U_{L}$ for workload, $U_{A}$ for regular exercise, and $U_{Y}$ for psychological distress. These terms denote the unknown, and perhaps unknowable darkness and angles in the mirror through which true reality is reflected. 
+Allow that the true underlying reality represented by the $\eta_{var}$ may be multivariate. Similarly, allow the true underlying reality represented by $\U_{var}$ is multivariate. 
 
-We allow that the true underlying reality represented by the $\eta_{var}$ may be multivariate. Similarly, we allow the true underlying reality represented by the $\U_{var}$ terms may also be multivariate. In relation to VanderWeele's @fig-dag-multivariate-reality-complete, these unmeasured states correspond to features of a complex multivariate reality that $\mathcal{R}$ that may include both our natural language concepts and scientific language, or constructs.
+We now have a causal diagramme that more precisely captures VanderWeele's thinking as presented in @fig-dag-multivariate-reality-complete. In our @fig-dag-uu-null, we have fleshed out  $\mathcal{R}$ in a way that may include natural language concepts and scientific language, or constructs, as latent realities and latent unmeasured sources of error in our constructs. 
 
-Note that the measured states, once conditioned upon, create collider bias, which opens a path between the unmeasured sources of error and the true underlying state that gives rise to the measured state. This is depicted by a the arrows $U_{var}$ and from $\eta_{var}$ into each $var_{f(X1, X2,\dots X_n)}$
+The utility of describing the measurement dynamics using causal graphs is apparrent. We can understand that the measured states, once conditioned upon create *collider biases* which opens path between the unmeasured sources of error and the true underlying state that gives rise to our measurements. This is depicted by a the arrows $U_{var}$ and from $\eta_{var}$ into each $var_{f(X1, X2,\dots X_n)}$
 
-Notice: **where true unmeasured (multivariate) psycho-physical states are related to true unmeasured (multivariate) sources of error in the measurement of those states, the very act of measurement opens pathways to confounding.** 
-
-If for each measured construct $var_{f(X1, X2,\dots X_n)}$, the sources of error  $U_{var}$ and the unmeasured consituents of reality that give rise to our measures $\eta_{var}$ are uncorrelated with other variables $U\prime_{var}$ and from $\eta\prime_{var}$ and $var\prime_{f(X1, X2,\dots X_n)}$, our estimates may be downwardly biased toward the null. 
-However, d-separation is preserved. There is no new pathway that link the exposure to the outcome.  This scenario is presented in @ fig-dag-uu-null. 
-
-
-However, suppose we have reason to think that the errors are correlated such that a person experiencing high workload ($U_{L}$) might inaccurately report their exercise frequency and affective states, leading to an assumed correlation in errors: $U_{L} \rightarrow U_{A}$, and $U_{L} \rightarrow U_{Y}$ as presented in @fig-dag-dep-udir-effect-confounders-3wave.
-
-In this new scenario, suppose we have reason to think that the true state of exercise impacts the measurement error in distress, and the true state of workload impacts the measurement error in exercise. This is represented in  @fig-dag-dep-udir-effect-confounders-3wave by the red arrows from $\eta_A \rightarrow U_{Y}$ and from $\eta_L \rightarrow U_{A}$. The connections from $U_{L}$ to $\eta_L$ and from $U_{A}$ to $\eta_A$ indicate the relationships between the unmeasured sources of error and the true states of stress and exercise, respectively. 
+Notice: **where true unmeasured (multivariate) psycho-physical states are related to true unmeasured (multivariate) sources of error in the measurement of those states, the very act of measurement opens pathways to confounding.**
 
 
-
+If for each measured construct $var_{f(X1, X2,\dots X_n)}$, the sources of error $U_{var}$ and the unmeasured consituents of reality that give rise to our measures $\eta_{var}$ are uncorrelated with other variables $U\prime_{var}$ and from $\eta\prime_{var}$ and $var\prime_{f(X1, X2,\dots X_n)}$, our estimates may be downwardly biased toward the null. However, d-separation is preserved. Where errors are uncorrelated with true latent realities, there is no new pathway that opens information between our exposure and outcome. Consider the relations presented in @fig-dag-dep-udir-effect-confounders-3wave
 
 ```{tikz}
 #| label: fig-dag-dep-udir-effect-confounders-3wave
@@ -728,113 +675,187 @@ In this new scenario, suppose we have reason to think that the true state of exe
 \end{tikzpicture}
 ```
 
+Here, 
 
-The scenario is as follows: 
+$\eta_L \rightarrow L$: Let's first explore the effect of the true workload state on its measurement. This measurement, however, is affected by an unmeasured error source, $U_{L}$. Personal perceptions of workload can introduce this error. For instance, a person may perceive their workload differently based on recent personal experiences or cultural backgrounds. Additionally, unmeasured cultural influences like societal expectations of productivity could shape their responses independently of the true workload state.
 
-1. $\eta_L \rightarrow L$: The true state of workload influences the measured workload. However, this measurement is also subject to the unmeasured error source, $U_{L}$.
+$\eta_A \rightarrow A$: When it comes to exercise, the true state impacts the measured frequency. This measurement also includes $U_{A}$, an unmeasured error. For example, a cultural shift towards valuing physical health might prompt participants to increase their exercise frequency and report higher activity levels, introducing an error, $U_{A}$.
 
-2. $\eta_A \rightarrow A$: Similarly, the true state of exercise influences the measured exercise frequency, but it is subject to $U_{A}$, the unmeasured error source in the exercise measurement.
+$\eta_Y \rightarrow Y$: With distress, the actual level impacts the measured distress, but this measurement is subject to $U_{Y}$, an unmeasured error. For instance, an increased societal acceptance of mental health issues might change how distress is reported over time, creating an error, $U_{Y}$, in the measurement of distress.
 
-3. $\eta_Y \rightarrow Y$: The true state of distress affects the measured distress, which is also influenced by $U_{Y}$, the unmeasured error source in distress measurement.
+$U_{L} \rightarrow L$, $U_{A} \rightarrow A$, and $U_{Y} \rightarrow Y$: These connections represent how each unmeasured error source can influence its corresponding measurement, leading to a discrepancy between the true state and the measured state.
 
-4. $U_{L} \rightarrow L$, $U_{A} \rightarrow A$, and $U_{Y} \rightarrow Y$: Each unmeasured source of error influences the corresponding measurement, causing discrepancies between the true states and the measured states.
+$U_{L} \rightarrow U_{A}$ and $U_{L} \rightarrow U_{Y}$: These relationships indicate that the error in the stress measurement can correlate with those in the exercise and mood measurements. This could stem from a common cultural bias affecting how a participant self-reports across these areas.
 
-5. $U_{L} \rightarrow U_{A}$ and $U_{L} \rightarrow U_{Y}$: The unmeasured error source in stress measurement is correlated with those in the exercise and mood measurements. This could be due to common sources of error such as similar biases in self-reporting across these constructs.
-
-6. $\eta_A \rightarrow U_{Y}$ and $\eta_L \rightarrow U_{A}$: The true state of exercise affects the unmeasured source of error in the distress measurement, and the true state of stress affects the unmeasured source of error in the exercise measurement. This could happen if high stress or high exercise frequency make respondents more prone to certain biases or errors in other measures.
-
-In all of these processes, as we have imagined them, the measurements of workload, exercise, and distress states reflect a more complex underlying reality, and they are also subject to multiple unmeasured sources of error, opening pathways for bias from the true measurement of A to the measurement of Y. 
+$\eta_A \rightarrow U_{Y}$ and $\eta_L \rightarrow U_{A}$: These illustrate that the actual state of one variable can affect the error in another variable's measurement. For example, a cultural emphasis on physical health leading to increased exercise might, in turn, affect the reporting of distress levels, causing an error, $U_{Y}$, in the distress measurement. Similarly, if a cultural trend pushes people to work more, it might cause them to over or underestimate their exercise frequency, introducing an error, $U_{A}$, in the exercise measurement.
 
 
-How might such dynamics operate? 
+### Confounding control by baseline measures of exposure and outcome: Dependent Directed Measurement Error in Three-Wave Panels 
 
-Let's consider $U_{L}$, the unmeasured source of error in daily workload This could arise from variations in individual perceptions of workload is a subjective experience and the way it's reported can depend on factors like cultural backgrounds, recent personal experiences, or even how a person interprets the survey question. For example, an event one participant deems to be an aspect of workload, another might consider trivial. These factors are not measured in the NZAVS but could affect participants' reported workload
+1. We propose a three-wave panel design to control confounding. This design adjusts for baseline measurements of both exposure and the outcome.
 
-$U_{A}$, the unmeasured source of error in regular exercise habits, could be the effect of social desirability bias. Participants might overestimate or underestimate their exercise frequency based on what they perceive as socially acceptable or desirable. It could also be influenced by memory recall biases, as the survey asks about past behaviours that might not be accurately remembered.
+2. Understanding this approach in the context of potential directed and correlated measurement errors gives us a clearer picture of its strengths and limitations.
 
-$U_{Y}$, the unmeasured source of error in psychological distress states, could be affected by the participant's immediate circumstances. For instance, a participant might be experiencing a particularly good or bad day when they complete the survey, which could affect how they report their general mood state. Additionally, language and cultural differences in describing and interpreting mood states could also introduce measurement error.
+3. This three-wave panel design incorporates baseline measurements of both exposure and confounders. As a result, any bias that could come from unmeasured sources of measurement errors should be uncorrelated with their baseline effects. 
+
+4. For instance, if individuals have a social desirability bias at the baseline, they would have to develop a different bias unrelated to the initial one for new bias to occur due to correlated unmeasured sources of measurement errors. 
+
+5. However, we cannot completely eliminate the possibility of such new bias development. There could also be potential new sources of bias from directed effects of the exposure on the error term of the outcome, which can often occur due to panel attrition.
+
+6. To mitigate this risk, we adjust for panel attrition/non-response using methods like multiple imputation. We also consistently perform sensitivity analyses to detect any unanticipated bias.
+
+7. Despite these potential challenges, it is worth noting that by including measures of both exposure and outcome at baseline, the chances of new confounding are significantly reduced. 
+
+8. Therefore, adopting this practice should be a standard procedure in multi-wave studies as it substantially minimizes the likelihood of introducing novel confounding factors.
 
 
-The directed effect of the true state of exercise, $\eta_A$, on the measurement error in distress, $U_{Y}$, could be understood in the context of the potential mood-enhancing effects of exercise. If a participant has been exercising regularly (true state of exercise), they might be more inclined to fill out the survey, which could lead to an overestimation of their general distress state if there there is people greater distress are less inclined to remain in the panel study. Put differently, excercise might affect panel attrition, which is this graph we denote as an unmeasured source of error. (See the causal graphs page for other pathways fo selection bias.)
 
-Likewise, the directed effect of the true state of workload, $\eta_L$, on the measurement error in exercise, $U_{A}$, might arise if people who work more tend to overestimate or underestimate their exercise frequency. High distress might hinder recall of past exercise behaviours or lead to a more negative interpretation of one's behaviours, thus introducing measurement error in reported exercise habits.
+```{tikz}
+#| label: fig-dag-dep-udir-effect-confounders-3wave-new
+#| fig-cap: "TBA"
+#| out-width: 100%
+#| echo: false
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
 
-Likewise, consider the measurement of distress ($\eta_Y$) in the NZAVS. This not a simple univariate variable; instead, it represents a complex psychological construct. In a formative sense, we might consider various indicators such as the Kessler-6 scale (discussed last week) to form a measure of stress. Each of these indicators contributes to measuring the construct of stress. However, they are not necessarily caused by single univariate "Kessler-6" entity out there in the world. More likely it is a rather a complex, multi-dimensional underlying reality that combines an individual's life circumstances and mental and physical health that gives rise to these indicators. Culture, too might play a systematic role. Yet, as VanderWeele argues, the formative model doesn't fully capture the relationship between measures and the underlying reality. The distress measured in the NZAVS is not just a function of these indicators; it also reflects an underlying complex reality that affects and is affected by these indicators. Put differently, the concept of stress is not simply a combination of these indicators, but rather, it's a complex construct emerging from a multitude of physiological, psychological, and environmental factors.
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
 
-In short, the causal diagram captures the multiple pathways by which measurement error and confounding can arise in a setting of survey research, demonstrating the complex relationships between true states, measured variables, and their associated errors.
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (ULAY) at (0, 5) {U$_{t0/LAY}$};
+\node [rectangle, draw=white] (UA) at (6, 4) {U$_{t1/A}$};
+\node [rectangle, draw=white] (UY) at (8, 5) {U$_{t2/Y}$};
+
+\node [rectangle, draw=black] (L0) at (4, 2) {LAY$^{t0}$};
+\node [rectangle, draw=black] (A1) at (6, 2) {A$^{t1}$};
+\node [rectangle, draw=black] (Y2) at (8, 2) {Y$^{t2}$};
+\node [rectangle, draw=white] (Leta0) at (4, 0) {L$^{t0}_\eta$};
+\node [rectangle, draw=white] (Aeta1) at (6, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (8, 0) {Y$^{t2}_\eta$};
 
 
-###  Control for baseline measures helps: the promise and perils
+\draw [-latex, draw=black, dotted] (ULAY) to (UA);
+\draw [-latex, draw=black, dotted] (ULAY) to (UY);
 
-We have adopted the three-wave panel design for counding control in which we adjust for baseline measurements of the exposure and outcome. We can now, in light of potentially directed and correlated measurement errors, better understand the strengths and limitations of the three wave approach.
+\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=red] (UY) to (Y2);
+\draw [-latex, draw=black] (ULAY) to (L0);
+\draw [-latex, draw=black] (Leta0) to (L0);
+\draw [-latex, draw=black] (Leta0) to (Aeta1);
+\draw [-latex, draw=black, bend right=30] (Leta0) to (Yeta2);
 
-1. **Baseline Measures and Cultural Differences:** The NZAVS contains data from diverse cultural backgrounds. Therefore, controlling for baseline measures of exercise and distress would also help account for cultural differences that might influence these variables at the outset. For instance, certain cultural groups might have different baseline physical activity or baseline distress states due to various socio-cultural factors.
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
 
-2. **Residual Confounding and Exercise:** Let's consider the construct $\eta_{A}$, representing the true state of exercise behaviour. If we control for baseline exercise, we're adjusting for the initial state of this behaviour. However, there could still be cultural factors that impact how exercise changes over time. For instance, a cultural event or festival that significantly increases physical activity for a certain period might occur. This change might be independent of the baseline state of exercise, thus leading to residual confounding.
+\draw [-latex, draw=red] (Aeta1) to (UY);
+\draw [-latex, draw=black] (Leta0) to (UA);
 
-3. **Residual Confounding and Depression:** Similarly for $\eta_{Y}$, the true state of Depression/Anxiety. Controlling for baseline states adjusts for the initial emotional state. However, cultural factors such as societal norms or expectations about emotional expression could change over time independently of the baseline distress. These changes could result in residual confounding. For example, a significant cultural event might induce communal feelings of joy or sadness, influencing the distress state irrespective of the baseline level.
 
-4. **Unmeasured Cultural Factors**: It's also important to consider that cultural influences might not be entirely captured by the survey. Factors such as societal expectations, shared beliefs, and norms within a culture could influence both exercise behaviour and distress states. These could change over time due to sociocultural shifts, and if these changes aren't accounted for, could lead to residual confounding. For example, a societal shift towards valuing physical health might encourage more exercise independently of baseline responses
 
-5. **Change over time**: Finally, time itself can be a factor. Changes in cultural norms and attitudes can occur over the duration of a longitudinal study like the NZAVS. If the timing of these changes isn't aligned with the measurement times, this can also lead to residual confounding. For example, if there is a cultural shift towards increased acceptance of mental health issues, this might change how mood is reported over time, irrespective of baseline responses.
+\draw [cor, draw=black, dashed,bend right=30] (ULAY) to (Leta0);
+\draw [cor, draw=black, dashed, bend right = 30] (UA) to (Aeta1);
+\draw [cor, draw=black, dashed, bend right = 100] (ULAY) to (Yeta2);
 
-6. **Directed Measurement Error:** Consider a situation where individuals from certain cultural backgrounds might systematically under-report their physical activity due to societal norms or expectations, introducing a directed measurement error. Similarly, reporting of mood states might also be influenced by cultural perspectives on expressing emotions. These culturally influenced errors in measurement can introduce bias, even after controlling for baseline measures.
+\end{tikzpicture}
+```
 
-7. **Undirected Measurement Error:** Undirected errors could also occur due to random variations in understanding or interpreting survey questions across different cultures, introducing variability in the data. If these random errors correlate with the error in measuring other variables (for instance, if misunderstanding of exercise questions correlates with misunderstanding of mood questions), this can introduce bias.
 
-8. **Correlated Errors and Cultural Differences:** The culturally influenced measurement errors ($U_{A}$, $U_{Y}$) could be correlated, as the cultural factors influencing the reporting of exercise might also influence the reporting of mood. This correlation between errors introduces further complexity and potential bias.
 
-9. **Residual Confounding:** Despite controlling for baseline measures, there can still be residual confounding due to unmeasured cultural factors. For instance, even if we control for baseline exercise and mood, there might still be cultural factors that impact the changes in these variables over time independently of the baseline measures. 
 
-In short, controlling for baseline measures in the NZAVS helps to reduce some bias and account for cultural differences that influence the exposure and outcome. However, potential bias due to unmeasured confounding and measurement error, for example, if these are influenced by cultural factors, still remain. 
 
-10. **Need for Sensitivity Analysis** The Key takehome message is that we must always perform sensitivity analyses because we can never be certain that our confounding control strategy has worked. 
 
+### Comment on slow changes
+
+Over long periods of time we can expect additional sources of confounding. Changes in cultural norms and attitudes can occur over the duration of a longitudinal study like the NZAVS, leading to residual confounding. For example, if there is a cultural shift towards increased acceptance of mental health issues, this might change how psychological distress is reported over time, irrespective of baseline responses.
+
+<!-- It's also important to consider that cultural influences might not be entirely captured by the survey. Factors such as societal expectations, shared beliefs, and norms within a culture could influence both exercise behaviour and distress states. These could change over time due to sociocultural shifts, and if these changes aren't accounted for, could lead to residual confounding. For example, a societal shift towards valuing physical health might encourage more exercise independently of baseline responses -->
+
+
+
+
+
+<!-- 1.  **Baseline Measures and Cultural Differences:** The NZAVS contains data from diverse cultural backgrounds. Therefore, controlling for baseline measures of exercise and distress would also help account for cultural differences that might influence these variables at the outset. For instance, certain cultural groups might have different baseline physical activity or baseline distress states due to various socio-cultural factors. -->
+
+<!-- 2.  **Residual Confounding and Exercise:** Let's consider the construct $\eta_{A}$, representing the true state of exercise behaviour. If we control for baseline exercise, we're adjusting for the initial state of this behaviour. However, there could still be cultural factors that impact how exercise changes over time. For instance, a cultural event or festival that significantly increases physical activity for a certain period might occur. This change might be independent of the baseline state of exercise, thus leading to residual confounding. -->
+
+<!-- 3.  **Residual Confounding and Depression:** Similarly for $\eta_{Y}$, the true state of Depression/Anxiety. Controlling for baseline states adjusts for the initial emotional state. However, cultural factors such as societal norms or expectations about emotional expression could change over time independently of the baseline distress. These changes could result in residual confounding. For example, a significant cultural event might induce communal feelings of joy or sadness, influencing the distress state irrespective of the baseline level. -->
+
+<!-- 4.  **Unmeasured Cultural Factors**: It's also important to consider that cultural influences might not be entirely captured by the survey. Factors such as societal expectations, shared beliefs, and norms within a culture could influence both exercise behaviour and distress states. These could change over time due to sociocultural shifts, and if these changes aren't accounted for, could lead to residual confounding. For example, a societal shift towards valuing physical health might encourage more exercise independently of baseline responses -->
+
+<!-- 5.  **Change over time**: Finally, time itself can be a factor. Changes in cultural norms and attitudes can occur over the duration of a longitudinal study like the NZAVS. If the timing of these changes isn't aligned with the measurement times, this can also lead to residual confounding. For example, if there is a cultural shift towards increased acceptance of mental health issues, this might change how mood is reported over time, irrespective of baseline responses. -->
+
+<!-- 6.  **Directed Measurement Error:** Consider a situation where individuals from certain cultural backgrounds might systematically under-report their physical activity due to societal norms or expectations, introducing a directed measurement error. Similarly, reporting of mood states might also be influenced by cultural perspectives on expressing emotions. These culturally influenced errors in measurement can introduce bias, even after controlling for baseline measures. -->
+
+<!-- 7.  **Undirected Measurement Error:** Undirected errors could also occur due to random variations in understanding or interpreting survey questions across different cultures, introducing variability in the data. If these random errors correlate with the error in measuring other variables (for instance, if misunderstanding of exercise questions correlates with misunderstanding of mood questions), this can introduce bias. -->
+
+<!-- 8.  **Correlated Errors and Cultural Differences:** The culturally influenced measurement errors ($U_{A}$, $U_{Y}$) could be correlated, as the cultural factors influencing the reporting of exercise might also influence the reporting of mood. This correlation between errors introduces further complexity and potential bias. -->
+
+<!-- 9.  **Residual Confounding:** Despite controlling for baseline measures, there can still be residual confounding due to unmeasured cultural factors. For instance, even if we control for baseline exercise and mood, there might still be cultural factors that impact the changes in these variables over time independently of the baseline measures. -->
+
+<!-- In short, controlling for baseline measures in the NZAVS helps to reduce some bias and account for cultural differences that influence the exposure and outcome. However, potential bias due to unmeasured confounding and measurement error, for example, if these are influenced by cultural factors, still remain. -->
+
+10. **Need for Sensitivity Analysis** The Key takehome message is that we must always perform sensitivity analyses because we can never be certain that our confounding control strategy has worked.
 
 <!-- ```{tikz} -->
+
 <!-- #| label: fig-dag-multivariate-reality-complete-bulbulia -->
+
 <!-- #| fig-cap: "Multivariate reality gives rise to the latent variables,if reality continues to strongly effect η at t0 ...tn, there is an open backdoor path to Y through our concepts and constructs." -->
+
 <!-- #| out-width: 100% -->
+
 <!-- #| echo: false -->
 
 <!-- \usetikzlibrary{positioning} -->
+
 <!-- \usetikzlibrary{shapes.geometric} -->
+
 <!-- \usetikzlibrary{arrows} -->
+
 <!-- \usetikzlibrary{decorations} -->
+
 <!-- \tikzstyle{Arrow} = [->, thin, preaction = {decorate}] -->
+
 <!-- \tikzset{>=latex} -->
 
 <!-- \begin{tikzpicture}[{every node/.append style}=draw] -->
 
-
 <!-- \node [rectangle, draw=white, align=left] (R) at (0, 0 ) {$\mathcal{R}$\\ -->
+
 <!--   concepts$^{~}$\\constructs$^{~}$}; -->
+
 <!-- \node [rectangle, draw=white] (eta0) at (3, 0 ) {$\eta^{t0}$}; -->
+
 <!-- \node [rectangle, draw=black] (X0) at (6, 0 ) {$(X_1 \dots X_n)^{t0}$}; -->
+
 <!-- \node [rectangle, draw=white] (eta1) at (10, 0 ) {$\eta^{t1}$}; -->
+
 <!-- \node [rectangle, draw=black] (X1) at (12, 0 ) {$(X_1 \dots X_n)^{t1}$}; -->
+
 <!-- \node [rectangle, draw=white] (Y) at (14, 0 ) {Y$^{t2}$}; -->
 
-
-
-
 <!-- \draw [-latex, draw=red, bend left=80] (R) to (Y); -->
+
 <!-- \draw [-latex, draw=black] (R) to (eta0); -->
+
 <!-- \draw [-latex, draw=black, bend left, red] (R) to (eta1); -->
+
 <!-- \draw [-latex, draw=black] (eta0) to (X0); -->
+
 <!-- \draw [-latex, draw=black, bend right=40] (eta0) to (X1); -->
+
 <!-- \draw [-latex, draw=black] (eta1) to (X1); -->
+
 <!-- \draw [-latex, draw=red,dotted, bend left=40] (eta1) to (Y); -->
 
-
-
-
-
-
 <!-- \end{tikzpicture} -->
+
 <!-- ``` -->
 
-
-  
-  
 ## Slides
