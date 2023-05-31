@@ -2044,22 +2044,22 @@ Supply arguments directly to `.fns` through an anonymous function instead.
 <tr class="odd">
 <td style="text-align: left;">NZ Euro Depression</td>
 <td style="text-align: right;">-0.039</td>
-<td style="text-align: right;">-0.103</td>
-<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">-0.099</td>
+<td style="text-align: right;">0.019</td>
 <td style="text-align: right;">1.231</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">unreliable</td>
-<td style="text-align: left;">-0.039 (-0.103-0.021) [EV 1.231/1]</td>
+<td style="text-align: left;">-0.039 (-0.099-0.019) [EV 1.231/1]</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Māori Depression</td>
 <td style="text-align: right;">0.028</td>
-<td style="text-align: right;">-0.120</td>
-<td style="text-align: right;">0.185</td>
+<td style="text-align: right;">-0.125</td>
+<td style="text-align: right;">0.176</td>
 <td style="text-align: right;">1.190</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">unreliable</td>
-<td style="text-align: left;">0.028 (-0.12-0.185) [EV 1.19/1]</td>
+<td style="text-align: left;">0.028 (-0.125-0.176) [EV 1.19/1]</td>
 </tr>
 </tbody>
 </table>
@@ -2085,8 +2085,8 @@ Supply arguments directly to `.fns` through an anonymous function instead.
 <div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interpret_results_subgroup</span>(big_tab_d, <span class="at">exposure =</span> <span class="st">"Exercise"</span>, <span class="at">outcome =</span> <span class="st">"Depression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "For the NZ Euro Depression, the data suggests a potential effect of Exercise on Depression, with a causal contrast value of -0.039.\nHowever, the confidence interval for this estimate, ranging from -0.103 to 0.021, crosses zero, indicating considerable uncertainties. The E-values indicate that an unmeasured confounder that is associated with both the Depression and the Exercise by a risk ratio of 1.231 could explain away the observed associations, even after accounting for the measured confounders. This finding further reduces confidence in a true causal effect. Hence, while the estimates suggest a potential effect of Exercise on Depression for the NZ Euro Depression, the substantial uncertainty and possible influence of unmeasured confounders mean these findings should be interpreted with caution."
-[2] "For the Māori Depression, the data suggests a potential effect of Exercise on Depression, with a causal contrast value of 0.028.\nHowever, the confidence interval for this estimate, ranging from -0.12 to 0.185, crosses zero, indicating considerable uncertainties. The E-values indicate that an unmeasured confounder that is associated with both the Depression and the Exercise by a risk ratio of 1.19 could explain away the observed associations, even after accounting for the measured confounders. This finding further reduces confidence in a true causal effect. Hence, while the estimates suggest a potential effect of Exercise on Depression for the Māori Depression, the substantial uncertainty and possible influence of unmeasured confounders mean these findings should be interpreted with caution."       </code></pre>
+<pre><code>[1] "For the NZ Euro Depression, the data suggests a potential effect of Exercise on Depression, with a causal contrast value of -0.039.\nHowever, the confidence interval for this estimate, ranging from -0.099 to 0.019, crosses zero, indicating considerable uncertainties. The E-values indicate that an unmeasured confounder that is associated with both the Depression and the Exercise by a risk ratio of 1.231 could explain away the observed associations, even after accounting for the measured confounders. This finding further reduces confidence in a true causal effect. Hence, while the estimates suggest a potential effect of Exercise on Depression for the NZ Euro Depression, the substantial uncertainty and possible influence of unmeasured confounders mean these findings should be interpreted with caution."
+[2] "For the Māori Depression, the data suggests a potential effect of Exercise on Depression, with a causal contrast value of 0.028.\nHowever, the confidence interval for this estimate, ranging from -0.125 to 0.176, crosses zero, indicating considerable uncertainties. The E-values indicate that an unmeasured confounder that is associated with both the Depression and the Exercise by a risk ratio of 1.19 could explain away the observed associations, even after accounting for the measured confounders. This finding further reduces confidence in a true causal effect. Hence, while the estimates suggest a potential effect of Exercise on Depression for the Māori Depression, the substantial uncertainty and possible influence of unmeasured confounders mean these findings should be interpreted with caution."      </code></pre>
 </div>
 </div>
 </section>
@@ -3626,117 +3626,118 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb64-1217"><a href="#cb64-1217" aria-hidden="true" tabindex="-1"></a>est_all_d <span class="ot">&lt;-</span> <span class="fu">transform</span>(est_all_d, <span class="st">`</span><span class="at">RD_m - RD_e</span><span class="st">`</span> <span class="ot">=</span> RD_m <span class="sc">-</span> RD_e)</span>
 <span id="cb64-1218"><a href="#cb64-1218" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(sim_estimand_all_m_d, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"sim_estimand_all_m_d"</span>))</span>
 <span id="cb64-1219"><a href="#cb64-1219" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(sim_estimand_all_e_d, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"sim_estimand_all_e_d"</span>))</span>
-<span id="cb64-1220"><a href="#cb64-1220" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb64-1221"><a href="#cb64-1221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1222"><a href="#cb64-1222" aria-hidden="true" tabindex="-1"></a><span class="fu">### Report anxiety results</span></span>
-<span id="cb64-1225"><a href="#cb64-1225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb64-1226"><a href="#cb64-1226" aria-hidden="true" tabindex="-1"></a><span class="co"># return stored estimates </span></span>
-<span id="cb64-1227"><a href="#cb64-1227" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_e_d <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>,<span class="st">"sim_estimand_all_e_d"</span>))</span>
-<span id="cb64-1228"><a href="#cb64-1228" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_m_d<span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>,<span class="st">"sim_estimand_all_m_d"</span>))</span>
-<span id="cb64-1229"><a href="#cb64-1229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1230"><a href="#cb64-1230" aria-hidden="true" tabindex="-1"></a><span class="co"># create individual summaries </span></span>
-<span id="cb64-1231"><a href="#cb64-1231" aria-hidden="true" tabindex="-1"></a>sum_e_d <span class="ot">&lt;-</span> <span class="fu">summary</span>(sim_estimand_all_e_d)</span>
-<span id="cb64-1232"><a href="#cb64-1232" aria-hidden="true" tabindex="-1"></a>sum_m_d <span class="ot">&lt;-</span> <span class="fu">summary</span>(sim_estimand_all_m_d)</span>
-<span id="cb64-1233"><a href="#cb64-1233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1220"><a href="#cb64-1220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1221"><a href="#cb64-1221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb64-1222"><a href="#cb64-1222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1223"><a href="#cb64-1223" aria-hidden="true" tabindex="-1"></a><span class="fu">### Report anxiety results</span></span>
+<span id="cb64-1226"><a href="#cb64-1226" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb64-1227"><a href="#cb64-1227" aria-hidden="true" tabindex="-1"></a><span class="co"># return stored estimates </span></span>
+<span id="cb64-1228"><a href="#cb64-1228" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_e_d <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>,<span class="st">"sim_estimand_all_e_d"</span>))</span>
+<span id="cb64-1229"><a href="#cb64-1229" aria-hidden="true" tabindex="-1"></a>sim_estimand_all_m_d<span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>,<span class="st">"sim_estimand_all_m_d"</span>))</span>
+<span id="cb64-1230"><a href="#cb64-1230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1231"><a href="#cb64-1231" aria-hidden="true" tabindex="-1"></a><span class="co"># create individual summaries </span></span>
+<span id="cb64-1232"><a href="#cb64-1232" aria-hidden="true" tabindex="-1"></a>sum_e_d <span class="ot">&lt;-</span> <span class="fu">summary</span>(sim_estimand_all_e_d)</span>
+<span id="cb64-1233"><a href="#cb64-1233" aria-hidden="true" tabindex="-1"></a>sum_m_d <span class="ot">&lt;-</span> <span class="fu">summary</span>(sim_estimand_all_m_d)</span>
 <span id="cb64-1234"><a href="#cb64-1234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1235"><a href="#cb64-1235" aria-hidden="true" tabindex="-1"></a><span class="co"># create individual tables</span></span>
-<span id="cb64-1236"><a href="#cb64-1236" aria-hidden="true" tabindex="-1"></a>tab_ed <span class="ot">&lt;-</span> <span class="fu">sub_tab_ate</span>(sum_e_d, <span class="at">new_name =</span> <span class="st">"NZ Euro Depression"</span>)</span>
-<span id="cb64-1237"><a href="#cb64-1237" aria-hidden="true" tabindex="-1"></a>tab_md <span class="ot">&lt;-</span> <span class="fu">sub_tab_ate</span>(sum_m_d, <span class="at">new_name =</span> <span class="st">"Māori Depression"</span>)</span>
-<span id="cb64-1238"><a href="#cb64-1238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1235"><a href="#cb64-1235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1236"><a href="#cb64-1236" aria-hidden="true" tabindex="-1"></a><span class="co"># create individual tables</span></span>
+<span id="cb64-1237"><a href="#cb64-1237" aria-hidden="true" tabindex="-1"></a>tab_ed <span class="ot">&lt;-</span> <span class="fu">sub_tab_ate</span>(sum_e_d, <span class="at">new_name =</span> <span class="st">"NZ Euro Depression"</span>)</span>
+<span id="cb64-1238"><a href="#cb64-1238" aria-hidden="true" tabindex="-1"></a>tab_md <span class="ot">&lt;-</span> <span class="fu">sub_tab_ate</span>(sum_m_d, <span class="at">new_name =</span> <span class="st">"Māori Depression"</span>)</span>
 <span id="cb64-1239"><a href="#cb64-1239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1240"><a href="#cb64-1240" aria-hidden="true" tabindex="-1"></a><span class="co"># expand tables </span></span>
-<span id="cb64-1241"><a href="#cb64-1241" aria-hidden="true" tabindex="-1"></a>plot_ed <span class="ot">&lt;-</span> <span class="fu">sub_group_tab</span>(tab_ed, <span class="at">type=</span> <span class="st">"RD"</span>)</span>
-<span id="cb64-1242"><a href="#cb64-1242" aria-hidden="true" tabindex="-1"></a>plot_md <span class="ot">&lt;-</span> <span class="fu">sub_group_tab</span>(tab_md, <span class="at">type=</span> <span class="st">"RD"</span>)</span>
-<span id="cb64-1243"><a href="#cb64-1243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1244"><a href="#cb64-1244" aria-hidden="true" tabindex="-1"></a>big_tab_d <span class="ot">&lt;-</span> <span class="fu">rbind</span>(plot_ed,plot_md)</span>
-<span id="cb64-1245"><a href="#cb64-1245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1240"><a href="#cb64-1240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1241"><a href="#cb64-1241" aria-hidden="true" tabindex="-1"></a><span class="co"># expand tables </span></span>
+<span id="cb64-1242"><a href="#cb64-1242" aria-hidden="true" tabindex="-1"></a>plot_ed <span class="ot">&lt;-</span> <span class="fu">sub_group_tab</span>(tab_ed, <span class="at">type=</span> <span class="st">"RD"</span>)</span>
+<span id="cb64-1243"><a href="#cb64-1243" aria-hidden="true" tabindex="-1"></a>plot_md <span class="ot">&lt;-</span> <span class="fu">sub_group_tab</span>(tab_md, <span class="at">type=</span> <span class="st">"RD"</span>)</span>
+<span id="cb64-1244"><a href="#cb64-1244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1245"><a href="#cb64-1245" aria-hidden="true" tabindex="-1"></a>big_tab_d <span class="ot">&lt;-</span> <span class="fu">rbind</span>(plot_ed,plot_md)</span>
 <span id="cb64-1246"><a href="#cb64-1246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1247"><a href="#cb64-1247" aria-hidden="true" tabindex="-1"></a><span class="co"># table for anxiety outcome --format as "markdown" if you are using quarto documents</span></span>
-<span id="cb64-1248"><a href="#cb64-1248" aria-hidden="true" tabindex="-1"></a>big_tab_d <span class="sc">|&gt;</span> </span>
-<span id="cb64-1249"><a href="#cb64-1249" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">format=</span><span class="st">"markdown"</span>)</span>
-<span id="cb64-1250"><a href="#cb64-1250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb64-1251"><a href="#cb64-1251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1247"><a href="#cb64-1247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1248"><a href="#cb64-1248" aria-hidden="true" tabindex="-1"></a><span class="co"># table for anxiety outcome --format as "markdown" if you are using quarto documents</span></span>
+<span id="cb64-1249"><a href="#cb64-1249" aria-hidden="true" tabindex="-1"></a>big_tab_d <span class="sc">|&gt;</span> </span>
+<span id="cb64-1250"><a href="#cb64-1250" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">format=</span><span class="st">"markdown"</span>)</span>
+<span id="cb64-1251"><a href="#cb64-1251" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb64-1252"><a href="#cb64-1252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1253"><a href="#cb64-1253" aria-hidden="true" tabindex="-1"></a><span class="fu">### Graph Anxiety result</span></span>
-<span id="cb64-1254"><a href="#cb64-1254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1253"><a href="#cb64-1253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1254"><a href="#cb64-1254" aria-hidden="true" tabindex="-1"></a><span class="fu">### Graph Anxiety result</span></span>
 <span id="cb64-1255"><a href="#cb64-1255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1258"><a href="#cb64-1258" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb64-1259"><a href="#cb64-1259" aria-hidden="true" tabindex="-1"></a><span class="co"># group tables</span></span>
-<span id="cb64-1260"><a href="#cb64-1260" aria-hidden="true" tabindex="-1"></a><span class="fu">sub_group_plot_ate</span>(big_tab_d, <span class="at">title =</span> <span class="st">"Effect of Exercise on Depression"</span>, <span class="at">subtitle =</span> <span class="st">"Subgroup Analysis: NZ Euro and Māori"</span>, <span class="at">xlab =</span> <span class="st">"Groups"</span>, <span class="at">ylab =</span> <span class="st">"Effects"</span>,</span>
-<span id="cb64-1261"><a href="#cb64-1261" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x_offset =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
-<span id="cb64-1262"><a href="#cb64-1262" aria-hidden="true" tabindex="-1"></a>                           <span class="at">x_lim_lo =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
-<span id="cb64-1263"><a href="#cb64-1263" aria-hidden="true" tabindex="-1"></a>                           <span class="at">x_lim_hi =</span> <span class="fl">1.5</span>)</span>
-<span id="cb64-1264"><a href="#cb64-1264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1265"><a href="#cb64-1265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb64-1266"><a href="#cb64-1266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1267"><a href="#cb64-1267" aria-hidden="true" tabindex="-1"></a><span class="fu">###  Interpretation</span></span>
-<span id="cb64-1268"><a href="#cb64-1268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1269"><a href="#cb64-1269" aria-hidden="true" tabindex="-1"></a>Use the function, again, modify the outputs to fit with your study and results and provide your own interpretation. </span>
-<span id="cb64-1270"><a href="#cb64-1270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1256"><a href="#cb64-1256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1259"><a href="#cb64-1259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb64-1260"><a href="#cb64-1260" aria-hidden="true" tabindex="-1"></a><span class="co"># group tables</span></span>
+<span id="cb64-1261"><a href="#cb64-1261" aria-hidden="true" tabindex="-1"></a><span class="fu">sub_group_plot_ate</span>(big_tab_d, <span class="at">title =</span> <span class="st">"Effect of Exercise on Depression"</span>, <span class="at">subtitle =</span> <span class="st">"Subgroup Analysis: NZ Euro and Māori"</span>, <span class="at">xlab =</span> <span class="st">"Groups"</span>, <span class="at">ylab =</span> <span class="st">"Effects"</span>,</span>
+<span id="cb64-1262"><a href="#cb64-1262" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x_offset =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb64-1263"><a href="#cb64-1263" aria-hidden="true" tabindex="-1"></a>                           <span class="at">x_lim_lo =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb64-1264"><a href="#cb64-1264" aria-hidden="true" tabindex="-1"></a>                           <span class="at">x_lim_hi =</span> <span class="fl">1.5</span>)</span>
+<span id="cb64-1265"><a href="#cb64-1265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1266"><a href="#cb64-1266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb64-1267"><a href="#cb64-1267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1268"><a href="#cb64-1268" aria-hidden="true" tabindex="-1"></a><span class="fu">###  Interpretation</span></span>
+<span id="cb64-1269"><a href="#cb64-1269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1270"><a href="#cb64-1270" aria-hidden="true" tabindex="-1"></a>Use the function, again, modify the outputs to fit with your study and results and provide your own interpretation. </span>
 <span id="cb64-1271"><a href="#cb64-1271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1274"><a href="#cb64-1274" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb64-1275"><a href="#cb64-1275" aria-hidden="true" tabindex="-1"></a><span class="fu">interpret_results_subgroup</span>(big_tab_d, <span class="at">exposure =</span> <span class="st">"Exercise"</span>, <span class="at">outcome =</span> <span class="st">"Depression"</span>)</span>
-<span id="cb64-1276"><a href="#cb64-1276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb64-1277"><a href="#cb64-1277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1278"><a href="#cb64-1278" aria-hidden="true" tabindex="-1"></a><span class="fu">### Estimate the subgroup contrast</span></span>
-<span id="cb64-1279"><a href="#cb64-1279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1272"><a href="#cb64-1272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1275"><a href="#cb64-1275" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb64-1276"><a href="#cb64-1276" aria-hidden="true" tabindex="-1"></a><span class="fu">interpret_results_subgroup</span>(big_tab_d, <span class="at">exposure =</span> <span class="st">"Exercise"</span>, <span class="at">outcome =</span> <span class="st">"Depression"</span>)</span>
+<span id="cb64-1277"><a href="#cb64-1277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb64-1278"><a href="#cb64-1278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1279"><a href="#cb64-1279" aria-hidden="true" tabindex="-1"></a><span class="fu">### Estimate the subgroup contrast</span></span>
 <span id="cb64-1280"><a href="#cb64-1280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1283"><a href="#cb64-1283" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb64-1284"><a href="#cb64-1284" aria-hidden="true" tabindex="-1"></a><span class="co"># calculated above</span></span>
-<span id="cb64-1285"><a href="#cb64-1285" aria-hidden="true" tabindex="-1"></a>est_all_d <span class="ot">&lt;-</span> <span class="fu">readRDS</span>( here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>,<span class="st">"est_all_d"</span>))</span>
-<span id="cb64-1286"><a href="#cb64-1286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1287"><a href="#cb64-1287" aria-hidden="true" tabindex="-1"></a><span class="co"># make the sumamry into a dataframe so we can make a table</span></span>
-<span id="cb64-1288"><a href="#cb64-1288" aria-hidden="true" tabindex="-1"></a>dfd <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(est_all_d))</span>
-<span id="cb64-1289"><a href="#cb64-1289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1290"><a href="#cb64-1290" aria-hidden="true" tabindex="-1"></a><span class="co"># get rownames for selecting the correct row</span></span>
-<span id="cb64-1291"><a href="#cb64-1291" aria-hidden="true" tabindex="-1"></a>dfd<span class="sc">$</span>RowName <span class="ot">&lt;-</span> <span class="fu">row.names</span>(dfd)</span>
-<span id="cb64-1292"><a href="#cb64-1292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1293"><a href="#cb64-1293" aria-hidden="true" tabindex="-1"></a><span class="co"># select the correct row -- the group contrast</span></span>
-<span id="cb64-1294"><a href="#cb64-1294" aria-hidden="true" tabindex="-1"></a>filtered_dfd <span class="ot">&lt;-</span> dfd <span class="sc">|&gt;</span> </span>
-<span id="cb64-1295"><a href="#cb64-1295" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(RowName <span class="sc">==</span> <span class="st">"RD_m - RD_e"</span>) </span>
-<span id="cb64-1296"><a href="#cb64-1296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1281"><a href="#cb64-1281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1284"><a href="#cb64-1284" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb64-1285"><a href="#cb64-1285" aria-hidden="true" tabindex="-1"></a><span class="co"># calculated above</span></span>
+<span id="cb64-1286"><a href="#cb64-1286" aria-hidden="true" tabindex="-1"></a>est_all_d <span class="ot">&lt;-</span> <span class="fu">readRDS</span>( here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>,<span class="st">"est_all_d"</span>))</span>
+<span id="cb64-1287"><a href="#cb64-1287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1288"><a href="#cb64-1288" aria-hidden="true" tabindex="-1"></a><span class="co"># make the sumamry into a dataframe so we can make a table</span></span>
+<span id="cb64-1289"><a href="#cb64-1289" aria-hidden="true" tabindex="-1"></a>dfd <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(est_all_d))</span>
+<span id="cb64-1290"><a href="#cb64-1290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1291"><a href="#cb64-1291" aria-hidden="true" tabindex="-1"></a><span class="co"># get rownames for selecting the correct row</span></span>
+<span id="cb64-1292"><a href="#cb64-1292" aria-hidden="true" tabindex="-1"></a>dfd<span class="sc">$</span>RowName <span class="ot">&lt;-</span> <span class="fu">row.names</span>(dfd)</span>
+<span id="cb64-1293"><a href="#cb64-1293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1294"><a href="#cb64-1294" aria-hidden="true" tabindex="-1"></a><span class="co"># select the correct row -- the group contrast</span></span>
+<span id="cb64-1295"><a href="#cb64-1295" aria-hidden="true" tabindex="-1"></a>filtered_dfd <span class="ot">&lt;-</span> dfd <span class="sc">|&gt;</span> </span>
+<span id="cb64-1296"><a href="#cb64-1296" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(RowName <span class="sc">==</span> <span class="st">"RD_m - RD_e"</span>) </span>
 <span id="cb64-1297"><a href="#cb64-1297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1298"><a href="#cb64-1298" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the filtered data frame</span></span>
-<span id="cb64-1299"><a href="#cb64-1299" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb64-1300"><a href="#cb64-1300" aria-hidden="true" tabindex="-1"></a>filtered_dfd  <span class="sc">|&gt;</span> </span>
-<span id="cb64-1301"><a href="#cb64-1301" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>RowName) <span class="sc">|&gt;</span> </span>
-<span id="cb64-1302"><a href="#cb64-1302" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb64-1303"><a href="#cb64-1303" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_material</span>(<span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>)) </span>
-<span id="cb64-1304"><a href="#cb64-1304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1305"><a href="#cb64-1305" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb64-1306"><a href="#cb64-1306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1298"><a href="#cb64-1298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1299"><a href="#cb64-1299" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the filtered data frame</span></span>
+<span id="cb64-1300"><a href="#cb64-1300" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb64-1301"><a href="#cb64-1301" aria-hidden="true" tabindex="-1"></a>filtered_dfd  <span class="sc">|&gt;</span> </span>
+<span id="cb64-1302"><a href="#cb64-1302" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>RowName) <span class="sc">|&gt;</span> </span>
+<span id="cb64-1303"><a href="#cb64-1303" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb64-1304"><a href="#cb64-1304" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_material</span>(<span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>)) </span>
+<span id="cb64-1305"><a href="#cb64-1305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1306"><a href="#cb64-1306" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb64-1307"><a href="#cb64-1307" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb64-1308"><a href="#cb64-1308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1309"><a href="#cb64-1309" aria-hidden="true" tabindex="-1"></a>Reporting might be: </span>
-<span id="cb64-1310"><a href="#cb64-1310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1311"><a href="#cb64-1311" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The estimated reduction of depression from exercise is higher overall for New Zealand Europeans (RD_e) compared to Māori (RD_m). This is suggested by the estimated risk difference (RD_m - RD_e) of 0.068. However, there is a degree of uncertainty in this estimate, as the confidence interval (-0.09 to 0.229) crosses zero. This suggests that we cannot be confident that the difference in depression reduction between New Zealand Europeans and Māori is statistically significant. It's possible that the true difference could be zero or even negative, implying a greater depression reduction for Māori than New Zealand Europeans. Thus, while the results hint at a larger depression reduction for New Zealand Europeans, the uncertainty in this estimate urges us to interpret this difference with caution.</span></span>
-<span id="cb64-1312"><a href="#cb64-1312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1309"><a href="#cb64-1309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1310"><a href="#cb64-1310" aria-hidden="true" tabindex="-1"></a>Reporting might be: </span>
+<span id="cb64-1311"><a href="#cb64-1311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1312"><a href="#cb64-1312" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The estimated reduction of depression from exercise is higher overall for New Zealand Europeans (RD_e) compared to Māori (RD_m). This is suggested by the estimated risk difference (RD_m - RD_e) of 0.068. However, there is a degree of uncertainty in this estimate, as the confidence interval (-0.09 to 0.229) crosses zero. This suggests that we cannot be confident that the difference in depression reduction between New Zealand Europeans and Māori is statistically significant. It's possible that the true difference could be zero or even negative, implying a greater depression reduction for Māori than New Zealand Europeans. Thus, while the results hint at a larger depression reduction for New Zealand Europeans, the uncertainty in this estimate urges us to interpret this difference with caution.</span></span>
 <span id="cb64-1313"><a href="#cb64-1313" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb64-1314"><a href="#cb64-1314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1315"><a href="#cb64-1315" aria-hidden="true" tabindex="-1"></a><span class="fu">### Discusion </span></span>
-<span id="cb64-1316"><a href="#cb64-1316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1317"><a href="#cb64-1317" aria-hidden="true" tabindex="-1"></a>You'll need to do this yourself. Here's a start: </span>
-<span id="cb64-1318"><a href="#cb64-1318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1315"><a href="#cb64-1315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1316"><a href="#cb64-1316" aria-hidden="true" tabindex="-1"></a><span class="fu">### Discusion </span></span>
+<span id="cb64-1317"><a href="#cb64-1317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1318"><a href="#cb64-1318" aria-hidden="true" tabindex="-1"></a>You'll need to do this yourself. Here's a start: </span>
 <span id="cb64-1319"><a href="#cb64-1319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1320"><a href="#cb64-1320" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In our study, we employed a robust statistical method that helps us estimate the impact of exercise on reducing anxiety among different population groups – New Zealand Europeans and Māori. This method has the advantage of providing reliable results even if our underlying assumptions aren't entirely accurate – a likely scenario given the complexity of real-world data.  However, this robustness comes with a trade-off: it gives us wider ranges of uncertainty in our estimates. This doesn't mean the analysis is flawed; rather, it accurately represents our level of certainty given the data we have.</span></span>
-<span id="cb64-1321"><a href="#cb64-1321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1322"><a href="#cb64-1322" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Exercise and Anxiety**</span></span>
-<span id="cb64-1323"><a href="#cb64-1323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1324"><a href="#cb64-1324" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Our analysis suggests that exercise may have a greater effect in reducing anxiety among New Zealand Europeans compared to Māori. This conclusion comes from our primary causal estimate, the risk difference, which is 0.104. However, it's crucial to consider our uncertainty in this value. We represent this uncertainty as a range, also known as a confidence interval. In this case, the interval ranges from -0.042 to 0.279. What this means is, given our current data and method, the true effect could plausibly be anywhere within this range. While our best estimate shows a higher reduction in anxiety for New Zealand Europeans, the range of plausible values includes zero and even negative values. This implies that the true effect could be no difference between the two groups or even a higher reduction in Māori. Hence, while there's an indication of a difference, we should interpret it cautiously given the wide range of uncertainty.</span></span>
-<span id="cb64-1325"><a href="#cb64-1325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1326"><a href="#cb64-1326" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Thus, although our analysis points towards a potential difference in how exercise reduces anxiety among these groups, the level of uncertainty means we should be careful about drawing firm conclusions. More research is needed to further explore these patterns.</span></span>
-<span id="cb64-1327"><a href="#cb64-1327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1328"><a href="#cb64-1328" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Exercise and Depression**</span></span>
-<span id="cb64-1329"><a href="#cb64-1329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1320"><a href="#cb64-1320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1321"><a href="#cb64-1321" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In our study, we employed a robust statistical method that helps us estimate the impact of exercise on reducing anxiety among different population groups – New Zealand Europeans and Māori. This method has the advantage of providing reliable results even if our underlying assumptions aren't entirely accurate – a likely scenario given the complexity of real-world data.  However, this robustness comes with a trade-off: it gives us wider ranges of uncertainty in our estimates. This doesn't mean the analysis is flawed; rather, it accurately represents our level of certainty given the data we have.</span></span>
+<span id="cb64-1322"><a href="#cb64-1322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1323"><a href="#cb64-1323" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Exercise and Anxiety**</span></span>
+<span id="cb64-1324"><a href="#cb64-1324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1325"><a href="#cb64-1325" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Our analysis suggests that exercise may have a greater effect in reducing anxiety among New Zealand Europeans compared to Māori. This conclusion comes from our primary causal estimate, the risk difference, which is 0.104. However, it's crucial to consider our uncertainty in this value. We represent this uncertainty as a range, also known as a confidence interval. In this case, the interval ranges from -0.042 to 0.279. What this means is, given our current data and method, the true effect could plausibly be anywhere within this range. While our best estimate shows a higher reduction in anxiety for New Zealand Europeans, the range of plausible values includes zero and even negative values. This implies that the true effect could be no difference between the two groups or even a higher reduction in Māori. Hence, while there's an indication of a difference, we should interpret it cautiously given the wide range of uncertainty.</span></span>
+<span id="cb64-1326"><a href="#cb64-1326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1327"><a href="#cb64-1327" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Thus, although our analysis points towards a potential difference in how exercise reduces anxiety among these groups, the level of uncertainty means we should be careful about drawing firm conclusions. More research is needed to further explore these patterns.</span></span>
+<span id="cb64-1328"><a href="#cb64-1328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1329"><a href="#cb64-1329" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Exercise and Depression**</span></span>
 <span id="cb64-1330"><a href="#cb64-1330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1331"><a href="#cb64-1331" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In addition to anxiety, we also examined the effect of exercise on depression. We do not find evidence for reduction of depression from exercise in either group. We do not find evidence for the effect of weekly exercise -- as self-reported -- on depression. </span></span>
-<span id="cb64-1332"><a href="#cb64-1332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1333"><a href="#cb64-1333" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Proviso**</span></span>
-<span id="cb64-1334"><a href="#cb64-1334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1335"><a href="#cb64-1335" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; It is important to bear in mind that statistical results are only one piece of a larger scientific puzzle about the relationship between excercise and well-being. Other pieces include understanding the context, incorporating subject matter knowledge, and considering the implications of the findings. In the present study, wide confidence intervals suggest the possibility of considerable individual differences.$\dots$ nevertheless, $\dots$</span></span>
-<span id="cb64-1336"><a href="#cb64-1336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1331"><a href="#cb64-1331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1332"><a href="#cb64-1332" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In addition to anxiety, we also examined the effect of exercise on depression. We do not find evidence for reduction of depression from exercise in either group. We do not find evidence for the effect of weekly exercise -- as self-reported -- on depression. </span></span>
+<span id="cb64-1333"><a href="#cb64-1333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1334"><a href="#cb64-1334" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Proviso**</span></span>
+<span id="cb64-1335"><a href="#cb64-1335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1336"><a href="#cb64-1336" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; It is important to bear in mind that statistical results are only one piece of a larger scientific puzzle about the relationship between excercise and well-being. Other pieces include understanding the context, incorporating subject matter knowledge, and considering the implications of the findings. In the present study, wide confidence intervals suggest the possibility of considerable individual differences.$\dots$ nevertheless, $\dots$</span></span>
 <span id="cb64-1337"><a href="#cb64-1337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-1338"><a href="#cb64-1338" aria-hidden="true" tabindex="-1"></a>**Again, you will need to come up with your own discussion, but follow the step-by-step instructions above as a guide.**</span>
+<span id="cb64-1338"><a href="#cb64-1338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-1339"><a href="#cb64-1339" aria-hidden="true" tabindex="-1"></a>**Again, you will need to come up with your own discussion, but follow the step-by-step instructions above as a guide.**</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

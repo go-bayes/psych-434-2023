@@ -1155,6 +1155,7 @@ est_all_d <- cbind(sim_estimand_all_m_d, sim_estimand_all_e_d)
 est_all_d <- transform(est_all_d, `RD_m - RD_e` = RD_m - RD_e)
 saveRDS(sim_estimand_all_m_d, here::here("data", "sim_estimand_all_m_d"))
 saveRDS(sim_estimand_all_e_d, here::here("data", "sim_estimand_all_e_d"))
+
 ```
 
 ### Report anxiety results
