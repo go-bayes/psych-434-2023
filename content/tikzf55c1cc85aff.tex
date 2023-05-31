@@ -1,0 +1,58 @@
+\documentclass[
+%% TIKZ_CLASSOPTION %%
+tikz
+]{standalone}
+\usepackage{amsmath}
+\usetikzlibrary{matrix}
+%% EXTRA_TIKZ_PREAMBLE_CODE %%
+\begin{document}
+%% TIKZ_CODE %%
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+
+% Define a simple decoration
+\tikzstyle{cor} = [-, dotted, preaction = {decorate}]
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+
+\node [rectangle, draw=white] (ULAY) at (0, 2) {U$_{t0/LAY}$};
+\node [rectangle, draw=white] (UA) at (6, 4) {U$_{t1/A}$};
+\node [rectangle, draw=white] (UY) at (8, 5) {U$_{t2/Y}$};
+
+\node [rectangle, draw=black] (L0) at (4, 2) {LAY$^{t0}$};
+\node [rectangle, draw=black] (A1) at (6, 2) {A$^{t1}$};
+\node [rectangle, draw=black] (Y2) at (8, 2) {Y$^{t2}$};
+\node [rectangle, draw=white] (Leta0) at (4, 0) {L$^{t0}_\eta$};
+\node [rectangle, draw=white] (Aeta1) at (6, 0) {A$^{t1}_\eta$};
+\node [rectangle, draw=white] (Yeta2) at (8, 0) {Y$^{t2}_\eta$};
+
+
+\draw [-latex, draw=black, dotted, bend_left = 20] (ULAY) to (UA);
+\draw [-latex, draw=black, dotted, bend_left = 40] (ULAY) to (UY);
+
+\draw [-latex, draw=black] (UA) to (A1);
+\draw [-latex, draw=red] (UY) to (Y2);
+\draw [-latex, draw=black] (ULAY) to (L0);
+\draw [-latex, draw=black] (Leta0) to (L0);
+\draw [-latex, draw=black] (Leta0) to (Aeta1);
+\draw [-latex, draw=black, bend right=30] (Leta0) to (Yeta2);
+
+\draw [-latex, draw=black] (Aeta1) to (A1);
+\draw [-latex, draw=black] (Yeta2) to (Y2);
+
+\draw [-latex, draw=red] (Aeta1) to (UY);
+\draw [-latex, draw=black] (Leta0) to (UA);
+
+
+
+\draw [cor, draw=black, dashed,bend right=30] (ULAY) to (Leta0);
+\draw [cor, draw=black, dashed, bend right = 30] (UA) to (Aeta1);
+\draw [cor, draw=black, dashed, bend right = 100] (ULAY) to (Yeta2);
+
+\end{tikzpicture}
+\end{document}
