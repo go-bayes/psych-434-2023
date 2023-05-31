@@ -265,10 +265,13 @@ Recall the positive assumption:
 
 **Positivity:** Can we intervene on the exposure at all levels of the covariates?
 
-These are the data by wave, but they don't track who changed.
 
 ```{r}
 #| label: prepare_exposure_data
+#| eval: true
+
+#These are the data by wave, but they don't track who changed.
+
 #  select only the baseline year and the exposure year.  That will give us change in the exposure. ()
 dt_exposure <- dt_start |>
   
@@ -284,14 +287,15 @@ dt_exposure <- dt_start |>
 
 
 # check
-dt_exposure |>
-  tabyl(hours_exercise_coarsen_n, eth_cat,  wave )
+# dt_exposure |>
+#   tabyl(hours_exercise_coarsen_n, eth_cat,  wave )
 ```
 
 I've written a function called `transition_table` that will help us assess change in the exposure at the *individual level.*
 
 ```{r}
-#| label: transition_table
+#| label: transition_table_interp
+
 #   consider people going from active to vary active
 out <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exposure)
 
