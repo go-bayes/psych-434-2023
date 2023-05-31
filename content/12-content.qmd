@@ -1,5 +1,5 @@
 ---
-title: "Template: Stratified Causal Estimatatio"
+title: "Template: Stratified Causal Estimatation"
 date: "2023-JUNE-06"
 author:
     name: Joseph Bulbulia
@@ -21,6 +21,10 @@ format:
       caption: none
 ---
 
+
+Your step-by-step guide to reporting is as follows: 
+
+
 ## Intoduction
 
 Answer the following:
@@ -35,7 +39,7 @@ Answer the following:
 -   Explain how the the exposure and outcome is relevant to your question.
 -   Define your causal estimand (see: lecture 9). Hint: it is ATE_g\_risk difference = E\[Y(1)-(0)\|G,L\], where G is your multiple-group indicator and L is your set of baseline confounders.
 
-## Methods
+## Method
 
 -   Consider any ethical implications.
 -   Explain the sample. Provide descriptive statistics
@@ -92,9 +96,8 @@ Example:
 -   Report the causal estimates.
     -   ATE contrasts for groups in setting the exposure to for each group in setting level A = a and A = a\*
     -   differences between groups in the magnitude of the effects. (ATE_group 1 - ATE_group_2)
--   Report the E-value: how sensitive are your results to unmeasured confounding? Hint I gave you code that will create a table for you: See [here](https://go-bayes.github.io/psych-434-2023/content/10-content.html)
+-   Report the E-value: how sensitive are your results to unmeasured confounding? Hint: see the code below. I've substantially automated this task.
 
-`table_depression <- tab_ate_subgroup_rd(table_estimates_depression, delta = 1, sd = 1)`
 
 ## Discussion
 
