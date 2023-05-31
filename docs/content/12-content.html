@@ -307,7 +307,7 @@ div.csl-indent {
   <li><a href="#depression-analysis-and-results" id="toc-depression-analysis-and-results" class="nav-link" data-scroll-target="#depression-analysis-and-results">Depression Analysis and Results</a>
   <ul class="collapse">
   <li><a href="#report-anxiety-results" id="toc-report-anxiety-results" class="nav-link" data-scroll-target="#report-anxiety-results">Report anxiety results</a></li>
-  <li><a href="#graph-anxiety-result" id="toc-graph-anxiety-result" class="nav-link" data-scroll-target="#graph-anxiety-result">Graph Anxiety result</a></li>
+  <li><a href="#graph-depression-result" id="toc-graph-depression-result" class="nav-link" data-scroll-target="#graph-depression-result">Graph depression result</a></li>
   <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
   <li><a href="#estimate-the-subgroup-contrast-1" id="toc-estimate-the-subgroup-contrast-1" class="nav-link" data-scroll-target="#estimate-the-subgroup-contrast-1">Estimate the subgroup contrast</a></li>
   <li><a href="#discusion" id="toc-discusion" class="nav-link" data-scroll-target="#discusion">Discusion</a></li>
@@ -2050,8 +2050,8 @@ Supply arguments directly to `.fns` through an anonymous function instead.
 </div>
 </div>
 </section>
-<section id="graph-anxiety-result" class="level3">
-<h3 class="anchored" data-anchor-id="graph-anxiety-result">Graph Anxiety result</h3>
+<section id="graph-depression-result" class="level3">
+<h3 class="anchored" data-anchor-id="graph-depression-result">Graph depression result</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group tables</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sub_group_plot_ate</span>(big_tab_d, <span class="at">title =</span> <span class="st">"Effect of Exercise on Depression"</span>, <span class="at">subtitle =</span> <span class="st">"Subgroup Analysis: NZ Euro and Māori"</span>, <span class="at">xlab =</span> <span class="st">"Groups"</span>, <span class="at">ylab =</span> <span class="st">"Effects"</span>,</span>
@@ -2127,12 +2127,12 @@ Supply arguments directly to `.fns` through an anonymous function instead.
 </section>
 <section id="discusion" class="level3">
 <h3 class="anchored" data-anchor-id="discusion">Discusion</h3>
-<p>You’ll need to do this yourself. Here’s a start:</p>
+<p>You’ll need to write the discussion for yourself. Here’s a start:</p>
 <blockquote class="blockquote">
 <p>In our study, we employed a robust statistical method that helps us estimate the impact of exercise on reducing anxiety among different population groups – New Zealand Europeans and Māori. This method has the advantage of providing reliable results even if our underlying assumptions aren’t entirely accurate – a likely scenario given the complexity of real-world data. However, this robustness comes with a trade-off: it gives us wider ranges of uncertainty in our estimates. This doesn’t mean the analysis is flawed; rather, it accurately represents our level of certainty given the data we have.</p>
 </blockquote>
 <section id="exercise-and-anxiety" class="level4">
-<h4 class="anchored" data-anchor-id="exercise-and-anxiety"><strong>Exercise and Anxiety</strong></h4>
+<h4 class="anchored" data-anchor-id="exercise-and-anxiety"><strong>Exercise and anxiety</strong></h4>
 <blockquote class="blockquote">
 <p>Our analysis suggests that exercise may have a greater effect in reducing anxiety among New Zealand Europeans compared to Māori. This conclusion comes from our primary causal estimate, the risk difference, which is 0.104. However, it’s crucial to consider our uncertainty in this value. We represent this uncertainty as a range, also known as a confidence interval. In this case, the interval ranges from -0.042 to 0.279. What this means is, given our current data and method, the true effect could plausibly be anywhere within this range. While our best estimate shows a higher reduction in anxiety for New Zealand Europeans, the range of plausible values includes zero and even negative values. This implies that the true effect could be no difference between the two groups or even a higher reduction in Māori. Hence, while there’s an indication of a difference, we should interpret it cautiously given the wide range of uncertainty.</p>
 </blockquote>
@@ -2141,17 +2141,17 @@ Supply arguments directly to `.fns` through an anonymous function instead.
 </blockquote>
 </section>
 <section id="exercise-and-depression" class="level4">
-<h4 class="anchored" data-anchor-id="exercise-and-depression"><strong>Exercise and Depression</strong></h4>
+<h4 class="anchored" data-anchor-id="exercise-and-depression"><strong>Exercise and depression</strong></h4>
 <blockquote class="blockquote">
 <p>In addition to anxiety, we also examined the effect of exercise on depression. We do not find evidence for reduction of depression from exercise in either group. We do not find evidence for the effect of weekly exercise – as self-reported – on depression.</p>
 </blockquote>
 </section>
-<section id="proviso" class="level4">
-<h4 class="anchored" data-anchor-id="proviso"><strong>Proviso</strong></h4>
+<section id="limitations" class="level4">
+<h4 class="anchored" data-anchor-id="limitations"><strong>Limitations</strong></h4>
 <blockquote class="blockquote">
 <p>It is important to bear in mind that statistical results are only one piece of a larger scientific puzzle about the relationship between excercise and well-being. Other pieces include understanding the context, incorporating subject matter knowledge, and considering the implications of the findings. In the present study, wide confidence intervals suggest the possibility of considerable individual differences.<span class="math inline">\dots</span> nevertheless, <span class="math inline">\dots</span></p>
 </blockquote>
-<p><strong>Again, you will need to come up with your own discussion, but follow the step-by-step instructions above as a guide.</strong></p>
+<p><strong>Again, you will need to come up with your own discussion, but you may follow the step-by-step instructions above as a guide.</strong></p>
 
 
 <!-- -->
@@ -3649,7 +3649,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb63-1258"><a href="#cb63-1258" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb63-1259"><a href="#cb63-1259" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1260"><a href="#cb63-1260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-1261"><a href="#cb63-1261" aria-hidden="true" tabindex="-1"></a><span class="fu">### Graph Anxiety result</span></span>
+<span id="cb63-1261"><a href="#cb63-1261" aria-hidden="true" tabindex="-1"></a><span class="fu">### Graph depression result</span></span>
 <span id="cb63-1262"><a href="#cb63-1262" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1263"><a href="#cb63-1263" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1266"><a href="#cb63-1266" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -3707,28 +3707,28 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb63-1322"><a href="#cb63-1322" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1323"><a href="#cb63-1323" aria-hidden="true" tabindex="-1"></a><span class="fu">### Discusion </span></span>
 <span id="cb63-1324"><a href="#cb63-1324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-1325"><a href="#cb63-1325" aria-hidden="true" tabindex="-1"></a>You'll need to do this yourself. Here's a start: </span>
+<span id="cb63-1325"><a href="#cb63-1325" aria-hidden="true" tabindex="-1"></a>You'll need to write the discussion for yourself. Here's a start: </span>
 <span id="cb63-1326"><a href="#cb63-1326" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1327"><a href="#cb63-1327" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1328"><a href="#cb63-1328" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In our study, we employed a robust statistical method that helps us estimate the impact of exercise on reducing anxiety among different population groups – New Zealand Europeans and Māori. This method has the advantage of providing reliable results even if our underlying assumptions aren't entirely accurate – a likely scenario given the complexity of real-world data.  However, this robustness comes with a trade-off: it gives us wider ranges of uncertainty in our estimates. This doesn't mean the analysis is flawed; rather, it accurately represents our level of certainty given the data we have.</span></span>
 <span id="cb63-1329"><a href="#cb63-1329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-1330"><a href="#cb63-1330" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Exercise and Anxiety**</span></span>
+<span id="cb63-1330"><a href="#cb63-1330" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Exercise and anxiety**</span></span>
 <span id="cb63-1331"><a href="#cb63-1331" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1332"><a href="#cb63-1332" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Our analysis suggests that exercise may have a greater effect in reducing anxiety among New Zealand Europeans compared to Māori. This conclusion comes from our primary causal estimate, the risk difference, which is 0.104. However, it's crucial to consider our uncertainty in this value. We represent this uncertainty as a range, also known as a confidence interval. In this case, the interval ranges from -0.042 to 0.279. What this means is, given our current data and method, the true effect could plausibly be anywhere within this range. While our best estimate shows a higher reduction in anxiety for New Zealand Europeans, the range of plausible values includes zero and even negative values. This implies that the true effect could be no difference between the two groups or even a higher reduction in Māori. Hence, while there's an indication of a difference, we should interpret it cautiously given the wide range of uncertainty.</span></span>
 <span id="cb63-1333"><a href="#cb63-1333" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1334"><a href="#cb63-1334" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Thus, although our analysis points towards a potential difference in how exercise reduces anxiety among these groups, the level of uncertainty means we should be careful about drawing firm conclusions. More research is needed to further explore these patterns.</span></span>
 <span id="cb63-1335"><a href="#cb63-1335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-1336"><a href="#cb63-1336" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Exercise and Depression**</span></span>
+<span id="cb63-1336"><a href="#cb63-1336" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Exercise and depression**</span></span>
 <span id="cb63-1337"><a href="#cb63-1337" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1338"><a href="#cb63-1338" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1339"><a href="#cb63-1339" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In addition to anxiety, we also examined the effect of exercise on depression. We do not find evidence for reduction of depression from exercise in either group. We do not find evidence for the effect of weekly exercise -- as self-reported -- on depression. </span></span>
 <span id="cb63-1340"><a href="#cb63-1340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-1341"><a href="#cb63-1341" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Proviso**</span></span>
+<span id="cb63-1341"><a href="#cb63-1341" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Limitations**</span></span>
 <span id="cb63-1342"><a href="#cb63-1342" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1343"><a href="#cb63-1343" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; It is important to bear in mind that statistical results are only one piece of a larger scientific puzzle about the relationship between excercise and well-being. Other pieces include understanding the context, incorporating subject matter knowledge, and considering the implications of the findings. In the present study, wide confidence intervals suggest the possibility of considerable individual differences.$\dots$ nevertheless, $\dots$</span></span>
 <span id="cb63-1344"><a href="#cb63-1344" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-1345"><a href="#cb63-1345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-1346"><a href="#cb63-1346" aria-hidden="true" tabindex="-1"></a>**Again, you will need to come up with your own discussion, but follow the step-by-step instructions above as a guide.**</span>
+<span id="cb63-1346"><a href="#cb63-1346" aria-hidden="true" tabindex="-1"></a>**Again, you will need to come up with your own discussion, but you may follow the step-by-step instructions above as a guide.**</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

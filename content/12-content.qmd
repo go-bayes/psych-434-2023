@@ -1194,7 +1194,7 @@ big_tab_d |>
 ```
 
 
-### Graph Anxiety result
+### Graph depression result
 
 
 ```{r}
@@ -1252,26 +1252,26 @@ Reporting might be:
 
 ### Discusion 
 
-You'll need to do this yourself. Here's a start: 
+You'll need to write the discussion for yourself. Here's a start: 
 
 
 > In our study, we employed a robust statistical method that helps us estimate the impact of exercise on reducing anxiety among different population groups – New Zealand Europeans and Māori. This method has the advantage of providing reliable results even if our underlying assumptions aren't entirely accurate – a likely scenario given the complexity of real-world data.  However, this robustness comes with a trade-off: it gives us wider ranges of uncertainty in our estimates. This doesn't mean the analysis is flawed; rather, it accurately represents our level of certainty given the data we have.
 
-#### **Exercise and Anxiety**
+#### **Exercise and anxiety**
 
 > Our analysis suggests that exercise may have a greater effect in reducing anxiety among New Zealand Europeans compared to Māori. This conclusion comes from our primary causal estimate, the risk difference, which is 0.104. However, it's crucial to consider our uncertainty in this value. We represent this uncertainty as a range, also known as a confidence interval. In this case, the interval ranges from -0.042 to 0.279. What this means is, given our current data and method, the true effect could plausibly be anywhere within this range. While our best estimate shows a higher reduction in anxiety for New Zealand Europeans, the range of plausible values includes zero and even negative values. This implies that the true effect could be no difference between the two groups or even a higher reduction in Māori. Hence, while there's an indication of a difference, we should interpret it cautiously given the wide range of uncertainty.
 
 > Thus, although our analysis points towards a potential difference in how exercise reduces anxiety among these groups, the level of uncertainty means we should be careful about drawing firm conclusions. More research is needed to further explore these patterns.
 
-#### **Exercise and Depression**
+#### **Exercise and depression**
 
 
 > In addition to anxiety, we also examined the effect of exercise on depression. We do not find evidence for reduction of depression from exercise in either group. We do not find evidence for the effect of weekly exercise -- as self-reported -- on depression. 
 
-#### **Proviso**
+#### **Limitations**
 
 > It is important to bear in mind that statistical results are only one piece of a larger scientific puzzle about the relationship between excercise and well-being. Other pieces include understanding the context, incorporating subject matter knowledge, and considering the implications of the findings. In the present study, wide confidence intervals suggest the possibility of considerable individual differences.$\dots$ nevertheless, $\dots$
 
 
-**Again, you will need to come up with your own discussion, but follow the step-by-step instructions above as a guide.**
+**Again, you will need to come up with your own discussion, but you may follow the step-by-step instructions above as a guide.**
 
