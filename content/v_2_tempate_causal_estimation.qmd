@@ -1,6 +1,6 @@
 ---
-title: "Template: Stratified Causal Estimatatio"
-date: "2023-JUNE-06"
+title: "Template: Causal Estimatatio"
+date: "2023-MAY-30"
 author:
     name: Joseph Bulbulia
     orcid: 0000-0002-5861-2056

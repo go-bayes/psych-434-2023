@@ -16,8 +16,6 @@ website:
     right:
     - text: "Content"
       menu:
-        - text: "Template for Reporting"
-          href: content/template_causal_estimation.qmd
         - text: "Background: Causal Graphs"
           href: content/common_graphs.qmd
         - text: "Background: Causal Graphs: Measurement Error"
@@ -46,7 +44,7 @@ website:
           href: content/10-content.qmd
         - text: "11: Reconsidering Measurement from a Causal Perspective"
           href: content/11-content.qmd
-        - text: "12: Future Horizons"
+        - text: "12: Template for Report"
           href: content/12-content.qmd
 format:
   html:
