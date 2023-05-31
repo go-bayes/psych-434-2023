@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.340">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -123,8 +123,16 @@ div.csl-indent {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-content">    
         <li>
+    <a class="dropdown-item" href="../content/template_causal_estimation.qmd" rel="" target="">
+ <span class="dropdown-text">Template for Reporting</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../content/common_graphs.html" rel="" target="">
  <span class="dropdown-text">Background: Causal Graphs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../content/measurement_error.html" rel="" target="">
+ <span class="dropdown-text">Background: Causal Graphs: Measurement Error</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../content/index.html" rel="" target="">
@@ -160,19 +168,19 @@ div.csl-indent {
   </li>  
         <li>
     <a class="dropdown-item" href="../content/08-content.html" rel="" target="">
- <span class="dropdown-text">8: Causal Inference: Target Trial Emulation</span></a>
+ <span class="dropdown-text">8: Causal Inference: Causal Effects</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../content/09-content.html" rel="" target="">
- <span class="dropdown-text">9: Causal inference: Reconsidering measurement and selection biases</span></a>
+ <span class="dropdown-text">9: Causal inference: Causal Estimation I</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../content/10-content.html" rel="" target="">
- <span class="dropdown-text">10: Causal Inference: Cross-Cultural Experiments</span></a>
+ <span class="dropdown-text">10: Causal Inference: Causal Estimation II</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../content/11-content.html" rel="" target="">
- <span class="dropdown-text">11: Ethics and Ownership</span></a>
+ <span class="dropdown-text">11: Reconsidering Measurement from a Causal Perspective</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../content/12-content.html" rel="" target="">
@@ -384,6 +392,7 @@ div.csl-indent {
 <ul>
 <li><strong>Stating the Question:</strong> Is my question clearly stated? If not, state it.</li>
 <li><strong>Relevance of the Question:</strong> Have I explained its importance? If not, explain.</li>
+<li><strong>Ethical Considerations</strong> How might this question affect people? How might not investigating this question affect people?</li>
 <li><strong>Causality of the Question:</strong> Is my question causal? If not, refine your question.</li>
 <li><strong>Subgroup Analysis:</strong> Does my question involve a subgroup (e.g., cultural group)? If not, develop a subgroup analysis question.</li>
 <li><strong>Understanding the Framework:</strong> Can I explain the potential outcomes framework, individual causal effects, the experimental method to obtain average causal effects, the fundamental assumptions of causal inference, and the estimation of causal effects in observational data? If not, review course materials.</li>
@@ -650,22 +659,17 @@ div.csl-indent {
 </section>
 <section id="inference" class="level3">
 <h3 class="anchored" data-anchor-id="inference">Inference</h3>
-<p>Consider the following ideas about what to discuss in one’s findings:</p>
+<p>Consider the following ideas about what to discuss in one’s findings: Consider the following ideas about what to discuss in one’s findings. The order of exposition might be different.</p>
 <ol type="1">
-<li><p><strong>Interpretation of Propensity Scores:</strong> Understand and articulate the meaning of the propensity scores, and how they relate to the exposure of interest in the study.</p></li>
-<li><p><strong>Analysis of Outcome Models:</strong> Analyze the outcome models to understand the relationships between the outcome, exposure, confounders, and subgroups.</p></li>
-<li><p><strong>Hypothetical Scenarios:</strong> Reason through the hypothetical scenarios used in the simulation of potential outcomes, and discuss their relevance to the research question.</p></li>
-<li><p><strong>Effect of Intervention Levels:</strong> Consider the implications of different intervention levels on potential outcomes, and how they inform the average causal effect within each subgroup.</p></li>
-<li><p><strong>Causal Effect Interpretation:</strong> Interpret the average causal effect of changing the exposure level within each subgroup, and discuss its relevance to the research question.</p></li>
-<li><p><strong>Comparison of Subgroups:</strong> Analyze and discuss the differences in causal effects between different subgroups, and how these differences contribute to the overall findings of the study.</p></li>
+<li><p><strong>Summary of results</strong>: What did you find?</p></li>
+<li><p><strong>Interpretation of E-values:</strong> Interpret the E-values used for sensitivity analysis. State what they represent in terms of the robustness of the findings to potential unmeasured confounding.</p></li>
+<li><p><strong>Causal Effect Interpretation:</strong> What is the interest of the effect, if any, if an effect was observed? Interpret the average causal effect of changing the exposure level within each subgroup, and discuss its relevance to the research question.</p></li>
+<li><p><strong>Comparison of Subgroups:</strong> Discuss how differences in causal effect estimates between different subgroups, if observed, or if not observed, contribute to the overall findings of the study.</p></li>
 <li><p><strong>Uncertainty and Confidence Intervals:</strong> Consider the uncertainty around the estimated causal effects, and interpret the confidence intervals to understand the precision of the estimates.</p></li>
-<li><p><strong>Assumptions and Limitations:</strong> Reflect on the assumptions made during the study and identify any limitations in the methodology that could affect the interpretation of results.</p></li>
+<li><p><strong>Generalisability and Transportability:</strong> Reflect on the generalizability of the study results to other contexts or populations. Discuss any factors that might influence the transportability of the causal effects found in the study. (Again see lecture 9.)</p></li>
+<li><p><strong>Assumptions and Limitations:</strong> Reflect on the assumptions made during the study and identify any limitations in the methodology that could affect the interpretation of results. State that the implications of different intervention levels on potential outcomes are not analysed.</p></li>
+<li><p><strong>Theoretical Relevance</strong>: How are these findings relevant to existing theories.</p></li>
 <li><p><strong>Replication and Future Research:</strong> Consider how the study could be replicated or expanded upon in future research, and how the findings contribute to the existing body of knowledge in the field.</p></li>
-<li><p><strong>Positivity Violations:</strong> Reflect on any violations of the positivity assumption. Ensure that for each combination of covariates, there is a positive probability of receiving each level of treatment.</p></li>
-<li><p><strong>Causal Consistency and Treatment Heterogeneity:</strong> Consider the assumption of causal consistency and the potential for treatment heterogeneity. Discuss whether the same version of treatment was consistently applied and if different versions of treatment might lead to different outcomes.</p></li>
-<li><p><strong>Interpretation of E-values:</strong> Interpret the E-values used for sensitivity analysis. Understand what they represent in terms of the robustness of the findings to potential unmeasured confounding.</p></li>
-<li><p><strong>Generalisability and Transportability:</strong> Reflect on the generalizability of the study results to other contexts or populations. Discuss any factors that might influence the transportability of the causal effects found in the study.</p></li>
-<li><p><strong>Considerations of Transportability:</strong> Discuss how the causal effects could be transported or applied to other settings, populations, or contexts, and what factors might affect this transportability.</p></li>
 <li><p><strong>Real-world Implications:</strong> Discuss the real-world implications of the findings, and how they could be applied in policy, practice, or further research.</p></li>
 </ol>
 </section>

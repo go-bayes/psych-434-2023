@@ -27,8 +27,6 @@ Today, we dive deep into data analysis for causal inference ast it applies to ob
 
 To kick things off, we will set up our environment. We'll source essential functions, load necessary libraries, and import synthetic data for our exploration.
 
-
-
 ```{r}
 #| label: load_libraries
 #| output: false 
@@ -541,7 +539,7 @@ Question 2. If there is unmeasured confounding, should we proceed?
 
 > The minimum strength of association on the risk ratio scale that an unmeasured confounder would need to have with both the exposure and the outcome, conditional on the measured covariates, to fully explain away a specific exposure-outcome association
 
-See: [@vanderweele2020]
+See: [@vanderweele2020][@mathur2018a]
 
 For example, suppose that the lower bound of the the E-value was 1.3 with the lower bound of the confidence interval = 1.12, we might then write:
 
@@ -882,7 +880,6 @@ formula_str_prop <-
         paste(baseline_vars_reflective_propensity, collapse = "+"))
 
 # this shows the exposure variable as predicted by the baseline confounders.
-formula_str_prop
 
 ```
 
@@ -1068,169 +1065,181 @@ dt_ref_all <- rbind(dt_ref_e, dt_ref_m) # combine the data into one dataframe.
 
 ```
 
-## Anxiety Analysis and Results
-
-Let's consider a pseudo experiment where someone moves from inactive to active.
-
-We will use doubly robust analysis. This means that we estimate a model using both propensity score weights (obtained using the ebalance algortithm) and regression stratification.
-
-I wrote a function that will caluclate "E-values." An E-value is defined as the
-
-> E-values represent the minimum strength or magnitude of association that an unmeasured confounder would need to have with both treatment and outcome in order to explain the observed effect estimates conditional on measured covariates.
-
-```{r}
-#| label: model_anxiety
-#| eval: false
-
-# we do not evaluate to save time
-### SUBGROUP analysis
-df <-  dt_ref_all
-Y <-  "t2_kessler_latent_anxiety_z"
-X <- "t1_hours_exercise_coarsen" # already defined above
-baseline_vars = baseline_vars_reflective_propensity
-treat_0 = "inactive"
-treat_1 = "very_active"
-estimand = "ATE"
-scale = "RD"
-nsims = 1000
-family = "gaussian"
-continuous_X = FALSE
-splines = FALSE
-cores = parallel::detectCores()
-S = "t0_eth_cat"
-
-# not we interact the subclass X treatment X covariates
-
-formula_str <-
-  paste(
-    Y,
-    "~",
-    S,
-    "*",
-    "(",
-    X ,
-    "*",
-    "(",
-    paste(baseline_vars_reflective_propensity, collapse = "+"),
-    ")",
-    ")"
-  )
-
-# formula_str. # inspect on our own time 
+# Table of Subgroup Results plus Evalues
 
 
 
-# fit model
-fit_all_all  <- glm(
-  as.formula(formula_str),
-  weights = weights,
-  # weights = if (!is.null(weight_var)) weight_var else NULL,
-  family = family,
-  data = df
-)
+<!-- > E[Y(1)]-E[Y(0)] presents the causal contrast between the expected value of the exposure were all within the target population {Group Var Here} to receive the exposure E[Y(1)] in comparison to the expected value of the exposure were to recieve the baseline treatment  E[Y(0)].  -->
 
-# simulate coefficients
-conflicts_prefer(clarify::sim)
-sim_model_all <- sim(fit_all_all, n = nsims, vcov = "HC0")
+<!-- > The Confidence interval for these estimates is between {2.5% column here} at the lower bound and {97.5% value here at the uppoer bound}.  -->
 
-# simulate effect as modified in europeans
-sim_estimand_all_e <- sim_ame(
-  sim_model_all,
-  var = X,
-  cl = cores,
-  subset = t0_eth_cat == "euro",
-  verbose = FALSE
-)
 
-#rm(sim_estimand_all_e)
-# note contrast of interest
-sim_estimand_all_e <-
-  transform(sim_estimand_all_e, RD = `E[Y(very_active)]` - `E[Y(inactive)]`)
+<!-- > E-values represent the minimum strength or magnitude of association that an unmeasured confounder would need to have with both treatment and outcome in order to explain the observed effect estimates conditional on measured covariates [@vanderweele2017]. -->
 
-#rm(sim_estimand_all_m)
+<!-- > With an observed risk ratio of RR = {E_Value Here}, an unmeasured confounder that was associated with both the outcome and the exposure by a risk ratio of {E_VAL_bound}-fold each, above and beyond the measured confounders, could explain away the estimate, but weaker joint confounder associations could not; to move the confidence interval to include the null, an unmeasured confounder that was associated with the outcome and the exposure by a risk ratio of {EVALUE HERE} - fold each could do so, but weaker joint confounder associations could not..[@vanderweele2017] -->
 
-# simulate effect as modified in māori
-sim_estimand_all_m <- sim_ame(
-  sim_model_all,
-  var = X,
-  cl = cores,
-  subset = t0_eth_cat == "māori",
-  verbose = FALSE
-)
 
-# combine
-#m(sim_estimand_all_m)
-
-sim_estimand_all_m <-
-  transform(sim_estimand_all_m, RD = `E[Y(very_active)]` - `E[Y(inactive)]`)
-
-# rearrange
-names(sim_estimand_all_e) <-
-  paste(names(sim_estimand_all_e), "e", sep = "_")
-
-names(sim_estimand_all_m) <-
-  paste(names(sim_estimand_all_m), "m", sep = "_")
-
-est_all_anxiety <- cbind(sim_estimand_all_m, sim_estimand_all_e)
-est_all_anxiety <- transform(est_all_anxiety, `RD_m - RD_e` = RD_m - RD_e)
-
-saveRDS(est_all_anxiety, here::here("data","est_all_anxiety"))
-# view summary
-```
-
-Calculate E-values
+I've created functions for reporting results so you can use this code, changing it to suit your analysis.
 
 ```{r}
 #| label: summary_anxiety
 
 
-# read data
-est_all_anxiety <- readRDS( here::here("data","est_all_anxiety"))
+# return stored estimates 
+sim_estimand_all_e <- readRDS(here::here("data","sim_estimand_all_e"))
+sim_estimand_all_m<- readRDS(here::here("data","sim_estimand_all_m"))
 
-# make dataframe
-df_anxiety_all <- data.frame( summary(est_all_anxiety) )
-
-table_estimates_anxiety <- df_anxiety_all |> 
-    filter(row.names(df_anxiety_all) %in% c("RD_m", "RD_e")) |> 
-    rename(lower_ci = `X2.5..`,
-         upper_ci = `X97.5..`,
-         estimate = Estimate) |> 
- # dplyr::mutate(standard_error = abs(`2.5 %` - `97.5 %`) / 3.92) |> 
-  dplyr::mutate(across(where(is.numeric), round, digits = 3))
+# create individual summaries 
+sum_e <- summary(sim_estimand_all_e)
+sum_m <- summary(sim_estimand_all_m)
 
 
-# note that I made a function to calculate the Evalue, load this with "experimental functions"
-test_tab <- tab_ate_subgroup_rd(table_estimates_anxiety, delta = 1, sd = 1)
-test_tab |> kbl(format = "markdown")
+# create individual tables
+tab_e <- sub_tab_ate(sum_e, new_name = "NZ Euro Anxiety")
+tab_m <- sub_tab_ate(sum_m, new_name = "Māori Anxiety")
+
+
+# expand tables 
+plot_e <- sub_group_tab(tab_e, type= "RD")
+plot_m <- sub_group_tab(tab_m, type= "RD")
+
+big_tab <- rbind(plot_e,plot_m)
+
+
+# table for anxiety outcome --format as "markdown" if you are using quarto documents
+big_tab |> 
+  kbl(format="markdown")
+
 ```
+
+
+
+## Graph of the result
+
+I've create a function you can use to graph your results. Here is the code, adjust to suit.
 
 ```{r}
-df_anxiety_all_plot <- df_anxiety_all |> 
- # filter(row.names(df_anxiety_all) %in% c("RD_m - RD_e")) |> 
-    rename(lower_ci = `X2.5..`,
-         upper_ci = `X97.5..`,
-         estimate = Estimate) |> 
- # dplyr::mutate(standard_error = abs(`2.5 %` - `97.5 %`) / 3.92) |> 
-  dplyr::mutate(across(where(is.numeric), round, digits = 3)) 
+# group tables
+sub_group_plot_ate(big_tab, title = "Effect of Exercise on Anxiety", subtitle = "Subgroup Analysis: NZ Euro and Māori", xlab = "Groups", ylab = "Effects",
+                 x_offset = -1,
+                           x_lim_lo = -1,
+                           x_lim_hi = 1.5)
 
-df_anxiety_all_plot
-
-plot_sub_forest(df_anxiety_all_plot)
-df_anxiety_all_plot|> 
-  kbl(format = "html")
 ```
 
-## Interpretation
+### Report the anxiety result.
 
--   Increase in activity among NZ Europeans would be expected to lower anxiety.
--   Increase in activity among Māori is not reliable.\
--   No reliable differences in these effects between the groups.
+
+> For the New Zealand European group, our results suggest that exercise potentially reduces anxiety, with an estimated causal contrast value (E[Y(1)]-E[Y(0)]) of -0.077. The associated confidence interval, ranging from -0.131 to -0.022, does not cross zero, providing more certainty in our estimate.
+
+> E-values quantify the minimum strength of association that an unmeasured confounding variable would need to have with both the treatment and outcome, to fully explain away our observed effect. In this case, any unmeasured confounder would need to be associated with both exercise and anxiety reduction, with a risk ratio of at least 1.352 to explain away the observed effect, and at least 1.167 to shift the confidence interval to include a null effect.
+
+> Turning to the Māori group, the data suggest a possible reducing effect of exercise on anxiety, with a causal contrast value of 0.027. Yet, the confidence interval for this estimate (-0.114 to 0.188) also crosses zero, indicating similar uncertainties. An unmeasured confounder would need to have a risk ratio of at least 1.183 with both exercise and anxiety to account for our observed effect, and a risk ratio of at least 1 to render the confidence interval inclusive of a null effect.
+
+> Thus, while our analysis suggests that exercise could potentially reduce anxiety in both New Zealand Europeans and Māori, we advise caution in interpretation. The confidence intervals crossing zero reflect substantial uncertainties, and the possible impact of unmeasured confounding factors further complicates the picture.
+
+
+Here's a function that will do much of this work for you. However, you'll need to adjust it, and supply your own interpretation.
+
+```{r}
+#|label: interpretation function
+#| eval: false
+interpret_results_subgroup <- function(df, outcome, exposure) {
+  df <- df %>%
+    mutate(
+      report = case_when(
+        E_Val_bound > 1.2 & E_Val_bound < 2 ~ paste0(
+          "For the ", group, ", our results suggest that ", exposure, " may potentially influence ", outcome, ", with an estimated causal contrast value (E[Y(1)]-E[Y(0)]) of ", `E[Y(1)]-E[Y(0)]`, ".\n",
+          "The associated confidence interval, ranging from ", `2.5 %`, " to ", `97.5 %`, ", does not cross zero, providing more certainty in our estimate. ",
+          "The E-values indicate that any unmeasured confounder would need to have a minimum risk ratio of ", E_Value, " with both the treatment and outcome to explain away the observed effect, and a minimum risk ratio of ", E_Val_bound, " to shift the confidence interval to include the null effect. This suggests stronger confidence in our findings."
+        ),
+        E_Val_bound >= 2 ~ paste0(
+          "For the ", group, ", our results suggest that ", exposure, " may potentially influence ", outcome, ", with an estimated causal contrast value (E[Y(1)]-E[Y(0)]) of ", `E[Y(1)]-E[Y(0)]`, ".\n",
+          "The associated confidence interval, ranging from ", `2.5 %`, " to ", `97.5 %`, ", does not cross zero, providing more certainty in our estimate. ",
+          "With an observed risk ratio of RR = ", E_Value, ", an unmeasured confounder that was associated with both the outcome and the exposure by a risk ratio of ", E_Val_bound, "-fold each, above and beyond the measured confounders, could explain away the estimate, but weaker joint confounder associations could not; to move the confidence interval to include the null, an unmeasured confounder that was associated with the outcome and the exposure by a risk ratio of ", E_Val_bound, "-fold each could do so, but weaker joint confounder associations could not. Here we find stronger evidence that the result is robust to unmeasured confounding."
+        ),
+        E_Val_bound < 1.2 & E_Val_bound > 1 ~ paste0(
+          "For the ", group, ", our results suggest that ", exposure, " may potentially influence ", outcome, ", with an estimated causal contrast value (E[Y(1)]-E[Y(0)]) of ", `E[Y(1)]-E[Y(0)]`, ".\n",
+          "The associated confidence interval, ranging from ", `2.5 %`, " to ", `97.5 %`, ", does not cross zero, providing more certainty in our estimate. ",
+          "The E-values indicate that any unmeasured confounder would need to have a minimum risk ratio of ", E_Value, " with both the treatment and outcome to explain away the observed effect, and a minimum risk ratio of ", E_Val_bound, " to shift the confidence interval to include the null effect. This suggests we should interpret these findings with caution given uncertainty in the model."
+        ),
+        E_Val_bound == 1 ~ paste0(
+          "For the ", group, ", the data suggests a potential effect of ", exposure, " on ", outcome, ", with a causal contrast value of ", `E[Y(1)]-E[Y(0)]`, ".\n",
+          "However, the confidence interval for this estimate, ranging from ", `2.5 %`," to ", `97.5 %`, ", crosses zero, indicating considerable uncertainties. The E-values indicate that an unmeasured confounder that is associated with both the ", outcome, " and the ", exposure, " by a risk ratio of ", E_Value, " could explain away the observed associations, even after accounting for the measured confounders. ",
+          "This finding further reduces confidence in a true causal effect. Hence, while the estimates suggest a potential effect of ", exposure, " on ", outcome, " for the ", group, ", the substantial uncertainty and possible influence of unmeasured confounders mean these findings should be interpreted with caution."
+        )
+      )
+    )
+  return(df$report)
+}
+
+```
+
+
+You run the function like this: 
+
+
+```{r}
+interpret_results_subgroup(big_tab, outcome = "Anxiety", exposure = "Excercise")
+```
+
+
+Easy!
+
+
+
+### Estimate the subgroup contrast
+
+```{r}
+# calculated above
+est_all_anxiety <- readRDS( here::here("data","est_all_anxiety"))
+
+# make the sumamry into a dataframe so we can make a table
+df <- as.data.frame(summary(est_all_anxiety))
+
+# get rownames for selecting the correct row
+df$RowName <- row.names(df)
+
+# select the correct row -- the group contrast
+filtered_df <- df |> 
+  dplyr::filter(RowName == "RD_m - RD_e") 
+
+
+# pring the filtered data frame
+library(kableExtra)
+filtered_df  |> 
+  select(-RowName) |> 
+  kbl(digits = 3) |> 
+  kable_material(c("striped", "hover")) 
+
+```
+
+Another option for making the table using markdown. This would be useful if you were writing your article using qaurto. 
+
+```{r}
+filtered_df  |> 
+  select(-RowName) |> 
+  kbl(digits = 3, format = "markdown")
+
+```
+
+Report result along the following lines:
+
+> The estimated reduction of anxiety from exercise is higher overall for New Zealand Europeans (RD_e) compared to Māori (RD_m). This is indicated by the estimated risk difference (RD_m - RD_e) of 0.104. However, there is uncertainty in this estimate, as the confidence interval (-0.042 to 0.279) crosses zero. This indicates that we cannot be confident that the difference in anxiety reduction between New Zealand Europeans and Māori is reliable. It's possible that the true difference could be zero or even negative, suggesting higher anxiety reduction for Māori. Thus, while there's an indication of higher anxiety reduction for New Zealand Europeans, the uncertainty in the estimate means we should interpret this difference with caution.
+
+
+
+
 
 ## Depression Analysis and Results
 
 ```{r}
 #| eval: false
 ### SUBGROUP analysis
+dt_ref_all <- readRDS(here::here("data", "dt_ref_all"))
+# get column names
+baseline_vars_reflective_propensity <- dt|>
+  dplyr::select(starts_with("t0"), -t0_eth_cat) |> colnames()
 df <-  dt_ref_all
 Y <-  "t2_kessler_latent_depression_z"
 X <- "t1_hours_exercise_coarsen" # already defined above
@@ -1288,8 +1297,7 @@ sim_estimand_all_e_d <- sim_ame(
   var = X,
   cl = cores,
   subset = t0_eth_cat == "euro",
-  verbose = FALSE
-)
+  verbose = TRUE)
 
 
 # note contrast of interest
@@ -1303,7 +1311,7 @@ sim_estimand_all_m_d <- sim_ame(
   var = X,
   cl = cores,
   subset = t0_eth_cat == "māori",
-  verbose = FALSE
+  verbose = TRUE
 )
 
 # combine
@@ -1325,82 +1333,117 @@ names(sim_estimand_all_m_d) <-
 
 est_all_d <- cbind(sim_estimand_all_m_d, sim_estimand_all_e_d)
 est_all_d <- transform(est_all_d, `RD_m - RD_e` = RD_m - RD_e)
-saveRDS(est_all_d, here::here("data", "est_all_d"))
+saveRDS(sim_estimand_all_m_d, here::here("data", "sim_estimand_all_m_d"))
+saveRDS(sim_estimand_all_e_d, here::here("data", "sim_estimand_all_e_d"))
 ```
+
+### Report anxiety results
+```{r}
+# return stored estimates 
+sim_estimand_all_e_d <- readRDS(here::here("data","sim_estimand_all_e_d"))
+sim_estimand_all_m_d<- readRDS(here::here("data","sim_estimand_all_m_d"))
+
+# create individual summaries 
+sum_e_d <- summary(sim_estimand_all_e_d)
+sum_m_d <- summary(sim_estimand_all_m_d)
+
+
+# create individual tables
+tab_ed <- sub_tab_ate(sum_e_d, new_name = "NZ Euro Depression")
+tab_md <- sub_tab_ate(sum_m_d, new_name = "Māori Depression")
+
+
+# expand tables 
+plot_ed <- sub_group_tab(tab_ed, type= "RD")
+plot_md <- sub_group_tab(tab_md, type= "RD")
+
+big_tab_d <- rbind(plot_ed,plot_md)
+
+
+# table for anxiety outcome --format as "markdown" if you are using quarto documents
+big_tab_d |> 
+  kbl(format="markdown")
+```
+
+
+### Graph Anxiety result
+
 
 ```{r}
-est_all_d <- readRDS( here::here("data", "est_all_d"))
+# group tables
+sub_group_plot_ate(big_tab_d, title = "Effect of Exercise on Depression", subtitle = "Subgroup Analysis: NZ Euro and Māori", xlab = "Groups", ylab = "Effects",
+                 x_offset = -1,
+                           x_lim_lo = -1,
+                           x_lim_hi = 1.5)
 
-        
-# make dataframe
-df_dep <- data.frame( summary(est_all_d) )
-
-table_estimates_depression <- df_dep |> 
-    filter(row.names(df_dep) %in% c("RD_m", "RD_e")) |> 
-    rename(lower_ci = `X2.5..`,
-         upper_ci = `X97.5..`,
-         estimate = Estimate) |> 
- # dplyr::mutate(standard_error = abs(`2.5 %` - `97.5 %`) / 3.92) |> 
-  dplyr::mutate(across(where(is.numeric), round, digits = 3))
-
-
-# note that I made a function to calculate the Evalue, load this with "experimental functions"
-table_depression <- tab_ate_subgroup_rd(table_estimates_depression, delta = 1, sd = 1)
-table_depression |> kbl(format = "markdown")
 ```
+
+###  Interpretation
+
+Use the function, again, modify the outputs to fit with your study and results and provide your own interpretation. 
+
 
 ```{r}
-# view summary
-df_dep |> 
-  mutate_if(is.numeric, round, 3) |> 
-  kbl(format = "html")
-# This table provides estimated levels of depression, in standard deviation units, for different levels of activity for two groups: Māori (indicated by "_m") and NZ Europeans (indicated by "_e").
+interpret_results_subgroup(big_tab_d, exposure = "Exercise", outcome = "Depression")
 ```
+
+### Estimate the subgroup contrast
+
 
 ```{r}
-#| label: my_graph 
+# calculated above
+est_all_d <- readRDS( here::here("data","est_all_d"))
 
-df_dep_plot_data <- df_dep |> 
- rename( lower_ci = `X2.5..`,
-         upper_ci = `X97.5..`,
-         estimate = Estimate) |> 
-  mutate_if(is.numeric, round, 3) 
+# make the sumamry into a dataframe so we can make a table
+dfd <- as.data.frame(summary(est_all_d))
+
+# get rownames for selecting the correct row
+dfd$RowName <- row.names(dfd)
+
+# select the correct row -- the group contrast
+filtered_dfd <- dfd |> 
+  dplyr::filter(RowName == "RD_m - RD_e") 
 
 
+# Print the filtered data frame
+library(kableExtra)
+filtered_dfd  |> 
+  select(-RowName) |> 
+  kbl(digits = 3) |> 
+  kable_material(c("striped", "hover")) 
 
-plot_sub_forest <- function(df) {
-  require(ggplot2)
-
-  # Check if required packages are installed
-  required_packages <- c("ggplot2")
-  new_packages <- required_packages[!(required_packages %in% installed.packages()[, "Package"])]
-  if (length(new_packages))
-    stop("Missing packages: ", paste(new_packages, collapse = ", "))
-  
-  # Check if required columns are in the dataframe
-  required_cols <- c("estimate", "lower_ci", "upper_ci")
-  missing_cols <- required_cols[!(required_cols %in% colnames(df))]
-  if (length(missing_cols) > 0)
-    stop("Missing columns in dataframe: ", paste(missing_cols, collapse = ", "))
-  
-  # Order the factor levels by the estimate column in decreasing order
-  
-  ggplot(df, aes(x=estimate, y=factor(row.names(df)))) +
-    geom_point() +
-    geom_errorbarh(aes(xmin = lower_ci, xmax = upper_ci), height=0.3) +
-    geom_vline(xintercept = 0, linetype="dashed", color = "red") +
-    theme_bw() +
-    xlab("Estimate") +
-    ylab("")
-}
-plot_sub_forest(df_dep_plot_data)
 ```
 
-## Interpretation
 
--   Increase in activity among NZ Europeans would be expected to lower depression, but the effect is not reliable.
--   Increase in activity among Māori does not reliably affect depression..
--   No reliable group differences.
+
+Reporting might be: 
+
+> The estimated reduction of depression from exercise is higher overall for New Zealand Europeans (RD_e) compared to Māori (RD_m). This is suggested by the estimated risk difference (RD_m - RD_e) of 0.068. However, there is a degree of uncertainty in this estimate, as the confidence interval (-0.09 to 0.229) crosses zero. This suggests that we cannot be confident that the difference in depression reduction between New Zealand Europeans and Māori is statistically significant. It's possible that the true difference could be zero or even negative, implying a greater depression reduction for Māori than New Zealand Europeans. Thus, while the results hint at a larger depression reduction for New Zealand Europeans, the uncertainty in this estimate urges us to interpret this difference with caution.
+
+
+
+### Discusion 
+
+You'll need to do this yourself. Here's a start: 
+
+
+> In our study, we employed a robust statistical method that helps us estimate the impact of exercise on reducing anxiety among different population groups – New Zealand Europeans and Māori. This method has the advantage of providing reliable results even if our underlying assumptions aren't entirely accurate – a likely scenario given the complexity of real-world data.  However, this robustness comes with a trade-off: it gives us wider ranges of uncertainty in our estimates. This doesn't mean the analysis is flawed; rather, it accurately represents our level of certainty given the data we have.
+
+#### **Exercise and Anxiety**
+
+> Our analysis suggests that exercise may have a greater effect in reducing anxiety among New Zealand Europeans compared to Māori. This conclusion comes from our primary causal estimate, the risk difference, which is 0.104. However, it's crucial to consider our uncertainty in this value. We represent this uncertainty as a range, also known as a confidence interval. In this case, the interval ranges from -0.042 to 0.279. What this means is, given our current data and method, the true effect could plausibly be anywhere within this range. While our best estimate shows a higher reduction in anxiety for New Zealand Europeans, the range of plausible values includes zero and even negative values. This implies that the true effect could be no difference between the two groups or even a higher reduction in Māori. Hence, while there's an indication of a difference, we should interpret it cautiously given the wide range of uncertainty.
+
+> Thus, although our analysis points towards a potential difference in how exercise reduces anxiety among these groups, the level of uncertainty means we should be careful about drawing firm conclusions. More research is needed to further explore these patterns.
+
+#### **Exercise and Depression**
+
+
+> In addition to anxiety, we also examined the effect of exercise on depression. We do not find evidence for reduction of depression from exercise in either group. We do not find evidence for the effect of weekly exercise -- as self-reported -- on depression. 
+
+#### **Proviso**
+
+> It is important to bear in mind that statistical results are only one piece of a larger scientific puzzle about the relationship between excercise and well-being. Other pieces include understanding the context, incorporating subject matter knowledge, and considering the implications of the findings. In the present study, wide confidence intervals suggest the possibility of considerable individual differences.$\dots$ nevertheless, $\dots$
+
 
 ## Exercises
 

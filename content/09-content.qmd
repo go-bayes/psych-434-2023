@@ -232,6 +232,7 @@ Our question: does visiting a clinical psychologist reduce the 10 year incidence
 
 -   **Stating the Question:** Is my question clearly stated? If not, state it.
 -   **Relevance of the Question:** Have I explained its importance? If not, explain.
+-   **Ethical Considerations** How might this question affect people? How might not investigating this question affect people? 
 -   **Causality of the Question:** Is my question causal? If not, refine your question.
 -   **Subgroup Analysis:** Does my question involve a subgroup (e.g., cultural group)? If not, develop a subgroup analysis question.
 -   **Understanding the Framework:** Can I explain the potential outcomes framework, individual causal effects, the experimental method to obtain average causal effects, the fundamental assumptions of causal inference, and the estimation of causal effects in observational data? If not, review course materials.
@@ -520,36 +521,28 @@ The Doubly Robust Estimation method for Subgroup Analysis Estimator is a sophist
 ### Inference
 
 Consider the following ideas about what to discuss in one's findings:
+Consider the following ideas about what to discuss in one's findings. The order of exposition might be different.
 
-1.  **Interpretation of Propensity Scores:** Understand and articulate the meaning of the propensity scores, and how they relate to the exposure of interest in the study.
+1.  **Summary of results**:  What did you find?
 
-2.  **Analysis of Outcome Models:** Analyze the outcome models to understand the relationships between the outcome, exposure, confounders, and subgroups.
+2. **Interpretation of E-values:** Interpret the E-values used for sensitivity analysis. State what they represent in terms of the robustness of the findings to potential unmeasured confounding.
 
-3.  **Hypothetical Scenarios:** Reason through the hypothetical scenarios used in the simulation of potential outcomes, and discuss their relevance to the research question.
+3.  **Causal Effect Interpretation:** What is the interest of the effect, if any, if an effect was observed? Interpret the average causal effect of changing the exposure level within each subgroup, and discuss its relevance to the research question. 
 
-4.  **Effect of Intervention Levels:** Consider the implications of different intervention levels on potential outcomes, and how they inform the average causal effect within each subgroup.
+4.  **Comparison of Subgroups:** Discuss how differences in causal effect estimates between different subgroups, if observed, or if not observed, contribute to the overall findings of the study.
 
-5.  **Causal Effect Interpretation:** Interpret the average causal effect of changing the exposure level within each subgroup, and discuss its relevance to the research question.
+5.  **Uncertainty and Confidence Intervals:** Consider the uncertainty around the estimated causal effects, and interpret the confidence intervals to understand the precision of the estimates.
 
-6.  **Comparison of Subgroups:** Analyze and discuss the differences in causal effects between different subgroups, and how these differences contribute to the overall findings of the study.
+6.  **Generalisability and Transportability:** Reflect on the generalizability of the study results to other contexts or populations. Discuss any factors that might influence the transportability of the causal effects found in the study. (Again see lecture 9.)
 
-7.  **Uncertainty and Confidence Intervals:** Consider the uncertainty around the estimated causal effects, and interpret the confidence intervals to understand the precision of the estimates.
+7.  **Assumptions and Limitations:** Reflect on the assumptions made during the study and identify any limitations in the methodology that could affect the interpretation of results. State that the implications of different intervention levels on potential outcomes are not analysed. 
 
-8.  **Assumptions and Limitations:** Reflect on the assumptions made during the study and identify any limitations in the methodology that could affect the interpretation of results.
+8.  **Theoretical Relevance**: How are these findings relevant to existing theories. 
 
 9.  **Replication and Future Research:** Consider how the study could be replicated or expanded upon in future research, and how the findings contribute to the existing body of knowledge in the field.
 
-10. **Positivity Violations:** Reflect on any violations of the positivity assumption. Ensure that for each combination of covariates, there is a positive probability of receiving each level of treatment.
+10. **Real-world Implications:** Discuss the real-world implications of the findings, and how they could be applied in policy, practice, or further research.
 
-11. **Causal Consistency and Treatment Heterogeneity:** Consider the assumption of causal consistency and the potential for treatment heterogeneity. Discuss whether the same version of treatment was consistently applied and if different versions of treatment might lead to different outcomes.
-
-12. **Interpretation of E-values:** Interpret the E-values used for sensitivity analysis. Understand what they represent in terms of the robustness of the findings to potential unmeasured confounding.
-
-13. **Generalisability and Transportability:** Reflect on the generalizability of the study results to other contexts or populations. Discuss any factors that might influence the transportability of the causal effects found in the study.
-
-14. **Considerations of Transportability:** Discuss how the causal effects could be transported or applied to other settings, populations, or contexts, and what factors might affect this transportability.
-
-15. **Real-world Implications:** Discuss the real-world implications of the findings, and how they could be applied in policy, practice, or further research.
 
 ## Appendix
 
