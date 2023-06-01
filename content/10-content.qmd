@@ -1530,7 +1530,7 @@ plot(n) + theme_classic()
 ```{r}
 #| label: cfa
 # first partition the data 
-part_data <- datawizard::data_partition(dt_only_k6, traing_proportion = .07, seed = 123)
+part_data <- datawizard::data_partition(dt_only_k6, traing_proportion = .7, seed = 123)
 
 
 # set up training data
@@ -1617,7 +1617,7 @@ dt_eth_k6_eth <- dt_start |>
 
 # partition the dataset into training and test subsets
 # stratify by ethnic category to ensure balanced representation
-part_data_eth <- datawizard::data_partition(dt_eth_k6_eth, traing_proportion = .07, seed = 123, group = "eth_cat")
+part_data_eth <- datawizard::data_partition(dt_eth_k6_eth, traing_proportion = .7, seed = 123, group = "eth_cat")
 
 training_eth <- part_data_eth$p_0.7
 test_eth <- part_data_eth$test
