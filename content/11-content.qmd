@@ -27,7 +27,7 @@ loadfonts(device = "all")
 source("/Users/joseph/GIT/templates/functions/libs2.R")
 
 # read functions
-#source("/Users/joseph/GIT/templates/functions/funs.R")
+source("/Users/joseph/GIT/templates/functions/funs.R")
 ```
 
 ## Two ways of thinking about measurement in psychometric research.
@@ -469,7 +469,7 @@ How can we do better?
 \draw [-latex, bend right, draw=black] (L0) to (Y2);
 \draw [-latex, draw=black] (K1) to (X1);
 \draw [-latex, draw=black] (X1) to (A1);
-\draw [-latex, draw=white, bend left] (K1) to (Y2);
+\draw [-latex, draw=white, bend left] (K1) to (Y2); # fix later
 
 \end{tikzpicture}
 ```
