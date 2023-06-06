@@ -469,7 +469,7 @@ How can we do better?
 \draw [-latex, bend right, draw=black] (L0) to (Y2);
 \draw [-latex, draw=black] (K1) to (X1);
 \draw [-latex, draw=black] (X1) to (A1);
-\draw [-latex, draw=white, bend left] (K1) to (Y2); # fix later
+%\draw [-latex, draw=white, bend left] (K1) to (Y2); # fix later
 
 \end{tikzpicture}
 ```
@@ -537,7 +537,7 @@ By now you are all familiar with The New Zealand Attitudes and Values Study (NZA
 
 ```{tikz}
 #| label: fig-dag-uu-null
-#| fig-cap: "Uncorrelated non-differential  measurement error does not bias estimates under the null."
+#| fig-cap: "Uncorrelated non-differential  measurement error does not bias estimates under the null. Note, however, we assume that L is measured with sufficient precision to block the path from A_eta --> L_eta --> Y_eta, which, otherwise, we would assume to be open. "
 #| out-width: 100%
 #| echo: false
 \usetikzlibrary{positioning}
@@ -608,7 +608,7 @@ If for each measured construct $var_{f(X1, X2,\dots X_n)}$, the sources of error
 
 ```{tikz}
 #| label: fig-dag-dep-udir-effect-confounders-3wave
-#| fig-cap: "Measurement error opens a pathway to confounding if either there are correlated errors, or a directed effect of the exposure on the errors of measured outcome."
+#| fig-cap: "Measurement error opens an additional pathway to confounding if either there are correlated errors, or a directed effect of the exposure on the errors of measured outcome."
 #| out-width: 100%
 #| echo: false
 \usetikzlibrary{positioning}
