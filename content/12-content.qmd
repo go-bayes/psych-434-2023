@@ -1351,7 +1351,7 @@ print(t_tab_m_c$table)
 
 In most cases, propensity scores are unstable when applied to continuous exposures. 
 
-Should you choose to execute a model without applying propensity score weights, it would equate to performing ordinary g-computation. In this scenario, the regression model could be specified with `weights = 1` or simply left unspecified, which R interprets as `weights = 1` by default. 
+Should you choose to execute a model without applying propensity score weights, it would equate to performing ordinary g-computation. In this scenario, the regression model leaves `weights` or simply unspecified. 
 
 However, the 'energy' balancing method provided by the `weightit` package offers robust results when estimating propensity scores for continuous exposures. Given this favorable characteristic, we will utilize energy balancing to estimate propensity scores for our continuous exercise exposure variable.
 
@@ -1744,9 +1744,170 @@ interpret_results_subgroup(big_tab_d_c, outcome = "Anxiety", exposure = "Excerci
 > Thus, while both the categorical and continuous exposure results suggest a potential influence of exercise in reducing anxiety for NZ Europeans, although perhaps not Māori, the effects seem to be less pronounced in NZ Europeans when modelling a continuous exercise exposure. 
 > However, it is important to note that each model addresses a different causal question. The categorical exposure model investigates the contrast between not exercising at all and exercising over eight hours per week. On the other hand, the continuous exposure model examines the contrast between exercising almost six hours a week and doubling that amount of exercise.
 
-> These two modelling approaches represent describe different hypothetical scenarios. Arguably, neither might reflect realistic circumstances. Nonetheless, the indication of exercise potentially aiding in anxiety reduction in NZ Europeans tentatively suggests it might be worthwhile to further investigate the role of exercise in promoting mental health, and also for identifying pathways to better expressing exercise benefits on mental health among Māori
+> These two modelling approaches describe different hypothetical experiments. Arguably, neither scenario reflects realistic interventions. Nonetheless, the indication of exercise potentially aiding in anxiety reduction in NZ Europeans tentatively suggests it might be worthwhile to further investigate the role of exercise in promoting mental health, and also for identifying pathways to better expressing exercise benefits on mental health among Māori
 
 
 I'll pass the baton back to you now to refine the interpretation of these results. Additionally, you may want to explore conducting a depression analysis using a continuous exercise exposure model. The steps provided in this Appendix should aid you in performing such an analysis with a continuous exposure variables.
 
 Ask me if you have any questions!
+
+
+## Appendix 2 G-computation alone: a step-by-step guide.
+
+Just leave out the weights. 
+
+Note the effect estimate is similar, but slightly stronger using only G-computation
+
+```{r}
+#| label: continuous_exposure_g-compuation 
+#| eval: false
+
+formula_str_c
+
+fit_all_all_c_gcomp  <- glm(
+  as.formula(formula_str_c),
+  data = df
+)
+
+# simulate coefficients
+conflicts_prefer(clarify::sim)
+sim_model_all_c_gcomp <- sim(fit_all_all_c_gcomp, n = nsims, vcov = "HC0")
+
+# simulate effect as modified in europeans
+sim_model_all_c_gcomp_e <- sim_ame(
+  sim_model_all_c_gcomp,
+  var = X_c,
+  cl = cores,
+  subset = t0_eth_cat == "euro",
+  verbose = TRUE
+)
+
+tab_e_comp <- summary(sim_model_all_c_gcomp_e)
+
+tab_real_euro_comp <- tab_ate(tab_e_comp, delta = 1, sd = 1, type ="RD", continuous_X = TRUE, new_name = "NZ Euro Anxiety, Continuous X")
+
+# tab_real_euro
+# simulate effect as modified in europeans
+sim_estimand_all_m_c_gcomp <- sim_ame(
+  sim_model_all_c_gcomp,
+  var = X_c,
+  cl = cores,
+  subset = t0_eth_cat == "māori",
+  verbose = TRUE
+)
+
+tab_m_comp<- summary(sim_estimand_all_m_c_gcomp)
+
+tab_real_maori_comp<- tab_ate(tab_m_comp, delta = 1, sd = 1, type ="RD", continuous_X = TRUE, new_name = "Māori Anxiety Anxiety, Continuous X")
+
+gcomp_tab_euro_maori <- rbind(tab_e_comp, tab_m_comp)
+
+plot_comp <- rbind( tab_real_euro_comp, tab_real_maori_comp )
+
+
+# expand tables 
+plot_ed_comp <- sub_group_tab(tab_real_euro_comp, type= "RD")
+plot_md_comp <- sub_group_tab(tab_real_maori_comp, type= "RD")
+
+plot_ed_comp
+
+# use this for graph
+big_tab_d_comp <- rbind(plot_ed_comp,plot_md_comp)
+
+# use this simple table for the report
+big_tab_d_comp |> 
+  kbl(format="markdown")
+
+saveRDS(big_tab_d_comp, here::here("data", "big_tab_d_comp"))
+```
+
+
+```{r}
+big_tab_d_comp<- readRDS( here::here("data", "big_tab_d_comp"))
+
+
+sub_group_plot_ate(big_tab_d_comp, title = "Effect of Continuous Exercise on Anxiety: G-computation", subtitle = "Subgroup Analysis: NZ Euro and Māori", xlab = "Groups", ylab = "Effects",
+                 x_offset = -1,
+                           x_lim_lo = -1,
+                           x_lim_hi = 1.5)
+```
+
+
+### Appendix 3 Propensity Scores Alone: a step-by-step guide.
+
+Again the effect estimate is similar, but slightly less efficient (more uncertainty). 
+
+It is encouraging that we do not see large differences from model choice. 
+
+
+```{r}
+#| label: continuous_exposure_propensity_score
+#| eval: false
+Y
+X_c
+
+table(df$t0_eth_cat)
+formula_str_c
+fit_prop <- lm(t2_kessler_latent_anxiety_z ~ t0_eth_cat * ( t1_hours_exercise_log_z), weights = weights, data = df)
+
+# simulate coefficients
+conflicts_prefer(clarify::sim)
+sim_prop <- sim(fit_prop, n = nsims, vcov = "HC0")
+
+# simulate effect as modified in europeans
+sim_model_prop<- sim_ame(
+  sim_prop,
+  var = X_c,
+  cl = cores,
+  subset = t0_eth_cat == "euro",
+  verbose = TRUE
+)
+
+tab_e_prop <- summary(sim_model_prop)
+
+tab_real_euro_prop<- tab_ate(tab_e_prop, delta = 1, sd = 1, type ="RD", continuous_X = TRUE, new_name = "NZ Euro Anxiety, Continuous X")
+
+
+# tab_real_euro
+# simulate effect as modified in europeans
+sim_maori_prop <- sim_ame(
+  sim_prop,
+  var = X_c,
+  cl = cores,
+  subset = t0_eth_cat == "māori",
+  verbose = TRUE
+)
+
+tab_m_prop<- summary(sim_maori_prop)
+
+tab_real_maori_prop<- tab_ate(tab_m_prop, delta = 1, sd = 1, type ="RD", continuous_X = TRUE, new_name = "Māori Anxiety Anxiety, Continuous X")
+
+
+# expand tables 
+plot_ed_prop<- sub_group_tab(tab_real_euro_prop, type= "RD")
+plot_md_prop <- sub_group_tab(tab_real_maori_prop, type= "RD")
+
+
+# use this for graph
+big_tab_d_prop <- rbind(plot_ed_prop,plot_md_prop)
+
+# use this simple table for the report
+big_tab_d_prop |> 
+  kbl(format="markdown")
+
+saveRDS(big_tab_d_prop, here::here("data", "big_tab_d_prop"))
+```
+
+
+```{r}
+
+# graph
+big_tab_d_prop<- readRDS( here::here("data", "big_tab_d_prop"))
+
+
+sub_group_plot_ate(big_tab_d_prop, title = "Effect of Continuous Exercise on Anxiety: Propensity Scores", subtitle = "Subgroup Analysis: NZ Euro and Māori", xlab = "Groups", ylab = "Effects",
+                 x_offset = -1,
+                           x_lim_lo = -1,
+                           x_lim_hi = 1.5)
+```
+
