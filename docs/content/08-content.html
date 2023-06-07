@@ -104,10 +104,6 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-content">    
         <li>
-    <a class="dropdown-item" href="../content/template_causal_estimation.qmd" rel="" target="">
- <span class="dropdown-text">Template for Reporting</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="../content/common_graphs.html" rel="" target="">
  <span class="dropdown-text">Background: Causal Graphs</span></a>
   </li>  
@@ -165,7 +161,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="../content/12-content.html" rel="" target="">
- <span class="dropdown-text">12: Future Horizons</span></a>
+ <span class="dropdown-text">12: Template for Report</span></a>
   </li>  
     </ul>
   </li>
@@ -227,9 +223,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#why-is-this-important" id="toc-why-is-this-important" class="nav-link" data-scroll-target="#why-is-this-important">Why is this important?</a></li>
   </ul></li>
   <li><a href="#review-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem" id="toc-review-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem" class="nav-link" data-scroll-target="#review-the-fundamental-problem-of-causal-inference-as-a-missing-data-problem">Review: The Fundamental Problem of Causal Inference as a Missing Data Problem</a></li>
-  <li><a href="#propensity-scores-and-confounding-control" id="toc-propensity-scores-and-confounding-control" class="nav-link" data-scroll-target="#propensity-scores-and-confounding-control">Propensity Scores and Confounding Control</a></li>
-  <li><a href="#doubly-robust-estimation" id="toc-doubly-robust-estimation" class="nav-link" data-scroll-target="#doubly-robust-estimation">Doubly Robust Estimation</a></li>
   <li><a href="#subgroup-analysis" id="toc-subgroup-analysis" class="nav-link" data-scroll-target="#subgroup-analysis">Subgroup analysis</a></li>
+  <li><a href="#calculating-exposure-weights-propensity-scores-and-confounding-control-generally" id="toc-calculating-exposure-weights-propensity-scores-and-confounding-control-generally" class="nav-link" data-scroll-target="#calculating-exposure-weights-propensity-scores-and-confounding-control-generally">Calculating exposure weights (propensity scores) and confounding control (generally)</a></li>
+  <li><a href="#calculating-exposure-weights-propensity-scores-and-confounding-control-in-subgroups" id="toc-calculating-exposure-weights-propensity-scores-and-confounding-control-in-subgroups" class="nav-link" data-scroll-target="#calculating-exposure-weights-propensity-scores-and-confounding-control-in-subgroups">Calculating exposure weights (propensity scores) and confounding control in subgroups</a></li>
+  <li><a href="#doubly-robust-estimation" id="toc-doubly-robust-estimation" class="nav-link" data-scroll-target="#doubly-robust-estimation">Doubly Robust Estimation</a></li>
   <li><a href="#readings" id="toc-readings" class="nav-link" data-scroll-target="#readings">Readings:</a></li>
   </ul>
 </nav>
@@ -303,8 +300,25 @@ E(\delta) = E(Y^{a=1} - Y^{a=0})\\
 <li>Correctly specified model: the requirement that the underlying statistical model used to estimate causal effects accurately represents the true relationships between the variables of interest. We say the model should be able to capture “the functional form” of the relationship between the treatment, the outcome, and any covariates. The functional form of the model should be flexible enough to capture the true underlying relationship. If the model’s functional form is incorrect, the estimated causal effects may be biased. Additionally, the model must handle omitted variable bias by including all relevant confounders and should correctly handle missing data. We will return to the bias arising from missing data in the weeks ahead. For now, it is important to note that an assumption of causal inference is that our model is correctly specified.</li>
 </ul>
 </section>
-<section id="propensity-scores-and-confounding-control" class="level2">
-<h2 class="anchored" data-anchor-id="propensity-scores-and-confounding-control">Propensity Scores and Confounding Control</h2>
+<section id="subgroup-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="subgroup-analysis">Subgroup analysis</h2>
+<p>In causal inference, these two concepts are related but have distinct meanings.</p>
+<p>Let <span class="math inline">Y_{a}</span> denote the counterfactual outcome Y when the experimental intervention <span class="math inline">A</span> is set to level <span class="math inline">a</span>. Let <span class="math inline">Y_{r}</span> denote the counterfactual outcome <span class="math inline">Y</span> when another experimental intervention <span class="math inline">R</span> is set to level <span class="math inline">r</span>. Following VanderWeele (2009), we can define interaction and effect modification as follows:</p>
+<ol type="1">
+<li>Interaction (causal interaction) on the difference scale, conditional on confounders <span class="math inline">L</span>, occurs when:</li>
+</ol>
+<p><span class="math display">E(Y^{a1,r1}|L=l) - E(Y^{a0,r1}|L=l) \neq E(Y^{a1,r0}|L=l) - E(Y^{a0,r0}|L=l)</span></p>
+<p>In this case, we are considering a double intervention, and interaction occurs when the combined effect of interventions <span class="math inline">A</span> and <span class="math inline">R</span> is not equal to the sum of their individual effects.</p>
+<ol start="2" type="1">
+<li>Effect Modification (also known as “heterogeneity of treatment effects”) occurs when the causal effect of intervention <span class="math inline">A</span> varies across different levels of another variable <span class="math inline">R</span>:</li>
+</ol>
+<p><span class="math display">E(Y^{a=1}|R=r_1, L=l) - E(Y^{a=0}|R=r_1, L=l) \neq E(Y^{a=1}|R=r_2, L=l) - E(Y^{a=0}|R=r_2, L=l)</span></p>
+<p>Effect modification indicates that the magnitude of the causal effect of intervention <span class="math inline">A</span> depends on the level of the modifier variable <span class="math inline">R</span>. It is important to note that effect modification can be observed even when there is no direct causal interaction between the treatment and the modifier variable.</p>
+<p>Thus, interaction in causal inference refers to a situation where the combined effect of two interventions is not equal to the sum of their individual effects. Effect modification, on the other hand, occurs when the causal effect of one intervention varies across different levels of another variable.</p>
+<p>By clearly distinguishing between these two concepts, researchers can better ask and answer questions about human thinking and behaviour. For comparative research, we are typically interested in effect-modification which requires subgroup analysis.</p>
+</section>
+<section id="calculating-exposure-weights-propensity-scores-and-confounding-control-generally" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-exposure-weights-propensity-scores-and-confounding-control-generally">Calculating exposure weights (propensity scores) and confounding control (generally)</h2>
 <p>Recall that last week, we considered confounding control by regression adjustment.</p>
 <p><span class="math display">
 \begin{aligned}
@@ -325,33 +339,33 @@ ATE = E[Y^{a=1}|L = l] - E[Y^{a=0}|L = l] ~ \text{for any value}~l
 <p>Let’s denote the treatment indicator by <span class="math inline">A</span>, where <span class="math inline">A = 1</span> if an individual receives treatment and <span class="math inline">A = 0</span>otherwise. Let <span class="math inline">L</span> represent the vector of observed covariates, and <span class="math inline">Y^a</span> be the potential outcomes. The propensity score, <span class="math inline">e(L)</span>, is defined as the probability of receiving treatment given the observed covariates:</p>
 <p><span class="math display">e(L) = P(A = 1 \mid L)</span></p>
 <p>To estimate the ATE using IPTW, we first compute the inverse probability of treatment weights, which are defined as:</p>
-<p><span class="math display">W_i = \frac{A_i}{e(L_i)} + \frac{1 - A_i}{1 - e(L_i)}</span></p>
-<p>where <span class="math inline">W_i</span> is the IPTW weight for individual <span class="math inline">i</span>, <span class="math inline">A_i</span> is the treatment indicator for individual <span class="math inline">i</span>, and <span class="math inline">e(L_i)</span> is the propensity score for individual <span class="math inline">i</span>.</p>
-<p>Now, the ATE can be estimated as:</p>
-<p><span class="math display">ATE_{\text{iptw}} = \frac{\sum [W_i \cdot (A_i \cdot Y_i)]}{\sum [W_i \cdot A_i]} - \frac{\sum [W_i \cdot ((1 - A_i) \cdot Y_i)]}{\sum [W_i \cdot (1 - A_i)]}</span></p>
-<p>In this equation, the numerator of the first term represents the sum of the weighted potential outcomes for the treated group, and the denominator is the sum of the weights for the treated group. The second term is similar but for the control group (those who did not receive the treatment). The <span class="math inline">ATE_{\text{iptw}}</span> represents the difference in outcomes between the treated and control groups in the pseudo-population created by applying IPTW.</p>
+<p><span class="math display">v_i = \frac{A_i}{e(L_i)} + \frac{1 - A_i}{1 - e(L_i)}</span></p>
+<p>where <span class="math inline">v_i</span> is the IPTW weight for individual <span class="math inline">i</span>, <span class="math inline">A_i</span> is the treatment indicator for individual <span class="math inline">i</span>, and <span class="math inline">e(L_i)</span> is the propensity score for individual <span class="math inline">i</span>.</p>
+</section>
+<section id="calculating-exposure-weights-propensity-scores-and-confounding-control-in-subgroups" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-exposure-weights-propensity-scores-and-confounding-control-in-subgroups">Calculating exposure weights (propensity scores) and confounding control in subgroups</h2>
+<p>When conducting weighted analyses in subgroups, we should estimate propensity scores <em>within</em> subgroups. The propensity score <span class="math inline">e(L, G)</span> is the conditional probability of the exposure <span class="math inline">A = 1</span>, given the covariates <span class="math inline">L</span> and subgroup indicator <span class="math inline">G</span>. This can be modelled using a statistical model, such as logistic regression, or one of the many other methods for obtaining balance (see Greifer’s work, described next week).</p>
+<p>We may say hat:</p>
+<p><span class="math display">\hat{e} = P(A = 1 | L, G) = f_A(L, G; \theta_A)</span></p>
+<p>Here, <span class="math inline">f_A(L, G; \theta_A)</span> is a function (statistical model) over <span class="math inline">Y</span> that estimates the probability of the exposure <span class="math inline">A = 1</span> given covariates <span class="math inline">L</span> and subgroup <span class="math inline">G</span>. Then, we calculate the weights for each individual, denoted as <span class="math inline">v</span>, using the estimated propensity score:</p>
+<p><span class="math display">
+v =
+\begin{cases}
+\frac{1}{e} &amp; \text{if } A = 1 \\
+\frac{1}{1-e} &amp; \text{if } A = 0
+\end{cases}
+</span></p>
+<p>Thus, <span class="math inline">v</span> depends on <span class="math inline">A</span>, and is calculated as the inverse of the propensity score for exposed individuals and as the inverse of <span class="math inline">1-e</span> for unexposed individuals.</p>
+<p>Note again that that we estimate propensity scores <em>separately</em> within strata of the subgroup for whom we are interested in effect modification. <span class="math inline">v</span> is the weight for each individual in a given subgroup <span class="math inline">G</span>. To foreshadow our work next week, we will fit models such that we may estimate contrast for the causal effects within groups (<span class="math inline">\hat{\delta_{g}}, \hat{\delta_{g^{\prime}}}\dots</span>); having obtained the group-level estimands, we may then obtain estimates for group-wise differences: (<span class="math inline">\hat{\gamma}</span>)</p>
+<p>Such that,</p>
+<p><span class="math display">\hat{\gamma} = \overbrace{\big( \hat{E}[Y(a)|G=g] - \hat{E}[Y(a^{\prime})|G=g] \big)}^{\hat{\delta_g}} - \overbrace{\big(\hat{E}[Y(a^{\prime})|G=g^{\prime}]- \hat{E}[Y(a)|G=g^{\prime}]\big)}^{\hat{\delta_{g^{\prime}}}}</span></p>
+<p>We again will use simulation-based inference methods to compute standard errors and confidence intervals <span class="citation" data-cites="greifer2023">[@greifer2023]</span>.</p>
+<p>Do not worry! All will be explained next week.</p>
 </section>
 <section id="doubly-robust-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="doubly-robust-estimation">Doubly Robust Estimation</h2>
 <p>We can combine regression based estimation and doubly robust estimation. I will walk you through the steps in today’s exercises. The TL;DR is this: doubly robust estimation leads to lower reliance on correct model specification. If either the PS model or the regression model is correctly specified, the model will be unbiased – if the other assumptions of causal inference are met.</p>
 <p>We cannot know whether these assumptions are met, we will need to do sensitivity analysis, the topic of next week.</p>
-</section>
-<section id="subgroup-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="subgroup-analysis">Subgroup analysis</h2>
-<p>In causal inference, these two concepts are related but have distinct meanings.</p>
-<p>Let <span class="math inline">Y_{a}</span> denote the counterfactual outcome Y when the experimental intervention <span class="math inline">A</span> is set to level <span class="math inline">a</span>. Let <span class="math inline">Y_{r}</span> denote the counterfactual outcome <span class="math inline">Y</span> when another experimental intervention <span class="math inline">R</span> is set to level <span class="math inline">r</span>. Following VanderWeele (2009), we can define interaction and effect modification as follows:</p>
-<ol type="1">
-<li>Interaction (causal interaction) on the difference scale, conditional on confounders <span class="math inline">L</span>, occurs when:</li>
-</ol>
-<p><span class="math display">E(Y^{a1,r1}|L=l) - E(Y^{a0,r1}|L=l) \neq E(Y^{a1,r0}|L=l) - E(Y^{a0,r0}|L=l)</span></p>
-<p>In this case, we are considering a double intervention, and interaction occurs when the combined effect of interventions <span class="math inline">A</span> and <span class="math inline">R</span> is not equal to the sum of their individual effects.</p>
-<ol start="2" type="1">
-<li>Effect Modification (also known as “heterogeneity of treatment effects”) occurs when the causal effect of intervention <span class="math inline">A</span> varies across different levels of another variable <span class="math inline">R</span>:</li>
-</ol>
-<p><span class="math display">E(Y^{a=1}|R=r_1, L=l) - E(Y^{a=0}|R=r_1, L=l) \neq E(Y^{a=1}|R=r_2, L=l) - E(Y^{a=0}|R=r_2, L=l)</span></p>
-<p>Effect modification indicates that the magnitude of the causal effect of intervention <span class="math inline">A</span> depends on the level of the modifier variable <span class="math inline">R</span>. It is important to note that effect modification can be observed even when there is no direct causal interaction between the treatment and the modifier variable.</p>
-<p>In short, interaction in causal inference refers to a situation where the combined effect of two interventions is not equal to the sum of their individual effects. Effect modification, on the other hand, occurs when the causal effect of one intervention varies across different levels of another variable.</p>
-<p>By clearly distinguishing between these two concept, researchers can better ask, and answer, questions about human thinking and behaviour. For comparative research, we are typically interested in effect-modification which requires subgroup analysis.</p>
 <p>In today’s workbook, you will learn how to conduct doubly robust subgroup analysis.</p>
 </section>
 <section id="readings" class="level2">
