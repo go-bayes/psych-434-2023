@@ -1588,7 +1588,7 @@ formula_str_c <-
     ")"
   )
 
-  # formula_str. # inspect on our own time 
+# formula_str. # inspect on our own time 
 
 
 
@@ -1756,7 +1756,7 @@ Ask me if you have any questions!
 
 Just leave out the weights. 
 
-Note the effect estimate is similar, but slightly stronger using only G-computation
+Note the effect estimate is similar, but slightly stronger using only G-computation.
 
 ```{r}
 #| label: continuous_exposure_g-compuation 

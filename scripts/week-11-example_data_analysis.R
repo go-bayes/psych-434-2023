@@ -15,15 +15,28 @@ nzavs_synth <-
   arrow::read_parquet(here::here("data", "nzavs_dat_synth_t10_t12"))
 
 
+#
+hist( nzavs_synth$support_help)
+hist( nzavs_synth$support_rnoguidance)
+hist( nzavs_synth$support_turnto)
 
+mean( nzavs_synth$support_help)
+mean( nzavs_synth$support_rnoguidance)
+mean( nzavs_synth$support_turnto)
+
+sd( nzavs_synth$support_help)
+sd( nzavs_synth$support_rnoguidance)
+sd( nzavs_synth$support_turnto)
 
 # create sum score of meaning of life
 dt_start <- nzavs_synth %>%
   arrange(id, wave) %>%
   rowwise() %>%
-  mutate(lifesat_composite  = mean(c(lifesat_satlife,                         
-    lifesat_ideal), na.rm = TRUE )) |>  ungroup() |>
-  
+  mutate(lifesat_composite  = mean(c(lifesat_satlife,
+    lifesat_ideal), na.rm = TRUE ),
+
+    support_composite = mean(c(support_help,support_rnoguidance,support_turnto), na.rm=TRUE )) |>  ungroup() |>
+
   # Create a binary 'urban' variable based on the 'rural_gch2018' variable
   mutate(urban = factor(
     ifelse(
@@ -34,7 +47,8 @@ dt_start <- nzavs_synth %>%
       # Label 'urban' if condition is met
       "rural"  # Label 'rural' if condition is not met
     )
-  ))
+  )) |>
+
 
 
 
@@ -67,7 +81,7 @@ out <- msm::statetable.msm(round(hours_exercise_coarsen_n, 0), id, data = dt_exp
 state_names <- c("Not Religious", "Religious")
 
 
-# 
+#
 transition_table(out, state_names)
 
 
@@ -93,7 +107,7 @@ baseline_vars = c(
   "parent",
   "pol_orient",
  # "rural_gch2018",
-   "urban", # use the two level urban varaible. 
+   "urban", # use the two level urban varaible.
   "agreeableness",
   "conscientiousness",
   "extraversion",
@@ -112,7 +126,7 @@ outcome_vars_reflective = c("lifesat_composite")
 
 
 
-# prepare your data for analysis 
+# prepare your data for analysis
 
 dt_prepare <-
   create_wide_data(
