@@ -55,8 +55,6 @@ source("/Users/joseph/GIT/templates/functions/libs2.R")
 \tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
 \tikzset{>=latex}
 
-
-
 \begin{tikzpicture}[{every node/.append style}=draw]
 
 \node [rectangle, draw=white] (eta) at (0, 0) {$\eta$};
