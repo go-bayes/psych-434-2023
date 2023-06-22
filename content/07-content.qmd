@@ -160,7 +160,7 @@ $$
 We say there is a causal effect if: 
 
 $$
-Y^{a=1} - Y^{a=0}  \neq 0
+Y_i^{a=1} - Y_i^{a=0}  \neq 0
 $$
 
 

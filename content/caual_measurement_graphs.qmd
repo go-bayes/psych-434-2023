@@ -224,6 +224,7 @@ Formative model & causal assumptions
 \end{tikzpicture}
 ```
 
+Insert 
 
 ```{tikz}
 #| label: fig-dag-reflectiveassumptions-compatible
