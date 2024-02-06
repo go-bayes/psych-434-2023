@@ -1,0 +1,359 @@
+---
+title: "Test Slide"
+subtitle: "Test"
+format:
+  revealjs: 
+    slide-number: true
+    smaller: true
+    scrollable: true
+    incremental: true
+    chalkboard: false 
+    buttons: false
+    preview-links: auto
+    theme: simple
+    embed-resources: false
+    code-fold: true
+    code-overflow: scroll
+    code-line-numbers: true
+    auto-stretch: true
+    html-math-method: katex
+    progress: true
+    bibliography: /Users/joseph/GIT/templates/bib/references.bib
+---
+
+##
+
+
+```{tikz}
+#| label: fig-dag-common-cause
+#| fig-cap: "Confounding by a common cause. The red path indicates bias from the open backdoor path from A to Y."
+#| out-width: 80%
+#| echo: false
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations}
+\tikzstyle{Arrow} = [->, thin, preaction = {decorate}]
+\tikzset{>=latex}
+% Define a simple decoration
+\tikzstyle{cor} = [-, dashed, preaction = {decorate}]
+
+
+\begin{tikzpicture}[{every node/.append style}=draw]
+\node [ellipse, draw=white] (L) at (0, 0) {L$_{0}$};
+\node [rectangle, draw=white] (A) at (4, 0) {A$_{1}$};
+\node [rectangle, draw=white] (Y) at (8, 0) {Y$_{2}$};
+\draw [-latex, bend left, draw =red] (L) to (Y);
+\draw [-latex, red] (L) to (A);
+\end{tikzpicture}
+```
+
+
+## Goals
+
+### By the end of this seminaryou will be able to:
+
+1.  Consider ethical problems that cultural research might present.
+2.  Understand the special problems that cultural research presents for **measurement.**
+3.  Understand the concept of **confounding.**
+
+### Key Concepts
+
+1.  Measurement
+2.  Validity 
+3.  A confounder 
+
+
+## Test
+
+
+
+## Group discussion: Ethics brainstorm
+
+1.  What are some ethical considerations that researchers need to take into account when conducting cross-cultural research? How do these considerations differ from those in other types of research?
+
+2.  How can cultural differences in values and beliefs impact the ethical considerations in cross-cultural research? What are some examples of cultural differences that researchers need to be aware of?
+
+3.  How can researchers ensure that their cross-cultural research is ethical, while still being scientifically rigorous and producing valuable insights? What are some best practices or guidelines that researchers can follow?
+
+
+
+
+## Where does psychology start?
+
+Psychology starts with a question about how people think or behave.
+
+## Examples of psychological questions?
+
+-   How does early childhood experience affect personality and behaviour?
+
+-   What are the effects of social media on self-esteem?
+
+-   Why do some people believe in a God or gods and others do not?
+
+-   Why are some people motivated to sacrifice for others?
+
+-   Does marriage make people happy?
+
+## Example of psychological questions in cross-cultural psychology
+
+-   How do early childhood experiences differ across cultures, and how do these differences impact personality and behavior development?
+
+-   Are there cultural differences in the way social media use affects self-esteem and body image?
+
+-   How do cultural and religious beliefs shape individual attitudes towards the concept of God or gods?
+
+-   What are the cultural and individual factors that motivate people to engage in acts of altruism or sacrifice for others, and how do these factors vary across cultures?
+
+-   Are there cultural differences in the factors that contribute to marital satisfaction and happiness, and how do cultural expectations and values surrounding marriage play a role?
+
+## How might psychological scientists answer whether marriage makes people happy?
+
+## *Wrong* answers only
+
+-   "Ask my married parents if they are happy."
+
+-   "Consult a palm reader."
+
+-   Assertion: "Yes marriage always makes people happy"; "No marriage can't possibly make anyone happy"
+
+-   Intuition: "It depends on the gender of the individual. Men are always happier in marriage, while women are never happier."
+
+-   Intuition: "It depends on the cultural background of the individuals. Couples from Western cultures are always happier in marriage, while couples from Eastern cultures are never happier."
+
+-   Conduct a literature review of previous research on the association between marriage and happiness, including cross-cultural studies that compare different cultural attitudes and practices regarding marriage and their relationship to happiness.
+
+-   Conduct a survey of a large and diverse sample of individuals to assess their happiness levels, as well as their marital status assess the relationship.
+
+## Conduct a literature review of previous research {.incremental}
+
+-   What would this tell us?
+
+    -   what other researchers have found.
+
+-   What would this not tell us?
+
+    -   what other researchers have not found.
+    -   what other researchers got wrong.
+
+## Conduct a survey of a large and diverse sample of individuals
+
+-   Where to begin?
+
+## Measurement
+
+Definitions:
+
+-   "Measurement is the numerical quantifcation of the attributes of an object or event, which can be used to compare with other objects or events" \[Conventional\]
+-   "Measurement is the assignment of numerals to objects or events according to rules." \[Psychological\]
+-   "Measurement is the process of experimentally obtaining one or more quantity values that can reasonably be attributed to a quantity." \[Metrological\] from [@briggs2021]
+
+## "On a scale of 1-7, how happy are you?"
+
+How might this go wrong?
+
+-   Ambiguity: Respondents may interpret "happiness" in different ways. -e.g. Some people may equate happiness with a momentary positive emotion -e.g. Others may think of happiness as a long-term state of contentment.
+-   Social Desirability Bias: Respondents may want to tell you what they think you want to hear. Others might want to frustrate you.
+-   Mood: the context in which the question is asked and the respondent's current mood might affect the answer (reliability)
+-   Limited range of scale
+-   What do the endpoints mean?
+-   Cultural Differences:
+    -   in meanings
+    -   in constructs themselves
+    
+## In survey research
+
+Construct: e.g. Happiness - a subjective experience of positive emotions, such as joy, contentment, and satisfaction with life/
+
+Item: A question or statement used to measure an aspect of happiness. Example: "I feel content with my life."
+
+Scale: A collection of items designed to measure a construct. Example: a happiness scale might consist of items rated on a Likert-type scale, with an overall score reflecting the level of happiness being measured. Example: 
+
+- "In general, how happy do you feel?" (rated on a scale from 1 - not at all happy to 5 - extremely happy)
+- "How often do you feel positive emotions, such as joy or contentment?" (rated on a scale from 1 - very rarely or never to 5 - very often or always)
+- "How satisfied are you with your life as a whole?" (rated on a scale from 1 - very dissatisfied to 5 - very satisfied)
+    
+
+## Concept of validity in psychometric research
+
+-   Content Validity: The degree an instrument measures what it is intended to measure (the "construct").
+-   Construct Validity: Whether the construct assumed to measure is accurately defined and operationalised.
+-   Criterion Validity: Whether an instrument accurately predicts performance
+-   Face Validity: whether an instrument measure what it is intended to measure, as assessed by experts.
+-   Ecological Validity: whether an instrument accurately reflects real-world situations and behavior [@bandalos2018]
+
+## What can we do about it?
+
+Part 1: Measurement matters
+
+-   Week 2: Getting started with R (Torven Schalk) tools for probing validity
+-   Week 3: Lost in Translation? Measurement and Language (Inkuk Kim) -- tools for addressing differences in meanings and concepts
+-   Week 4: Dealing with Data Factor Analysis (Inkuk Kim) - tools needed for modelling relationship of items in a scale.
+-   Week 5: Dealing with Data (Multi-Group CFA) (In Kuk Kim) - test the factor structures across groups.
+-   Week 6: Dealing with Data (Partial Invariance) (Torven Schalk) -- test (a) whether there are differences in the measurement properties of variables between groups, but the overall structure of the measurement model is similar (b) investigate whether there are differences in the factor structure of a measure between groups. Interest is in *equivalence*
+
+:::{.notes}
+Metric equivalence: Factor loadings are similar across groups.
+Configural equivalence: The factor structure is the same across groups in a multi-group confirmatory factor analysis.
+Scalar equivalence: Values/Means are also equivalent across groups.
+:::
+
+## What else might go wrong?
+
+Suppose we are confident in measurement, administer survey, and find an relationship.
+
+::: {.fragment .highlight-red}
+Does marriage cause happiness cross culturally?
+:::
+
+
+## What might go wrong?
+
+```{r}
+# See: https://remlapmot.github.io/mrdags/
+# see also: https://github.com/rich-iannone/DiagrammeR
+
+DiagrammeR::grViz("
+      digraph mrdag {
+
+      graph [rankdir=TB]
+
+      node [shape=plaintext]
+      
+      A [label='Marriage',  pos='1,0!']
+      Y [label='Happiness',  pos='2,0!']
+
+      { rank = same; A Y }
+      A -> Y
+      }
+      ", height = 600)
+```
+
+## Happiness might cause marriage
+
+```{r}
+# See: https://remlapmot.github.io/mrdags/
+# see also: https://github.com/rich-iannone/DiagrammeR
+
+DiagrammeR::grViz("
+      digraph mrdag {
+
+      graph [rankdir=TB]
+
+      node [shape=plaintext]
+      
+      A [label='Marriage',  pos='1,0!']
+      Y [label='Happiness',  pos='2,0!']
+
+      { rank = same; A Y }
+      Y -> A
+      }
+      ", height = 600)
+```
+
+## Age might be a confounder of both Marriage and Happiness
+
+```{r}
+# See: https://remlapmot.github.io/mrdags/
+# see also: https://github.com/rich-iannone/DiagrammeR
+
+DiagrammeR::grViz("
+      digraph mrdag {
+
+      graph [rankdir=TB]
+
+      node [shape=plaintext]
+      L [label='Age   ',  pos='0,0!']
+      A [label='Marriage',  pos='1,0!']
+      Y [label='Happy',  pos='2,0!']
+
+      { rank = same; L A Y }
+
+      L -> A
+      L -> Y
+      }
+      ", height = 600)
+```
+
+## Many psychologists will simply "control for age"
+
+::: {.fragment .highlight-red}
+This doesn't work if there is reverse causation: 
+Regression coefficient for Marriage (M) is biased.
+:::
+
+```{r}
+#| echo: true
+
+## Simulate data 
+set.seed(123)
+sim_fun_B = function() {
+  n <- 1000
+  A <- rnorm(n, 1) # simulates age,
+  H <- rnorm(n , A) #  simulates happy as function of age
+  M <- rnorm(n , A) + .2 * H # simulate marriage as a function of age + happiness
+
+  
+# Simulate dataframe from function
+simdat_B <- data.frame(
+  A = A, 
+  H = H,
+  M = M) 
+
+#  model in which marriage "predicts" happiness controlling for age
+sim_B <- lm(H ~ M + A, data = simdat_B)
+sim_B  # returns output
+}
+
+# Replication 100 times
+r_lm_B <- NA
+r_lm_B = replicate(100, sim_fun_B(), simplify = FALSE )
+
+# print model results
+parameters::pool_parameters(r_lm_B)
+```
+
+## The problem is confounding: what can we do about it?
+
+Week 7: Causal inference: Causal Graphs(Joseph Bulbulia). How to diagnosis sources of confounding and what to do about it.
+
+Week 8: Causal inference: Target Trial Emulation (Joseph Bulbulia). How to emulate an experiment with observational data and how to identify the modification of effects by cultural groups.
+
+Week 9: Causal inference: Reconsidering measurement and selection biases (Joseph Bulbulia). A discussion of problems in standard approaches to measurement.
+
+Week 10 Causal inference: Cross-Cultural Experiments (Joseph Bulbulia & Guests). For whom to our results generalise?
+
+## Course conclusions
+
+Week 11 Ethics and Ownership (Joseph Bulbulia & Guests). Can causal inference help us to improve ethical reasoning? Why is data protection important? How do the ethics of data protection relate to the ethics of open science?
+
+Week 12 Future Horizons (Joseph Bulbulia, Torven, Inkuk):
+
+
+## What have we learned? 
+
+**Key Concepts**
+::: {.fragment .highlight-red}
+1.  Measurement = quantification
+2.  Validity = accuracy
+3.  Confounder = interference
+:::
+
+
+
+## References
+
+For an account of the history of measurement in psychological research, see: [@briggs2021]
+
+For an account of key concepts and current debates in psychometrics, see: [@bandalos2018]
+
+For an account of special measurement problems that arise in cross-cultural research, see: [@vandevijver2021]
+
+For an accessible introduction to causal inference and its history see: [@pearl2018]
+
+
+
+
+### Bibliography
+

@@ -3155,5 +3155,180 @@
     "title": "Causal inference: a step by step guide",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nA and G on Y might not be additive. We assume that the potential confounders L are sufficient to control for confounding. See Appendix↩︎"
+  },
+  {
+    "objectID": "slides/test.html#goals",
+    "href": "slides/test.html#goals",
+    "title": "Test Slide",
+    "section": "Goals",
+    "text": "Goals\nBy the end of this seminaryou will be able to:\n\nConsider ethical problems that cultural research might present.\nUnderstand the special problems that cultural research presents for measurement.\nUnderstand the concept of confounding.\n\nKey Concepts\n\nMeasurement\nValidity\nA confounder"
+  },
+  {
+    "objectID": "slides/test.html#group-discussion-ethics-brainstorm",
+    "href": "slides/test.html#group-discussion-ethics-brainstorm",
+    "title": "Test Slide",
+    "section": "Group discussion: Ethics brainstorm",
+    "text": "Group discussion: Ethics brainstorm\n\nWhat are some ethical considerations that researchers need to take into account when conducting cross-cultural research? How do these considerations differ from those in other types of research?\nHow can cultural differences in values and beliefs impact the ethical considerations in cross-cultural research? What are some examples of cultural differences that researchers need to be aware of?\nHow can researchers ensure that their cross-cultural research is ethical, while still being scientifically rigorous and producing valuable insights? What are some best practices or guidelines that researchers can follow?"
+  },
+  {
+    "objectID": "slides/test.html#where-does-psychology-start",
+    "href": "slides/test.html#where-does-psychology-start",
+    "title": "Test Slide",
+    "section": "Where does psychology start?",
+    "text": "Where does psychology start?\nPsychology starts with a question about how people think or behave."
+  },
+  {
+    "objectID": "slides/test.html#examples-of-psychological-questions",
+    "href": "slides/test.html#examples-of-psychological-questions",
+    "title": "Test Slide",
+    "section": "Examples of psychological questions?",
+    "text": "Examples of psychological questions?\n\nHow does early childhood experience affect personality and behaviour?\nWhat are the effects of social media on self-esteem?\nWhy do some people believe in a God or gods and others do not?\nWhy are some people motivated to sacrifice for others?\nDoes marriage make people happy?"
+  },
+  {
+    "objectID": "slides/test.html#example-of-psychological-questions-in-cross-cultural-psychology",
+    "href": "slides/test.html#example-of-psychological-questions-in-cross-cultural-psychology",
+    "title": "Test Slide",
+    "section": "Example of psychological questions in cross-cultural psychology",
+    "text": "Example of psychological questions in cross-cultural psychology\n\nHow do early childhood experiences differ across cultures, and how do these differences impact personality and behavior development?\nAre there cultural differences in the way social media use affects self-esteem and body image?\nHow do cultural and religious beliefs shape individual attitudes towards the concept of God or gods?\nWhat are the cultural and individual factors that motivate people to engage in acts of altruism or sacrifice for others, and how do these factors vary across cultures?\nAre there cultural differences in the factors that contribute to marital satisfaction and happiness, and how do cultural expectations and values surrounding marriage play a role?"
+  },
+  {
+    "objectID": "slides/test.html#how-might-psychological-scientists-answer-whether-marriage-makes-people-happy",
+    "href": "slides/test.html#how-might-psychological-scientists-answer-whether-marriage-makes-people-happy",
+    "title": "Test Slide",
+    "section": "How might psychological scientists answer whether marriage makes people happy?",
+    "text": "How might psychological scientists answer whether marriage makes people happy?"
+  },
+  {
+    "objectID": "slides/test.html#wrong-answers-only",
+    "href": "slides/test.html#wrong-answers-only",
+    "title": "Test Slide",
+    "section": "Wrong answers only",
+    "text": "Wrong answers only\n\n“Ask my married parents if they are happy.”\n“Consult a palm reader.”\nAssertion: “Yes marriage always makes people happy”; “No marriage can’t possibly make anyone happy”\nIntuition: “It depends on the gender of the individual. Men are always happier in marriage, while women are never happier.”\nIntuition: “It depends on the cultural background of the individuals. Couples from Western cultures are always happier in marriage, while couples from Eastern cultures are never happier.”\nConduct a literature review of previous research on the association between marriage and happiness, including cross-cultural studies that compare different cultural attitudes and practices regarding marriage and their relationship to happiness.\nConduct a survey of a large and diverse sample of individuals to assess their happiness levels, as well as their marital status assess the relationship."
+  },
+  {
+    "objectID": "slides/test.html#conduct-a-literature-review-of-previous-research",
+    "href": "slides/test.html#conduct-a-literature-review-of-previous-research",
+    "title": "Test Slide",
+    "section": "Conduct a literature review of previous research",
+    "text": "Conduct a literature review of previous research\n\nWhat would this tell us?\n\nwhat other researchers have found.\n\nWhat would this not tell us?\n\nwhat other researchers have not found.\nwhat other researchers got wrong."
+  },
+  {
+    "objectID": "slides/test.html#conduct-a-survey-of-a-large-and-diverse-sample-of-individuals",
+    "href": "slides/test.html#conduct-a-survey-of-a-large-and-diverse-sample-of-individuals",
+    "title": "Test Slide",
+    "section": "Conduct a survey of a large and diverse sample of individuals",
+    "text": "Conduct a survey of a large and diverse sample of individuals\n\nWhere to begin?"
+  },
+  {
+    "objectID": "slides/test.html#measurement",
+    "href": "slides/test.html#measurement",
+    "title": "Test Slide",
+    "section": "Measurement",
+    "text": "Measurement\nDefinitions:\n\n“Measurement is the numerical quantifcation of the attributes of an object or event, which can be used to compare with other objects or events” [Conventional]\n“Measurement is the assignment of numerals to objects or events according to rules.” [Psychological]\n“Measurement is the process of experimentally obtaining one or more quantity values that can reasonably be attributed to a quantity.” [Metrological] from (briggs2021?)"
+  },
+  {
+    "objectID": "slides/test.html#on-a-scale-of-1-7-how-happy-are-you",
+    "href": "slides/test.html#on-a-scale-of-1-7-how-happy-are-you",
+    "title": "Test Slide",
+    "section": "“On a scale of 1-7, how happy are you?”",
+    "text": "“On a scale of 1-7, how happy are you?”\nHow might this go wrong?\n\nAmbiguity: Respondents may interpret “happiness” in different ways. -e.g. Some people may equate happiness with a momentary positive emotion -e.g. Others may think of happiness as a long-term state of contentment.\nSocial Desirability Bias: Respondents may want to tell you what they think you want to hear. Others might want to frustrate you.\nMood: the context in which the question is asked and the respondent’s current mood might affect the answer (reliability)\nLimited range of scale\nWhat do the endpoints mean?\nCultural Differences:\n\nin meanings\nin constructs themselves"
+  },
+  {
+    "objectID": "slides/test.html#in-survey-research",
+    "href": "slides/test.html#in-survey-research",
+    "title": "Test Slide",
+    "section": "In survey research",
+    "text": "In survey research\nConstruct: e.g. Happiness - a subjective experience of positive emotions, such as joy, contentment, and satisfaction with life/\nItem: A question or statement used to measure an aspect of happiness. Example: “I feel content with my life.”\nScale: A collection of items designed to measure a construct. Example: a happiness scale might consist of items rated on a Likert-type scale, with an overall score reflecting the level of happiness being measured. Example:\n\n“In general, how happy do you feel?” (rated on a scale from 1 - not at all happy to 5 - extremely happy)\n“How often do you feel positive emotions, such as joy or contentment?” (rated on a scale from 1 - very rarely or never to 5 - very often or always)\n“How satisfied are you with your life as a whole?” (rated on a scale from 1 - very dissatisfied to 5 - very satisfied)"
+  },
+  {
+    "objectID": "slides/test.html#concept-of-validity-in-psychometric-research",
+    "href": "slides/test.html#concept-of-validity-in-psychometric-research",
+    "title": "Test Slide",
+    "section": "Concept of validity in psychometric research",
+    "text": "Concept of validity in psychometric research\n\nContent Validity: The degree an instrument measures what it is intended to measure (the “construct”).\nConstruct Validity: Whether the construct assumed to measure is accurately defined and operationalised.\nCriterion Validity: Whether an instrument accurately predicts performance\nFace Validity: whether an instrument measure what it is intended to measure, as assessed by experts.\nEcological Validity: whether an instrument accurately reflects real-world situations and behavior (Bandalos 2018)"
+  },
+  {
+    "objectID": "slides/test.html#what-can-we-do-about-it",
+    "href": "slides/test.html#what-can-we-do-about-it",
+    "title": "Test Slide",
+    "section": "What can we do about it?",
+    "text": "What can we do about it?\nPart 1: Measurement matters\n\nWeek 2: Getting started with R (Torven Schalk) tools for probing validity\nWeek 3: Lost in Translation? Measurement and Language (Inkuk Kim) – tools for addressing differences in meanings and concepts\nWeek 4: Dealing with Data Factor Analysis (Inkuk Kim) - tools needed for modelling relationship of items in a scale.\nWeek 5: Dealing with Data (Multi-Group CFA) (In Kuk Kim) - test the factor structures across groups.\nWeek 6: Dealing with Data (Partial Invariance) (Torven Schalk) – test (a) whether there are differences in the measurement properties of variables between groups, but the overall structure of the measurement model is similar (b) investigate whether there are differences in the factor structure of a measure between groups. Interest is in equivalence\n\n\nMetric equivalence: Factor loadings are similar across groups. Configural equivalence: The factor structure is the same across groups in a multi-group confirmatory factor analysis. Scalar equivalence: Values/Means are also equivalent across groups."
+  },
+  {
+    "objectID": "slides/test.html#what-else-might-go-wrong",
+    "href": "slides/test.html#what-else-might-go-wrong",
+    "title": "Test Slide",
+    "section": "What else might go wrong?",
+    "text": "What else might go wrong?\nSuppose we are confident in measurement, administer survey, and find an relationship.\n\nDoes marriage cause happiness cross culturally?"
+  },
+  {
+    "objectID": "slides/test.html#what-might-go-wrong",
+    "href": "slides/test.html#what-might-go-wrong",
+    "title": "Test Slide",
+    "section": "What might go wrong?",
+    "text": "What might go wrong?"
+  },
+  {
+    "objectID": "slides/test.html#happiness-might-cause-marriage",
+    "href": "slides/test.html#happiness-might-cause-marriage",
+    "title": "Test Slide",
+    "section": "Happiness might cause marriage",
+    "text": "Happiness might cause marriage"
+  },
+  {
+    "objectID": "slides/test.html#age-might-be-a-confounder-of-both-marriage-and-happiness",
+    "href": "slides/test.html#age-might-be-a-confounder-of-both-marriage-and-happiness",
+    "title": "Test Slide",
+    "section": "Age might be a confounder of both Marriage and Happiness",
+    "text": "Age might be a confounder of both Marriage and Happiness"
+  },
+  {
+    "objectID": "slides/test.html#many-psychologists-will-simply-control-for-age",
+    "href": "slides/test.html#many-psychologists-will-simply-control-for-age",
+    "title": "Test Slide",
+    "section": "Many psychologists will simply “control for age”",
+    "text": "Many psychologists will simply “control for age”\n\nThis doesn’t work if there is reverse causation: Regression coefficient for Marriage (M) is biased.\n\n\n\nCode\n## Simulate data \nset.seed(123)\nsim_fun_B = function() {\n  n &lt;- 1000\n  A &lt;- rnorm(n, 1) # simulates age,\n  H &lt;- rnorm(n , A) #  simulates happy as function of age\n  M &lt;- rnorm(n , A) + .2 * H # simulate marriage as a function of age + happiness\n\n  \n# Simulate dataframe from function\nsimdat_B &lt;- data.frame(\n  A = A, \n  H = H,\n  M = M) \n\n#  model in which marriage \"predicts\" happiness controlling for age\nsim_B &lt;- lm(H ~ M + A, data = simdat_B)\nsim_B  # returns output\n}\n\n# Replication 100 times\nr_lm_B &lt;- NA\nr_lm_B = replicate(100, sim_fun_B(), simplify = FALSE )\n\n# print model results\nparameters::pool_parameters(r_lm_B)\n\n\n# Fixed Effects\n\nParameter   | Coefficient |   SE |        95% CI | Statistic |     df |      p\n------------------------------------------------------------------------------\n(Intercept) |    4.12e-03 | 0.06 | [-0.12, 0.13] |      0.07 | 220.99 | 0.947 \nM           |        0.19 | 0.04 | [ 0.10, 0.27] |      4.42 | 234.19 | &lt; .001\nA           |        0.77 | 0.07 | [ 0.64, 0.91] |     11.17 | 211.13 | &lt; .001"
+  },
+  {
+    "objectID": "slides/test.html#the-problem-is-confounding-what-can-we-do-about-it",
+    "href": "slides/test.html#the-problem-is-confounding-what-can-we-do-about-it",
+    "title": "Test Slide",
+    "section": "The problem is confounding: what can we do about it?",
+    "text": "The problem is confounding: what can we do about it?\nWeek 7: Causal inference: Causal Graphs(Joseph Bulbulia). How to diagnosis sources of confounding and what to do about it.\nWeek 8: Causal inference: Target Trial Emulation (Joseph Bulbulia). How to emulate an experiment with observational data and how to identify the modification of effects by cultural groups.\nWeek 9: Causal inference: Reconsidering measurement and selection biases (Joseph Bulbulia). A discussion of problems in standard approaches to measurement.\nWeek 10 Causal inference: Cross-Cultural Experiments (Joseph Bulbulia & Guests). For whom to our results generalise?"
+  },
+  {
+    "objectID": "slides/test.html#course-conclusions",
+    "href": "slides/test.html#course-conclusions",
+    "title": "Test Slide",
+    "section": "Course conclusions",
+    "text": "Course conclusions\nWeek 11 Ethics and Ownership (Joseph Bulbulia & Guests). Can causal inference help us to improve ethical reasoning? Why is data protection important? How do the ethics of data protection relate to the ethics of open science?\nWeek 12 Future Horizons (Joseph Bulbulia, Torven, Inkuk):"
+  },
+  {
+    "objectID": "slides/test.html#what-have-we-learned",
+    "href": "slides/test.html#what-have-we-learned",
+    "title": "Test Slide",
+    "section": "What have we learned?",
+    "text": "What have we learned?\nKey Concepts ::: {.fragment .highlight-red} 1. Measurement = quantification 2. Validity = accuracy 3. Confounder = interference :::"
+  },
+  {
+    "objectID": "slides/test.html#references",
+    "href": "slides/test.html#references",
+    "title": "Test Slide",
+    "section": "References",
+    "text": "References\nFor an account of the history of measurement in psychological research, see: (briggs2021?)\nFor an account of key concepts and current debates in psychometrics, see: (Bandalos 2018)\nFor an account of special measurement problems that arise in cross-cultural research, see: (vandevijver2021?)\nFor an accessible introduction to causal inference and its history see: (Pearl and Mackenzie 2018)\nBibliography\n\n\n\n\n\n\nBandalos, Deborah L. 2018. Measurement Theory and Applications for the Social Sciences. Guilford Publications.\n\n\nPearl, Judea, and Dana Mackenzie. 2018. The Book of Why: The New Science of Cause and Effect. Basic books."
+  },
+  {
+    "objectID": "slides/test.html#section",
+    "href": "slides/test.html#section",
+    "title": "Test Slide",
+    "section": "",
+    "text": "Figure 1: Confounding by a common cause. The red path indicates bias from the open backdoor path from A to Y."
+  },
+  {
+    "objectID": "slides/test.html#test",
+    "href": "slides/test.html#test",
+    "title": "Test Slide",
+    "section": "Test",
+    "text": "Test"
   }
 ]
