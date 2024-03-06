@@ -1,21 +1,18 @@
 ---
 title: "Getting started with R"
-date: "2023-MAR-07"
+date: "2023-MAR-04"
 author:
-    name: Torven Schalk
-    email: torven.schalk@vuw.ac.nz
+    name: Joseph Bulbulia
+    email: joseph.bulbulia@gmail.com
     corresponding: yes
 ---
   
   
 ## Overview
 
-This session is devoted to learning R. There are no required readings. 
 
   
 ## Slides
-
-Torven's slides will be on Nuku/Canvas.
 
 
 

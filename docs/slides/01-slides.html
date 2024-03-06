@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.514">
+  <meta name="generator" content="quarto-1.4.523">
 
   <title>PSYC 434 Conducting Research Across Cultures: Trimester 1, 2023 - Asking questions in cross-cultural psychology</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -407,7 +407,7 @@
       margin-right: 0; 
     }
   </style>
-  <script src="../site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+  <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
   <script src="../site_libs/viz-1.8.2/viz.js"></script>
   <link href="../site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
   <script src="../site_libs/grViz-binding-1.0.10/grViz.js"></script>
@@ -587,8 +587,8 @@
 <h2>What might go wrong?</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-c69ef618e4b2bc1c1dcf" style="width:960px;height:600px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-c69ef618e4b2bc1c1dcf">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      A -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2f1fd622b003d555fd68" style="width:960px;height:600px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2f1fd622b003d555fd68">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      A -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -596,8 +596,8 @@
 <h2>Happiness might cause marriage</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-f3b9ca78f54977780da8" style="width:960px;height:600px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-f3b9ca78f54977780da8">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      Y -> A\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3154f8ac570ed5524137" style="width:960px;height:600px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3154f8ac570ed5524137">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      Y -> A\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -605,8 +605,8 @@
 <h2>Age might be a confounder of both Marriage and Happiness</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-4f5db2a03f8ed6a46ded" style="width:960px;height:600px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-4f5db2a03f8ed6a46ded">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      L [label=\"Age   \",  pos=\"0,0!\"]\n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happy\",  pos=\"2,0!\"]\n\n      { rank = same; L A Y }\n\n      L -> A\n      L -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5aedaa67dd5a875060a7" style="width:960px;height:600px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5aedaa67dd5a875060a7">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      L [label=\"Age   \",  pos=\"0,0!\"]\n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happy\",  pos=\"2,0!\"]\n\n      { rank = same; L A Y }\n\n      L -> A\n      L -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -618,32 +618,32 @@
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="do">## Simulate data </span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>sim_fun_B <span class="ot">=</span> <span class="cf">function</span>() {</span>
-<span id="cb1-4"><a href="#cb1-4"></a>  n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>  A <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">1</span>) <span class="co"># simulates age,</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>  H <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n , A) <span class="co">#  simulates happy as function of age</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>  M <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n , A) <span class="sc">+</span> .<span class="dv">2</span> <span class="sc">*</span> H <span class="co"># simulate marriage as a function of age + happiness</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a>  </span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co"># Simulate dataframe from function</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>simdat_B <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-12"><a href="#cb1-12"></a>  <span class="at">A =</span> A, </span>
-<span id="cb1-13"><a href="#cb1-13"></a>  <span class="at">H =</span> H,</span>
-<span id="cb1-14"><a href="#cb1-14"></a>  <span class="at">M =</span> M) </span>
-<span id="cb1-15"><a href="#cb1-15"></a></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="co">#  model in which marriage "predicts" happiness controlling for age</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a>sim_B <span class="ot">&lt;-</span> <span class="fu">lm</span>(H <span class="sc">~</span> M <span class="sc">+</span> A, <span class="at">data =</span> simdat_B)</span>
-<span id="cb1-18"><a href="#cb1-18"></a>sim_B  <span class="co"># returns output</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a>}</span>
-<span id="cb1-20"><a href="#cb1-20"></a></span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="co"># Replication 100 times</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a>r_lm_B <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a>r_lm_B <span class="ot">=</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">sim_fun_B</span>(), <span class="at">simplify =</span> <span class="cn">FALSE</span> )</span>
-<span id="cb1-24"><a href="#cb1-24"></a></span>
-<span id="cb1-25"><a href="#cb1-25"></a><span class="co"># print model results</span></span>
-<span id="cb1-26"><a href="#cb1-26"></a>parameters<span class="sc">::</span><span class="fu">pool_parameters</span>(r_lm_B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="do">## Simulate data </span></span>
+<span id="cb1-2"><a></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb1-3"><a></a>sim_fun_B <span class="ot">=</span> <span class="cf">function</span>() {</span>
+<span id="cb1-4"><a></a>  n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb1-5"><a></a>  A <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">1</span>) <span class="co"># simulates age,</span></span>
+<span id="cb1-6"><a></a>  H <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n , A) <span class="co">#  simulates happy as function of age</span></span>
+<span id="cb1-7"><a></a>  M <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n , A) <span class="sc">+</span> .<span class="dv">2</span> <span class="sc">*</span> H <span class="co"># simulate marriage as a function of age + happiness</span></span>
+<span id="cb1-8"><a></a></span>
+<span id="cb1-9"><a></a>  </span>
+<span id="cb1-10"><a></a><span class="co"># Simulate dataframe from function</span></span>
+<span id="cb1-11"><a></a>simdat_B <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-12"><a></a>  <span class="at">A =</span> A, </span>
+<span id="cb1-13"><a></a>  <span class="at">H =</span> H,</span>
+<span id="cb1-14"><a></a>  <span class="at">M =</span> M) </span>
+<span id="cb1-15"><a></a></span>
+<span id="cb1-16"><a></a><span class="co">#  model in which marriage "predicts" happiness controlling for age</span></span>
+<span id="cb1-17"><a></a>sim_B <span class="ot">&lt;-</span> <span class="fu">lm</span>(H <span class="sc">~</span> M <span class="sc">+</span> A, <span class="at">data =</span> simdat_B)</span>
+<span id="cb1-18"><a></a>sim_B  <span class="co"># returns output</span></span>
+<span id="cb1-19"><a></a>}</span>
+<span id="cb1-20"><a></a></span>
+<span id="cb1-21"><a></a><span class="co"># Replication 100 times</span></span>
+<span id="cb1-22"><a></a>r_lm_B <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb1-23"><a></a>r_lm_B <span class="ot">=</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">sim_fun_B</span>(), <span class="at">simplify =</span> <span class="cn">FALSE</span> )</span>
+<span id="cb1-24"><a></a></span>
+<span id="cb1-25"><a></a><span class="co"># print model results</span></span>
+<span id="cb1-26"><a></a>parameters<span class="sc">::</span><span class="fu">pool_parameters</span>(r_lm_B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># Fixed Effects

@@ -1,7 +1,8 @@
 {
   "hash": "4ea761c0a3f7d799e7d56295d4e2efe8",
   "result": {
-    "markdown": "---\ntitle: \"Asking questions in cross-cultural psychology\"\ndate: \"2023-FEB-28\"\nbibliography: references.bib\n---\n\n::: {.cell}\n\n:::\n\n::: {.cell engine.opts='{\"dvisvgm.opts\":\"--font-format=woff\"}' caption='dag'}\n::: {.cell-output-display}\n![A caual graph ](01-content_files/figure-html/fig-line-plot-1.png){#fig-line-plot width=60%}\n:::\n:::\n\n\n\n## Overview\n\n\n\n## Slides\n\n[PREVIEW](/slides/01-slides.html)\n\n<div>\n\n\n```{=html}\n<iframe class=\"slide-deck\" src=\"/slides/01-slides.html\"></iframe>\n```\n\n\n</div>\n\nOpen in browser [here](/slides/01-slides.html){target=\"_blank\"}\n\n## Background Readings\n\n[@he2012]\n\n[@vandevijver2021]\n\n[@berry1989]\n",
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Asking questions in cross-cultural psychology\"\ndate: \"2023-FEB-28\"\nbibliography: references.bib\n---\n\n::: {.cell}\n\n:::\n\n::: {.cell caption='dag'}\n::: {.cell-output-display}\n![A caual graph ](01-content_files/figure-html/fig-line-plot-1.png){#fig-line-plot width=60%}\n:::\n:::\n\n\n\n## Overview\n\n\n\n## Slides\n\n[PREVIEW](/slides/01-slides.html)\n\n<div>\n\n\n```{=html}\n<iframe class=\"slide-deck\" src=\"/slides/01-slides.html\"></iframe>\n```\n\n\n</div>\n\nOpen in browser [here](/slides/01-slides.html){target=\"_blank\"}\n\n## Background Readings\n\n[@he2012]\n\n[@vandevijver2021]\n\n[@berry1989]\n",
     "supporting": [
       "01-content_files"
     ],

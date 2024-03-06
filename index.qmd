@@ -11,6 +11,16 @@ author:
     warnings: false
     error: false
     highlight: kate
+    header-includes:
+      - \input{/Users/joseph/GIT/templates/latex/custom-commands.tex}
+date: last-modified
+execute:
+  echo: true
+  warning: false
+  include: true
+  eval: true
+fontfamily: libertinus
+bibliography: /Users/joseph/GIT/templates/bib/references.bib
 ---
 
 ```{r}
