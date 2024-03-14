@@ -1,0 +1,1157 @@
+---
+title: "Elements of a linear model"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+date: 2023-MAR-08
+output:
+  html:
+   code_folding: true
+   highlight: kate
+toc: true
+bibliography: references.bib
+---
+
+
+```{r echo = FALSE, message = FALSE}
+# libraries
+library("tidyverse")
+library("patchwork")
+library("brms")
+library("lubridate")
+library("splines")
+if (!require(equatiomatic)) {
+  remotes::install_github("datalorax/equatiomatic")
+  }
+# set theme
+# theme set
+theme_set(theme_classic())
+```
+
+```{r echo = FALSE, cache = TRUE, message = FALSE}
+# Import data
+# read data
+nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
+
+# to relevel kessler 6 variables
+f<-c("None Of The Time","A Little Of The Time","Some Of The Time",  "Most Of The Time", "All Of The Time")
+
+# get data into shape
+library("tidyverse")
+nz <- nz_0 %>%
+  dplyr::mutate_if(is.character, factor) %>%
+  select(
+    -c(
+      SWB.Kessler01,
+      SWB.Kessler02,
+      SWB.Kessler03,
+      SWB.Kessler04,
+      SWB.Kessler05,
+      SWB.Kessler06
+    )
+  ) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  dplyr::mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  dplyr::mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  dplyr::mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  dplyr::mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  dplyr::mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) %>%
+  dplyr::mutate(height_m = HLTH.Height * 100,
+         weight_kg =  HLTH.Weight) # better height vars
+```
+
+## Overview
+
+This week we introduce regression.
+
+## Learning outcomes
+
+By learning regression, you will be better equipped to do psychological science and to evaluate psychological research.
+
+## What is regression?
+
+Broadly speaking, a regression model is method for inferring the expected average features of a population, and the variance of a population, conditional on other features of the population as measured in a sample.
+
+We'll see that regression encompasses more than this definition, however, this definition makes a start.
+
+To understand regression, then, we need to understand the following jargon words: population, sample, measurement, and inference.
+
+#### What is a population?
+
+In science, a population is a hypothetical construct. It is the set of all potential members of a set of things. In psychological science that set is typically a collection of individuals. We want to understand "The population of all human beings?" or "The New Zealand adult population"; or "The population of undergraduates who may be recruited for IPRP in New Zealand."
+
+#### What is a sample?
+
+A sample is a randomly realised sub-population from the larger abstract population that a scientific community hopes to generalise about.
+
+Think of selecting balls randomly from an urn. If pulled at random, the balls may inform us about the contents of the urn. For example, if we select one white ball and one black ball, we may infer that the balls in the urn are not all white or all black.
+
+#### What is "measurement"?
+
+A measure is tool or method for obtaining numerical descriptions of a sample. We often call measures "scales." We can think of a bathroom weight scale as a tool and method for tracking body weight.
+
+A measurement is the numerical description we obtain from sensors such as statistical surveys, census data, twitter feeds, & etc.
+
+In the course, we have encountered numerical scales, ordinal scales, and factors. The topic of measurement in psychological is, to say the least, very broad.
+
+For now, it is important to keep in mind that, similar to bathroom scales, measures can be prone to error.
+
+Also similar to bathroom scales, error prone scales may nevertheless be useful. We need to investigate the utility of error prone scales against the backdrop of specific interests and purposes.
+
+#### What is a parameter?
+
+In regression, we combine measurements on samples with probability theory to guess about the properties of a population we will never observe. We call these properties "parameters."
+
+#### What is statistical inference?
+
+The bulk of statistical inference consists of educated guessing about population parameters.
+
+#### Probability distributions and statistical guessing
+
+Inference is possible because the parameters of naturally occurring populations are structured by data generating processes that are approximated by **probability distributions.** A probability distribution is a mathematical function that describes the probability of a random event. Today we will be focusing on height. [^1]
+
+[^1]: The relationship of probability distributions and data-generating processes is complex, intriguing, and both historically and philosophically rich $\dots$. Because our interests are applied, we will hardly touch up this richness in this course, alas.
+
+Today we will be talking about the "normal" or "Gaussian distribution." A very large number of data-generating processes in nature conform the normal distribution.
+
+Let's consider some examples of randomly generated samples, which we will obtain using R's `rnorm` function.
+
+#### 100-person sample of heights
+
+```{r}
+set.seed(123)
+sm<-rnorm(100, mean = 170, sd = 20)
+ggplot2::qplot(sm, binwidth = 10)
+```
+
+#### 10-person sample of heights
+
+```{r}
+set.seed(123)
+subsm <-rnorm(10, mean = 170, sd = 20)
+
+ggplot2::qplot(
+  subsm, binwidth = 10
+  )
+```
+
+#### 10000-person sample of heights
+
+```{r}
+set.seed(123)
+largesm <-rnorm(1e5, mean = 170, sd = 20)
+ggplot2::qplot(
+  largesm, binwidth = 1
+  )
+```
+
+### How can I use regression to infer a population parameter?
+
+We can use R to investigate the *average* height of our imaginary population from which the preceding samples were randomly drawn. We do this in R by writing an "intercept-only" model as follows:
+
+```{r eval=FALSE}
+model <- lm(outcome ~ 1, data = datset)
+summary(model)
+```
+
+Using the previous simulations:
+
+N = 10 random draws
+
+```{r code_folding = FALSE}
+#write the model and get a nice table for it
+sjPlot::tab_model(
+  lm(sm ~ 1)
+)
+```
+
+N = 100 random draws
+
+```{r  code_folding = FALSE}
+sjPlot::tab_model(
+  lm(subsm ~ 1)
+)
+```
+
+N = 10,000 random draws
+
+```{r}
+sjPlot::tab_model(
+  lm(largesm ~ 1)
+)
+```
+
+What do we notice about the relationship between sample size the estimated population average?
+
+```{r}
+sjPlot::tab_model(
+   lm(sm ~ 1),
+   lm(subsm ~ 1),
+   lm(largesm ~ 1)
+)
+```
+
+### Regression with a single co-variate
+
+Does mother height predict daughter height? It seems so. By what how close are is the relationship?
+
+Francis Galton is credited with inventing regression. Galton observed that the height of offspring tends to fall between parental height and the population average, what Galton termed: "regression to the mean." Galton sought a method for educated guessing about heights, and this led to fitting a line of regression by a method called "least squares" (For a history see: [here](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2011.00509.x)).
+
+This following dataset is from "The heredity of height", Karl Pearson and Alice Lee (1903)[@pearson1903]. I obtained the dataset from [@gelman2020]. Let's use this dataset to investigate the relationship between a mother's height and a daughter's height.
+
+```{r}
+md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"), header=TRUE))
+# Center mother's height for later example
+md_df <- md_df %>%
+  dplyr::mutate(mother_height_c = as.numeric(scale(mother_height, center = TRUE, scale = FALSE)))
+dplyr::glimpse(md_df)
+
+```
+
+Pearson and Lee collected 5,524 observations from mother/daughter height pairs. Let's examine the data, first by plotting the relationship.
+
+What what is happening here?
+
+```{r}
+explore_md <-ggplot2::ggplot(data = md_df, aes(y = daughter_height, x = mother_height)) + 
+  geom_jitter(alpha = .2) + 
+  labs(title = "The relationship between mothers height and daughter's height") +
+       ylab("Daughter's height") +
+       xlab("Mother's height") + theme_classic()
+explore_md
+```
+
+Is there a linear predictive relationship between these two parameters? In regression we examine the line of best fit.
+
+```{r}
+m1 <- lm(daughter_height ~ mother_height, data = md_df)
+sjPlot::tab_model(m1)
+```
+
+We can plot the coefficient; in a model with one predictor isn't too informative. As we continue in the course, however, we'll see that plotting coefficients can be easier than deciphering the numbers in tables. Here are two methods for plotting.
+
+```{r echo = FALSE, layout = "l-body-outset", fig.width=12,fig.height=10}
+t_m1<-parameters::model_parameters(m1,  
+                                   ci = 0.95)
+method1 <- plot(t_m1) +
+  labs(title = "The relationship between mothers height and daughter's height") + 
+  ylab("Daughter's height") 
+
+method2 <-sjPlot::plot_model(m1)
+
+library(patchwork)
+method1 / method2 + plot_annotation(title = "Comparision of two coefficeint plots",
+                                    subtitle = "a: parameters see; b: sjPlot", 
+                                    tag_levels = "a")
+```
+
+## How do we interpret the regression model?
+
+Let's write the equation out in mathematics. How do we read this? [^2]
+
+[^2]: Later, we'll prefer a different way of writing regression equations in math. (Note: writing math isn't math - it's just encoding the model that we've written).
+
+```{r echo = FALSE}
+library("equatiomatic")
+extract_eq(m1,  use_coefs = FALSE)
+```
+
+The math says that the expected daughter's height in a population is predicted by the average height of the population when mother's height is set to zero units (note, this is impossible - we'll come back to this) plus $\beta ~\times$ units of daughter's height (inches) for each additional unit of mother's height (inches)
+
+We can plug the output of the model directly into the equation as follows:
+
+```{r echo = FALSE}
+library("equatiomatic")
+extract_eq(m1,  use_coefs = TRUE)
+```
+
+### Graph the relationship between mother's and daughter's heights
+
+```{r code_folding = FALSE}
+library(ggeffects)
+toplot<-ggeffects::ggpredict(m1, terms = "mother_height")
+
+heightplot<-plot(toplot, add.data = TRUE, dot.alpha = .1, jitter = TRUE) +   theme_classic()
+heightplot + labs(title = "Predicted values of daughter's height from the Pearson/Fox 1903 dataset")
+
+```
+
+### Regression to predict beyond the range of a dataset
+
+Joyte Amge is the world's shortest woman at 25 inches. Sandy Allen was the world's tallest woman at 91 inches. What is be the expected heights of their daughter, and of every intermediary woman in between?
+
+```{r code_folding = FALSE}
+
+# use the `expand.grid` command to create a sequence of points for mother's height
+ndat<-expand.grid(mother_height = c(25:91)) 
+
+# use the `predict` function to create a new response 
+pr<- predict(m1, type = "response", interval = "confidence", newdata =ndat)
+
+# have a look at the object
+dplyr::glimpse(pr)
+
+# create a new dataframe for the new sequence of points for mother's height and the predicted data
+newdata<-data.frame(ndat,pr)
+head(newdata)
+```
+
+Graph the predicted results
+
+```{r  layout="l-body-outset", fig.width=10, fig.height=10}
+# graph the expected results
+predplot<-ggplot(data = newdata, 
+       aes(x= mother_height, y = fit))  + 
+  geom_point() +  geom_errorbar(aes(ymin = lwr, ymax = upr), width = .1) + 
+   expand_limits(x = c(20,91), y = c(0,81))  + theme_classic() + 
+  labs(title = "Predicted values for a broader population")
+
+# plot the two graphs together (making the x and y axis at the same scale )
+library("patchwork")
+# rescale heightplot
+
+# old plot with the new axis and y axis scales, and remove points
+
+heightplot2<-plot(toplot, add.data = FALSE) +   theme_classic()
+
+nhp <- heightplot2 +  expand_limits(x = c(20,91), y = c(0,81) ) +  labs(title = "Predicted values of daughter's height from the Pearson/Fox 1903 dataset")
+
+# double graph
+ nhp /predplot  + plot_annotation(title = "What do you notie about these relationships?", tag_levels = "a")
+```
+
+A simple method for obtaining the predicted values form your fitted model is to obtain the ggeffects output without producing a graph.
+
+```{r code_folding = FALSE}
+
+library(ggeffects)
+
+toplot<-ggeffects::ggpredict(m1, terms = "mother_height")
+toplot
+```
+
+### Non-linear relationships
+
+Linear regression assumes linearity conditional on a model. Often your data will not be linear!
+
+Consider the following example:
+
+```{r code_folding = FALSE}
+# Simulate nonlinear relationship between x and y
+b <- c(2, 0.75)
+set.seed(12)
+x <- rnorm(100)
+set.seed(12)
+y <- rnorm(100, mean = b[1] * exp(b[2] * x))
+dat1 <- data.frame(x, y)
+
+ot1 <-lm(y ~ x, data  = dat1)
+# performance::check_model(ot1)
+
+# Plot linear effect
+plot(ggeffects::ggpredict(ot1, terms = "x"), add.data =TRUE, dot.alpha = .4)
+```
+
+Non-linear relationship as modelled by a polynomial regression:
+
+```{r  code_folding = FALSE}
+
+library(splines)
+ot2 <-lm(y ~ x + I(x^2), data  = dat1)
+plot(ggeffects::ggpredict(ot2, terms = "x"), add.data =TRUE, dot.alpha = .4)
+```
+
+Here is another approach:
+
+```{r  code_folding = FALSE}
+library(splines)
+ot2.b <-lm(y ~ x + poly(x, 2), data  = dat1)
+plot(ggeffects::ggpredict(ot2.b, terms = "x"), add.data =TRUE, dot.alpha = .4)
+```
+
+Non-linear relationship as modeled by a general additive model (spline)
+
+```{r code_folding = FALSE}
+library(splines)
+
+ot3 <-lm(y ~ bs(x), data  = dat1)
+
+#performance::check_model(ot2)
+plot(ggeffects::ggpredict(ot3, terms = "x"), add.data =TRUE, dot.alpha = .4)
+```
+
+### Centering
+
+Any linear transformation of a predictor is OK. Often we center (or center and scale) all indicators, which gives us an intercept that is meaninful (the expected population average when the other indicators are set their average).
+
+```{r}
+library(ggeffects)
+# original model
+m1 <- lm(daughter_height ~ mother_height, data = md_df)
+mc <-lm(daughter_height ~ mother_height_c, data=md_df)
+sjPlot::tab_model(m1,mc)
+```
+
+Graph model
+
+```{r}
+plot(ggeffects::ggpredict(mc, terms = "mother_height_c"), add.data =TRUE, dot.alpha = .4)
+```
+
+Note: when fitting a polynomial or any interaction, it is important to center your indicators. We'll come back to this point in later lectures.
+
+### Model evaluation
+
+A simple way to assess your model fit is to compare a model with one covariate with a simple intercept-only model and to assess improvement in either the `AIC` statistic or the `BIC` statistic. The `BIC` is similar to the `AIC` but adds a penalty for extra predictors. An absolute improvement in either statistic of n \> 10 is considered to be a better model.
+
+We can use the `performance` package to generate a table that compares fits.
+
+```{r code_foldign = FALSE, code_folding =FALSE}
+library(performance)
+# intercept only
+ionly <- lm(daughter_height ~ 1, data = md_df)
+
+# covariate added
+covadded <- lm(daughter_height ~ mother_height, data = md_df)
+
+# evaluate
+performance::compare_performance(ionly, covadded)
+```
+
+What was the model improvement?
+
+```{r}
+# improved fit
+BIC(ionly)- BIC(covadded)
+```
+
+### Generate a report
+
+This is easy with the `report` package
+
+For example:
+
+```{r code_folding = FALSE,}
+report::report_statistics(covadded)
+```
+
+Or if you want a longer report
+
+```{r code_folding = FALSE, eval=FALSE}
+report::report(covadded)
+```
+
+Though use `statistically significant` in place of `significant`. This will avoid misleading your audience into thinking your result is important, when what you intend to communicate is that it is reliable.
+
+## Assumptions of regression
+
+From Gelman and Hill [@gelman2006]
+
+1.  Validity
+
+    > The most important is that the data you are analyzing should map to the research question you are trying to answer [@gelman_regression_2020, p.152]
+
+2.  Representativeness
+
+    > A regression model is fit to data and is used to make inferences about a larger population, hence the implicit assumption in interpreting regression coefficients is that the sample is representative of the population. [@gelman_regression_2020, p.153]\
+
+3.  Linearity\*
+
+    > The most important mathematical assumption of the linear regression model is that its deterministic component is a linear function of the separate predictors: y = β0 + β1x1 + β2x2 +···. If additivity is violated, it might make sense to transform the data (for example, if y = abc, then log y = log a + log b + log c) or to add interactions. If linearity is violated, perhaps a predictor should be put in as 1/x or log(x) instead of simply linearly. Or a more complicated relationship could be expressed using a nonlinear function such as a spline or Gaussian process, [@gelman_regression_2020, p.153]
+
+4.  Independence of errors
+
+    > The simple regression model assumes that the errors from the prediction line are independent, an assumption that is violated in time series, spatial, and multilevel settings [@gelman_regression_2020, p.153]
+
+5.  Equal variance of errors
+
+> ...unequal variance does not affect the most important aspect of a regression model, which is the form of the predictors [@gelman_regression_2020, p.153]
+
+5.  Normality of errors (statistical independence)
+
+> The regression assumption that is generally least important is that the errors are normally distributed. In fact, for the purpose of estimating the regression line (as compared to predicting individual data points), the assumption of normality is barely important at all. Thus, in contrast to many regression textbooks, we do not recommend diagnostics of the normality of re-gression residuals. [@gelman2006, p. 46]
+
+> A good way to diagnose violations of some of the assumptions just considered (importantly, linearity) is to plot the residuals versus fitted values or simply individual predictors.[@gelman2006 p. 46]
+
+### Common confusions
+
+#### Causal inference is tricky
+
+People use the work "effect" but that is not what regression gives us (by default)
+
+#### "Normality assumption"
+
+As Gelman and Hill note, the "normality" assumption is the least important. And the assumption pertains to the normality of residuals
+
+#### Statistical independence
+
+This will be the main reason we do multi-level modelling: to condition on dependencies in the data.
+
+#### Levels (wrong population)
+
+We sample from undergraduates, but infer about the human population.
+
+## Acknowledgments
+
+1.  Richard Mcelreath's Statistical Rethinking [@mcelreath2020]
+2.  Regression and other stories [@gelman2020]
+
+## Appendix 1: Conceptual Background
+
+Some preliminaries about science.
+
+### Science begins with a question
+
+Science begins with a question about the world. The first step in science, then, is to clarify what you want to know.
+
+Because science is a social practice, you will also need to clarify why your question is interesting: so what?
+
+In short, know your question.
+
+### Scientific model (or theory)
+
+Sometimes scientists are interested in specific features of the world: how did virus x originate? Such a question might have a forensic interest: what constellation of events gave rise to a novel infectious disease?
+
+More typically, scientists seek generalisations. How do infectious diseases evolve? How do biological organisms evolve? Such questions have applied and fundamental interests. How can we better prevent infectious disease? How did life originate?
+
+A scientific model is a proposal for how nature is structured (and unstructured). For example, the theory of evolution by natural selection proposes that life emerges from variation, inheritance, and differential reproduction/survival.
+
+To evaluate a scientific model, scientists must make generalisations beyond individual cases. This is where statistics shines.
+
+### What is statistics?
+
+Mathematics is a logic of certainty.
+
+Statistics is a logic of uncertainty.
+
+A statistical model uses the logic of probability to make better guesses.
+
+### Applications of statistical models in science
+
+Scientific models seek to explain how nature is structured. Where scientific models conflict, we can combine statistical models with data-collection to evaluate the credibility of of one theoretical model over others. To do this, a scientific model must make distinct, non-trivial predictions about the world.
+
+If the predictions are not distinct, the observations will not enable a shift in credibility for one theory over another. Consider the theory that predicts any observation. Such a theory would be better classified as a conspiracy theory; it is compatible with any evidence whatsoever.
+
+<!-- Sometimes the processes of empirical testing is called "hypothesis testing." In the weeks ahead, we will distinguish the intellectually excellent concept of "hypothesis testing" from "Null Hypothesis Significance Testing (NHST)." Although there is is nothing inherently flawed with NHST, it's misunderstandings have been an abomination. -->
+
+Today we introduce a statistical method called regression. We will focus on how regression helps both to evaluate, and to make, informed predictions about the structures of the world.
+
+## Appendix 2: How your computer sees your data
+
+### Under the hood
+
+Under the hood, your computer sees your data as consisting of vectors and matrices. An algorithm searches to estimate (or in the case of Bayesian inference, to "solve") an optimization problem to obtain a location for the unobserved parameter; in the case we examined above, this parameter is the relationship between daughter heights and mother heights.
+
+$$\begin{bmatrix}
+\textbf{y}\\
+\textit{daughter's height}\\
+51.5\\
+52.5 \\
+53.0 \\
+\vdots
+\end{bmatrix}
+=
+\begin{bmatrix}
+\textbf{intercept} \\
+1 \\
+1 \\
+1 \\
+1 \\
+\vdots \\
+\end{bmatrix}
+\begin{bmatrix}
+\textbf{x}\\
+\textit{mother's height}\\
+59.5\\
+57.5 \\
+60.0 \\
+\vdots
+\end{bmatrix}
+\begin{bmatrix}
+\textbf{b}\\
+29.8 \\
+0.54
+\end{bmatrix}$$
+
+
+# LAB 3
+
+
+## Setup
+
+### Libraries
+```{r}
+library(tidyverse)
+library(patchwork)
+library(lubridate)
+library(kableExtra)
+library(gtsummary)
+```
+
+### Import `nz` data
+
+```{r}
+# read data
+nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
+
+# to relevel kessler 6 variables
+f<-c("None Of The Time","A Little Of The Time","Some Of The Time",  "Most Of The Time", "All Of The Time")
+
+# get data into shape
+nz <- nz_0 %>%
+  dplyr::mutate_if(is.character, factor) %>%
+  select(
+    -c(
+      SWB.Kessler01,
+      SWB.Kessler02,
+      SWB.Kessler03,
+      SWB.Kessler04,
+      SWB.Kessler05,
+      SWB.Kessler06
+    )
+  ) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(male_id = as.factor(Male)) %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)
+
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+nz$ma
+```
+
+
+### Import `Pearson and Lee` mother's and daughters data
+
+```{r}
+md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"), header=TRUE))
+# Center mother's height for later example
+md_df <- md_df %>%
+  dplyr::mutate(mother_height_c = as.numeric(scale(mother_height, center = TRUE, scale = FALSE)))
+dplyr::glimpse(md_df)
+
+# In 1903, Pearson and Lee collected 5,524 observations from mother/daughter height pairs. See lecture 5 for details
+```
+
+### Note
+
+**For all exercises below, use only the 2019 wave of the `nz` dataset.**
+
+
+## Q1. Create a descriptive table and a descriptive graph for the `HLTH.Weight` and `HLTH.Height` variables in the `nz` dataset
+
+Select `HLTH.Weight`, `HLTH.Height` from the nz dataset. 
+
+Filter only the 2019 wave.
+
+Create a descriptive table and graph these two variables
+
+Annotate your workflow (at each step, describe what you are doing and why).
+
+
+## Q2. Write up a sample summary of the `HLTH.Weight` and `HLTH.Height` variables in the `nz` dataset in APA style. 
+
+Using the analysis in Q1, describe Height and Weight in the `nz` dataset
+
+Write brief APA methods summary for these two variables. 
+
+Note: *if useful, use the 'male_id' variable to clarify interesting or puzzling features of the `HLTH.Weight` and `HLTH.Height` responses.
+
+[NZAVS data dictionary](https://www.dropbox.com/s/e7krce01taya8a1/Copy%20of%20NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
+
+
+## Q3. Regression height ~ weight and report results
+
+Using the `nz` dataset, write a regression model for height as predicted by weight. 
+
+Create a table for your results. 
+
+Create a graphs/graphs to clarify the results of your regression model. 
+
+Briefly report your results. 
+
+
+## Q4. Regress height ~ male_id and report results
+
+
+Using the `nz` dataset, write a regression model for height as predicted by `male_id` 
+
+Create a table for your results. 
+
+Create a graphs/graphs to clarify the results of your regression model. 
+
+Briefly report your results. 
+
+
+## Q5. Regression to predict
+
+Using the regression coefficients from the Pearson and Lee 1903 dataset
+
+Predict the heights of daughters of women in the `nz` dataset. 
+
+
+## Q6. Bonus, not marked
+
+On average, how much taller or shorter are women in New Zealand as sampled in 2019 `nz` dataset compared with women in 1903 as sampled in the Pearson and Lee dataset. 
+
+Clarify your inference.
+
+
+
+## Solutions 
+
+---
+title: "Week 5 workbook solutions"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_depth: 3
+    highlight: kate
+---
+
+```{r setup, include=FALSE}
+# setup
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  layout = "l-body-outset",
+  fig.width= 12,
+  fig.height= 10,
+  collapse =TRUE,
+  R.options = list(width = 60)
+)
+```
+```{r  libraries}
+### Libraries
+library("tidyverse")
+library("patchwork")
+library("lubridate")
+library("kableExtra")
+library("gtsummary")
+```
+
+```{r  nzdata}
+# read data
+nz_0 <- readr::read_csv2(
+  url(
+    "https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"
+  )
+)
+
+# to relevel kessler 6 variables
+f <-
+  c(
+    "None Of The Time",
+    "A Little Of The Time",
+    "Some Of The Time",
+    "Most Of The Time",
+    "All Of The Time"
+  )
+
+# get data into shape
+nz <- nz_0 %>%
+  dplyr::mutate_if(is.character, factor) %>%
+  select(
+    -c(
+      SWB.Kessler01,
+      SWB.Kessler02,
+      SWB.Kessler03,
+      SWB.Kessler04,
+      SWB.Kessler05,
+      SWB.Kessler06
+    )
+  ) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(male_id = as.factor(Male)) %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)
+
+```
+```{r pearson_lee_data}
+### Import `Pearson and Lee` mother's and daughters data
+md_df <- data.frame(read.table(
+  url(
+    "https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"
+  ),
+  header = TRUE
+))
+# Center mother's height for later example
+md_df <- md_df %>%
+  dplyr::mutate(mother_height_c = as.numeric(scale(
+    mother_height, center = TRUE, scale = FALSE
+  )))
+dplyr::glimpse(md_df)
+```
+
+# In 1903, Pearson and Lee collected 5,524 observations from mother/daughter height pairs. See lecture 5 for details
+
+
+### Notes
+
+**For all exercises below, use only the 2019 wave of the `nz` dataset.**
+
+
+## Q1. Create a descriptive table and a descriptive graph for the `HLTH.Weight` and `HLTH.Height` variables in the `nz` dataset
+
+Select `HLTH.Weight`, `HLTH.Height` from the nz dataset. 
+
+Filter only the 2019 wave.
+
+Create a descriptive table and graph these two variables
+
+Annotate your workflow (at each step, describe what you are doing and why).
+
+### Solution 
+
+
+```{r   layout = "l-body-outset"}
+library(gtable)
+# select focal variables and rename them for clarity
+nzdat <- nz %>%
+  dplyr::filter(Wave == 2019) %>%
+  dplyr::select(HLTH.Weight, HLTH.Height, male_id) %>%
+  dplyr::rename(weight = HLTH.Weight,
+                height = HLTH.Height) %>%
+  dplyr::select(weight, height, male_id) %>%
+  dplyr::mutate(weight_c = as.numeric(scale(
+    weight, scale = F, center = TRUE
+  )))
+
+# create table
+nzdat %>%
+  dplyr::select(weight,
+                height) %>%
+  gtsummary::tbl_summary(
+    #by = Wave,
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} / {N} ({p}%)"
+    ),
+    digits = all_continuous() ~ 2,
+    missing_text = "(Missing)"
+  ) %>%
+  bold_labels() 
+```
+
+
+
+Here's another approach:
+
+
+```{r   layout = "l-body-outset"}
+library(table1)
+
+# filter 2019 wave
+nz1 <- nz %>%
+  dplyr::filter(Wave == 2019)
+
+# nicer labels
+table1::label(nz1$HLTH.Weight)     <- "Weight"
+table1::label(nz1$HLTH.Height)     <- "Height"
+
+# table
+table1::table1(~ HLTH.Weight + HLTH.Height, data = nz1)     
+```
+
+
+
+Create graph
+
+```{r   layout = "l-body-outset"}
+nzdat1 <- nzdat%>%
+    dplyr::filter(!is.na(weight),
+                  !is.na(height),
+                  !is.na(male_id)) # filter na's for density plots
+  
+weight_density <-ggplot2::ggplot(data = nzdat1, aes(x = weight)) + geom_density(fill = "chocolate2") + 
+  labs(title = "Density plot of weight of NZ sample years 2019/2020") + theme_classic()
+
+height_density <-ggplot2::ggplot(data = nzdat1, aes(x = height)) + geom_density(fill ="blue2") + 
+  labs(title = "Density plot of height of NZ sample years 2019/2020") + theme_classic()
+
+weight_density / height_density + plot_annotation(tag_levels = 'a')
+```
+
+## Q2. Write up a sample summary of the `HLTH.Weight` and `HLTH.Height` variables in the `nz` dataset in APA style. 
+
+Using the analysis in Q1, describe Height and Weight in the `nz` dataset
+
+Write brief APA methods summary for these two variables. 
+
+Note: *if useful, use the 'male_id' variable to clarify interesting or puzzling features of the `HLTH.Weight` and `HLTH.Height` responses.
+
+[NZAVS data dictionary](https://www.dropbox.com/s/e7krce01taya8a1/Copy%20of%20NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
+
+
+#### Solution
+
+Why aren't the distributions of height and weight normal? Likely there is a hidden co-variate. 
+
+Let's assess whether there might be differences in these parameters that might owe to sex.
+
+```{r   layout = "l-body-outset"}
+# plot of weight ~ is_male
+weight_density2 <-
+  ggplot2::ggplot(data = nzdat1, aes(x = weight, fill = male_id)) +
+  geom_density() +
+  labs(title = "Density plot of weight of NZ sample years 2019/2020") +
+  theme_classic() +
+  facet_grid(. ~ male_id)
+weight_density2 <-
+  weight_density2 + 
+  aes(fill = male_id) + 
+  scale_fill_viridis_d() # nicer colour
+
+# plot of height ~ is_male
+height_density2 <-
+  height_density2 <-
+  ggplot2::ggplot(data = nzdat1, aes(x = height, fill = male_id)) +
+  geom_density() +
+  labs(title = "Density plot of height of NZ sample years 2019/2020") +
+  theme_classic() +
+  facet_grid(. ~ male_id)  + 
+  aes(fill = male_id) +  
+  scale_fill_viridis_d() # nicer colour
+
+height_density2 <- height_density2 + aes(fill = male_id)
+weight_density2 / height_density2 + plot_annotation(tag_levels = 'a')
+```
+
+
+## Q3. Regress height ~ weight and report results
+
+Using the `nz` dataset, write a regression model for height as predicted by weight. 
+
+Create a table for your results. 
+
+Create a graphs/graphs to clarify the results of your regression model. 
+
+Briefly report your results. 
+
+
+#### Solution
+
+Model:
+
+```{r}
+# regression of height ~ weight
+mod1 <- lm(height ~ weight_c, data = nzdat)
+```
+
+Table:
+
+```{r   layout = "l-body-outset"}
+sjPlot::tab_model(mod1)
+```
+
+Prediction
+
+```{r layout = "l-body-outset"}
+sjPlot::tab_model(mod1)
+plot(ggeffects::ggpredict(mod1,terms = "weight_c"))
+```
+
+
+Briefly report your results. (note: please replace "significant" with "statistically significant.)
+
+```{r   layout = "l-body-outset"}
+report::report(mod1)
+```
+
+## Q4. Regress height ~ male_id and report results
+
+
+Using the `nz` dataset, write a regression model for height as predicted by `male_id` 
+
+Create a table for your results. 
+
+Create a graph/graphs to clarify the results of your regression model. 
+
+Briefly report your results. 
+
+#### Solution
+
+Model and table:
+
+```{r   layout = "l-body-outset"}
+# regression of height ~ weight
+mod2 <- lm(height ~ male_id, data = nzdat)
+sjPlot::tab_model(mod2)
+```
+
+Graph:
+
+```{r   layout = "l-body-outset"}
+# plot over the range of the data
+pl1<- plot(
+  ggeffects::ggpredict(mod2, terms = "male_id [all]"),
+  add.data = TRUE,
+  dot.alpha = .2
+) 
+pl1 + 
+  scale_y_continuous(limits = c(1.2, 2.1)) +  # range of data
+  geom_point(colour = c("brown2", "cadetblue2")) 
+```
+
+
+Report
+
+```{r   layout = "l-body-outset"}
+report::report(mod1)
+```
+## Q5. Regression to predict
+
+Using the regression coefficients from the Pearson and Lee 1903 dataset, predict the heights of daughters of women in the `nz` dataset. 
+
+### Solutoin 
+
+```{r   layout = "l-body-outset"}
+# model for daughter height from mother height
+mpf<- lm(daughter_height ~ mother_height, data = md_df)
+
+# create data frame of not_male's in 2019
+# Notice problem. not_male != woman
+# additionally, woman != mother! 
+
+nz2 <-nzdat %>%
+  filter(male_id == "Not_Male")%>% # not_males
+  dplyr::select(height) %>% # variable of interest
+  dplyr::mutate(mother_height = height * 39.36)%>% # Convert meters to inches
+  dplyr::select(mother_height)%>%
+  dplyr::arrange((mother_height)) 
+
+# find min and max heights, store as objects 
+mnh<-min(nz2$mother_height, na.rm = TRUE)
+mxh<-max(nz2$mother_height, na.rm = TRUE)
+
+# expand grid, use stored objects to define boundaries.
+ndat2<-expand.grid(mother_height = seq(from = mnh, to = mxh, length.out=200))
+
+# use the `predict` function to create a new response using the pearson and fox regression model
+
+pr2<- predict(mpf, type = "response", interval = "confidence", newdata =ndat2)
+
+# create a new dataframe for the response variables, following the method in lecture 5
+
+# combine variables into a data frame
+newdata2 <- data.frame(ndat2,pr2)
+
+# graph the expected average hypothetical heights of "daughters"  
+predplot2 <-
+  ggplot(data = newdata2, aes(x = mother_height, y = fit))  +
+  geom_line(colour = "cadetblue")  +  geom_errorbar(aes(ymin = lwr, ymax = upr), width = .1) + scale_x_continuous(limits = c(50, 75)) + scale_y_continuous(limits = c(50, 75)) + theme_classic()  +
+  xlab("NZ 2019 female population") +
+  ylab("predicted daughter heights in inches") +
+  labs(title = "Regression prediction for hypothetical daughter heights of NZ population in 2019 ")
+
+# plot
+predplot2
+```
+
+## Q6. Bonus, not marked
+
+On average, how much taller or shorter are women in New Zealand as sampled in 2019 `nz` dataset compared with women in 1903 as sampled in the Pearson and Lee dataset. 
+
+### Solution 
+
+```{r   layout = "l-body-outset"}
+#create var for 1903 dataset
+md_df2 <- md_df %>%
+  dplyr::select(mother_height, daughter_height) %>%
+  tidyr::pivot_longer(everything(),
+                      names_to = c("height")) %>%
+  dplyr::select(value) %>%
+  dplyr::rename(f_height = value) %>%
+  dplyr::mutate(is_2019 = factor(rep("1903", nrow(.)))) # create identifier
+
+# create var for 2019 dataset
+nz_df2 <-
+  nz2 %>%  # dataset with only women and height transformed to inches
+  dplyr::rename(f_height = mother_height) %>%
+  dplyr::mutate(is_2019 = factor(rep("2019", nrow(.))))
+
+# combine data frames row-wise
+rdf <- rbind(md_df2, nz_df2)
+
+# look at data structure
+dplyr::glimpse(rdf)
+```
+
+Look at heights in sample 
+
+```{r   layout = "l-body-outset"}
+ggplot2::ggplot(data = rdf, aes(x= is_2019, y= f_height, fill = is_2019))+ geom_boxplot(notch = TRUE) + 
+  labs(title = "Differences in female height 1903/2019") + theme_classic() + scale_fill_viridis_d()
+```
+
+
+Predict heights out of sample
+
+```{r   layout = "l-body-outset"}
+mod3<-lm(f_height ~   is_2019, data = rdf)
+sjPlot::tab_model(mod3)
+```
+
+Women in 2019 are taller
+
+```{r   layout = "l-body-outset"}
+report::report(mod3)
+```
+
+
+Graph:
+```{r}
+plot(
+  ggeffects::ggpredict(mod3, terms = "is_2019"),
+  add.data = F,
+  dot.alpha = .2
+) + labs(title = "Predicted difference in female heights 1903/2019") + 
+  xlab("Study year") + 
+  ylab ("Predicted femal height (inches)")
+```
+
+Graph with predicted points:
+
+```{r}
+plot(
+  ggeffects::ggpredict(mod3, terms = "is_2019"),
+  add.data = F,
+  dot.alpha = .2
+) + labs(title = "Predicted difference in female heights 1903/2019") + 
+  xlab("Study year") + 
+  ylab ("Predicted femal height (inches)")
+```
+
+
+
+
