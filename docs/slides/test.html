@@ -519,7 +519,7 @@ Figure&nbsp;1: Confounding by a common cause. The red path indicates bias from t
 <ul>
 <li class="fragment">“Measurement is the numerical quantifcation of the attributes of an object or event, which can be used to compare with other objects or events” [Conventional]</li>
 <li class="fragment">“Measurement is the assignment of numerals to objects or events according to rules.” [Psychological]</li>
-<li class="fragment">“Measurement is the process of experimentally obtaining one or more quantity values that can reasonably be attributed to a quantity.” [Metrological] from <span class="citation" data-cites="briggs2021">(<a href="#/references" role="doc-biblioref" onclick=""><strong>briggs2021?</strong></a>)</span></li>
+<li class="fragment">“Measurement is the process of experimentally obtaining one or more quantity values that can reasonably be attributed to a quantity.” [Metrological] from <span class="citation" data-cites="briggs2021">(<a href="#/references" role="doc-biblioref" onclick="">Briggs 2021</a>)</span></li>
 </ul>
 </section>
 <section id="on-a-scale-of-1-7-how-happy-are-you" class="slide level2">
@@ -594,8 +594,8 @@ Figure&nbsp;1: Confounding by a common cause. The red path indicates bias from t
 <h2>What might go wrong?</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-3d3f3dd75d2897c18a94" style="width:960px;height:600px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-3d3f3dd75d2897c18a94">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      A -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6300678710167cf7cd5e" style="width:960px;height:600px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-6300678710167cf7cd5e">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      A -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -603,8 +603,8 @@ Figure&nbsp;1: Confounding by a common cause. The red path indicates bias from t
 <h2>Happiness might cause marriage</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-786e6db93b805979b8b6" style="width:960px;height:600px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-786e6db93b805979b8b6">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      Y -> A\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1d819f5ffc7e01485a3d" style="width:960px;height:600px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-1d819f5ffc7e01485a3d">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      \n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happiness\",  pos=\"2,0!\"]\n\n      { rank = same; A Y }\n      Y -> A\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -612,8 +612,8 @@ Figure&nbsp;1: Confounding by a common cause. The red path indicates bias from t
 <h2>Age might be a confounder of both Marriage and Happiness</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-e7b1b9615a008576e1fd" style="width:960px;height:600px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-e7b1b9615a008576e1fd">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      L [label=\"Age   \",  pos=\"0,0!\"]\n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happy\",  pos=\"2,0!\"]\n\n      { rank = same; L A Y }\n\n      L -> A\n      L -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d049533b46d1c8f2dde7" style="width:960px;height:600px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-d049533b46d1c8f2dde7">{"x":{"diagram":"\n      digraph mrdag {\n\n      graph [rankdir=TB]\n\n      node [shape=plaintext]\n      L [label=\"Age   \",  pos=\"0,0!\"]\n      A [label=\"Marriage\",  pos=\"1,0!\"]\n      Y [label=\"Happy\",  pos=\"2,0!\"]\n\n      { rank = same; L A Y }\n\n      L -> A\n      L -> Y\n      }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -681,7 +681,7 @@ A           |        0.77 | 0.07 | [ 0.64, 0.91] |     11.17 | 211.13 | &lt; .00
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
-<p>For an account of the history of measurement in psychological research, see: <span class="citation" data-cites="briggs2021">(<a href="#/references" role="doc-biblioref" onclick=""><strong>briggs2021?</strong></a>)</span></p>
+<p>For an account of the history of measurement in psychological research, see: <span class="citation" data-cites="briggs2021">(<a href="#/references" role="doc-biblioref" onclick="">Briggs 2021</a>)</span></p>
 <p>For an account of key concepts and current debates in psychometrics, see: <span class="citation" data-cites="bandalos2018">(<a href="#/references" role="doc-biblioref" onclick="">Bandalos 2018</a>)</span></p>
 <p>For an account of special measurement problems that arise in cross-cultural research, see: <span class="citation" data-cites="vandevijver2021">(<a href="#/references" role="doc-biblioref" onclick=""><strong>vandevijver2021?</strong></a>)</span></p>
 <p>For an accessible introduction to causal inference and its history see: <span class="citation" data-cites="pearl2018">(<a href="#/references" role="doc-biblioref" onclick="">Pearl and Mackenzie 2018</a>)</span></p>
@@ -693,6 +693,9 @@ A           |        0.77 | 0.07 | [ 0.64, 0.91] |     11.17 | 211.13 | &lt; .00
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-bandalos2018" class="csl-entry" role="listitem">
 Bandalos, Deborah L. 2018. <em>Measurement Theory and Applications for the Social Sciences</em>. Guilford Publications.
+</div>
+<div id="ref-briggs2021" class="csl-entry" role="listitem">
+Briggs, Derek C. 2021. <em>Historical and Conceptual Foundations of Measurement in the Human Sciences: Credos and Controversies</em>. Routledge.
 </div>
 <div id="ref-pearl2018" class="csl-entry" role="listitem">
 Pearl, Judea, and Dana Mackenzie. 2018. <em>The Book of Why: The New Science of Cause and Effect</em>. Basic books.
